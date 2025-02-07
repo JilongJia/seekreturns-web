@@ -1,0 +1,79 @@
+.searchbox {
+  max-width: 13rem;
+}
+
+.form {
+  position: relative;
+}
+
+.screenReaderLabel {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.input {
+  display: block;
+  transition-duration: 100ms;
+  outline: 1px solid var(--outline-color);
+  outline-offset: 0;
+  border-radius: 9999px;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  width: 100%;
+  color: #262626;
+  font-size: 0.875rem;
+}
+
+.input::placeholder {
+  color: #a3a3a3;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--outline-focus-color);
+}
+
+.button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transition-duration: 100ms;
+  outline: 0 solid var(--outline-color);
+  border-radius: 0 9999px 9999px 0;
+  padding: 0 0.5rem;
+  color: #737373;
+  text-align: center;
+}
+
+.button:hover {
+  transition-duration: 200ms;
+  color: #262626;
+}
+
+.button:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+.screenReaderText {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

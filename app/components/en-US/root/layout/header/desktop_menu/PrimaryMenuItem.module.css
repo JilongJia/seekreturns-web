@@ -1,0 +1,25 @@
+.menuItemLink {
+  display: block;
+  position: relative;
+  padding: 0.25rem;
+}
+
+.menuItemLink::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transition-duration: 500ms;
+  border-bottom: 2px solid #525252;
+  width: 0;
+  content: "";
+}
+
+.menuItemLink:hover::after,
+.menuItemLink:focus-visible::after {
+  left: 0;
+  width: 100%;
+}
+
+.menuItemLink:focus-visible {
+  outline-style: none;
+}

@@ -1,0 +1,31 @@
+.menuItemLink {
+  display: block;
+  transition-duration: 100ms;
+  outline: 0 solid var(--outline-color);
+  outline-offset: -2px;
+  padding: 0.75rem 1.5rem 0.75rem 2.5rem;
+}
+
+.menuItemLink:hover {
+  transition-duration: 200ms;
+  background-color: #dbeafe;
+}
+
+.menuItemLink:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+@media (min-width: 640px) {
+  .menuItemLink {
+    padding-right: 2.5rem;
+    padding-left: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .menuItemLink {
+    padding-right: 3.5rem;
+    padding-left: 4.5rem;
+  }
+}

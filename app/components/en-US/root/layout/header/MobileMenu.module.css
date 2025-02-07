@@ -1,0 +1,54 @@
+.mobileMenu {
+  color: #525252;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.button {
+  vertical-align: middle;
+  transition-duration: 100ms;
+  outline: 0 solid var(--outline-color);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.button:hover {
+  transition-duration: 200ms;
+  color: #262626;
+}
+
+.button:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+.icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  list-style: none;
+}
+
+.screenReaderText {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .menu {
+    display: none;
+  }
+}

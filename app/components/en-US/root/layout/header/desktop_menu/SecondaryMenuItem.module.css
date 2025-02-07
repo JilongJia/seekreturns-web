@@ -1,0 +1,36 @@
+.menuItemLink {
+  display: block;
+  position: relative;
+  transition-duration: 100ms;
+  padding: 0.75rem 2rem;
+}
+
+.menuItemLink:hover {
+  transition-duration: 200ms;
+  background-color: #dbeafe;
+}
+
+.menuItemLink:focus-visible {
+  transition-duration: 200ms;
+  outline-style: none;
+  background-color: #dbeafe;
+}
+
+.menuItemLink::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition-duration: 100ms;
+  height: 100%;
+  content: "";
+}
+
+.menuItemLink:hover::before {
+  transition-duration: 200ms;
+  border-left: 3px solid #2563eb;
+}
+
+.menuItemLink:focus-visible::before {
+  transition-duration: 200ms;
+  border-left: 3px solid #2563eb;
+}

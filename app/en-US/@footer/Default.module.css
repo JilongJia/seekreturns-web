@@ -1,0 +1,62 @@
+.footer {
+  display: grid;
+  row-gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  grid-column: span 12;
+  justify-self: center;
+}
+
+.socialIcons {
+  grid-column: span 12;
+}
+
+.navbar {
+  grid-column: span 12;
+}
+
+.copyRight {
+  grid-column: span 12;
+}
+
+@media (min-width: 640px) {
+  .footer {
+    row-gap: 0.5rem;
+  }
+
+  .logo {
+    grid-column: span 4;
+    justify-self: start;
+  }
+
+  .socialIcons {
+    grid-column: span 4;
+  }
+
+  .navbar {
+    grid-column: span 5;
+    order: 2;
+  }
+
+  .copyRight {
+    grid-column: span 3;
+    order: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .socialIcons {
+    grid-column: span 8;
+  }
+
+  .navbar {
+    grid-column: span 8;
+  }
+
+  .copyRight {
+    grid-column: span 4;
+  }
+}
