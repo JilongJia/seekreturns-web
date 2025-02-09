@@ -9,7 +9,7 @@ import { DesktopMenu } from "@/app/components/en-US/root/layout/header/DesktopMe
 import { MobileSearchbox } from "@/app/components/en-US/root/layout/header/MobileSearchbox";
 import { DesktopSearchbox } from "@/app/components/en-US/root/layout/header/DesktopSearchbox";
 import { LanguageSelector } from "@/app/components/en-US/root/layout/header/LanguageSelector";
-import styles from "./Page.module.css";
+import styles from "./page.module.css";
 
 async function Page() {
   const hreflangAlternates = await getHreflangAlternates(`/en-US/concepts`);
