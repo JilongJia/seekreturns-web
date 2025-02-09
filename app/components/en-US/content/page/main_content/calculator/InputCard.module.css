@@ -1,0 +1,9 @@
+.inputCard {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .inputCard {
+    margin-bottom: 2rem;
+  }
+}

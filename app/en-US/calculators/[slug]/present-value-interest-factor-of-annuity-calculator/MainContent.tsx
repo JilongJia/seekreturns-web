@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
 import {
@@ -16,17 +17,16 @@ import { H2 } from "@/app/components/en-US/content/page/main_content/article/H2"
 import { P } from "@/app/components/en-US/content/page/main_content/article/P";
 import { Section } from "@/app/components/en-US/content/page/main_content/article/Section";
 import { Calculator } from "./components/Calculator";
+import styles from "./MainContent.module.css";
 
-export function MainContent({ pathname, className = "" }: MainContentProps) {
+export function MainContent({ pathname, className }: MainContentProps) {
   return (
-    <Main
-      className={`${className} md:grid md:grid-cols-[2fr_3fr] md:gap-x-16 md:gap-y-5`}
-    >
-      <Header className="col-start-2 mb-5 md:mb-0">
+    <Main className={clsx(styles.main, className)}>
+      <Header className={styles.header}>
         <H1>Present Value Interest Factor of Annuity (PVIFA) Calculator</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className="row-span-2 row-start-1" />
+      <Calculator className={styles.calculator} />
       <Article>
         <P>
           Understanding the Present Value Interest Factor of Annuity (PVIFA) is

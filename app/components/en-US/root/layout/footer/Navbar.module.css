@@ -28,13 +28,11 @@
 
 .link:hover {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
 
 .link:focus-visible {
   outline-style: none;
   text-decoration: underline;
-  text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }

@@ -1,8 +1,9 @@
 import "@/app/globals.css";
 import { type Metadata } from "next";
-
 import { Inter, Noto_Sans_SC } from "next/font/google";
-import styles from "./RootLayout.module.css";
+
+import styles from "./layout.module.css";
+
 type RootLayoutProps = {
   header: React.ReactNode;
   children: React.ReactNode;

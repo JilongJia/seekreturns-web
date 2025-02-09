@@ -163,7 +163,7 @@ export function LanguageSelector({
       <menu
         id="language-menu"
         aria-labelledby="language-selector-button"
-        className={clsx(styles.dropdown, { [styles.expanded]: isExpanded })}
+        className={clsx(styles.menu, { [styles.expanded]: isExpanded })}
       >
         {availableLanguages.map(({ label, path, fontClassName }) => {
           const isCurrentLanguage = label === "English";

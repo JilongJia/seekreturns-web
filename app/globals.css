@@ -9,10 +9,19 @@
 ol,
 ul,
 menu,
-button {
+button,
+input,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
   padding: 0;
 }
+
 html,
 :host {
   scroll-behavior: smooth;
@@ -190,6 +199,8 @@ input:where([type="button"], [type="reset"], [type="submit"]),
   --outline-color: #d4d4d4;
   --outline-hover-color: #2563eb;
   --outline-focus-color: #2563eb;
+  --article-heading-color: #262626;
+  --article-text-color: #262626;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -203,7 +214,6 @@ input:where([type="button"], [type="reset"], [type="submit"]),
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 0.5rem;
-  align-items: center;
   padding-right: 2rem;
   padding-left: 2rem;
 }

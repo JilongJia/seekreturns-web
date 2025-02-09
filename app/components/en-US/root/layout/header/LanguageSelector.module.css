@@ -42,6 +42,7 @@
   background-color: #fafafa;
   padding: 0.75rem 0;
   width: 9rem;
+  list-style: none;
 }
 
 .menu.expanded {
@@ -64,18 +65,18 @@
   padding: 0.625rem 1.5rem;
 }
 
-.menuItem:hover {
+.menuItemLink:hover {
   transition-duration: 200ms;
   background-color: #dbeafe;
 }
 
-.menuItem:focus-visible {
+.menuItemLink:focus-visible {
   transition-duration: 200ms;
   outline-style: none;
   background-color: #dbeafe;
 }
 
-.menuItem::before {
+.menuItemLink::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -84,12 +85,12 @@
   content: "";
 }
 
-.menuItem:hover::before {
+.menuItemLink:hover::before {
   transition-duration: 200ms;
   border-left: 3px solid var(--outline-hover-color);
 }
 
-.menuItem:focus-visible::before {
+.menuItemLink:focus-visible::before {
   transition-duration: 200ms;
   border-left: 3px solid var(--outline-focus-color);
 }

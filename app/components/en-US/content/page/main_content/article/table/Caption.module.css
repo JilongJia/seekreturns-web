@@ -1,0 +1,13 @@
+.caption {
+  color: #737373;
+}
+
+.caption.top {
+  margin-bottom: 0.1875rem;
+  caption-side: top;
+}
+
+.caption.bottom {
+  margin-top: 0.1875rem;
+  caption-side: bottom;
+}

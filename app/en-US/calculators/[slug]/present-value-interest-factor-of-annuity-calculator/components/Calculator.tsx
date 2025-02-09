@@ -7,14 +7,14 @@ import { Form } from "@/app/components/en-US/content/page/main_content/calculato
 import { InputCard } from "@/app/components/en-US/content/page/main_content/calculator/InputCard";
 import { OutputCard } from "@/app/components/en-US/content/page/main_content/calculator/OutputCard";
 import { Section } from "@/app/components/en-US/content/page/main_content/calculator/Section";
-import { VisuallyHiddenH2 } from "@/app/components/en-US/content/page/main_content/calculator/VisuallyHiddenH2";
+import { ScreenReaderH2 } from "@/app/components/en-US/content/page/main_content/calculator/ScreenReaderH2";
+import styles from "./Calculator.module.css";
 
 type CalculatorProps = {
-  margin?: string;
   className?: string;
 };
 
-export function Calculator({ margin, className = "" }: CalculatorProps) {
+export function Calculator({ className }: CalculatorProps) {
   const [interestRateInput, setInterestRateInput] = useState("6.4");
   const [numberOfPeriodsInput, setNumberOfPeriodsInput] = useState("10");
 
@@ -57,10 +57,10 @@ export function Calculator({ margin, className = "" }: CalculatorProps) {
   }
 
   return (
-    <Section margin={margin} className={className}>
-      <VisuallyHiddenH2>PVIFA calculator</VisuallyHiddenH2>
+    <Section className={className}>
+      <ScreenReaderH2>PVIFA calculator</ScreenReaderH2>
       <Form>
-        <InputCard className="grid grid-cols-[1fr_auto] items-center gap-5">
+        <InputCard className={styles.inputCard}>
           <InputCard.Label htmlFor="interest-rate-number-input">
             Interest Rate:
           </InputCard.Label>
@@ -70,13 +70,13 @@ export function Calculator({ margin, className = "" }: CalculatorProps) {
             min="0"
             max="50"
             step="0.01"
-            className="w-32 justify-self-end sm:w-36 md:w-32 xl:w-36"
+            className={styles.numberInput}
             unit="percent"
             onChange={(e) => setInterestRateInput(e.target.value)}
           />
-          <InputCard.VisuallyHiddenLabel htmlFor="interest-rate-range-input">
+          <InputCard.ScreenReaderLabel htmlFor="interest-rate-range-input">
             Interest Rate:
-          </InputCard.VisuallyHiddenLabel>
+          </InputCard.ScreenReaderLabel>
           <InputCard.RangeInput
             id="interest-rate-range-input"
             value={interestRateInput}
@@ -84,7 +84,7 @@ export function Calculator({ margin, className = "" }: CalculatorProps) {
             max="50"
             step="0.01"
             unit="percent"
-            className="col-span-full mb-1"
+            className={styles.rangeInput}
             onChange={(e) => setInterestRateInput(e.target.value)}
           />
 
@@ -98,12 +98,12 @@ export function Calculator({ margin, className = "" }: CalculatorProps) {
             max="50"
             step="1"
             unit="year"
-            className="w-32 justify-self-end sm:w-36 md:w-32 xl:w-36"
+            className={styles.numberInput}
             onChange={(e) => setNumberOfPeriodsInput(e.target.value)}
           />
-          <InputCard.VisuallyHiddenLabel htmlFor="number-of-periods-range-input">
+          <InputCard.ScreenReaderLabel htmlFor="number-of-periods-range-input">
             Number of Periods:
-          </InputCard.VisuallyHiddenLabel>
+          </InputCard.ScreenReaderLabel>
           <InputCard.RangeInput
             id="number-of-periods-range-input"
             value={numberOfPeriodsInput}
@@ -111,7 +111,7 @@ export function Calculator({ margin, className = "" }: CalculatorProps) {
             max="50"
             step="1"
             unit="year"
-            className="col-span-full"
+            className={styles.rangeInput}
             onChange={(e) => setNumberOfPeriodsInput(e.target.value)}
           />
         </InputCard>

@@ -1,0 +1,27 @@
+.page {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.mainContent {
+  grid-column: 1 / -1;
+}
+
+.tableOfContentsSidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .page {
+    margin-top: 4rem;
+  }
+
+  .mainContent {
+    grid-column: 1 / 10;
+  }
+
+  .tableOfContentsSidebar {
+    display: block;
+    grid-column: 10 / 13;
+  }
+}

@@ -1,21 +1,21 @@
-import { prisma } from "./prisma";
+import postgres from "postgres";
 
-export async function getStaticParams(language: string, section: string) {
+const sql = postgres(process.env.DATABASE_URL!);
+
+type PagePath = { path: string };
+
+export async function getStaticParams(
+  language: string,
+  section: string,
+): Promise<{ slug: string }[]> {
   const prefix = `/${language}/${section}/`;
 
-  const pages = await prisma.page.findMany({
-    where: {
-      path: {
-        startsWith: prefix,
-      },
-    },
-    select: {
-      path: true,
-    },
-  });
+  const pages = await sql<PagePath[]>`
+    SELECT "path" FROM "Page" WHERE "path" LIKE ${prefix || ""} || '%'
+  `;
 
   return pages.map((page) => {
-    const slug = page.path.replace(prefix, "").replace(/\/$/, ""); // Remove prefix and trailing slash
+    const slug = page.path.replace(prefix, "").replace(/\/$/, "");
     return { slug };
   });
 }

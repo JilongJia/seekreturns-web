@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
-import { getStaticParams } from "@/app/lib/prisma/getStaticParams";
-import { paddingClassName } from "@/app/styles/padding";
-import { gridColsClassName, gridGapXClassName } from "@/app/styles/grid";
+import clsx from "clsx";
+
+import { getStaticParams } from "@/app/lib/db/getStaticParams";
 
 import { TableOfContentsSidebar } from "@/app/components/en-US/content/page/TableOfContentsSidebar";
 import { type MainContentProps } from "@/app/components/en-US/content/page/main_content/Main";
+import styles from "./page.module.css";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -17,14 +18,12 @@ async function Page({ params }: PageProps) {
   );
 
   return (
-    <div
-      className={`${paddingClassName} ${gridColsClassName} ${gridGapXClassName} mb-6 mt-10 lg:mt-16`}
-    >
+    <div className={clsx(styles.page, "layoutContainer")}>
       <MainContent
         pathname={`/en-US/calculators/${slug}`}
-        className="col-span-full lg:col-span-9"
+        className={styles.mainContent}
       />
-      <TableOfContentsSidebar className="hidden lg:col-span-3 lg:block" />
+      <TableOfContentsSidebar className={styles.tableOfContentsSidebar} />
     </div>
   );
 }

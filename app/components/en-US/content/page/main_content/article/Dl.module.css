@@ -1,0 +1,8 @@
+.dl {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.25rem;
+  color: #404040;
+  font-size: 15px;
+  line-height: 26px;
+}

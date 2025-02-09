@@ -1,0 +1,16 @@
+.form {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .form {
+    position: sticky;
+    top: 2.5rem;
+    margin: -0.5rem -1.5rem;
+    padding: 0.5rem 1.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-color: #e5e5e5 #0000;
+    scrollbar-width: thin;
+  }
+}

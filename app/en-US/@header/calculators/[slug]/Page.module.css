@@ -1,13 +1,14 @@
 .header {
   position: relative;
+  align-items: center;
 }
 
 .mobileMenu {
-  grid-column: span 1;
+  grid-column: 1 / 2;
 }
 
 .logo {
-  grid-column: span 2;
+  grid-column: 2 / 4;
   justify-self: center;
 }
 
@@ -17,7 +18,7 @@
 }
 
 .mobileSearchbox {
-  grid-column: span 1;
+  grid-column: 4 / 5;
   justify-self: end;
 }
 
@@ -33,13 +34,15 @@
 
 @media (min-width: 640px) {
   .mobileMenu {
-    grid-column: span 2;
+    grid-column: 1 / 3;
   }
+
   .logo {
-    grid-column: span 4;
+    grid-column: 3 / 7;
   }
+
   .mobileSearchbox {
-    grid-column: span 2;
+    grid-column: 7 / 9;
   }
 }
 
@@ -47,9 +50,10 @@
   .mobileSearchbox {
     display: none;
   }
+
   .desktopSearchbox {
     display: block;
-    grid-column: span 2;
+    grid-column: 7 / 9;
   }
 }
 
@@ -57,18 +61,23 @@
   .mobileMenu {
     display: none;
   }
+
   .logo {
+    grid-column: 1 / 5;
     justify-self: start;
   }
+
   .desktopMenu {
     display: block;
-    grid-column: span 3;
+    grid-column: 5 / 8;
   }
+
   .desktopSearchbox {
-    grid-column: span 3;
+    grid-column: 8 / 11;
   }
+
   .languageSelector {
     display: block;
-    grid-column: span 2;
+    grid-column: 11 / 13;
   }
 }
