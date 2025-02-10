@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import { ErrorMessageCard } from "@/app/components/en-US/content/page/main_content/calculator/ErrorMessageCard";
-import { Form } from "@/app/components/en-US/content/page/main_content/calculator/Form";
-import { InputCard } from "@/app/components/en-US/content/page/main_content/calculator/InputCard";
-import { OutputCard } from "@/app/components/en-US/content/page/main_content/calculator/OutputCard";
-import { Section } from "@/app/components/en-US/content/page/main_content/calculator/Section";
-import { ScreenReaderH2 } from "@/app/components/en-US/content/page/main_content/calculator/ScreenReaderH2";
+import { ErrorMessageCard } from "@/app/components/en-US/content/page/main/calculator/ErrorMessageCard";
+import { Form } from "@/app/components/en-US/content/page/main/calculator/Form";
+import { InputCard } from "@/app/components/en-US/content/page/main/calculator/InputCard";
+import { OutputCard } from "@/app/components/en-US/content/page/main/calculator/OutputCard";
+import { Section } from "@/app/components/en-US/content/page/main/calculator/Section";
+import { ScreenReaderH2 } from "@/app/components/en-US/content/page/main/calculator/ScreenReaderH2";
 import styles from "./Calculator.module.css";
 
 type CalculatorProps = {

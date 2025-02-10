@@ -1,9 +1,14 @@
-.page {
-  margin-top: 2.5rem;
+.header {
+  position: relative;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.contentContainer {
   margin-bottom: 1.5rem;
 }
 
-.mainContent {
+.main {
   grid-column: 1 / -1;
 }
 
@@ -11,12 +16,24 @@
   display: none;
 }
 
+.footer {
+  row-gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .footer {
+    row-gap: 0.5rem;
+  }
+}
+
 @media (min-width: 1024px) {
-  .page {
+  .contentContainer {
     margin-top: 4rem;
   }
 
-  .mainContent {
+  .main {
     grid-column: 1 / 10;
   }
 

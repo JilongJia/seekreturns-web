@@ -1,27 +1,24 @@
 import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
-import {
-  Main,
-  type MainContentProps,
-} from "@/app/components/en-US/content/page/main_content/Main";
-import { Header } from "@/app/components/en-US/content/page/main_content/header/Header";
-import { H1 } from "@/app/components/en-US/content/page/main_content/header/H1";
-import { ModifiedDate } from "@/app/components/en-US/content/page/main_content/header/ModifiedDate";
-import { Article } from "@/app/components/en-US/content/page/main_content/article/Article";
+import { type MainProps } from "@/app/components/en-US/content/page/main";
+import { Header } from "@/app/components/en-US/content/page/main/header/Header";
+import { H1 } from "@/app/components/en-US/content/page/main/header/H1";
+import { ModifiedDate } from "@/app/components/en-US/content/page/main/header/ModifiedDate";
+import { Article } from "@/app/components/en-US/content/page/main/article/Article";
 import {
   InlineMath,
   BlockMath,
-} from "@/app/components/en-US/content/page/main_content/article/Math";
-import { H2 } from "@/app/components/en-US/content/page/main_content/article/H2";
-import { P } from "@/app/components/en-US/content/page/main_content/article/P";
-import { Section } from "@/app/components/en-US/content/page/main_content/article/Section";
+} from "@/app/components/en-US/content/page/main/article/Math";
+import { H2 } from "@/app/components/en-US/content/page/main/article/H2";
+import { P } from "@/app/components/en-US/content/page/main/article/P";
+import { Section } from "@/app/components/en-US/content/page/main/article/Section";
 import { Calculator } from "./components/Calculator";
-import styles from "./MainContent.module.css";
+import styles from "./Main.module.css";
 
-export function MainContent({ pathname, className }: MainContentProps) {
+export function Main({ pathname, className }: MainProps) {
   return (
-    <Main className={clsx(styles.main, className)}>
+    <main className={clsx(styles.main, className)}>
       <Header className={styles.header}>
         <H1>Present Value Interest Factor of Annuity (PVIFA) Calculator</H1>
         <ModifiedDate pathname={pathname} />
@@ -120,6 +117,6 @@ export function MainContent({ pathname, className }: MainContentProps) {
           </P>
         </Section>
       </Article>
-    </Main>
+    </main>
   );
 }
