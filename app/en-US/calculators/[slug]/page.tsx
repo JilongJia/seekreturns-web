@@ -13,17 +13,21 @@ type PageProps = {
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
+  const { tableOfContentsData } = await import(`./${slug}/tableOfContents`);
   const MainContent = dynamic<MainContentProps>(() =>
     import(`./${slug}/MainContent`).then((mod) => mod.MainContent),
   );
 
   return (
     <div className={clsx(styles.page, "layoutContainer")}>
+      <TableOfContentsSidebar
+        tableOfContentsData={tableOfContentsData}
+        className={styles.tableOfContentsSidebar}
+      />
       <MainContent
         pathname={`/en-US/calculators/${slug}`}
         className={styles.mainContent}
       />
-      <TableOfContentsSidebar className={styles.tableOfContentsSidebar} />
     </div>
   );
 }

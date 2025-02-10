@@ -126,10 +126,10 @@ export function LanguageSelector({
 
       if (path.startsWith("/en-US")) {
         label = "English";
-        fontClassName = "font-inter";
+        fontClassName = styles.english;
       } else if (path.startsWith("/zh-CN")) {
         label = "中文 - 简体";
-        fontClassName = "font-noto-sans-sc";
+        fontClassName = styles.simplifiedChinese;
       } else if (path.startsWith("/zh-TW")) {
         label = "中文 - 繁體";
         fontClassName = "";

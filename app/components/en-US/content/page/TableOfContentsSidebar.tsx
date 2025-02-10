@@ -1,16 +1,24 @@
-import { TableOfContents } from "./table_of_contents_sidebar/TableOfContents";
+import {
+  TableOfContents,
+  type TableOfContentsData,
+} from "./table_of_contents_sidebar/TableOfContents";
 import styles from "./TableOfContentsSidebar.module.css";
 
 type TableOfContentsSidebarProps = {
+  tableOfContentsData: TableOfContentsData;
   className?: string;
 };
 
 export function TableOfContentsSidebar({
+  tableOfContentsData,
   className,
 }: TableOfContentsSidebarProps) {
   return (
     <aside className={className}>
-      <TableOfContents className={styles.tableOfContents} />
+      <TableOfContents
+        data={tableOfContentsData}
+        className={styles.tableOfContents}
+      />
     </aside>
   );
 }

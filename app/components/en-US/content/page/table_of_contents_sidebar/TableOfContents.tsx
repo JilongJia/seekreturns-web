@@ -6,55 +6,35 @@ import clsx from "clsx";
 
 import styles from "./TableOfContents.module.css";
 
-type Heading = {
+type SubHeadingsData = { id: string; label: string }[];
+
+export type TableOfContentsData = {
   id: string;
   label: string;
-  subHeadings?: Heading[];
-};
+  subHeadingsData?: SubHeadingsData;
+}[];
 
 type TableOfContentsProps = {
+  data: TableOfContentsData;
   className?: string;
 };
 
-function structureHeadings(headingElements: HTMLHeadingElement[]): Heading[] {
-  const structuredHeadings: Heading[] = [];
-  headingElements.forEach((headingElement) => {
-    if (headingElement.tagName === "H2") {
-      structuredHeadings.push({
-        id: headingElement.id,
-        label: headingElement.innerText,
-      });
-    } else if (headingElement.tagName === "H3") {
-      const lastH2 = structuredHeadings[structuredHeadings.length - 1];
-      if (lastH2) {
-        if (!lastH2.subHeadings) lastH2.subHeadings = [];
-        lastH2.subHeadings.push({
-          id: headingElement.id,
-          label: headingElement.innerText,
-        });
-      }
-    }
-  });
-  return structuredHeadings;
-}
-
-export function TableOfContents({ className }: TableOfContentsProps) {
-  const [structuredHeadings, setStructuredHeadings] = useState<Heading[]>([]);
+export function TableOfContents({ data, className }: TableOfContentsProps) {
   const [currentHeadingId, setCurrentHeadingId] = useState<string | null>(null);
-
   const allHeadingElementsRef = useRef<HTMLHeadingElement[]>([]);
   const headingEntryRef = useRef<Record<string, IntersectionObserverEntry>>({});
 
   useEffect(() => {
-    const mainArticle = document.querySelector("main article");
-    if (!mainArticle) return;
-    allHeadingElementsRef.current = Array.from(
-      mainArticle.querySelectorAll("h2, h3"),
-    ).filter(
-      (headingElement) => !headingElement.closest(`.${styles.toc}`),
-    ) as HTMLHeadingElement[];
-    setStructuredHeadings(structureHeadings(allHeadingElementsRef.current));
-  }, []);
+    allHeadingElementsRef.current = data.flatMap((h2) => {
+      const h2Element = document.getElementById(h2.id) as HTMLHeadingElement;
+      const h3Elements =
+        h2.subHeadingsData?.map(
+          (h3) => document.getElementById(h3.id) as HTMLHeadingElement,
+        ) || [];
+
+      return [h2Element, ...h3Elements].filter(Boolean);
+    });
+  }, [data]);
 
   useEffect(() => {
     const getHeadingElementIndex = (id: string) => {
@@ -68,11 +48,9 @@ export function TableOfContents({ className }: TableOfContentsProps) {
         headingEntryRef.current[entry.target.id] = entry;
       });
 
-      const visibleEntries: IntersectionObserverEntry[] = [];
-      for (const id in headingEntryRef.current) {
-        if (headingEntryRef.current[id].isIntersecting)
-          visibleEntries.push(headingEntryRef.current[id]);
-      }
+      const visibleEntries = Object.values(headingEntryRef.current).filter(
+        (entry) => entry.isIntersecting,
+      );
 
       if (visibleEntries.length > 0) {
         visibleEntries.sort(
@@ -121,33 +99,31 @@ export function TableOfContents({ className }: TableOfContentsProps) {
         On this page
       </h2>
       <menu className={styles.primaryMenu}>
-        {structuredHeadings.map((heading) => (
-          <li key={heading.id}>
+        {data.map((h2) => (
+          <li key={h2.id}>
             <Link
-              href={`#${heading.id}`}
-              aria-current={
-                heading.id === currentHeadingId ? "true" : undefined
-              }
+              href={`#${h2.id}`}
+              aria-current={h2.id === currentHeadingId ? "true" : undefined}
               className={clsx(styles.primaryMenuItemLink, {
-                [styles.current]: heading.id === currentHeadingId,
+                [styles.current]: h2.id === currentHeadingId,
               })}
             >
-              {heading.label}
+              {h2.label}
             </Link>
-            {heading.subHeadings && (
+            {h2.subHeadingsData && (
               <menu className={styles.secondaryMenu}>
-                {heading.subHeadings.map((subHeading) => (
-                  <li key={subHeading.id}>
+                {h2.subHeadingsData.map((h3) => (
+                  <li key={h3.id}>
                     <Link
-                      href={`#${subHeading.id}`}
+                      href={`#${h3.id}`}
                       aria-current={
-                        subHeading.id === currentHeadingId ? "true" : undefined
+                        h3.id === currentHeadingId ? "true" : undefined
                       }
                       className={clsx(styles.secondaryMenuItemLink, {
-                        [styles.current]: subHeading.id === currentHeadingId,
+                        [styles.current]: h3.id === currentHeadingId,
                       })}
                     >
-                      {subHeading.label}
+                      {h3.label}
                     </Link>
                   </li>
                 ))}

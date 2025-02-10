@@ -52,6 +52,14 @@
   transition-duration: 200ms;
 }
 
+.english {
+  font-family: var(--font-inter);
+}
+
+.simplifiedChinese {
+  font-family: var(--font-noto-sans-sc);
+}
+
 .menuItemText {
   display: block;
   background-color: #e5e5e5;

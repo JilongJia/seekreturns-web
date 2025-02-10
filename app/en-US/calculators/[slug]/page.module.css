@@ -23,5 +23,6 @@
   .tableOfContentsSidebar {
     display: block;
     grid-column: 10 / 13;
+    order: 1;
   }
 }
