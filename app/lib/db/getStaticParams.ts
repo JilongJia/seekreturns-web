@@ -1,21 +1,22 @@
-import postgres from "postgres";
-
-const sql = postgres(process.env.DATABASE_URL!);
-
-type PagePath = { path: string };
+import { adminDb } from "./firebaseAdmin";
 
 export async function getStaticParams(
   language: string,
   section: string,
 ): Promise<{ slug: string }[]> {
   const prefix = `/${language}/${section}/`;
+  const pagesRef = adminDb.collection("pages");
 
-  const pages = await sql<PagePath[]>`
-    SELECT "path" FROM "Page" WHERE "path" LIKE ${prefix || ""} || '%'
-  `;
+  const snapshot = await pagesRef
+    .where("path", ">=", prefix)
+    .where("path", "<=", prefix + "\uf8ff")
+    .get();
 
-  return pages.map((page) => {
-    const slug = page.path.replace(prefix, "").replace(/\/$/, "");
-    return { slug };
+  return snapshot.docs.flatMap((doc) => {
+    const path = doc.data().path;
+    if (!path) return [];
+
+    const slug = path.replace(prefix, "").replace(/\/$/, "");
+    return [{ slug }];
   });
 }

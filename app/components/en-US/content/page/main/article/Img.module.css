@@ -2,7 +2,7 @@
   border-radius: 0.25rem;
 }
 
-.floatLeft {
+.img.floatLeft {
   float: left;
   margin-top: 0.75rem;
   margin-right: 1rem;
@@ -10,7 +10,7 @@
   width: 50%;
 }
 
-.floatRight {
+.img.floatRight {
   float: right;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -18,7 +18,7 @@
   width: 50%;
 }
 
-.noFloat {
+.img.noFloat {
   margin-top: 1.5rem;
   margin-right: auto;
   margin-bottom: 1.5rem;

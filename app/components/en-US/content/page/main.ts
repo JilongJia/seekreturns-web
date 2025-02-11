@@ -1,4 +1,1 @@
-export type MainProps = {
-  pathname: string;
-  className?: string;
-};
+export type MainProps = { pathname: string; className?: string };

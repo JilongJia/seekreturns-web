@@ -14,10 +14,7 @@ export type TableOfContentsData = {
   subHeadingsData?: SubHeadingsData;
 }[];
 
-type TableOfContentsProps = {
-  data: TableOfContentsData;
-  className?: string;
-};
+type TableOfContentsProps = { data: TableOfContentsData; className?: string };
 
 export function TableOfContents({ data, className }: TableOfContentsProps) {
   const [currentHeadingId, setCurrentHeadingId] = useState<string | null>(null);

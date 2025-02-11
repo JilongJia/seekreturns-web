@@ -4,10 +4,7 @@ import { primaryMenuData, type PrimaryMenuData } from "@/app/data/en-US/menu";
 import { PrimaryMenu } from "./desktop_menu/PrimaryMenu";
 import styles from "./DesktopMenu.module.css";
 
-type DesktopMenuProps = {
-  data?: PrimaryMenuData;
-  className?: string;
-};
+type DesktopMenuProps = { data?: PrimaryMenuData; className?: string };
 
 export function DesktopMenu({
   data = primaryMenuData,

@@ -1,23 +1,12 @@
 import styles from "./SocialIcons.module.css";
 
-type FacebookIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type FacebookIconProps = { ariaHidden?: boolean; className?: string };
 
-type XIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type XIconProps = { ariaHidden?: boolean; className?: string };
 
-type EnvelopeIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type EnvelopeIconProps = { ariaHidden?: boolean; className?: string };
 
-type SocialIconsProps = {
-  className?: string;
-};
+type SocialIconsProps = { className?: string };
 
 function FacebookIcon({ ariaHidden = true, className }: FacebookIconProps) {
   return (

@@ -1,7 +1,3 @@
-.form {
-  position: relative;
-}
-
 @media (min-width: 768px) {
   .form {
     position: sticky;

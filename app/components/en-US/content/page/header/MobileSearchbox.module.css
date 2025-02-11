@@ -17,6 +17,23 @@
   outline-width: 2px;
 }
 
+.screenReaderText {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.openDialogMagnifyingGlassIcon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -60,14 +77,14 @@
   outline-width: 2px;
 }
 
-.form {
-  position: relative;
-  margin-top: 2rem;
-}
-
 .xMarkIcon {
   width: 1.75rem;
   height: 1.75rem;
+}
+
+.form {
+  position: relative;
+  margin-top: 2rem;
 }
 
 .input {
@@ -110,23 +127,6 @@
 .submitButton:focus-visible {
   outline-color: var(--outline-focus-color);
   outline-width: 2px;
-}
-
-.screenReaderText {
-  position: absolute;
-  margin: -1px;
-  padding: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  white-space: nowrap;
-}
-
-.openDialogMagnifyingGlassIcon {
-  width: 1.75rem;
-  height: 1.75rem;
 }
 
 .searchMagnifyingGlassIcon {

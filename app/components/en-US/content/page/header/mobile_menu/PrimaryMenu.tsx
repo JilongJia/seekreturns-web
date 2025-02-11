@@ -28,10 +28,7 @@ export function PrimaryMenu({
       {data.map((primaryMenuItemData) => {
         const { state, action } = menuStateAndAction[
           primaryMenuItemData.id
-        ] ?? {
-          state: false,
-          action: { type: "" },
-        };
+        ] ?? { state: false, action: { type: "" } };
 
         return (
           <React.Fragment key={primaryMenuItemData.id}>

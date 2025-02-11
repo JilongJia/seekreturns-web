@@ -1,9 +1,8 @@
 import Link from "next/link";
+
 import styles from "./Navbar.module.css";
 
-type NavbarProps = {
-  className?: string;
-};
+type NavbarProps = { className?: string };
 
 export function Navbar({ className }: NavbarProps) {
   return (

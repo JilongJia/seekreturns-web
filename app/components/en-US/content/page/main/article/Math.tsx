@@ -3,17 +3,9 @@ import clsx from "clsx";
 
 import styles from "./Math.module.css";
 
-type InlineMathProps = {
-  math: string;
-  ariaLabel: string;
-  className?: string;
-};
+type InlineMathProps = { math: string; ariaLabel: string; className?: string };
 
-type BlockMathProps = {
-  math: string;
-  ariaLabel: string;
-  className?: string;
-};
+type BlockMathProps = { math: string; ariaLabel: string; className?: string };
 
 export function InlineMath({ math, ariaLabel, className }: InlineMathProps) {
   const html = katex.renderToString(math, { displayMode: false });

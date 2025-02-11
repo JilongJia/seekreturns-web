@@ -4,14 +4,9 @@ import { useRef } from "react";
 
 import styles from "./MobileSearchbox.module.css";
 
-type MobileSearchboxProps = {
-  className?: string;
-};
+type MobileSearchboxProps = { className?: string };
 
-type IconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type IconProps = { ariaHidden?: boolean; className?: string };
 
 function MagnifyingGlassIcon({ ariaHidden = true, className }: IconProps) {
   return (

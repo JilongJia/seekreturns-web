@@ -20,6 +20,36 @@
   outline-width: 2px;
 }
 
+.input.year {
+  padding-right: 3.4375rem;
+  padding-left: 1rem;
+}
+
+.input.month {
+  padding-right: 4.125rem;
+  padding-left: 1rem;
+}
+
+.input.day {
+  padding-right: 3.25rem;
+  padding-left: 1rem;
+}
+
+.input.percent {
+  padding-right: 2rem;
+  padding-left: 1rem;
+}
+
+.input.dollar {
+  padding-right: 0.75rem;
+  padding-left: 1.625rem;
+}
+
+.input.default {
+  padding-right: 0.75rem;
+  padding-left: 1rem;
+}
+
 .unitLabel {
   position: absolute;
   pointer-events: none;
@@ -33,34 +63,4 @@
 
 .unitLabel.right {
   right: 0.625rem;
-}
-
-.inputYear {
-  padding-right: 3.4375rem;
-  padding-left: 1rem;
-}
-
-.inputMonth {
-  padding-right: 4.125rem;
-  padding-left: 1rem;
-}
-
-.inputDay {
-  padding-right: 3.25rem;
-  padding-left: 1rem;
-}
-
-.inputPercent {
-  padding-right: 2rem;
-  padding-left: 1rem;
-}
-
-.inputDollar {
-  padding-right: 0.75rem;
-  padding-left: 1.625rem;
-}
-
-.inputDefault {
-  padding-right: 0.75rem;
-  padding-left: 1rem;
 }

@@ -8,20 +8,6 @@
   list-style: none;
 }
 
-@media (min-width: 640px) {
-  .menu {
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 0.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .menu {
-    gap: 1rem;
-  }
-}
-
 .link {
   transition-duration: 100ms;
 }
@@ -35,4 +21,18 @@
   outline-style: none;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .menu {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .menu {
+    gap: 1rem;
+  }
 }

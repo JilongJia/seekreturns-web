@@ -6,20 +6,11 @@ import clsx from "clsx";
 
 import styles from "./LanguageSelector.module.css";
 
-type LanguageIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type LanguageIconProps = { ariaHidden?: boolean; className?: string };
 
-type ArrowDropUpIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type ArrowDropUpIconProps = { ariaHidden?: boolean; className?: string };
 
-type ArrowDropDownIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type ArrowDropDownIconProps = { ariaHidden?: boolean; className?: string };
 
 type LanguageSelectorProps = {
   hreflangAlternates: { path: string }[];

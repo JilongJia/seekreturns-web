@@ -14,6 +14,7 @@ export function ImageFigure({ children, float, className }: ImageFigureProps) {
   return (
     <figure
       className={clsx(
+        styles.imageFigure,
         {
           [styles.floatLeft]: float === "left",
           [styles.floatRight]: float === "right",

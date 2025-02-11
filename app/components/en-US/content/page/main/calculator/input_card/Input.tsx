@@ -39,12 +39,12 @@ export function NumberInput({
         className={clsx(
           styles.input,
           {
-            [styles.inputYear]: unit === "year",
-            [styles.inputMonth]: unit === "month",
-            [styles.inputDay]: unit === "day",
-            [styles.inputPercent]: unit === "percent",
-            [styles.inputDollar]: unit === "dollar",
-            [styles.inputDefault]: !unit,
+            [styles.year]: unit === "year",
+            [styles.month]: unit === "month",
+            [styles.day]: unit === "day",
+            [styles.percent]: unit === "percent",
+            [styles.dollar]: unit === "dollar",
+            [styles.default]: !unit,
           },
           className,
         )}

@@ -4,16 +4,9 @@ import { Inter, Noto_Sans_SC } from "next/font/google";
 
 import styles from "./layout.module.css";
 
-type RootLayoutProps = {
-  header: React.ReactNode;
-  children: React.ReactNode;
-  footer: React.ReactNode;
-};
+type RootLayoutProps = { children: React.ReactNode };
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const noto_sans_sc = Noto_Sans_SC({
   subsets: ["latin"],

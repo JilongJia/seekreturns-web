@@ -1,22 +1,22 @@
-.menuItemLink {
+.link {
   display: block;
   position: relative;
   transition-duration: 100ms;
   padding: 0.75rem 2rem;
 }
 
-.menuItemLink:hover {
+.link:hover {
   transition-duration: 200ms;
   background-color: #dbeafe;
 }
 
-.menuItemLink:focus-visible {
+.link:focus-visible {
   transition-duration: 200ms;
   outline-style: none;
   background-color: #dbeafe;
 }
 
-.menuItemLink::before {
+.link::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -25,12 +25,12 @@
   content: "";
 }
 
-.menuItemLink:hover::before {
+.link:hover::before {
   transition-duration: 200ms;
   border-left: 3px solid #2563eb;
 }
 
-.menuItemLink:focus-visible::before {
+.link:focus-visible::before {
   transition-duration: 200ms;
   border-left: 3px solid #2563eb;
 }

@@ -25,6 +25,16 @@
   outline-width: 2px;
 }
 
+.languageIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.chevronIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
 .menu {
   position: absolute;
   top: 100%;
@@ -101,14 +111,4 @@
 .menuItemLink:focus-visible::before {
   transition-duration: 200ms;
   border-left: 3px solid var(--outline-focus-color);
-}
-
-.languageIcon {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.chevronIcon {
-  width: 1rem;
-  height: 1rem;
 }

@@ -1,17 +1,23 @@
-import postgres from "postgres";
-
-const sql = postgres(process.env.DATABASE_URL!);
+import { adminDb } from "./firebaseAdmin";
 
 type HreflangAlternate = { path: string };
 
 export async function getHreflangAlternates(
   path: string,
 ): Promise<HreflangAlternate[]> {
-  const results = await sql<{ path: string }[]>`
-    SELECT "path" FROM "Page" WHERE "hreflangGroupId" = (
-      SELECT "hreflangGroupId" FROM "Page" WHERE "path" = ${path} LIMIT 1
-    )
-  `;
+  const pagesRef = adminDb.collection("pages");
 
-  return results;
+  const pageSnapshot = await pagesRef.where("path", "==", path).limit(1).get();
+
+  if (pageSnapshot.empty) return [];
+
+  const hreflangGroupId = pageSnapshot.docs[0].data().hreflangGroupId;
+
+  const hreflangAlternatesSnapshot = await pagesRef
+    .where("hreflangGroupId", "==", hreflangGroupId)
+    .get();
+
+  return hreflangAlternatesSnapshot.docs.map((doc) => ({
+    path: doc.data().path,
+  }));
 }

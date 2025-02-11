@@ -2,10 +2,7 @@ import clsx from "clsx";
 
 import styles from "./Section.module.css";
 
-type SectionProps = {
-  children: React.ReactNode;
-  className?: string;
-};
+type SectionProps = { children: React.ReactNode; className?: string };
 
 export function Section({ children, className }: SectionProps) {
   return (

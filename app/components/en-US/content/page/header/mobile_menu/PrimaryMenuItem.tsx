@@ -5,11 +5,7 @@ import { usePathname } from "next/navigation";
 
 import styles from "./PrimaryMenuItem.module.css";
 
-type PrimaryMenuItemProps = {
-  label: string;
-  href: string;
-  className?: string;
-};
+type PrimaryMenuItemProps = { label: string; href: string; className?: string };
 
 export function PrimaryMenuItem({
   label,
@@ -23,7 +19,7 @@ export function PrimaryMenuItem({
       <Link
         href={href}
         aria-current={pathname === href ? "page" : undefined}
-        className={styles.menuItemLink}
+        className={styles.link}
       >
         {label}
       </Link>

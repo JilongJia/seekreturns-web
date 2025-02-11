@@ -8,10 +8,7 @@ type LabelProps = {
   className?: string;
 };
 
-type ScreenReaderLabelProps = {
-  children: React.ReactNode;
-  htmlFor: string;
-};
+type ScreenReaderLabelProps = { children: React.ReactNode; htmlFor: string };
 
 export function Label({ children, htmlFor, className }: LabelProps) {
   return (

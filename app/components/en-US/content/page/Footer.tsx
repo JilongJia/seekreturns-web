@@ -4,9 +4,7 @@ import { Navbar } from "@/app/components/en-US/content/page/footer/Navbar";
 import { SocialIcons } from "@/app/components/en-US/content/page/footer/SocialIcons";
 import styles from "./Footer.module.css";
 
-type FooterProps = {
-  className?: string;
-};
+type FooterProps = { className?: string };
 
 export function Footer({ className }: FooterProps) {
   return (

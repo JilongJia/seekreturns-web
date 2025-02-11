@@ -1,4 +1,4 @@
-.floatLeft {
+.imageFigure.floatLeft {
   float: left;
   margin-top: 0.75rem;
   margin-right: 1rem;
@@ -6,7 +6,7 @@
   width: 50%;
 }
 
-.floatRight {
+.imageFigure.floatRight {
   float: right;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -14,7 +14,7 @@
   width: 50%;
 }
 
-.noFloat {
+.imageFigure.noFloat {
   margin-top: 1.5rem;
   margin-bottom: 1rem;
 }

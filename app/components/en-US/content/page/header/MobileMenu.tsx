@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 import { primaryMenuData, type PrimaryMenuData } from "@/app/data/en-US/menu";
-
 import { PrimaryMenu } from "./mobile_menu/PrimaryMenu";
 import styles from "./MobileMenu.module.css";
 
@@ -13,15 +12,9 @@ type State = Record<string, boolean>;
 
 type Action = Record<"type", string>;
 
-type IconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type IconProps = { ariaHidden?: boolean; className?: string };
 
-type MobileMenuProps = {
-  data?: PrimaryMenuData;
-  className?: string;
-};
+type MobileMenuProps = { data?: PrimaryMenuData; className?: string };
 
 const initialState = {
   mobileMenuOpen: false,
@@ -105,10 +98,7 @@ export function MobileMenu({
         state: knowledgeExpanded,
         action: { type: "toggle_knowledge" },
       },
-      tools: {
-        state: toolsExpanded,
-        action: { type: "toggle_tools" },
-      },
+      tools: { state: toolsExpanded, action: { type: "toggle_tools" } },
     };
 
   return (

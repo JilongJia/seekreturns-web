@@ -1,13 +1,13 @@
-import postgres from "postgres";
-
-const sql = postgres(process.env.DATABASE_URL!);
-
-type ModifiedDateResult = { modifiedDate: Date };
+import { adminDb } from "./firebaseAdmin";
 
 export async function getModifiedDate(path: string): Promise<Date | null> {
-  const result = await sql<ModifiedDateResult[]>`
-    SELECT "modifiedDate" FROM "Page" WHERE path = ${path} LIMIT 1
-  `;
+  const pagesRef = adminDb.collection("pages");
 
-  return result.length > 0 ? result[0].modifiedDate : null;
+  const snapshot = await pagesRef.where("path", "==", path).limit(1).get();
+
+  if (snapshot.empty) return null;
+
+  const modifiedDate = snapshot.docs[0].data().modifiedDate;
+
+  return modifiedDate ? modifiedDate.toDate() : null;
 }

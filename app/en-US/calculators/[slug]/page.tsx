@@ -9,9 +9,7 @@ import { MainProps } from "@/app/components/en-US/content/page/main";
 import { Footer } from "@/app/components/en-US/content/page/Footer";
 import styles from "./page.module.css";
 
-type PageProps = {
-  params: Promise<{ slug: string }>;
-};
+type PageProps = { params: Promise<{ slug: string }> };
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;

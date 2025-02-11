@@ -2,10 +2,7 @@ import clsx from "clsx";
 
 import styles from "./Figcaption.module.css";
 
-type FigcaptionProps = {
-  children: React.ReactNode;
-  className?: string;
-};
+type FigcaptionProps = { children: React.ReactNode; className?: string };
 
 export function Figcaption({ children, className }: FigcaptionProps) {
   return (

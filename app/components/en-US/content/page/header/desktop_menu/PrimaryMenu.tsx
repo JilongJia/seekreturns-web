@@ -4,10 +4,7 @@ import { type PrimaryMenuData } from "@/app/data/en-US/menu";
 import { Dropdown } from "./Dropdown";
 import { PrimaryMenuItem } from "./PrimaryMenuItem";
 
-type PrimaryMenuProps = {
-  data: PrimaryMenuData;
-  className?: string;
-};
+type PrimaryMenuProps = { data: PrimaryMenuData; className?: string };
 
 export function PrimaryMenu({ data, className }: PrimaryMenuProps) {
   return (

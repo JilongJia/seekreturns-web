@@ -8,12 +8,12 @@
   margin-bottom: 1.5rem;
 }
 
-.main {
-  grid-column: 1 / -1;
-}
-
 .tableOfContentsSidebar {
   display: none;
+}
+
+.main {
+  grid-column: 1 / -1;
 }
 
 .footer {
@@ -33,13 +33,13 @@
     margin-top: 4rem;
   }
 
-  .main {
-    grid-column: 1 / 10;
-  }
-
   .tableOfContentsSidebar {
     display: block;
     grid-column: 10 / 13;
     order: 1;
+  }
+
+  .main {
+    grid-column: 1 / 10;
   }
 }

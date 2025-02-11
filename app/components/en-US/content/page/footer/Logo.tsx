@@ -6,9 +6,7 @@ import styles from "./Logo.module.css";
 
 import logo from "@/public/canny-trading-logo.png";
 
-type LogoProps = {
-  className?: string;
-};
+type LogoProps = { className?: string };
 
 export function Logo({ className }: LogoProps) {
   return (

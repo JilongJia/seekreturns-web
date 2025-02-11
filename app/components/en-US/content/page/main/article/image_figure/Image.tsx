@@ -3,11 +3,7 @@ import clsx from "clsx";
 
 import styles from "./Image.module.css";
 
-type ImageProps = {
-  src: StaticImageData;
-  alt: string;
-  className?: string;
-};
+type ImageProps = { src: StaticImageData; alt: string; className?: string };
 
 export function Image({ src, alt, className }: ImageProps) {
   return (

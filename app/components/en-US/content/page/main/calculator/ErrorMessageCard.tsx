@@ -3,10 +3,7 @@ import clsx from "clsx";
 import { P } from "./error_message_card/P";
 import styles from "./ErrorMessageCard.module.css";
 
-type ErrorMessageCardProps = {
-  children: React.ReactNode;
-  className?: string;
-};
+type ErrorMessageCardProps = { children: React.ReactNode; className?: string };
 
 export function ErrorMessageCard({
   children,

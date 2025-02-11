@@ -23,7 +23,7 @@ export function SecondaryMenuItem({
       <Link
         href={href}
         aria-current={pathname === href ? "page" : undefined}
-        className={styles.menuItemLink}
+        className={styles.link}
       >
         {label}
       </Link>

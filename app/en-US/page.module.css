@@ -10,9 +10,9 @@
   grid-template-rows: 20px 1fr 20px;
   align-items: center;
   justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
   gap: 64px;
+  padding: 80px;
+  min-height: 100svh;
   font-family: var(--font-geist-sans);
 }
 
@@ -29,17 +29,17 @@
 
 .main {
   display: flex;
+  grid-row-start: 2;
   flex-direction: column;
   gap: 32px;
-  grid-row-start: 2;
 }
 
 .main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
   margin: 0;
+  padding-left: 0;
   font-size: 14px;
   line-height: 24px;
+  font-family: var(--font-geist-mono);
   letter-spacing: -0.01em;
   list-style-position: inside;
 }
@@ -49,11 +49,11 @@
 }
 
 .main code {
-  font-family: inherit;
+  border-radius: 4px;
   background: var(--gray-alpha-100);
   padding: 2px 4px;
-  border-radius: 4px;
   font-weight: 600;
+  font-family: inherit;
 }
 
 .ctas {
@@ -62,29 +62,29 @@
 }
 
 .ctas a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
   transition:
     background 0.2s,
     color 0.2s,
     border-color 0.2s;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
+  border: 1px solid transparent;
+  border-radius: 128px;
+  padding: 0 20px;
+  height: 48px;
+  font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  font-weight: 500;
 }
 
 a.primary {
+  gap: 8px;
   background: var(--foreground);
   color: var(--background);
-  gap: 8px;
 }
 
 a.secondary {
@@ -93,8 +93,8 @@ a.secondary {
 }
 
 .footer {
-  grid-row-start: 3;
   display: flex;
+  grid-row-start: 3;
   gap: 24px;
 }
 
@@ -111,13 +111,13 @@ a.secondary {
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
-    background: var(--button-primary-hover);
     border-color: transparent;
+    background: var(--button-primary-hover);
   }
 
   a.secondary:hover {
-    background: var(--button-secondary-hover);
     border-color: transparent;
+    background: var(--button-secondary-hover);
   }
 
   .footer a:hover {
@@ -145,9 +145,9 @@ a.secondary {
   }
 
   .ctas a {
-    font-size: 14px;
-    height: 40px;
     padding: 0 16px;
+    height: 40px;
+    font-size: 14px;
   }
 
   a.secondary {
@@ -156,8 +156,8 @@ a.secondary {
 
   .footer {
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
 }
 

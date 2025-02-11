@@ -10,9 +10,7 @@ import { Section } from "@/app/components/en-US/content/page/main/calculator/Sec
 import { ScreenReaderH2 } from "@/app/components/en-US/content/page/main/calculator/ScreenReaderH2";
 import styles from "./Calculator.module.css";
 
-type CalculatorProps = {
-  className?: string;
-};
+type CalculatorProps = { className?: string };
 
 export function Calculator({ className }: CalculatorProps) {
   const [interestRateInput, setInterestRateInput] = useState("6.4");

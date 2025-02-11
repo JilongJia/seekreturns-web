@@ -1,10 +1,14 @@
-.menuItemLink {
+.link {
   display: block;
   position: relative;
   padding: 0.25rem;
 }
 
-.menuItemLink::after {
+.link:focus-visible {
+  outline-style: none;
+}
+
+.link::after {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -14,12 +18,12 @@
   content: "";
 }
 
-.menuItemLink:hover::after,
-.menuItemLink:focus-visible::after {
+.link:hover::after {
   left: 0;
   width: 100%;
 }
 
-.menuItemLink:focus-visible {
-  outline-style: none;
+.link:focus-visible::after {
+  left: 0;
+  width: 100%;
 }

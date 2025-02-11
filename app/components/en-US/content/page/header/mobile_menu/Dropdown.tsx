@@ -4,10 +4,7 @@ import { type SecondaryMenuData } from "@/app/data/en-US/menu";
 import { SecondaryMenu } from "./SecondaryMenu";
 import styles from "./Dropdown.module.css";
 
-type ArrowIconProps = {
-  ariaHidden?: boolean;
-  className?: string;
-};
+type ArrowIconProps = { ariaHidden?: boolean; className?: string };
 
 type DropdownProps = {
   id: string;
