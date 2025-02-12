@@ -4,7 +4,6 @@ steps:
     args:
       [
         "build",
-        "--network=cloudbuild",
         "-t",
         "$_AR_HOSTNAME/$_PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA",
         ".",
