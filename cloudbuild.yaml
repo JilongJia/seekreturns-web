@@ -41,3 +41,6 @@ substitutions:
   _REPO_NAME: nextjs
   _AR_HOSTNAME: us-west1-docker.pkg.dev
   _SERVICE_NAME: cannytrading
+
+options:
+  logging: CLOUD_LOGGING_ONLY
