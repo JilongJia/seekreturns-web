@@ -41,7 +41,7 @@ options:
 substitutions:
   _PROJECT_ID: cannytrading
   _ARTIFACT_REGISTRY_REGION: us-west1
-  _ARTIFACT_REGISTRY_REPO_NAME: web
+  _ARTIFACT_REGISTRY_REPO_NAME: web-repository
   _ARTIFACT_REGISTRY_IMAGE_NAME: main
   _CLOUD_RUN_REGION: us-west1
-  _CLOUD_RUN_SERVICE_NAME: cannytrading
+  _CLOUD_RUN_SERVICE_NAME: cannytrading-web
