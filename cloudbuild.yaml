@@ -40,7 +40,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _PROJECT_ID: cannytrading
+  _PROJECT_ID: deft-strata-451608-j3
   _ARTIFACT_REGISTRY_REGION: us-west1
   _ARTIFACT_REGISTRY_REPO_NAME: web-repository
   _ARTIFACT_REGISTRY_IMAGE_NAME: main
