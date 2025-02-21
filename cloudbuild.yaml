@@ -4,9 +4,8 @@ steps:
     args:
       [
         "build",
-        "--network=cloudbuild",
         "-t",
-        "$_AR_HOSTNAME/$_PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA",
+        "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA",
         ".",
       ]
 
@@ -15,7 +14,7 @@ steps:
     args:
       [
         "push",
-        "$_AR_HOSTNAME/$_PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA",
+        "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA",
       ]
 
   # Deploy image to Cloud Run
@@ -25,23 +24,24 @@ steps:
       [
         "run",
         "deploy",
-        "$_SERVICE_NAME",
+        "$_CLOUD_RUN_SERVICE_NAME",
         "--image",
-        "$_AR_HOSTNAME/$_PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA",
+        "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA",
         "--region",
-        "$_DEPLOY_REGION",
+        "$_CLOUD_RUN_REGION",
         "--allow-unauthenticated",
       ]
 
 images:
-  - "$_AR_HOSTNAME/$_PROJECT_ID/$_REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
-
-substitutions:
-  _DEPLOY_REGION: us-west1
-  _PROJECT_ID: jilongs-gcp-playground
-  _REPO_NAME: nextjs
-  _AR_HOSTNAME: us-west1-docker.pkg.dev
-  _SERVICE_NAME: cannytrading
+  - "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA"
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _PROJECT_ID: cannytrading
+  _ARTIFACT_REGISTRY_REGION: us-west1
+  _ARTIFACT_REGISTRY_REPO_NAME: web
+  _ARTIFACT_REGISTRY_IMAGE_NAME: main
+  _CLOUD_RUN_REGION: us-west1
+  _CLOUD_RUN_SERVICE_NAME: cannytrading
