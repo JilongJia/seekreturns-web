@@ -7,12 +7,12 @@ export async function getStaticParams(
   const prefix = `/${language}/${section}/`;
   const pagesRef = adminDb.collection("pages");
 
-  const snapshot = await pagesRef
+  const pagesSnapshot = await pagesRef
     .where("path", ">=", prefix)
     .where("path", "<=", prefix + "\uf8ff")
     .get();
 
-  return snapshot.docs.flatMap((doc) => {
+  return pagesSnapshot.docs.flatMap((doc) => {
     const path = doc.data().path;
     if (!path) return [];
 
