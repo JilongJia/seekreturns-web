@@ -3,9 +3,9 @@ import clsx from "clsx";
 
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
 
+import { type MainProps } from "@/app/components/en-US/content/page/main";
 import { Header } from "@/app/components/en-US/content/page/Header";
 import { TableOfContentsSidebar } from "@/app/components/en-US/content/page/TableOfContentsSidebar";
-import { MainProps } from "@/app/components/en-US/content/page/main";
 import { AdvertisementSidebar } from "@/app/components/en-US/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/en-US/content/page/Footer";
 import styles from "./page.module.css";

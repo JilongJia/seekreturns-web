@@ -6,6 +6,7 @@ import { getStaticParams } from "@/app/lib/db/getStaticParams";
 import { type MainProps } from "@/app/components/en-US/content/page/main";
 import { Header } from "@/app/components/en-US/content/page/Header";
 import { TableOfContentsSidebar } from "@/app/components/en-US/content/page/TableOfContentsSidebar";
+import { AdvertisementSidebar } from "@/app/components/en-US/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/en-US/content/page/Footer";
 import styles from "./page.module.css";
 
@@ -21,7 +22,7 @@ async function Page({ params }: PageProps) {
   return (
     <>
       <Header
-        pathname={`/en-US/calculators/${slug}`}
+        pathname={`/en-US/guides/${slug}`}
         className={clsx(styles.header, "layoutContainer")}
       />
       <div className={clsx(styles.contentContainer, "layoutContainer")}>
@@ -29,7 +30,8 @@ async function Page({ params }: PageProps) {
           tableOfContentsData={tableOfContentsData}
           className={styles.tableOfContentsSidebar}
         />
-        <Main pathname={`/en-US/calculators/${slug}`} className={styles.main} />
+        <Main pathname={`/en-US/guides/${slug}`} className={styles.main} />
+        <AdvertisementSidebar className={styles.advertisementSidebar} />
       </div>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
     </>
@@ -38,7 +40,7 @@ async function Page({ params }: PageProps) {
 
 export async function generateStaticParams() {
   const language = "en-US";
-  const section = "calculators";
+  const section = "guides";
   const staticParams = await getStaticParams(language, section);
   return staticParams;
 }
