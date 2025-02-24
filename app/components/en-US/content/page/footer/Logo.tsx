@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import styles from "./Logo.module.css";
 
-import logo from "@/public/canny-trading-logo.png";
+import logo from "@/public/cannytrading-logo.png";
 
 type LogoProps = { className?: string };
 

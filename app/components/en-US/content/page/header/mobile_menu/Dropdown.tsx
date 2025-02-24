@@ -1,10 +1,9 @@
 import clsx from "clsx";
-
+import { LuChevronUp, LuChevronDown } from "react-icons/lu";
 import { type SecondaryMenuData } from "@/app/data/en-US/menu";
+
 import { SecondaryMenu } from "./SecondaryMenu";
 import styles from "./Dropdown.module.css";
-
-type ArrowIconProps = { ariaHidden?: boolean; className?: string };
 
 type DropdownProps = {
   id: string;
@@ -14,36 +13,6 @@ type DropdownProps = {
   className?: string;
   onClick: () => void;
 };
-
-function ArrowDropUpIcon({ ariaHidden = true, className }: ArrowIconProps) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden={ariaHidden}
-      className={className}
-    >
-      <path d="M0 0h24v24H0z" fill="none" />
-      <path d="M7 14l5-5 5 5z" />
-    </svg>
-  );
-}
-
-function ArrowDropDownIcon({ ariaHidden = true, className }: ArrowIconProps) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden={ariaHidden}
-      className={className}
-    >
-      <path d="M0 0h24v24H0z" fill="none" />
-      <path d="M7 10l5 5 5-5z" />
-    </svg>
-  );
-}
 
 export function Dropdown({
   id,
@@ -65,9 +34,9 @@ export function Dropdown({
       >
         <span>{label}</span>
         {isExpanded ? (
-          <ArrowDropUpIcon className={styles.icon} />
+          <LuChevronUp aria-hidden={true} className={styles.icon} />
         ) : (
-          <ArrowDropDownIcon className={styles.icon} />
+          <LuChevronDown aria-hidden={true} className={styles.icon} />
         )}
       </button>
       <SecondaryMenu

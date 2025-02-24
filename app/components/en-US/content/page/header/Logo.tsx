@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 
-import logo from "@/public/canny-trading-logo.png";
+import logo from "@/public/cannytrading-logo.png";
 import styles from "./Logo.module.css";
 
 type LogoProps = { className?: string };

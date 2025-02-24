@@ -30,6 +30,7 @@
 }
 
 .openDialogMagnifyingGlassIcon {
+  stroke-width: 1.5px;
   width: 1.75rem;
   height: 1.75rem;
 }
@@ -78,6 +79,7 @@
 }
 
 .xMarkIcon {
+  stroke-width: 1.5px;
   width: 1.75rem;
   height: 1.75rem;
 }
@@ -130,6 +132,7 @@
 }
 
 .searchMagnifyingGlassIcon {
+  stroke-width: 1.5px;
   width: 1.25rem;
   height: 1.25rem;
 }

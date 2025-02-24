@@ -26,11 +26,13 @@
 }
 
 .languageIcon {
+  stroke-width: 1.5px;
   width: 1.5rem;
   height: 1.5rem;
 }
 
 .chevronIcon {
+  stroke-width: 1.5px;
   width: 1rem;
   height: 1rem;
 }
