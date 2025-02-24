@@ -6,18 +6,20 @@
   box-sizing: border-box;
   border: 0 solid;
 }
-ol,
-ul,
-menu,
+
 button,
-input,
+figure,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-p {
+input,
+menu,
+ol,
+p,
+ul {
   margin: 0;
   padding: 0;
 }

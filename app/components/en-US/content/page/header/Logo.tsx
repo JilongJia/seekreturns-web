@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 
-import logo from "@/public/cannytrading-logo.png";
 import styles from "./Logo.module.css";
+
+import logo from "@/app/images/en-US/cannytrading-logo.png";
 
 type LogoProps = { className?: string };
 

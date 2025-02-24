@@ -6,6 +6,7 @@ import { getStaticParams } from "@/app/lib/db/getStaticParams";
 import { Header } from "@/app/components/en-US/content/page/Header";
 import { TableOfContentsSidebar } from "@/app/components/en-US/content/page/TableOfContentsSidebar";
 import { MainProps } from "@/app/components/en-US/content/page/main";
+import { AdvertisementSidebar } from "@/app/components/en-US/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/en-US/content/page/Footer";
 import styles from "./page.module.css";
 
@@ -30,6 +31,7 @@ async function Page({ params }: PageProps) {
           className={styles.tableOfContentsSidebar}
         />
         <Main pathname={`/en-US/concepts/${slug}`} className={styles.main} />
+        <AdvertisementSidebar className={styles.advertisementSidebar} />
       </div>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
     </>

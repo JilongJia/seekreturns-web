@@ -1,7 +1,7 @@
 .h2 {
   margin-top: 2rem;
   margin-bottom: 1rem;
-  scroll-margin-top: 8rem;
+  scroll-margin-top: 100px;
   color: var(--article-heading-color);
   font-weight: 600;
   font-size: 1.5rem;

@@ -29,8 +29,8 @@
 }
 
 @media (min-width: 1024px) {
-  .contentContainer {
-    margin-top: 4rem;
+  .header {
+    margin-bottom: 4rem;
   }
 
   .tableOfContentsSidebar {
