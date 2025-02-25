@@ -1,0 +1,45 @@
+.dropdown {
+  position: relative;
+  padding: 0.25rem;
+}
+
+.dropdown::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transition-duration: 500ms;
+  border-bottom: 2px solid #525252;
+  width: 0;
+  content: "";
+}
+
+.dropdown.expand::after {
+  left: 0;
+  width: 100%;
+}
+
+.trigger {
+  display: block;
+}
+
+.trigger:focus-visible {
+  outline-style: none;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  left: -2rem;
+  transform: translateY(0.25rem);
+  visibility: hidden;
+  opacity: 0;
+  transition-duration: 100ms;
+  list-style: none;
+}
+
+.menu.expand {
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+  transition-duration: 200ms;
+}

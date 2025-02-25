@@ -1,0 +1,91 @@
+.h2 {
+  margin-bottom: 0.5rem;
+  color: #262626;
+  font-weight: 700;
+}
+
+.primaryMenu {
+  margin-right: -1rem;
+  margin-left: -1rem;
+  padding: 0.5rem 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-color: #e5e5e5 #0000;
+  scrollbar-width: thin;
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.primaryMenuItemLink {
+  display: block;
+  position: relative;
+  padding: 0.375rem 1rem;
+  color: #737373;
+  font-weight: 600;
+}
+
+.primaryMenuItemLink.current {
+  border-radius: 0 0.25rem 0.25rem 0;
+  background-color: #dbeafe;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  color: #525252;
+  font-weight: 700;
+}
+
+.primaryMenuItemLink.current::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-left: 3px solid #2563eb;
+  border-radius: 0.125rem 0 0 0.125rem;
+  height: 100%;
+  content: "";
+}
+
+.primaryMenuItemLink:focus-visible {
+  outline-style: none;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.secondaryMenu {
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.secondaryMenuItemLink {
+  display: block;
+  position: relative;
+  padding: 0.375rem 1rem;
+  color: #737373;
+}
+
+.secondaryMenuItemLink.current {
+  border-radius: 0 0.25rem 0.25rem 0;
+  background-color: #dbeafe;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  color: #525252;
+  font-weight: 500;
+}
+
+.secondaryMenuItemLink:focus-visible {
+  outline-style: none;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.secondaryMenuItemLink.current::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-left: 3px solid #2563eb;
+  border-radius: 0.125rem 0 0 0.125rem;
+  height: 100%;
+  content: "";
+}

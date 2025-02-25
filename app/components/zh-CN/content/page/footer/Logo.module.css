@@ -1,0 +1,21 @@
+.logo {
+  transition-duration: 100ms;
+  outline: 0 solid var(--outline-color);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.logo:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+.image {
+  max-width: 10rem;
+}
+
+@media (min-width: 768px) {
+  .image {
+    max-width: 13rem;
+  }
+}

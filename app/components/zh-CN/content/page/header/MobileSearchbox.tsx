@@ -19,9 +19,9 @@ export function MobileSearchbox({ className }: MobileSearchboxProps) {
   };
 
   return (
-    <search aria-label="Sitewide search" className={className}>
+    <search aria-label="全站搜索" className={className}>
       <button className={styles.openDialogButton} onClick={handleOpenDialog}>
-        <span className={styles.screenReaderText}>Open searchbox</span>
+        <span className={styles.screenReaderText}>打开搜索框</span>
         <LuSearch
           aria-hidden={true}
           className={styles.openDialogMagnifyingGlassIcon}
@@ -29,7 +29,7 @@ export function MobileSearchbox({ className }: MobileSearchboxProps) {
       </button>
       <dialog className={styles.dialog} ref={dialogRef}>
         <button className={styles.closeButton} onClick={handleCloseDialog}>
-          <span className={styles.screenReaderText}>Close searchbox</span>
+          <span className={styles.screenReaderText}>关闭搜索框</span>
           <LuX aria-hidden={true} className={styles.xMarkIcon} />
         </button>
         <form action="/search" className={styles.form}>
@@ -37,19 +37,19 @@ export function MobileSearchbox({ className }: MobileSearchboxProps) {
             htmlFor="mobile-searchbox-input"
             className={styles.screenReaderLabel}
           >
-            Search
+            搜索
           </label>
           <input
             id="mobile-searchbox-input"
             type="search"
             name="q"
             className={styles.input}
-            placeholder="Search…"
+            placeholder="搜索……"
             required
             autoFocus
           />
           <button type="submit" className={styles.submitButton}>
-            <span className={styles.screenReaderText}>Search</span>
+            <span className={styles.screenReaderText}>搜索</span>
             <LuSearch
               aria-hidden={true}
               className={styles.searchMagnifyingGlassIcon}

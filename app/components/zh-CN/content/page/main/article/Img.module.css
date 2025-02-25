@@ -1,0 +1,26 @@
+.img {
+  border-radius: 0.25rem;
+}
+
+.img.floatLeft {
+  float: left;
+  margin-top: 0.75rem;
+  margin-right: 1rem;
+  margin-bottom: 0.75rem;
+  width: 50%;
+}
+
+.img.floatRight {
+  float: right;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-left: 1rem;
+  width: 50%;
+}
+
+.img.noFloat {
+  margin-top: 1.5rem;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+  margin-left: auto;
+}

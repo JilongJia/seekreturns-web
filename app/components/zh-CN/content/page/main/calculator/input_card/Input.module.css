@@ -1,0 +1,66 @@
+.numberInput {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input {
+  display: block;
+  transition-duration: 100ms;
+  outline: 1px solid var(--outline-color);
+  border-radius: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: var(--article-text-color);
+}
+
+.input:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+.input.year {
+  padding-right: 3.4375rem;
+  padding-left: 1rem;
+}
+
+.input.month {
+  padding-right: 4.125rem;
+  padding-left: 1rem;
+}
+
+.input.day {
+  padding-right: 3.25rem;
+  padding-left: 1rem;
+}
+
+.input.percent {
+  padding-right: 2rem;
+  padding-left: 1rem;
+}
+
+.input.dollar {
+  padding-right: 0.75rem;
+  padding-left: 1.625rem;
+}
+
+.input.default {
+  padding-right: 0.75rem;
+  padding-left: 1rem;
+}
+
+.unitLabel {
+  position: absolute;
+  pointer-events: none;
+  color: #737373;
+  font-size: 0.875rem;
+}
+
+.unitLabel.left {
+  left: 0.625rem;
+}
+
+.unitLabel.right {
+  right: 0.625rem;
+}

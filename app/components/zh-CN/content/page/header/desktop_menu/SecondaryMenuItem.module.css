@@ -1,0 +1,36 @@
+.link {
+  display: block;
+  position: relative;
+  transition-duration: 100ms;
+  padding: 0.75rem 2rem;
+}
+
+.link:hover {
+  transition-duration: 200ms;
+  background-color: #dbeafe;
+}
+
+.link:focus-visible {
+  transition-duration: 200ms;
+  outline-style: none;
+  background-color: #dbeafe;
+}
+
+.link::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition-duration: 100ms;
+  height: 100%;
+  content: "";
+}
+
+.link:hover::before {
+  transition-duration: 200ms;
+  border-left: 3px solid #2563eb;
+}
+
+.link:focus-visible::before {
+  transition-duration: 200ms;
+  border-left: 3px solid #2563eb;
+}

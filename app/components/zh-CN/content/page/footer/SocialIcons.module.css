@@ -1,0 +1,55 @@
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  color: #737373;
+  list-style: none;
+}
+
+.link {
+  transition-duration: 100ms;
+}
+
+.link:hover {
+  transition-duration: 200ms;
+  color: #262626;
+}
+
+.link:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-offset: 2px;
+}
+
+.screenReaderText {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.facebookIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.xIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.envelopeIcon {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+@media (min-width: 640px) {
+  .menu {
+    justify-content: flex-end;
+  }
+}

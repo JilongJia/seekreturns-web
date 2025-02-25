@@ -1,0 +1,20 @@
+.imageFigure.floatLeft {
+  float: left;
+  margin-top: 0.75rem;
+  margin-right: 1rem;
+  margin-bottom: 0.75rem;
+  width: 50%;
+}
+
+.imageFigure.floatRight {
+  float: right;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-left: 1rem;
+  width: 50%;
+}
+
+.imageFigure.noFloat {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
