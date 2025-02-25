@@ -2,15 +2,15 @@ import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
 import { type MainProps } from "@/app/components/en-US/content/page/main";
-import { Header } from "@/app/components/en-US/content/page/main/header/Header";
-import { H1 } from "@/app/components/en-US/content/page/main/header/H1";
-import { ModifiedDate } from "@/app/components/en-US/content/page/main/header/ModifiedDate";
 import { Article } from "@/app/components/en-US/content/page/main/article/Article";
 import {
-  InlineMath,
   BlockMath,
+  InlineMath,
 } from "@/app/components/en-US/content/page/main/article/Math";
+import { H1 } from "@/app/components/en-US/content/page/main/header/H1";
 import { H2 } from "@/app/components/en-US/content/page/main/article/H2";
+import { Header } from "@/app/components/en-US/content/page/main/header/Header";
+import { ModifiedDate } from "@/app/components/en-US/content/page/main/header/ModifiedDate";
 import { P } from "@/app/components/en-US/content/page/main/article/P";
 import { Section } from "@/app/components/en-US/content/page/main/article/Section";
 import { Calculator } from "./components/Calculator";

@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import { ErrorMessageCard } from "@/app/components/en-US/content/page/main/calculator/ErrorMessageCard";
-import { Form } from "@/app/components/en-US/content/page/main/calculator/Form";
-import { InputCard } from "@/app/components/en-US/content/page/main/calculator/InputCard";
-import { OutputCard } from "@/app/components/en-US/content/page/main/calculator/OutputCard";
-import { Section } from "@/app/components/en-US/content/page/main/calculator/Section";
-import { ScreenReaderH2 } from "@/app/components/en-US/content/page/main/calculator/ScreenReaderH2";
+import { ErrorMessageCard } from "@/app/components/zh-CN/content/page/main/calculator/ErrorMessageCard";
+import { Form } from "@/app/components/zh-CN/content/page/main/calculator/Form";
+import { InputCard } from "@/app/components/zh-CN/content/page/main/calculator/InputCard";
+import { OutputCard } from "@/app/components/zh-CN/content/page/main/calculator/OutputCard";
+import { Section } from "@/app/components/zh-CN/content/page/main/calculator/Section";
+import { ScreenReaderH2 } from "@/app/components/zh-CN/content/page/main/calculator/ScreenReaderH2";
 import styles from "./Calculator.module.css";
 
 type CalculatorProps = { className?: string };
@@ -21,20 +21,20 @@ export function Calculator({ className }: CalculatorProps) {
 
   let interestRateError = "";
   if (interestRateInput.trim() === "") {
-    interestRateError = "Please enter an interest rate.";
+    interestRateError = "请输入利率。";
   } else if (Number.isNaN(interestRatePercentValue)) {
-    interestRateError = "Please enter a valid numeric interest rate.";
+    interestRateError = "利率必须是数字。";
   } else if (interestRatePercentValue < 0) {
-    interestRateError = "Interest rate must not be less than 0.";
+    interestRateError = "利率不能小于0。";
   }
 
   let numberOfPeriodsError = "";
   if (numberOfPeriodsInput.trim() === "") {
-    numberOfPeriodsError = "Please enter the number of periods.";
+    numberOfPeriodsError = "请输入期数。";
   } else if (Number.isNaN(numberOfPeriodsValue)) {
-    numberOfPeriodsError = "Please enter a valid numeric number of periods.";
+    numberOfPeriodsError = "期数必须是数字。";
   } else if (numberOfPeriodsValue < 0) {
-    numberOfPeriodsError = "Number of periods must not be less than 0.";
+    numberOfPeriodsError = "期数不能小于0。";
   }
 
   const errorMessages = [interestRateError, numberOfPeriodsError].filter(
@@ -56,11 +56,11 @@ export function Calculator({ className }: CalculatorProps) {
 
   return (
     <Section className={className}>
-      <ScreenReaderH2>PVIFA calculator</ScreenReaderH2>
+      <ScreenReaderH2>年金现值系数计算器</ScreenReaderH2>
       <Form>
         <InputCard className={styles.inputCard}>
           <InputCard.Label htmlFor="interest-rate-number-input">
-            Interest Rate:
+            利率：
           </InputCard.Label>
           <InputCard.NumberInput
             id="interest-rate-number-input"
@@ -73,7 +73,7 @@ export function Calculator({ className }: CalculatorProps) {
             onChange={(e) => setInterestRateInput(e.target.value)}
           />
           <InputCard.ScreenReaderLabel htmlFor="interest-rate-range-input">
-            Interest Rate:
+            利率：
           </InputCard.ScreenReaderLabel>
           <InputCard.RangeInput
             id="interest-rate-range-input"
@@ -87,7 +87,7 @@ export function Calculator({ className }: CalculatorProps) {
           />
 
           <InputCard.Label htmlFor="number-of-periods-number-input">
-            Number of Periods:
+            期数：
           </InputCard.Label>
           <InputCard.NumberInput
             id="number-of-periods-number-input"
@@ -100,7 +100,7 @@ export function Calculator({ className }: CalculatorProps) {
             onChange={(e) => setNumberOfPeriodsInput(e.target.value)}
           />
           <InputCard.ScreenReaderLabel htmlFor="number-of-periods-range-input">
-            Number of Periods:
+            期数：
           </InputCard.ScreenReaderLabel>
           <InputCard.RangeInput
             id="number-of-periods-range-input"
@@ -117,7 +117,7 @@ export function Calculator({ className }: CalculatorProps) {
         {pvifa && (
           <OutputCard>
             <OutputCard.Label htmlFor="pvifa-output">
-              Present Value Interest Factor of Annuity:
+              年金现值系数：
             </OutputCard.Label>
             <OutputCard.Output
               id="pvifa-output"
@@ -126,9 +126,8 @@ export function Calculator({ className }: CalculatorProps) {
               {pvifa}
             </OutputCard.Output>
             <OutputCard.P>
-              With an interest rate of {interestRatePercentValue}% over{" "}
-              {numberOfPeriodsValue} years, the present value of an annuity with
-              periodic payments of $1 is ${pvifa}.
+              在{interestRatePercentValue}%的利率下，经过{numberOfPeriodsValue}
+              年，每年支付1美元的年金现值系数为{pvifa}。
             </OutputCard.P>
           </OutputCard>
         )}

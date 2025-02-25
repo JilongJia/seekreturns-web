@@ -1,0 +1,24 @@
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.dl {
+  grid-template-columns: 1fr 4fr;
+}
+
+@media (min-width: 768px) {
+  .main {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    column-gap: 4rem;
+    row-gap: 1.25rem;
+  }
+
+  .header {
+    margin-bottom: 0;
+  }
+
+  .calculator {
+    grid-row: 1 / 3;
+  }
+}
