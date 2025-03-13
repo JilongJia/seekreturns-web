@@ -1,7 +1,17 @@
 .li {
+  position: relative;
+  counter-increment: list-counter;
   margin-bottom: 0.75rem;
+  padding-left: 1.2em;
 }
 
 .li:last-child {
   margin-bottom: 0;
+}
+
+.li:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: counter(list-counter) ".";
 }

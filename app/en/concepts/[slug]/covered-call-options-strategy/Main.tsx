@@ -10,7 +10,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 
-import coveredCallStrategyProfitAndLossGraph from "./images/covered-call-strategy-profit-and-loss-graph.png";
+import coveredCallOptionsStrategyProfitAndLossGraph from "./images/covered-call-options-strategy-profit-and-loss-graph.png";
 import tslaStockInformation from "./images/tsla-stock-information.jpg";
 import tslaCallOptionInformation from "./images/tsla-call-option-information.jpg";
 
@@ -55,7 +55,7 @@ export function Main({ pathname, className }: MainProps) {
           </P>
           <ImageFigure>
             <ImageFigure.Image
-              src={coveredCallStrategyProfitAndLossGraph}
+              src={coveredCallOptionsStrategyProfitAndLossGraph}
               alt="Covered call strategy profit and loss graph"
             />
             <ImageFigure.Figcaption>

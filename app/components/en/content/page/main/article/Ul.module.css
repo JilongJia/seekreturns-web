@@ -2,5 +2,5 @@
   margin-bottom: 1rem;
   color: var(--article-text-color);
   line-height: 1.75rem;
-  list-style-position: inside;
+  list-style: none;
 }
