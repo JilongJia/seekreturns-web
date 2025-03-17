@@ -666,11 +666,7 @@ export function Main({ pathname, className }: MainProps) {
             <Ul.Li>The intersection shows the FVIF factor: 1.0609.</Ul.Li>
           </Ul>
           <P>Multiply your initial investment by this FVIF factor:</P>
-          <BlockMath
-            math="\$500 \times 1.0609 = \$530.45"
-            ariaLabel="Future value calculation using FVIF factor"
-            className={styles.blockMath}
-          />
+          <BlockMath math="\$500 \times 1.0609 = \$530.45" />
           <P>Thus, your investment grows to $530.45 after two years.</P>
         </Section>
       </Article>

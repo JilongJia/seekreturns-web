@@ -56,20 +56,17 @@ export function Main({ pathname, className }: MainProps) {
           <P>
             除了查询表格，我们还可以通过年金现值系数公式来直接计算。我们的年金现值系数计算器也是通过这个公式来计算的：
           </P>
-          <BlockMath
-            ariaLabel="年金现值系数公式"
-            math="\text{PVIFA} = \frac{1 - (1 + r)^{-n}}{r}"
-          />
+          <BlockMath math="\text{PVIFA} = \frac{1 - (1 + r)^{-n}}{r}" />
           <P>其中：</P>
           <Dl className={styles.dl}>
             <Dl.Dt>
-              <InlineMath ariaLabel="PVIFA" math="\text{PVIFA}" />
+              <InlineMath math="\text{PVIFA}" />
             </Dl.Dt>
             <Dl.Dd>
               <Dl.Dd.P>年金现值系数</Dl.Dd.P>
             </Dl.Dd>
             <Dl.Dt>
-              <InlineMath ariaLabel="利率" math="r" />
+              <InlineMath math="r" />
             </Dl.Dt>
             <Dl.Dd>
               <Dl.Dd.P>
@@ -77,7 +74,7 @@ export function Main({ pathname, className }: MainProps) {
               </Dl.Dd.P>
             </Dl.Dd>
             <Dl.Dt>
-              <InlineMath ariaLabel="期数" math="n" />
+              <InlineMath math="n" />
             </Dl.Dt>
             <Dl.Dd>
               <Dl.Dd.P>
@@ -91,10 +88,7 @@ export function Main({ pathname, className }: MainProps) {
           <P>
             还是以上面的例子来计算，每年一支付，年化利率为5%，年数为10年，那么年金现值系数为：
           </P>
-          <BlockMath
-            ariaLabel="年金现值系数计算例子"
-            math="\frac{1 - (1 + r)^{-n}}{r} = \frac{1 - (1 + 5\%)^{-10}}{5\%} \approx 7.72"
-          />
+          <BlockMath math="\frac{1 - (1 + r)^{-n}}{r} = \frac{1 - (1 + 5\%)^{-10}}{5\%} \approx 7.72" />
           <P>
             所以，在每年支付1000元的条件下，老李的10年年金保险的现值为：1000 ×
             7.72 = 7720元

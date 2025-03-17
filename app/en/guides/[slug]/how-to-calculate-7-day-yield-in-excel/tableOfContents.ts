@@ -5,6 +5,6 @@ export const tableOfContentsData = [
   },
   {
     id: "example",
-    label: "A detailed example of calculating the 7-day yield in Excel",
+    label: "Example of calculating the 7-day yield in Excel",
   },
 ];

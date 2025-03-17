@@ -3,29 +3,27 @@ import clsx from "clsx";
 
 import styles from "./Math.module.css";
 
-type InlineMathProps = { math: string; ariaLabel: string; className?: string };
+type InlineMathProps = { math: string; className?: string };
 
-type BlockMathProps = { math: string; ariaLabel: string; className?: string };
+type BlockMathProps = { math: string; className?: string };
 
-export function InlineMath({ math, ariaLabel, className }: InlineMathProps) {
+export function InlineMath({ math, className }: InlineMathProps) {
   const html = katex.renderToString(math, { displayMode: false });
 
   return (
     <span
       dangerouslySetInnerHTML={{ __html: html }}
-      aria-label={ariaLabel}
       className={clsx(styles.inlineMath, className)}
     />
   );
 }
 
-export function BlockMath({ math, ariaLabel, className }: BlockMathProps) {
+export function BlockMath({ math, className }: BlockMathProps) {
   const html = katex.renderToString(math, { displayMode: true });
 
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
-      aria-label={ariaLabel}
       className={clsx(styles.blockMath, className)}
     />
   );

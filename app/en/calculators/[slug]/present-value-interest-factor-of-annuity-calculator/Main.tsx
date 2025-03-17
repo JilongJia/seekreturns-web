@@ -66,15 +66,11 @@ export function Main({ pathname, className }: MainProps) {
             The formula for the Present Value Interest Factor of Annuity (PVIFA)
             is:
           </P>
-          <BlockMath
-            ariaLabel="PVIFA formula"
-            math="\text{PVIFA} = \frac{1 - (1 + r)^{-n}}{r}"
-          />
+          <BlockMath math="\text{PVIFA} = \frac{1 - (1 + r)^{-n}}{r}" />
           <P>
-            In this formula, <InlineMath ariaLabel="Interest rate" math="r" />{" "}
-            represents the interest rate per period, and{" "}
-            <InlineMath ariaLabel="Number of periods" math="n" /> is the number
-            of periods.
+            In this formula, <InlineMath math="r" /> represents the interest
+            rate per period, and <InlineMath math="n" /> is the number of
+            periods.
           </P>
         </Section>
         <Section ariaLabelledby="example">
