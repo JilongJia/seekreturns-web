@@ -7,6 +7,7 @@ import { Header } from "@/app/components/en/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
+import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 
 export function Main({ pathname, className }: MainProps) {
   return (
@@ -97,9 +98,12 @@ export function Main({ pathname, className }: MainProps) {
             effectively bypass these barriers. This allows investors to
             participate in China’s economic growth without navigating the
             complex regulatory environment or the need to open a mainland
-            brokerage account. Consequently, these instruments reduce friction
-            and simplify the process, enabling you to capitalize on
-            opportunities in restrictive markets.
+            brokerage account.
+          </P>
+          <P>
+            Consequently, these instruments reduce friction and simplify the
+            process, enabling you to capitalize on opportunities in restrictive
+            markets.
           </P>
           <H3>Simplified currency handling</H3>
           <P>
@@ -115,8 +119,11 @@ export function Main({ pathname, className }: MainProps) {
             currency restrictions. Additionally, since the Hong Kong dollar is
             pegged to the U.S. dollar, currency fluctuations remain relatively
             predictable, mitigating the risks typically associated with foreign
-            exchange. This simplification allows investors to concentrate on
-            evaluating corporate performance rather than worrying about currency
+            exchange.
+          </P>
+          <P>
+            This simplification allows investors to concentrate on evaluating
+            corporate performance rather than worrying about currency
             volatility.
           </P>
         </Section>
@@ -150,11 +157,13 @@ export function Main({ pathname, className }: MainProps) {
             limiting investor choices. While prominent firms like Alibaba offer
             both ADRs and H-shares, many others—particularly state-owned
             enterprises such as China National Offshore Oil Corporation
-            (CNOOC)—are exclusively available as H-shares. Thus, your investment
-            strategy may be shaped by the availability of shares across these
-            two channels. If a company isn’t available as an ADR, investors must
-            either participate directly through HKEX or exclude it from their
-            portfolio entirely.
+            (CNOOC)—are exclusively available as H-shares.
+          </P>
+          <P>
+            Thus, your investment strategy may be shaped by the availability of
+            shares across these two channels. If a company isn’t available as an
+            ADR, investors must either participate directly through HKEX or
+            exclude it from their portfolio entirely.
           </P>
           <H3>Minimum purchase requirements</H3>
           <P>
@@ -190,25 +199,32 @@ export function Main({ pathname, className }: MainProps) {
           </P>
           <H3>Cost considerations</H3>
           <P>
-            The cost structures differ significantly between ADRs and H-shares,
-            impacting your net returns in distinct ways:
+            The cost structures of ADRs and H-shares have notable differences,
+            which can affect your net returns depending on how you trade and
+            hold your investments.
           </P>
           <P>
-            ADRs incur depositary fees (usually around $0.01–$0.03 per share
-            annually) payable to the issuing bank, U.S. capital gains taxes on
-            profits, and dividends subject to withholding taxes, depending on
-            U.S. treaties with the company’s home country. These fees are often
-            embedded into the share price or handled transparently through
-            brokers.
+            ADRs come with depositary fees, typically $0.01–$0.03 per share
+            annually, which are payable to the issuing bank. These fees may be
+            embedded in the share price or deducted through brokers.
+            Additionally, dividends from Chinese ADRs are subject to a 10%
+            withholding tax imposed by Chinese tax authorities before
+            distribution, meaning investors receive their dividends net of this
+            amount.
           </P>
           <P>
-            H-shares typically do not include depositary fees, but investors
-            directly pay trading fees levied by HKEX (ranging from approximately
-            0.005%–0.1% per trade). Additionally, investors must consider the
-            cost of currency conversion from their local currency into Hong Kong
-            dollars. Capital gains taxes in Hong Kong are generally not
-            applicable, but dividends from H-shares may be subject to
-            withholding taxes determined by Mainland Chinese regulations.
+            H-shares, in contrast, do not incur depositary fees, but investors
+            must account for trading fees levied by HKEX (approximately
+            0.005%–0.1% per transaction) as well as currency conversion costs
+            when exchanging their local currency into Hong Kong dollars. Like
+            ADRs, H-share dividends are also subject to the same 10% withholding
+            tax under Mainland Chinese tax regulations.
+          </P>
+          <P>
+            While ADRs may have small ongoing depositary fees, H-shares involve
+            one-time trading and currency conversion costs. The most
+            cost-effective choice depends on your broker’s fee structure and
+            your trading frequency.
           </P>
         </Section>
         <Section ariaLabelledby="frequently-asked-questions">
@@ -217,44 +233,58 @@ export function Main({ pathname, className }: MainProps) {
             Can I trade both ADRs and H-shares in my U.S. brokerage account?
           </H3>
           <P>
-            You can trade both ADRs and H-shares, but the ease of doing so
-            depends on your brokerage. ADRs are straightforward because they
-            trade on U.S. exchanges like the NYSE and Nasdaq, and virtually all
-            U.S. brokerage platforms support them. Trading H-shares, however,
-            requires a broker that provides international access to the Hong
-            Kong Stock Exchange (HKEX). Platforms such as Interactive Brokers or
-            Fidelity’s global trading service commonly offer this capability,
-            but you might need to specifically enable HKEX trading or open a
+            Yes, you can trade both ADRs and H-shares, but the ease of doing so
+            depends on your brokerage.
+          </P>
+          <P>
+            ADRs are straightforward since they trade on U.S. exchanges like the
+            NYSE and Nasdaq. Virtually all U.S. brokerage platforms support
+            them.
+          </P>
+          <P>
+            H-shares require a broker that provides international access to the
+            Hong Kong Stock Exchange (HKEX). Platforms such as Interactive
+            Brokers or Fidelity’s global trading service commonly offer this
+            capability, but you may need to enable HKEX trading or open a
             dedicated international trading account.
           </P>
           <H3>Are ADRs riskier than H-shares, or vice versa?</H3>
           <P>
             Neither ADRs nor H-shares are inherently riskier than the other, but
-            each comes with unique considerations. ADRs include minor risks such
-            as relying on a U.S. depositary bank as a middleman—though bank
-            failure or significant issues are rare—and the embedded currency
-            conversions. H-shares involve direct exposure to Hong Kong’s market
-            dynamics, including HKEX-specific volatility and direct fluctuations
-            in the Hong Kong dollar (despite its peg to the USD, minor
-            fluctuations can still occur).
+            each has unique considerations:
           </P>
           <P>
-            Both ADRs and H-shares share common underlying risks related to the
-            specific company, industry, and the Chinese regulatory environment.
-            Ultimately, ADRs might feel safer due to familiar U.S. regulatory
-            oversight, whereas H-shares provide more direct and transparent
-            market exposure without the intermediary layer.
+            ADRs involve minor risks, such as reliance on a U.S. depositary bank
+            as a middleman. While bank failures are rare, this extra layer adds
+            some complexity. Additionally, currency conversions are handled
+            within the ADR structure, which could introduce small
+            inefficiencies.
+          </P>
+          <P>
+            H-shares expose investors directly to Hong Kong’s market dynamics,
+            including HKEX-specific volatility and fluctuations in the Hong Kong
+            dollar (which is pegged to the USD but can still experience slight
+            variations).
+          </P>
+          <P>
+            Both ADRs and H-shares share common risks related to the company,
+            industry, and Chinese regulatory environment. ADRs may feel safer
+            due to U.S. regulatory oversight, whereas H-shares provide more
+            direct and transparent market exposure without an intermediary.
           </P>
           <H3>Why would a company only offer H-shares and not ADRs?</H3>
           <P>
             Companies may choose to offer only H-shares and not ADRs primarily
-            due to cost considerations and regulatory complexities. Listing as
-            an ADR involves extensive U.S. Securities and Exchange Commission
-            (SEC) disclosure requirements, higher compliance fees, and
-            additional administrative overhead.Some Chinese firms—especially
-            state-owned enterprises like China National Offshore Oil Corporation
-            (CNOOC)—may find the costs outweigh the potential benefits,
-            particularly if they anticipate limited U.S. investor demand.
+            due to cost considerations and regulatory complexities:
+          </P>
+          <P>
+            Listing as an ADR involves extensive U.S. Securities and Exchange
+            Commission (SEC) disclosure requirements, higher compliance fees,
+            and additional administrative overhead. Some Chinese
+            firms—especially state-owned enterprises like China National
+            Offshore Oil Corporation (CNOOC)—may find the costs outweigh the
+            potential benefits, particularly if they anticipate limited U.S.
+            investor demand.
           </P>
           <P>
             On the other hand, H-shares are typically simpler and more
@@ -268,55 +298,78 @@ export function Main({ pathname, className }: MainProps) {
             How do taxes work if I’m a U.S. investor holding ADRs and H-shares?
           </H3>
           <P>
-            As a U.S. investor, taxes differ slightly for ADRs and H-shares,
-            though both are subject to similar dividend withholding taxes by
-            China. ADRs held in the U.S. incur standard U.S. capital gains
+            When holding ADRs, investors are subject to U.S. capital gains
             taxes—ranging from 0% to 20% for long-term gains and 10% to 37% for
-            short-term gains—and are also subject to a 10% Chinese withholding
-            tax on dividends. U.S. investors can typically offset this foreign
-            withholding through IRS Form 1116 as a foreign tax credit.
+            short-term gains. Additionally, dividends received from ADRs are
+            subject to a 10% withholding tax imposed by China. However, U.S.
+            investors can typically claim this withholding as a foreign tax
+            credit by filing IRS Form 1116, helping to offset their overall U.S.
+            tax liability.
           </P>
           <P>
-            For H-shares, while Hong Kong does not levy capital gains taxes on
-            investments, mainland China still withholds 10% of dividends. Any
-            capital gains realized from H-share sales must be reported as
-            foreign income to the IRS and will be taxed according to standard
-            U.S. capital gains rules. Thus, while both ADRs and H-shares incur a
-            similar 10% dividend withholding, H-shares involve different
-            reporting requirements and tax filings. Consulting a tax
-            professional is advisable for optimizing your overall tax efficiency
-            and compliance.
+            For H-shares, Hong Kong does not impose capital gains taxes, but
+            China still withholds 10% on dividends before distribution. While
+            capital gains from selling H-shares are not taxed in Hong Kong, they
+            must still be reported as foreign income to the IRS and are taxed
+            according to standard U.S. capital gains rules. Like ADRs, the 10%
+            withholding tax on H-share dividends may also qualify for a foreign
+            tax credit, depending on the investor’s tax situation.
+          </P>
+          <P>
+            While both ADRs and H-shares have similar tax implications on
+            dividends, H-shares require additional foreign income reporting,
+            particularly for capital gains. To ensure compliance and optimize
+            tax efficiency, consulting a tax professional is highly recommended.
           </P>
           <H3>Which is cheaper to trade in the long run—ADRs or H-shares?</H3>
           <P>
-            The cost-effectiveness of ADRs versus H-shares depends significantly
-            on your trading frequency and brokerage fees. ADRs typically carry
-            depositary fees (around $0.01–$0.03 per share annually), which can
-            gradually reduce returns, although standard U.S. brokerage
-            commissions are generally low. H-shares avoid depositary fees
-            entirely but incur HKEX trading fees (approximately 0.005%–0.1% per
-            transaction) and foreign exchange fees for converting USD into Hong
-            Kong dollars. If you trade infrequently and maintain positions over
-            longer periods, the impact of these fees is less pronounced for
-            H-shares. Ultimately, you’ll need to consider your broker’s specific
-            fee structures and your personal trading frequency to determine
-            which is more economical.
+            The cost-effectiveness of ADRs versus H-shares largely depends on
+            how frequently you trade and the fee structure of your brokerage.
+          </P>
+          <P>
+            For investors who trade frequently, ADRs are often the more
+            economical choice. U.S. brokerage commissions are typically low, and
+            while ADRs come with depositary fees—usually ranging from $0.01 to
+            $0.03 per share annually—these fees are relatively minor compared to
+            the potential costs of foreign exchange. Since ADRs trade directly
+            on U.S. exchanges in USD, investors avoid the additional expenses
+            associated with converting currency, making them a more convenient
+            and cost-effective option for those who actively buy and sell.
+          </P>
+          <P>
+            On the other hand, for long-term investors, H-shares can be more
+            cost-efficient due to the absence of depositary fees. Although HKEX
+            trading fees (typically 0.005% to 0.1% per transaction) and currency
+            conversion costs apply when buying or selling, these are one-time
+            expenses rather than ongoing charges. As a result, H-shares may be
+            the better choice for those who intend to hold their investments for
+            an extended period rather than trade frequently.
           </P>
           <H3>
             Which is better for small investors starting out—ADRs or H-shares?
           </H3>
           <P>
-            ADRs are generally better suited for small investors or those just
-            beginning international investing. They allow investors to buy even
-            a single share at a time without minimum purchase requirements,
-            trading in U.S. dollars on familiar U.S. exchanges. This eliminates
-            the upfront barrier associated with HKEX, which often mandates
-            minimum lot sizes (commonly 100 shares), leading to a more
-            substantial initial investment. For example, purchasing 100 H-shares
-            priced at around $50 HKD (~$6.40 USD per share) would require about
-            $640 USD. In contrast, ADRs let investors build positions gradually,
-            making them an accessible entry point. Investors can later expand
-            into H-shares as they gain experience and capital.
+            ADRs are generally better suited for small investors or beginners in
+            international investing.
+          </P>
+          <Ul>
+            <Ul.Li>
+              They allow purchasing even a single share, without minimum lot
+              requirements. In contrast, H-shares often require minimum lot
+              sizes (commonly 100 shares), leading to higher upfront investment
+              costs. For example, buying 100 H-shares at $50 HKD (~$6.40 USD per
+              share) would require around $640 USD. In comparison, ADRs allow
+              gradual position building, making them a more accessible entry
+              point for new investors.
+            </Ul.Li>
+            <Ul.Li>
+              They trade in U.S. dollars on familiar U.S. exchanges, eliminating
+              currency conversion complexities.
+            </Ul.Li>
+          </Ul>
+          <P>
+            Investors can expand into H-shares later as they gain experience and
+            capital.
           </P>
         </Section>
       </Article>
