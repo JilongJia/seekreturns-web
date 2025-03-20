@@ -90,15 +90,15 @@ export function Main({ pathname, className }: MainProps) {
           </P>
           <Ul>
             <Ul.Li>
-              <Strong>Payment amount:</Strong> The amount received each period
+              <Strong>Payment amount</Strong>: The amount received each period
               (e.g., $1,000 per year).
             </Ul.Li>
             <Ul.Li>
-              <Strong>Discount rate:</Strong> The rate used to discount future
+              <Strong>Discount rate</Strong>: The rate used to discount future
               payments to today’s value (e.g., 5% or 0.05).
             </Ul.Li>
             <Ul.Li>
-              <Strong>Number of periods:</Strong> The total number of payments
+              <Strong>Number of periods</Strong>: The total number of payments
               (e.g., 5 years).
             </Ul.Li>
           </Ul>
@@ -110,9 +110,17 @@ export function Main({ pathname, className }: MainProps) {
           <BlockMath math="PV = P \times \frac{1 - (1 + r)^{-n}}{r}" />
           <P>Where:</P>
           <Ul>
-            <Ul.Li>P = Payment per period</Ul.Li>
-            <Ul.Li>r = Discount rate per period</Ul.Li>
-            <Ul.Li>n = Number of periods</Ul.Li>
+            <Ul.Li>
+              <Strong>P</Strong> is the payment per period (e.g., $1,000 each
+              year).
+            </Ul.Li>
+            <Ul.Li>
+              <Strong>r</Strong> is the discount rate per period (e.g., 5% or
+              0.05).
+            </Ul.Li>
+            <Ul.Li>
+              <Strong>n</Strong> is the number of periods (e.g., 5 years).
+            </Ul.Li>
           </Ul>
           <P>
             Using our example of $1,000 annual payments for 5 years with a 5%
@@ -127,7 +135,7 @@ export function Main({ pathname, className }: MainProps) {
           <H3>Calculating it in Excel</H3>
           <Ol>
             <Ol.Li>
-              <Strong>Enter your data:</Strong>
+              <Strong>Enter your data</Strong>:
               <Ol className={styles.secondaryList}>
                 <Ol.Li>
                   In cell <Strong>A1</Strong>, type <Code>Payment</Code>; in{" "}
@@ -144,14 +152,15 @@ export function Main({ pathname, className }: MainProps) {
               </Ol>
             </Ol.Li>
             <Ol.Li>
-              <Strong>Calculate the present value:</Strong>
+              <Strong>Calculate the present value</Strong>:
               <Ol className={styles.secondaryList}>
                 <Ol.Li>
-                  Choose a cell for your result (e.g., <Strong>D2</Strong>) and
-                  type: <Code>=PV(B2, C2, -A2)</Code>.
+                  In cell <Strong>D1</Strong>, type <Code>Present Value</Code>;
+                  in <Strong>D2</Strong>, type <Code>=PV(B2, C2, -A2)</Code>.
                 </Ol.Li>
                 <Ol.Li>
-                  Press <Strong>Enter</Strong>, and you’ll get{" "}
+                  Press <Strong>Enter</Strong>, and you’ll get the present value
+                  of the ordinary annuity, which is approximately{" "}
                   <Code>$4,329.48</Code>.
                 </Ol.Li>
               </Ol>
@@ -186,19 +195,19 @@ export function Main({ pathname, className }: MainProps) {
           </P>
           <Ul>
             <Ul.Li>
-              <Strong>First payment:</Strong> The initial payment you receive
+              <Strong>First payment</Strong>: The initial payment you receive
               (e.g., $1,000).
             </Ul.Li>
             <Ul.Li>
-              <Strong>Discount rate:</Strong> The rate used to discount future
+              <Strong>Discount rate</Strong>: The rate used to discount future
               payments to today’s dollars (e.g., 5% or 0.05).
             </Ul.Li>
             <Ul.Li>
-              <Strong>Growth rate:</Strong> The rate at which payments grow each
+              <Strong>Growth rate</Strong>: The rate at which payments grow each
               period (e.g., 3% or 0.03).
             </Ul.Li>
             <Ul.Li>
-              <Strong>Number of periods:</Strong> Total number of payments
+              <Strong>Number of periods</Strong>: Total number of payments
               (e.g., 5 years).
             </Ul.Li>
           </Ul>
@@ -210,10 +219,20 @@ export function Main({ pathname, className }: MainProps) {
           <BlockMath math="PV = P \times \frac{1 - \left(\frac{1 + g}{1 + r}\right)^n}{r - g}" />
           <P>Where:</P>
           <Ul>
-            <Ul.Li>P = First payment</Ul.Li>
-            <Ul.Li>g = Growth rate per period</Ul.Li>
-            <Ul.Li>r = Discount rate per period</Ul.Li>
-            <Ul.Li>n = Number of periods</Ul.Li>
+            <Ul.Li>
+              <Strong>P</Strong> is the first payment (e.g., $1,000).
+            </Ul.Li>
+            <Ul.Li>
+              <Strong>g</Strong> is the growth rate per period (e.g., 3% or
+              0.03).
+            </Ul.Li>
+            <Ul.Li>
+              <Strong>r</Strong> is the discount rate per period (e.g., 5% or
+              0.05).
+            </Ul.Li>
+            <Ul.Li>
+              <Strong>n</Strong> is the number of periods (e.g., 5 years).
+            </Ul.Li>
           </Ul>
           <P>
             If your initial payment is $1,000, growing by 3% each year for 5
@@ -228,7 +247,7 @@ export function Main({ pathname, className }: MainProps) {
           <H3>Calculating it in Excel</H3>
           <Ol>
             <Ol.Li>
-              <Strong>Enter your data:</Strong>
+              <Strong>Enter your data</Strong>:
               <Ol className={styles.secondaryList}>
                 <Ol.Li>
                   In cell <Strong>A1</Strong>, type <Code>First Payment</Code>;
@@ -249,15 +268,17 @@ export function Main({ pathname, className }: MainProps) {
               </Ol>
             </Ol.Li>
             <Ol.Li>
-              <Strong>Calculate the present value:</Strong>
+              <Strong>Calculate the present value</Strong>:
               <Ol className={styles.secondaryList}>
                 <Ol.Li>
-                  Select a cell for the result (e.g., <Strong>E2</Strong>) and
-                  type: <Code>=A2*((1-((1+C2)/(1+B2))^D2)/(B2-C2))</Code>.
+                  In cell <Strong>E1</Strong>, type <Code>Present Value</Code>;
+                  in <Strong>E2</Strong>, type{" "}
+                  <Code>=A2*((1-((1+C2)/(1+B2))^D2)/(B2-C2))</Code>.
                 </Ol.Li>
                 <Ol.Li>
-                  Press <Strong>Enter</Strong>, and you’ll get{" "}
-                  <Code>$4583.92</Code>.
+                  Press <Strong>Enter</Strong>, and you’ll get the present value
+                  of the growing annuity, which is approximately{" "}
+                  <Code>$4,583.92</Code>.
                 </Ol.Li>
               </Ol>
             </Ol.Li>
