@@ -1,0 +1,12 @@
+.secondaryList {
+  margin-top: 0.5rem;
+}
+
+.secondaryList li {
+  margin-bottom: 0.5rem;
+}
+
+.table {
+  display: block;
+  overflow-x: auto;
+}

@@ -11,9 +11,7 @@ import { ModifiedDate } from "@/app/components/en/content/page/main/article/Modi
 import { Ol } from "@/app/components/en/content/page/main/article/Ol";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Strong } from "@/app/components/en/content/page/main/article/Strong";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
-import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 import styles from "./Main.module.css";
 
 export function Main({ pathname, className }: MainProps) {
@@ -27,14 +25,14 @@ export function Main({ pathname, className }: MainProps) {
         <P>
           Understanding how money grows over time is essential to investing and
           financial planning. One tool that simplifies this calculation is the
-          Future Value Interest Factor (FVIF)—a number that allows you to
+          future value interest factor (FVIF)—a number that allows you to
           quickly determine how much an investment today will be worth in the
           future, given compound interest.
         </P>
         <Section ariaLabelledby="definition">
           <H2 id="definition">What is FVIF?</H2>
           <P>
-            The Future Value Interest Factor (FVIF) indicates how much one
+            The future value interest factor (FVIF) indicates how much one
             dollar will grow over time when invested with compound interest. It
             serves as a multiplier: by multiplying your initial investment with
             the appropriate FVIF value—determined by the interest rate and
@@ -52,75 +50,6 @@ export function Main({ pathname, className }: MainProps) {
             directly provides the future value, eliminating the need for manual
             yearly calculations.
           </P>
-        </Section>
-        <Section ariaLabelledby="guide">
-          <H2 id="guide">How to use the FVIF table?</H2>
-          <P>
-            An FVIF table functions as a quick-reference guide to calculate
-            future value without performing manual computations. The table
-            provides pre-calculated factors based on various interest rates and
-            investment periods, allowing you to quickly determine the multiplier
-            for your specific scenario. It simplifies tasks like portfolio
-            planning or estimating the growth of your savings, regardless of
-            whether your investment is $100 or $10,000.
-          </P>
-          <P>To use the FVIF table effectively:</P>
-          <Ol>
-            <Ol.Li>
-              <Strong>Identify your investment details:</Strong>
-              <Ul className={styles.secondaryList}>
-                <Ul.Li>Annual interest rate (%)</Ul.Li>
-                <Ul.Li>Investment duration (typically in years)</Ul.Li>
-              </Ul>
-            </Ol.Li>
-            <Ol.Li>
-              <Strong>Locate your FVIF value:</Strong>
-              <Ul className={styles.secondaryList}>
-                <Ul.Li>
-                  Find the column corresponding to your interest rate.
-                </Ul.Li>
-                <Ul.Li>
-                  Find the row corresponding to your investment duration.
-                </Ul.Li>
-                <Ul.Li>
-                  The intersection of the column and row provides your FVIF
-                  factor.
-                </Ul.Li>
-              </Ul>
-            </Ol.Li>
-            <Ol.Li>
-              <Strong>Calculate future value:</Strong>
-              <Ul className={styles.secondaryList}>
-                <Ul.Li>
-                  Multiply your initial investment amount by the FVIF factor you
-                  found.
-                </Ul.Li>
-              </Ul>
-            </Ol.Li>
-          </Ol>
-          <H3 id="unlisted-rate-or-duration">
-            What if my exact rate or duration isn’t listed?
-          </H3>
-          <P>
-            If your specific interest rate or time period isn’t directly
-            available in the FVIF table, you have several options:
-          </P>
-          <Ul>
-            <Ul.Li>
-              Choose the closest available value from the table for a quick
-              estimate.
-            </Ul.Li>
-            <Ul.Li>
-              Interpolate between two nearby values to achieve a more precise
-              calculation.
-            </Ul.Li>
-            <Ul.Li>
-              If you prefer exact calculations without manual interpolation, you
-              can conveniently use our FVIF calculator to instantly determine
-              the accurate future value factor based on your exact rate and
-              duration.
-            </Ul.Li>
-          </Ul>
         </Section>
         <Section ariaLabelledby="table">
           <H2 id="table">FVIF table</H2>
@@ -651,23 +580,48 @@ export function Main({ pathname, className }: MainProps) {
             </Table.Tbody>
           </Table>
         </Section>
-        <Section ariaLabelledby="example">
-          <H2 id="example">Example of using the FVIF table</H2>
+        <Section ariaLabelledby="guide">
+          <H2 id="guide">How to use the FVIF table in real life</H2>
           <P>
-            Let’s put the FVIF table into action with a clear example. Suppose
-            you invest $500 at a 3% annual interest rate, compounded yearly, and
-            want to know the investment’s value after 2 years. An FVIF table
-            allows you to quickly find the answer without complicated
-            calculations:
+            The FVIF table helps you quickly find the future value of your
+            investment without complex calculations. Suppose you’re investing
+            $1,000 at a 2% interest rate for 3 years. Here’s how:
           </P>
-          <Ul>
-            <Ul.Li>Locate the 3% interest rate column.</Ul.Li>
-            <Ul.Li>Find the 2-year investment period row.</Ul.Li>
-            <Ul.Li>The intersection shows the FVIF factor: 1.0609.</Ul.Li>
-          </Ul>
-          <P>Multiply your initial investment by this FVIF factor:</P>
-          <BlockMath math="\$500 \times 1.0609 = \$530.45" />
-          <P>Thus, your investment grows to $530.45 after two years.</P>
+          <Ol>
+            <Ol.Li>Locate the column for 2% interest.</Ol.Li>
+            <Ol.Li>Find the row for 3 years.</Ol.Li>
+            <Ol.Li>
+              Identify the FVIF value where they meet—in this case, 1.0609.
+            </Ol.Li>
+            <Ol.Li>
+              Multiply your investment by this factor:
+              <BlockMath math="\$1,000 \times 1.0609 = \$1,060.90" />
+            </Ol.Li>
+          </Ol>
+          <P>
+            This means your $1,000 investment grows to $1,060.90 after 3 years.
+            You can use this same straightforward process for any interest rate
+            or time period listed in the table.
+          </P>
+        </Section>
+        <Section ariaLabelledby="frequently-asked-questions">
+          <H2 id="frequently-asked-questions">Frequently asked questions</H2>
+          <H3>What if my interest rate or time period isn’t on the table?</H3>
+          <P>
+            No table can list every possible rate or timeframe. If your rate or
+            time falls between the listed values, you can estimate by averaging
+            the closest FVIF values or use the nearest one for a quick
+            approximation. For precise calculations, use our FVIF
+            Calculator—just input your numbers for an instant answer.
+          </P>
+          <H3>Why does the FVIF increase significantly over time?</H3>
+          <P>
+            This rapid growth occurs due to compound interest—earning interest
+            on previously earned interest. For example, the FVIF at 3% interest
+            is 1.0300 for 1 year but increases to 1.0927 by the third year. The
+            longer your money is invested, the greater the compounding effect,
+            making time a powerful tool for building wealth.
+          </P>
         </Section>
       </Article>
     </main>

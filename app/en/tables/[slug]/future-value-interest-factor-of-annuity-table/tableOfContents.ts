@@ -1,15 +1,15 @@
 export const tableOfContentsData = [
   {
     id: "definition",
-    label: "What is FVIF?",
+    label: "What is FVIFA?",
   },
   {
     id: "table",
-    label: "FVIF table",
+    label: "FVIFA table",
   },
   {
     id: "guide",
-    label: "How to use the FVIF table in real life",
+    label: "How to use the FVIFA table in real life",
   },
   {
     id: "frequently-asked-questions",
