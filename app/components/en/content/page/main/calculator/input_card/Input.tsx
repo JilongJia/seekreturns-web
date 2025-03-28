@@ -5,9 +5,9 @@ import styles from "./Input.module.css";
 type NumberInputProps = {
   id: string;
   value: string;
-  min: string;
-  max: string;
-  step: string;
+  min?: string;
+  max?: string;
+  step?: string;
   unit?: "dollar" | "percent" | "year" | "month" | "day";
   className?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

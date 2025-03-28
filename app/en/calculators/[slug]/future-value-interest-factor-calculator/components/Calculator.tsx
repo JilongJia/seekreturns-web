@@ -122,8 +122,7 @@ export function Calculator({ className }: CalculatorProps) {
             </OutputCard.Output>
             <OutputCard.P>
               With an interest rate of {interestRatePercentValue}% over{" "}
-              {numberOfPeriodsValue} years, the future value of an annuity with
-              periodic payments of $1 is ${fvif}.
+              {numberOfPeriodsValue} years, the future value of $1 is ${fvif}.
             </OutputCard.P>
           </OutputCard>
         )}
