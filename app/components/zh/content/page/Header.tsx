@@ -13,7 +13,18 @@ import styles from "./Header.module.css";
 type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
-  const hreflangAlternates = await getHreflangAlternates(pathname);
+  let hreflangAlternates;
+  const pathSegments = pathname.split("/");
+
+  if (pathSegments.length > 2 && pathSegments[2] === "stock-comparisons") {
+    const languages = ["en", "zh"];
+    const remainingPath = pathSegments.slice(2).join("/");
+    hreflangAlternates = languages.map((lang) => ({
+      path: `/${lang}/${remainingPath}`,
+    }));
+  } else {
+    hreflangAlternates = await getHreflangAlternates(pathname);
+  }
 
   return (
     <header className={clsx(styles.header, className)}>
