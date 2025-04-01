@@ -30,19 +30,13 @@ steps:
         "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA",
         "--region",
         "$_CLOUD_RUN_REGION",
-        "--set-env-vars",
-        "FINANCIAL_MODELING_PREP_API_KEY=$$FINANCIAL_MODELING_PREP_API_KEY",
+        "--set-secrets",
+        "FINANCIAL_MODELING_PREP_API_KEY=FINANCIAL_MODELING_PREP_API_KEY:latest",
         "--allow-unauthenticated",
       ]
-    secretEnv: ["FINANCIAL_MODELING_PREP_API_KEY"]
 
 images:
   - "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA"
-
-availableSecrets:
-  secretManager:
-    - versionName: "projects/cannytrading-prod/secrets/FINANCIAL_MODELING_PREP_API_KEY/versions/1"
-      env: "FINANCIAL_MODELING_PREP_API_KEY"
 
 options:
   logging: CLOUD_LOGGING_ONLY
