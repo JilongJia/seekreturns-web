@@ -27,8 +27,31 @@ type HistoricalPriceEODData = {
   volume: number;
 };
 
+type StockComparisonDataItem = {
+  symbol: string;
+  companyName: string;
+  country: string;
+  sector: string;
+  industry: string;
+  ceo: string;
+  price: number;
+  marketCap: number;
+  beta: number;
+  exchange: string;
+  ipoDate: string;
+  isAdr: boolean;
+  currency: string;
+  priceSeries: { date: string; price: number }[];
+};
+
+type StockComparisonData = {
+  stockOne: StockComparisonDataItem | null;
+  stockTwo: StockComparisonDataItem | null;
+};
+
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
+
   const stockOneSymbol = "AAPL";
   const stockTwoSymbol = "TSLA";
 
@@ -42,28 +65,6 @@ async function Page({ params }: PageProps) {
   const stockOneProfileDataApiEndpoint = `https://financialmodelingprep.com/stable/profile?symbol=${stockOneSymbol}&apikey=${process.env.FINANCIAL_MODELING_PREP_API_KEY}`;
   const stockTwoProfileDataApiEndpoint = `https://financialmodelingprep.com/stable/profile?symbol=${stockTwoSymbol}&apikey=${process.env.FINANCIAL_MODELING_PREP_API_KEY}`;
 
-  type StockComparisonDataItem = {
-    symbol: string;
-    companyName: string;
-    country: string;
-    sector: string;
-    industry: string;
-    ceo: string;
-    price: number;
-    marketCap: number;
-    beta: number;
-    exchange: string;
-    ipoDate: string;
-    isAdr: boolean;
-    currency: string;
-    priceSeries: { date: string; price: number }[];
-  };
-
-  type StockComparisonData = {
-    stockOne: StockComparisonDataItem | null;
-    stockTwo: StockComparisonDataItem | null;
-  };
-
   const stockComparisonData: StockComparisonData = {
     stockOne: null,
     stockTwo: null,
@@ -71,6 +72,7 @@ async function Page({ params }: PageProps) {
 
   let stockOnePriceSeriesData: { date: string; price: number }[] | null = null;
   let stockTwoPriceSeriesData: { date: string; price: number }[] | null = null;
+
   try {
     const [
       stockOneHistoricalPriceEODDataApiResponse,

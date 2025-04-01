@@ -2,22 +2,56 @@
 
 import { useRef, useEffect } from "react";
 import { createChart, ColorType, LineSeries } from "lightweight-charts";
-import styles from "./Chart.module.css";
 
-type StockDataPoint = { date: string; price: number };
+import styles from "./Chart.module.css";
 
 type ChartProps = {
   data: {
     stockOne: {
       symbol: string;
-      priceSeries: StockDataPoint[];
+      priceSeries: { date: string; price: number }[];
     };
     stockTwo: {
       symbol: string;
-      priceSeries: StockDataPoint[];
+      priceSeries: { date: string; price: number }[];
     };
   };
 };
+
+function generateWeekdayArray(startDate: string, endDate: string): string[] {
+  const weekdayArray: string[] = [];
+  const current = new Date(startDate);
+  const end = new Date(endDate);
+  while (current <= end) {
+    const dayOfWeek = current.getDay();
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      weekdayArray.push(current.toISOString().split("T")[0]);
+    }
+    current.setDate(current.getDate() + 1);
+  }
+  return weekdayArray;
+}
+
+function fillPriceSeries(
+  priceSeries: { date: string; price: number }[],
+  weekdayArray: string[],
+): { time: string; price: number }[] {
+  const priceMap = new Map(
+    priceSeries.map((point) => [point.date, point.price]),
+  );
+  const filledPriceSeries: { time: string; price: number }[] = [];
+  let lastRecordedPrice: number | null = null;
+
+  for (const weekday of weekdayArray) {
+    if (priceMap.has(weekday)) {
+      lastRecordedPrice = priceMap.get(weekday)!;
+    } else if (lastRecordedPrice === null) {
+      lastRecordedPrice = priceSeries[0].price;
+    }
+    filledPriceSeries.push({ time: weekday, price: lastRecordedPrice });
+  }
+  return filledPriceSeries;
+}
 
 export function Chart({ data }: ChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +60,39 @@ export function Chart({ data }: ChartProps) {
     if (!chartContainerRef.current) return;
 
     chartContainerRef.current.style.position = "relative";
+
+    const stockOneDates = data.stockOne.priceSeries.map((pt) => pt.date);
+    const stockTwoDates = data.stockTwo.priceSeries.map((pt) => pt.date);
+
+    const startDate = [stockOneDates[0], stockTwoDates[0]].sort()[0];
+    const endDate = [
+      stockOneDates[stockOneDates.length - 1],
+      stockTwoDates[stockTwoDates.length - 1],
+    ].sort()[1];
+
+    const weekdayArray = generateWeekdayArray(startDate, endDate);
+
+    const stockOneFilledPriceSeries = fillPriceSeries(
+      data.stockOne.priceSeries,
+      weekdayArray,
+    );
+    const stockTwoFilledPriceSeries = fillPriceSeries(
+      data.stockTwo.priceSeries,
+      weekdayArray,
+    );
+
+    const stockOneFirstPrice = stockOneFilledPriceSeries[0].price;
+    const stockTwoFirstPrice = stockTwoFilledPriceSeries[0].price;
+
+    const stockOneValueSeries = stockOneFilledPriceSeries.map((point) => ({
+      time: point.time,
+      value: (point.price / stockOneFirstPrice) * 10000,
+    }));
+
+    const stockTwoValueSeries = stockTwoFilledPriceSeries.map((point) => ({
+      time: point.time,
+      value: (point.price / stockTwoFirstPrice) * 10000,
+    }));
 
     const chart = createChart(chartContainerRef.current, {
       layout: {
@@ -37,18 +104,6 @@ export function Chart({ data }: ChartProps) {
       height: 300,
     });
     chart.timeScale().fitContent();
-
-    const stockOneFirstPrice = data.stockOne.priceSeries[0].price;
-    const stockOneValueSeries = data.stockOne.priceSeries.map((point) => ({
-      time: point.date,
-      value: (point.price / stockOneFirstPrice) * 10000,
-    }));
-
-    const stockTwoFirstPrice = data.stockTwo.priceSeries[0].price;
-    const stockTwoValueSeries = data.stockTwo.priceSeries.map((point) => ({
-      time: point.date,
-      value: (point.price / stockTwoFirstPrice) * 10000,
-    }));
 
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
@@ -106,28 +161,28 @@ export function Chart({ data }: ChartProps) {
         value: number;
       };
 
-      const stockOneValue =
-        stockOneData.value !== undefined
+      const stockOneCurrentValue =
+        stockOneData && stockOneData.value !== undefined
           ? stockOneData.value
           : stockOneLastValue;
-      const stockTwoValue =
-        stockTwoData.value !== undefined
+      const stockTwoCurrentValue =
+        stockTwoData && stockTwoData.value !== undefined
           ? stockTwoData.value
           : stockTwoLastValue;
 
-      const stockOneFormattedValue = stockOneValue.toFixed(2);
-      const stockTwoFormattedValue = stockTwoValue.toFixed(2);
-      const stockOneFormattedPercent = (
-        (stockOneValue / 10000 - 1) *
+      const stockOneFormattedCurrentValue = stockOneCurrentValue.toFixed(2);
+      const stockTwoFormattedCurrentValue = stockTwoCurrentValue.toFixed(2);
+      const stockOneFormattedCurrentPercent = (
+        (stockOneCurrentValue / 10000 - 1) *
         100
       ).toFixed(2);
-      const stockTwoFormattedPercent = (
-        (stockTwoValue / 10000 - 1) *
+      const stockTwoFormattedCurrentPercent = (
+        (stockTwoCurrentValue / 10000 - 1) *
         100
       ).toFixed(2);
 
-      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedValue} (${stockOneFormattedPercent}%)`;
-      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedValue} (${stockTwoFormattedPercent}%)`;
+      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedCurrentValue} (${stockOneFormattedCurrentPercent}%)`;
+      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedCurrentValue} (${stockTwoFormattedCurrentPercent}%)`;
     });
 
     const handleResize = () => {
