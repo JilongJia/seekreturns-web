@@ -4,7 +4,6 @@ import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 
 export type CompanyProfileData = {
-  symbol: string;
   companyName: string;
   country: string;
   sector: string;
@@ -39,53 +38,68 @@ async function fetchCompanyProfileData(
   }
 }
 
-function generateMarketCapComparisonParagraph(
-  stockOne: CompanyProfileData,
-  stockTwo: CompanyProfileData,
+function generateMarketCapComparisonCommentary(
+  stockOneSymbol: string,
+  stockOneMarketCap: number,
+  stockOneCurrency: string,
+  stockTwoSymbol: string,
+  stockTwoMarketCap: number,
+  stockTwoCurrency: string,
 ): string {
-  const marketCapRatio = stockOne.marketCap / stockTwo.marketCap;
+  const marketCapRatio = stockOneMarketCap / stockTwoMarketCap;
   const stockOneFormattedMarketCap = (
-    stockOne.marketCap / 1000000000
+    stockOneMarketCap / 1000000000
   ).toLocaleString("en", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
   const stockTwoFormattedMarketCap = (
-    stockTwo.marketCap / 1000000000
+    stockTwoMarketCap / 1000000000
   ).toLocaleString("en", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
   if (marketCapRatio > 1.5) {
-    return `For market capitalization, ${stockOne.symbol} is notably larger with a market cap of approximately ${stockOneFormattedMarketCap} billion ${stockOne.currency}, roughly ${marketCapRatio.toFixed(
-      2,
-    )} times that of ${stockTwo.symbol} (${stockTwoFormattedMarketCap} billion ${stockTwo.currency}).`;
+    return `For market capitalization, ${stockOneSymbol} is notably larger with a market cap of approximately ${stockOneFormattedMarketCap} billion ${stockOneCurrency}, roughly ${marketCapRatio.toFixed(2)} times that of ${stockTwoSymbol} (${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}).`;
   } else if (marketCapRatio < 0.67) {
     const inverseRatio = 1 / marketCapRatio;
-    return `In terms of market cap, ${stockTwo.symbol} stands out with a value of approximately ${stockTwoFormattedMarketCap} billion ${stockTwo.currency}, roughly ${inverseRatio.toFixed(2)} times that of ${stockOne.symbol} (${stockOneFormattedMarketCap} billion ${stockOne.currency}).`;
+    return `In terms of market cap, ${stockTwoSymbol} stands out with a value of approximately ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, roughly ${inverseRatio.toFixed(2)} times that of ${stockOneSymbol} (${stockOneFormattedMarketCap} billion ${stockOneCurrency}).`;
   } else {
-    return `Both ${stockOne.symbol} and ${stockTwo.symbol} have comparable market capitalizations, at ${stockOneFormattedMarketCap} billion ${stockOne.currency} and ${stockTwoFormattedMarketCap} billion ${stockTwo.currency}, respectively.`;
+    return `Both ${stockOneSymbol} and ${stockTwoSymbol} have comparable market capitalizations, at ${stockOneFormattedMarketCap} billion ${stockOneCurrency} and ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, respectively.`;
   }
 }
 
-function generateBetaComparisonParagraph(
-  stockOne: CompanyProfileData,
-  stockTwo: CompanyProfileData,
+function generateBetaComparisonCommentary(
+  stockOneSymbol: string,
+  stockOneBeta: number,
+  stockTwoSymbol: string,
+  stockTwoBeta: number,
 ): string {
-  const betaRatio = stockOne.beta / stockTwo.beta;
+  const betaRatio = stockOneBeta / stockTwoBeta;
   if (betaRatio > 1.5) {
-    return `Regarding volatility, ${stockOne.symbol} has a higher beta of ${stockOne.beta.toFixed(
-      2,
-    )} (suggesting potentially higher volatility relative to the market), compared to ${stockTwo.symbol}'s beta of ${stockTwo.beta.toFixed(2)}.`;
+    return `Regarding volatility, ${stockOneSymbol} has a higher beta of ${stockOneBeta.toFixed(2)} (suggesting potentially higher volatility relative to the market), compared to ${stockTwoSymbol}'s beta of ${stockTwoBeta.toFixed(2)}.`;
   } else if (betaRatio < 0.67) {
-    return `Looking at volatility, ${stockTwo.symbol} shows a higher beta of ${stockTwo.beta.toFixed(
-      2,
-    )} (suggesting potentially higher volatility relative to the market), while ${stockOne.symbol} has a beta of ${stockOne.beta.toFixed(2)}.`;
+    return `Looking at volatility, ${stockTwoSymbol} shows a higher beta of ${stockTwoBeta.toFixed(2)} (suggesting potentially higher volatility relative to the market), while ${stockOneSymbol} has a beta of ${stockOneBeta.toFixed(2)}.`;
   } else {
-    return `Both stocks exhibit similar volatility characteristics based on their beta values, with ${stockOne.symbol} at ${stockOne.beta.toFixed(
-      2,
-    )} and ${stockTwo.symbol} at ${stockTwo.beta.toFixed(2)}.`;
+    return `Both stocks exhibit similar volatility characteristics based on their beta values, with ${stockOneSymbol} at ${stockOneBeta.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoBeta.toFixed(2)}.`;
+  }
+}
+
+function generateAdrCommentary(
+  stockOneSymbol: string,
+  stockOneIsAdr: boolean,
+  stockTwoSymbol: string,
+  stockTwoIsAdr: boolean,
+): string {
+  if (stockOneIsAdr && stockTwoIsAdr) {
+    return `Also, please note: both ${stockOneSymbol} and ${stockTwoSymbol} are ADRs. This means they represent ownership in shares of foreign companies, made available for trading on U.S. stock exchanges, offering investors exposure to international markets.`;
+  } else if (stockOneIsAdr) {
+    return `Also, please note: ${stockOneSymbol} operates as an ADR, meaning it’s a foreign company’s stock listed on U.S. exchanges, while ${stockTwoSymbol} is a standard U.S.-listed stock, not tied to the ADR structure.`;
+  } else if (stockTwoIsAdr) {
+    return `Also, please note: ${stockTwoSymbol} is structured as an ADR, indicating it’s a foreign entity traded on U.S. markets, whereas ${stockOneSymbol} is a regular U.S.-based stock without ADR designation.`;
+  } else {
+    return "";
   }
 }
 
@@ -107,32 +121,42 @@ export async function CompanyOverviewSection({
     );
   }
 
+  const marketCapComparisonCommentary = generateMarketCapComparisonCommentary(
+    stockOneSymbol,
+    stockOneCompanyProfileData.marketCap,
+    stockOneCompanyProfileData.currency,
+    stockTwoSymbol,
+    stockTwoCompanyProfileData.marketCap,
+    stockTwoCompanyProfileData.currency,
+  );
+
+  const betaComparisonCommentary = generateBetaComparisonCommentary(
+    stockOneSymbol,
+    stockOneCompanyProfileData.beta,
+    stockTwoSymbol,
+    stockTwoCompanyProfileData.beta,
+  );
+
+  const adrCommentary = generateAdrCommentary(
+    stockOneSymbol,
+    stockOneCompanyProfileData.isAdr,
+    stockTwoSymbol,
+    stockTwoCompanyProfileData.isAdr,
+  );
+
   return (
     <Section ariaLabelledby="company-overview">
       <H2 id="company-overview">Company Overview</H2>
-      <P>
-        {generateMarketCapComparisonParagraph(
-          stockOneCompanyProfileData,
-          stockTwoCompanyProfileData,
-        )}
-      </P>
-      <P>
-        {generateBetaComparisonParagraph(
-          stockOneCompanyProfileData,
-          stockTwoCompanyProfileData,
-        )}
-      </P>
+      <P>{marketCapComparisonCommentary}</P>
+      <P>{betaComparisonCommentary}</P>
+      {adrCommentary && <P>{adrCommentary}</P>}
       <P>For a detailed comparison, please refer to the table below.</P>
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">
-              {stockOneCompanyProfileData.symbol}
-            </Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">
-              {stockTwoCompanyProfileData.symbol}
-            </Table.Thead.Tr.Th>
+            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
+            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
         <Table.Tbody>
