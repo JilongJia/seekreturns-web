@@ -1,13 +1,12 @@
 import clsx from "clsx";
-
 import { getModifiedDate } from "@/app/lib/db/getModifiedDate";
 
 import styles from "./ModifiedDate.module.css";
 
-type ModifiedDateProps = { pathname: string; className?: string };
+type ModifiedDateProps = { pathname?: string; className?: string };
 
 export async function ModifiedDate({ pathname, className }: ModifiedDateProps) {
-  const modifiedDate = await getModifiedDate(pathname);
+  const modifiedDate = pathname ? await getModifiedDate(pathname) : new Date();
   if (!modifiedDate) return null;
 
   return (

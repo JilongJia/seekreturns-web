@@ -102,6 +102,9 @@ export function Chart({ data }: ChartProps) {
       },
       width: chartContainerRef.current.clientWidth,
       height: 300,
+      localization: {
+        locale: "en",
+      },
     });
     chart.timeScale().fitContent();
 
