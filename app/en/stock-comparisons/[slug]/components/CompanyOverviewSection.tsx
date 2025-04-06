@@ -31,7 +31,22 @@ async function fetchCompanyProfileData(
   try {
     const response = await fetch(endpoint);
     const rawData = await response.json();
-    return rawData[0];
+    const data = rawData[0];
+
+    return {
+      companyName: data.companyName,
+      country: data.country,
+      sector: data.sector,
+      industry: data.industry,
+      ceo: data.ceo,
+      price: data.price,
+      marketCap: data.marketCap,
+      beta: data.beta,
+      exchange: data.exchange,
+      ipoDate: data.ipoDate,
+      isAdr: data.isAdr,
+      currency: data.currency,
+    };
   } catch (error) {
     console.error("Error fetching company profile data for", symbol, error);
     return null;
@@ -61,12 +76,12 @@ function generateMarketCapComparisonCommentary(
   });
 
   if (marketCapRatio > 1.5) {
-    return `For market capitalization, ${stockOneSymbol} is notably larger with a market cap of approximately ${stockOneFormattedMarketCap} billion ${stockOneCurrency}, roughly ${marketCapRatio.toFixed(2)} times that of ${stockTwoSymbol} (${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}).`;
+    return `${stockOneSymbol} dwarfs ${stockTwoSymbol} in market cap, clocking in at ${stockOneFormattedMarketCap} billion ${stockOneCurrency}—about ${marketCapRatio.toFixed(2)} times the ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency} of its counterpart.`;
   } else if (marketCapRatio < 0.67) {
     const inverseRatio = 1 / marketCapRatio;
-    return `In terms of market cap, ${stockTwoSymbol} stands out with a value of approximately ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, roughly ${inverseRatio.toFixed(2)} times that of ${stockOneSymbol} (${stockOneFormattedMarketCap} billion ${stockOneCurrency}).`;
+    return `${stockTwoSymbol} towers over ${stockOneSymbol} with a market cap of ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, roughly ${inverseRatio.toFixed(2)} times the ${stockOneFormattedMarketCap} billion ${stockOneCurrency} of its peer.`;
   } else {
-    return `Both ${stockOneSymbol} and ${stockTwoSymbol} have comparable market capitalizations, at ${stockOneFormattedMarketCap} billion ${stockOneCurrency} and ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, respectively.`;
+    return `${stockOneSymbol} (${stockOneFormattedMarketCap} billion ${stockOneCurrency}) and ${stockTwoSymbol} (${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}) sit neck-and-neck in market cap terms.`;
   }
 }
 
@@ -78,11 +93,11 @@ function generateBetaComparisonCommentary(
 ): string {
   const betaRatio = stockOneBeta / stockTwoBeta;
   if (betaRatio > 1.5) {
-    return `Regarding volatility, ${stockOneSymbol} has a higher beta of ${stockOneBeta.toFixed(2)} (suggesting potentially higher volatility relative to the market), compared to ${stockTwoSymbol}'s beta of ${stockTwoBeta.toFixed(2)}.`;
+    return `${stockOneSymbol} rides a wilder wave with a beta of ${stockOneBeta.toFixed(2)}, hinting at bigger swings than ${stockTwoSymbol}’s steadier ${stockTwoBeta.toFixed(2)}.`;
   } else if (betaRatio < 0.67) {
-    return `Looking at volatility, ${stockTwoSymbol} shows a higher beta of ${stockTwoBeta.toFixed(2)} (suggesting potentially higher volatility relative to the market), while ${stockOneSymbol} has a beta of ${stockOneBeta.toFixed(2)}.`;
+    return `${stockTwoSymbol} dances to a riskier tune, sporting a beta of ${stockTwoBeta.toFixed(2)}, while ${stockOneSymbol} keeps it calmer at ${stockOneBeta.toFixed(2)}.`;
   } else {
-    return `Both stocks exhibit similar volatility characteristics based on their beta values, with ${stockOneSymbol} at ${stockOneBeta.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoBeta.toFixed(2)}.`;
+    return `${stockOneSymbol} at ${stockOneBeta.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoBeta.toFixed(2)} move in sync when it comes to market volatility.`;
   }
 }
 
@@ -93,11 +108,11 @@ function generateAdrCommentary(
   stockTwoIsAdr: boolean,
 ): string {
   if (stockOneIsAdr && stockTwoIsAdr) {
-    return `Also, please note: both ${stockOneSymbol} and ${stockTwoSymbol} are ADRs. This means they represent ownership in shares of foreign companies, made available for trading on U.S. stock exchanges, offering investors exposure to international markets.`;
+    return `Heads up: ${stockOneSymbol} and ${stockTwoSymbol} both roll as ADRs, bridging foreign companies to U.S. markets for a taste of global exposure.`;
   } else if (stockOneIsAdr) {
-    return `Also, please note: ${stockOneSymbol} operates as an ADR, meaning it’s a foreign company’s stock listed on U.S. exchanges, while ${stockTwoSymbol} is a standard U.S.-listed stock, not tied to the ADR structure.`;
+    return `Worth noting: ${stockOneSymbol} flies the ADR flag, tying it to a foreign outfit on U.S. soil, while ${stockTwoSymbol} sticks to plain-vanilla U.S. listing.`;
   } else if (stockTwoIsAdr) {
-    return `Also, please note: ${stockTwoSymbol} is structured as an ADR, indicating it’s a foreign entity traded on U.S. markets, whereas ${stockOneSymbol} is a regular U.S.-based stock without ADR designation.`;
+    return `Quick note: ${stockTwoSymbol} sports an ADR tag, marking it as a foreign player on U.S. exchanges, unlike the homegrown ${stockOneSymbol}.`;
   } else {
     return "";
   }
@@ -150,7 +165,7 @@ export async function CompanyOverviewSection({
       <P>{marketCapComparisonCommentary}</P>
       <P>{betaComparisonCommentary}</P>
       {adrCommentary && <P>{adrCommentary}</P>}
-      <P>For a detailed comparison, please refer to the table below.</P>
+      <P>Dive into the nitty-gritty details in the table below.</P>
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>

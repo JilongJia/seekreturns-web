@@ -8,6 +8,8 @@ import { tableOfContentsData } from "./tableOfContents";
 import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
+import { DividendComparisonSection } from "./components/DividendComparisonSection";
+import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthComparisonSection";
 import styles from "./page.module.css";
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -38,6 +40,14 @@ async function Page({ params }: PageProps) {
             stockTwoSymbol={stockTwoSymbol}
           />
           <ValuationMetricsComparisonSection
+            stockOneSymbol={stockOneSymbol}
+            stockTwoSymbol={stockTwoSymbol}
+          />
+          <DividendComparisonSection
+            stockOneSymbol={stockOneSymbol}
+            stockTwoSymbol={stockTwoSymbol}
+          />
+          <FinancialStrengthMetricsComparisonSection
             stockOneSymbol={stockOneSymbol}
             stockTwoSymbol={stockTwoSymbol}
           />

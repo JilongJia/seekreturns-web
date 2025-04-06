@@ -342,11 +342,10 @@ export async function ValuationMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            The valuation metrics comparison section examines key financial
-            ratios to assess the valuation of {stockOneSymbol} and{" "}
-            {stockTwoSymbol} based on earnings, cash flow, sales, and book
-            value. Pay attention to the following notable points where extreme
-            values stand out.
+            The section examines key financial ratios to assess the valuation of{" "}
+            {stockOneSymbol} and {stockTwoSymbol} based on earnings, cash flow,
+            sales, and book value. Pay attention to the following notable points
+            where extreme values stand out.
           </P>
           <Ul>
             {priceToEarningsRatioCommentary && (
