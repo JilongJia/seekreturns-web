@@ -9,7 +9,7 @@ import { PerformanceComparisonSection } from "./components/PerformanceComparison
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
 import { DividendComparisonSection } from "./components/DividendComparisonSection";
-import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthComparisonSection";
+import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
 import styles from "./page.module.css";
 
 type PageProps = { params: Promise<{ slug: string }> };

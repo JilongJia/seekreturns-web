@@ -3,7 +3,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 
-export type DividendData = {
+type DividendData = {
   symbol: string;
   dividendYieldTTM: number;
 };
@@ -18,12 +18,15 @@ async function fetchDividendData(symbol: string): Promise<DividendData | null> {
   const endpoint = `https://financialmodelingprep.com/stable/ratios-ttm?symbol=${symbol}&apikey=${apiKey}`;
   try {
     const response = await fetch(endpoint);
-    const rawData = await response.json();
-    const data = rawData[0];
-    return {
-      symbol: data.symbol,
-      dividendYieldTTM: data.dividendYieldTTM,
+    const dividendRawData = await response.json();
+    if (!dividendRawData || dividendRawData.length === 0) return null;
+
+    const dividendData = dividendRawData[0];
+    const data: DividendData = {
+      symbol: dividendData.symbol,
+      dividendYieldTTM: dividendData.dividendYieldTTM,
     };
+    return data;
   } catch (error) {
     console.error("Error fetching dividend data for", symbol, error);
     return null;
@@ -37,15 +40,14 @@ function generateDividendYieldCommentary(
   stockTwoDividendYield: number,
 ): string {
   const DIVIDEND_YIELD_THRESHOLD_NONE = 0;
-  const SIGNIFICANT_RELATIVE_GAP_THRESHOLD = 0.5;
+  const DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP = 0.5;
 
   type DividendYieldCategory = "None" | "Has";
 
-  function getDividendYieldCategory(
+  const getDividendYieldCategory = (
     dividendYield: number,
-  ): DividendYieldCategory {
-    return dividendYield <= DIVIDEND_YIELD_THRESHOLD_NONE ? "None" : "Has";
-  }
+  ): DividendYieldCategory =>
+    dividendYield <= DIVIDEND_YIELD_THRESHOLD_NONE ? "None" : "Has";
 
   const stockOneCategory = getDividendYieldCategory(stockOneDividendYield);
   const stockTwoCategory = getDividendYieldCategory(stockTwoDividendYield);
@@ -70,7 +72,7 @@ function generateDividendYieldCommentary(
     const relativeDifference = (higherYield - lowerYield) / lowerYield;
     const percentageDifference = (relativeDifference * 100).toFixed(0);
 
-    if (relativeDifference > SIGNIFICANT_RELATIVE_GAP_THRESHOLD) {
+    if (relativeDifference > DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP) {
       const higherStock =
         stockOneDividendYield > stockTwoDividendYield
           ? stockOneSymbol

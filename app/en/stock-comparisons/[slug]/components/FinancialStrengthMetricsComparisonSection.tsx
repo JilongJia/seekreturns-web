@@ -4,17 +4,12 @@ import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 
-export type FinancialStrengthMetricsData = {
+type FinancialStrengthMetricsData = {
   currentRatioTTM: number;
   quickRatioTTM: number;
   debtToEquityRatioTTM: number;
   debtToAssetsRatioTTM: number;
   interestCoverageRatioTTM: number;
-};
-
-export type FinancialStrengthMetricsComparisonData = {
-  stockOne: FinancialStrengthMetricsData;
-  stockTwo: FinancialStrengthMetricsData;
 };
 
 type FinancialStrengthMetricsComparisonSectionProps = {
@@ -29,19 +24,21 @@ async function fetchFinancialStrengthMetricsData(
   const endpoint = `https://financialmodelingprep.com/stable/ratios-ttm?symbol=${symbol}&apikey=${apiKey}`;
   try {
     const response = await fetch(endpoint);
-    const rawData = await response.json();
-    const data = rawData[0];
+    const ratiosRawData = await response.json();
+    if (!ratiosRawData || ratiosRawData.length === 0) return null;
 
-    return {
-      currentRatioTTM: data.currentRatioTTM,
-      quickRatioTTM: data.quickRatioTTM,
-      debtToEquityRatioTTM: data.debtToEquityRatioTTM,
-      debtToAssetsRatioTTM: data.debtToAssetsRatioTTM,
-      interestCoverageRatioTTM: data.interestCoverageRatioTTM,
+    const ratiosData = ratiosRawData[0];
+    const data: FinancialStrengthMetricsData = {
+      currentRatioTTM: ratiosData.currentRatioTTM,
+      quickRatioTTM: ratiosData.quickRatioTTM,
+      debtToEquityRatioTTM: ratiosData.debtToEquityRatioTTM,
+      debtToAssetsRatioTTM: ratiosData.debtToAssetsRatioTTM,
+      interestCoverageRatioTTM: ratiosData.interestCoverageRatioTTM,
     };
+    return data;
   } catch (error) {
     console.error(
-      "Error fetching financial strength metrics for",
+      "Error fetching financial strength metrics data for",
       symbol,
       error,
     );
@@ -59,9 +56,10 @@ function generateCurrentRatioCommentary(
 
   type CurrentRatioCategory = "Low" | "Normal";
 
-  function getCurrentRatioCategory(currentRatio: number): CurrentRatioCategory {
-    return currentRatio < CURRENT_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
-  }
+  const getCurrentRatioCategory = (
+    currentRatio: number,
+  ): CurrentRatioCategory =>
+    currentRatio < CURRENT_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
   const stockOneCurrentRatioCategory =
     getCurrentRatioCategory(stockOneCurrentRatio);
@@ -102,9 +100,8 @@ function generateQuickRatioCommentary(
 
   type QuickRatioCategory = "Low" | "Normal";
 
-  function getQuickRatioCategory(quickRatio: number): QuickRatioCategory {
-    return quickRatio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
-  }
+  const getQuickRatioCategory = (quickRatio: number): QuickRatioCategory =>
+    quickRatio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
   const stockOneQuickRatioCategory = getQuickRatioCategory(stockOneQuickRatio);
   const stockTwoQuickRatioCategory = getQuickRatioCategory(stockTwoQuickRatio);
@@ -144,14 +141,14 @@ function generateDebtToEquityRatioCommentary(
 
   type DebtToEquityRatioCategory = "Negative" | "High" | "Normal";
 
-  function getDebtToEquityRatioCategory(
+  const getDebtToEquityRatioCategory = (
     debtToEquityRatio: number,
-  ): DebtToEquityRatioCategory {
+  ): DebtToEquityRatioCategory => {
     if (debtToEquityRatio < DEBT_TO_EQUITY_RATIO_THRESHOLD_NEGATIVE)
       return "Negative";
     if (debtToEquityRatio > DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH) return "High";
     return "Normal";
-  }
+  };
 
   const stockOneDebtToEquityRatioCategory = getDebtToEquityRatioCategory(
     stockOneDebtToEquityRatio,
@@ -229,13 +226,10 @@ function generateDebtToAssetsRatioCommentary(
 
   type DebtToAssetsRatioCategory = "High" | "Normal";
 
-  function getDebtToAssetsRatioCategory(
+  const getDebtToAssetsRatioCategory = (
     debtToAssetsRatio: number,
-  ): DebtToAssetsRatioCategory {
-    return debtToAssetsRatio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH
-      ? "High"
-      : "Normal";
-  }
+  ): DebtToAssetsRatioCategory =>
+    debtToAssetsRatio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
 
   const stockOneDebtToAssetsRatioCategory = getDebtToAssetsRatioCategory(
     stockOneDebtToAssetsRatio,
@@ -279,15 +273,15 @@ function generateInterestCoverageRatioCommentary(
 
   type InterestCoverageRatioCategory = "Low" | "Zero" | "Normal";
 
-  function getInterestCoverageRatioCategory(
+  const getInterestCoverageRatioCategory = (
     interestCoverageRatio: number,
-  ): InterestCoverageRatioCategory {
+  ): InterestCoverageRatioCategory => {
     if (interestCoverageRatio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO)
       return "Zero";
     if (interestCoverageRatio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW)
       return "Low";
     return "Normal";
-  }
+  };
 
   const stockOneInterestCoverageRatioCategory =
     getInterestCoverageRatioCategory(stockOneInterestCoverageRatio);
@@ -305,21 +299,21 @@ function generateInterestCoverageRatioCommentary(
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `For ${stockOneSymbol} and ${stockTwoSymbol}, interest coverage shows as "--", pointing to negligible interest costs—often a sign of slim debt or rock-bottom rates keeping expenses near zero.`;
+    return `For ${stockOneSymbol} and ${stockTwoSymbol}, interest coverage shows as “--”, pointing to negligible interest costs—often a sign of slim debt or rock-bottom rates keeping expenses near zero.`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Low" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `${stockOneSymbol}’s ${stockOneInterestCoverageRatio.toFixed(2)} interest coverage dips below 1.5, with earnings just nudging past interest—tight if pressure hits. Meanwhile, ${stockTwoSymbol} displays "--", reflecting an interest burden so small it barely registers, likely from minimal debt.`;
+    return `${stockOneSymbol}’s ${stockOneInterestCoverageRatio.toFixed(2)} interest coverage dips below 1.5, with earnings just nudging past interest—tight if pressure hits. Meanwhile, ${stockTwoSymbol} displays “--”, reflecting an interest burden so small it barely registers, likely from minimal debt.`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Low"
   ) {
-    return `${stockOneSymbol}’s interest coverage reads "--", suggesting interest expenses are next to nothing—think tiny debt or ultra-low rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} teeters below 1.5, earnings barely clearing interest.`;
+    return `${stockOneSymbol}’s interest coverage reads “--”, suggesting interest expenses are next to nothing—think tiny debt or ultra-low rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} teeters below 1.5, earnings barely clearing interest.`;
   }
 
   if (
@@ -340,14 +334,14 @@ function generateInterestCoverageRatioCommentary(
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} posts an interest coverage of "--", hinting at interest costs so low they’re negligible—often from scant debt or dirt-cheap rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} handles interest with solid earnings.`;
+    return `${stockOneSymbol} posts an interest coverage of “--”, hinting at interest costs so low they’re negligible—often from scant debt or dirt-cheap rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} handles interest with solid earnings.`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Normal" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `${stockTwoSymbol}’s interest coverage comes up "--", reflecting interest demands so faint they’re barely there—likely minimal debt or tiny rates—whereas ${stockOneSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} cruises past interest with ease.`;
+    return `${stockTwoSymbol}’s interest coverage comes up “--”, reflecting interest demands so faint they’re barely there—likely minimal debt or tiny rates—whereas ${stockOneSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} cruises past interest with ease.`;
   }
 
   return "";
@@ -369,9 +363,7 @@ export async function FinancialStrengthMetricsComparisonSection({
         <H2 id="financial-strength-metrics-comparison">
           Financial Strength Metrics Comparison
         </H2>
-        <P>
-          Data for financial strength metrics is not available at this time.
-        </P>
+        <P>Financial strength metrics data is currently unavailable.</P>
       </Section>
     );
   }

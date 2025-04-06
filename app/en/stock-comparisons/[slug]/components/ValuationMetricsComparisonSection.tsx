@@ -4,7 +4,7 @@ import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 
-export type ValuationMetricsData = {
+type ValuationMetricsData = {
   priceToEarningsRatioTTM: number;
   forwardPriceToEarningsGrowthRatioTTM: number;
   priceToSalesRatioTTM: number;
@@ -13,11 +13,6 @@ export type ValuationMetricsData = {
   evToEBITDATTM: number;
   evToSalesTTM: number;
   evToFreeCashFlowTTM: number;
-};
-
-export type ValuationMetricsComparisonData = {
-  stockOne: ValuationMetricsData;
-  stockTwo: ValuationMetricsData;
 };
 
 type ValuationMetricsComparisonSectionProps = {
@@ -36,15 +31,15 @@ function generatePriceToEarningsRatioCommentary(
 
   type PriceToEarningsRatioCategory = "Negative" | "Normal" | "High";
 
-  function getPriceToEarningsRatioCategory(
+  const getPriceToEarningsRatioCategory = (
     priceToEarningsRatio: number,
-  ): PriceToEarningsRatioCategory {
+  ): PriceToEarningsRatioCategory => {
     if (priceToEarningsRatio < PRICE_TO_EARNINGS_RATIO_THRESHOLD_NEGATIVE)
       return "Negative";
     if (priceToEarningsRatio > PRICE_TO_EARNINGS_RATIO_THRESHOLD_HIGH)
       return "High";
     return "Normal";
-  }
+  };
 
   const stockOnePriceToEarningsRatioCategory = getPriceToEarningsRatioCategory(
     stockOnePriceToEarningsRatio,
@@ -115,13 +110,13 @@ function generateForwardPEGRatioCommentary(
 
   type ForwardPEGRatioCategory = "Negative" | "Normal";
 
-  function getForwardPEGRatioCategory(
+  const getForwardPEGRatioCategory = (
     forwardPEGRatio: number,
-  ): ForwardPEGRatioCategory {
+  ): ForwardPEGRatioCategory => {
     if (forwardPEGRatio < FORWARD_PEG_RATIO_THRESHOLD_NEGATIVE)
       return "Negative";
     return "Normal";
-  }
+  };
 
   const stockOneForwardPEGRatioCategory = getForwardPEGRatioCategory(
     stockOneForwardPEGRatio,
@@ -162,13 +157,13 @@ function generatePriceToBookRatioCommentary(
 
   type PriceToBookRatioCategory = "Negative" | "Normal";
 
-  function getPriceToBookRatioCategory(
+  const getPriceToBookRatioCategory = (
     priceToBookRatio: number,
-  ): PriceToBookRatioCategory {
+  ): PriceToBookRatioCategory => {
     if (priceToBookRatio < PRICE_TO_BOOK_RATIO_THRESHOLD_NEGATIVE)
       return "Negative";
     return "Normal";
-  }
+  };
 
   const stockOnePriceToBookRatioCategory = getPriceToBookRatioCategory(
     stockOnePriceToBookRatio,
@@ -209,16 +204,16 @@ function generatePriceToFreeCashFlowRatioCommentary(
 
   type PriceToFreeCashFlowRatioCategory = "Negative" | "Normal";
 
-  function getPriceToFreeCashFlowRatioCategory(
+  const getPriceToFreeCashFlowRatioCategory = (
     priceToFreeCashFlowRatio: number,
-  ): PriceToFreeCashFlowRatioCategory {
+  ): PriceToFreeCashFlowRatioCategory => {
     if (
       priceToFreeCashFlowRatio <
       PRICE_TO_FREE_CASH_FLOW_RATIO_THRESHOLD_NEGATIVE
     )
       return "Negative";
     return "Normal";
-  }
+  };
 
   const stockOnePriceToFreeCashFlowRatioCategory =
     getPriceToFreeCashFlowRatioCategory(stockOnePriceToFreeCashFlowRatio);
@@ -261,9 +256,17 @@ async function fetchValuationMetricsData(
     const keyMetricsRawData = await keyMetricsResponse.json();
     const ratiosRawData = await ratiosResponse.json();
 
+    if (
+      !keyMetricsRawData ||
+      keyMetricsRawData.length === 0 ||
+      !ratiosRawData ||
+      ratiosRawData.length === 0
+    ) {
+      return null;
+    }
+
     const keyMetricsData = keyMetricsRawData[0];
     const ratiosData = ratiosRawData[0];
-    if (!keyMetricsData || !ratiosData) return null;
 
     const data: ValuationMetricsData = {
       priceToEarningsRatioTTM: ratiosData.priceToEarningsRatioTTM,

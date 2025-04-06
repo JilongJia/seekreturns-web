@@ -3,7 +3,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 
-export type CompanyProfileData = {
+type CompanyProfileData = {
   companyName: string;
   country: string;
   sector: string;
@@ -30,23 +30,25 @@ async function fetchCompanyProfileData(
   const endpoint = `https://financialmodelingprep.com/stable/profile?symbol=${symbol}&apikey=${apiKey}`;
   try {
     const response = await fetch(endpoint);
-    const rawData = await response.json();
-    const data = rawData[0];
+    const profileRawData = await response.json();
+    if (!profileRawData || profileRawData.length === 0) return null;
 
-    return {
-      companyName: data.companyName,
-      country: data.country,
-      sector: data.sector,
-      industry: data.industry,
-      ceo: data.ceo,
-      price: data.price,
-      marketCap: data.marketCap,
-      beta: data.beta,
-      exchange: data.exchange,
-      ipoDate: data.ipoDate,
-      isAdr: data.isAdr,
-      currency: data.currency,
+    const profileData = profileRawData[0];
+    const data: CompanyProfileData = {
+      companyName: profileData.companyName,
+      country: profileData.country,
+      sector: profileData.sector,
+      industry: profileData.industry,
+      ceo: profileData.ceo,
+      price: profileData.price,
+      marketCap: profileData.marketCap,
+      beta: profileData.beta,
+      exchange: profileData.exchange,
+      ipoDate: profileData.ipoDate,
+      isAdr: profileData.isAdr,
+      currency: profileData.currency,
     };
+    return data;
   } catch (error) {
     console.error("Error fetching company profile data for", symbol, error);
     return null;

@@ -5,7 +5,7 @@ import { Chart } from "./performance_comparison_section/Chart";
 
 type PriceSeriesData = { date: string; price: number }[];
 
-type HistoricalPriceEODDataPoint = {
+type HistoricalPriceDataPoint = {
   symbol: string;
   date: string;
   adjOpen: number;
@@ -28,12 +28,19 @@ async function fetchPriceSeriesData(
   const endpoint = `https://financialmodelingprep.com/stable/historical-price-eod/dividend-adjusted?symbol=${symbol}&from=${fromDate}&apikey=${apiKey}`;
   try {
     const response = await fetch(endpoint);
-    const rawData: HistoricalPriceEODDataPoint[] = await response.json();
-    rawData.reverse();
-    return rawData.map((item: HistoricalPriceEODDataPoint) => ({
-      date: item.date,
-      price: item.adjClose,
-    }));
+    const historicalPriceRawData: HistoricalPriceDataPoint[] =
+      await response.json();
+    if (!historicalPriceRawData || historicalPriceRawData.length === 0)
+      return null;
+
+    historicalPriceRawData.reverse();
+    const data: PriceSeriesData = historicalPriceRawData.map(
+      (item: HistoricalPriceDataPoint) => ({
+        date: item.date,
+        price: item.adjClose,
+      }),
+    );
+    return data;
   } catch (error) {
     console.error("Error fetching price series data for", symbol, error);
     return null;
