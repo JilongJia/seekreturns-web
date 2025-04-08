@@ -103,7 +103,7 @@ export function Chart({ data }: ChartProps) {
       width: chartContainerRef.current.clientWidth,
       height: 300,
       localization: {
-        locale: "en",
+        locale: "zh",
       },
     });
     chart.timeScale().fitContent();
@@ -140,18 +140,18 @@ export function Chart({ data }: ChartProps) {
 
     const stockOneLegendItem = document.createElement("li");
     stockOneLegendItem.className = `${styles.legendItem} ${styles.blueBullet}`;
-    stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedLastValue} (${stockOneFormattedLastPercent}%)`;
+    stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneFormattedLastValue}（${stockOneFormattedLastPercent}%）`;
     legend.appendChild(stockOneLegendItem);
 
     const stockTwoLegendItem = document.createElement("li");
     stockTwoLegendItem.className = `${styles.legendItem} ${styles.redBullet}`;
-    stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedLastValue} (${stockTwoFormattedLastPercent}%)`;
+    stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoFormattedLastValue}（${stockTwoFormattedLastPercent}%）`;
     legend.appendChild(stockTwoLegendItem);
 
     chart.subscribeCrosshairMove((param) => {
       if (!param.time) {
-        stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedLastValue} (${stockOneFormattedLastPercent}%)`;
-        stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedLastValue} (${stockTwoFormattedLastPercent}%)`;
+        stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneFormattedLastValue}（${stockOneFormattedLastPercent}%）`;
+        stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoFormattedLastValue}（${stockTwoFormattedLastPercent}%）`;
         return;
       }
 
@@ -184,8 +184,8 @@ export function Chart({ data }: ChartProps) {
         100
       ).toFixed(2);
 
-      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedCurrentValue} (${stockOneFormattedCurrentPercent}%)`;
-      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedCurrentValue} (${stockTwoFormattedCurrentPercent}%)`;
+      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneFormattedCurrentValue}（${stockOneFormattedCurrentPercent}%）`;
+      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoFormattedCurrentValue}（${stockTwoFormattedCurrentPercent}%）`;
     });
 
     const handleResize = () => {

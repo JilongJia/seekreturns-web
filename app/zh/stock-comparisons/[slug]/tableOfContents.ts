@@ -1,10 +1,10 @@
 export const tableOfContentsData = [
-  { id: "performance-comparison", label: "Performance Comparison" },
-  { id: "company-overview", label: "Company Overview" },
-  { id: "valuation-metrics-comparison", label: "Valuation Metrics Comparison" },
-  { id: "dividend-comparison", label: "Dividend Comparison" },
+  { id: "performance-comparison", label: "历史表现比较" },
+  { id: "company-overview", label: "公司概况" },
+  { id: "valuation-metrics-comparison", label: "估值指标比较" },
+  { id: "dividend-comparison", label: "股息比较" },
   {
     id: "financial-strength-metrics-comparison",
-    label: "Financial Strength Metrics Comparison",
+    label: "财务状况指标比较",
   },
 ];

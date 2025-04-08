@@ -1,8 +1,8 @@
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
-import { Ul } from "@/app/components/en/content/page/main/article/Ul";
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
 
 type FinancialStrengthMetricsData = {
   currentRatioTTM: number;
@@ -70,21 +70,21 @@ function generateCurrentRatioCommentary(
     stockOneCurrentRatioCategory === "Low" &&
     stockTwoCurrentRatioCategory === "Low"
   ) {
-    return `For both ${stockOneSymbol} (${stockOneCurrentRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoCurrentRatio.toFixed(2)}), current ratios sit below 1. With current assets trailing short-term liabilities, they might tap into cash flow or borrowing to stay afloat—a setup not uncommon in certain sectors, though it bears monitoring if cash gets tight.`;
+    return `${stockOneSymbol} (${stockOneCurrentRatio.toFixed(2)}) 和 ${stockTwoSymbol} (${stockTwoCurrentRatio.toFixed(2)}) 的流动比率均低于 1，流动资产不足以覆盖短期债务，需依赖现金流或外部融资支持。这在某些行业较为常见，但若现金流紧张，则需谨慎管理。`;
   }
 
   if (
     stockOneCurrentRatioCategory === "Low" &&
     stockTwoCurrentRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} posts a current ratio of ${stockOneCurrentRatio.toFixed(2)} under 1, where current assets fall short of covering short-term debts—manageable perhaps with solid cash inflows. Compare that to ${stockTwoSymbol}, sitting at ${stockTwoCurrentRatio.toFixed(2)}, where liabilities are comfortably met.`;
+    return `${stockOneSymbol} 的流动比率仅为 ${stockOneCurrentRatio.toFixed(2)}，低于 1，流动资产不足以偿还短期债务，需依赖较强的现金流支撑。而 ${stockTwoSymbol} 的 ${stockTwoCurrentRatio.toFixed(2)} 则能充分覆盖短期债务。`;
   }
 
   if (
     stockOneCurrentRatioCategory === "Normal" &&
     stockTwoCurrentRatioCategory === "Low"
   ) {
-    return `${stockTwoSymbol}’s current ratio of ${stockTwoCurrentRatio.toFixed(2)} dips below 1, leaving short-term liabilities larger than current assets—a scenario that could hinge on cash flow support. On the other hand, ${stockOneSymbol} at ${stockOneCurrentRatio.toFixed(2)} has enough assets to handle its obligations.`;
+    return `${stockTwoSymbol} 的流动比率仅为 ${stockTwoCurrentRatio.toFixed(2)}，低于 1，流动资产无法覆盖短期债务，需依靠现金流维持。而 ${stockOneSymbol} 的 ${stockOneCurrentRatio.toFixed(2)} 足以偿还短期债务。`;
   }
 
   return "";
@@ -110,21 +110,21 @@ function generateQuickRatioCommentary(
     stockOneQuickRatioCategory === "Low" &&
     stockTwoQuickRatioCategory === "Low"
   ) {
-    return `${stockOneSymbol} (${stockOneQuickRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoQuickRatio.toFixed(2)}) both clock quick ratios under 0.8. Without inventory, their liquid assets don’t match short-term debts, so they might lean on sales or loans to cover the difference—doable if cash keeps flowing.`;
+    return `${stockOneSymbol} (${stockOneQuickRatio.toFixed(2)}) 和 ${stockTwoSymbol} (${stockTwoQuickRatio.toFixed(2)}) 的速动比率均低于 0.8，去除库存后流动资产不足以偿还债务，需依赖销售收入或融资支持。只要现金流稳定，通常问题不大。`;
   }
 
   if (
     stockOneQuickRatioCategory === "Low" &&
     stockTwoQuickRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol}’s quick ratio sits at ${stockOneQuickRatio.toFixed(2)} below 0.8, leaving its cash and near-cash assets shy of short-term obligations—potentially a stretch without extra funds. Meanwhile, ${stockTwoSymbol} lands at ${stockTwoQuickRatio.toFixed(2)}, with enough liquidity to spare.`;
+    return `${stockOneSymbol} 的速动比率仅为 ${stockOneQuickRatio.toFixed(2)}，低于 0.8，现金类资产不足以覆盖短期债务，若缺乏额外资金来源可能面临压力。而 ${stockTwoSymbol} 的 ${stockTwoQuickRatio.toFixed(2)} 显示其流动性较为充足。`;
   }
 
   if (
     stockOneQuickRatioCategory === "Normal" &&
     stockTwoQuickRatioCategory === "Low"
   ) {
-    return `At ${stockTwoQuickRatio.toFixed(2)}, ${stockTwoSymbol}’s quick ratio falls below 0.8, where liquid assets, minus inventory, can’t keep up with short-term bills—possibly riding on cash flow. By contrast, ${stockOneSymbol} hits ${stockOneQuickRatio.toFixed(2)}, covering its bases comfortably.`;
+    return `${stockTwoSymbol} 的速动比率仅为 ${stockTwoQuickRatio.toFixed(2)}，低于 0.8，去除库存后流动资产不足以偿还债务，需依赖现金流支持。而 ${stockOneSymbol} 的 ${stockOneQuickRatio.toFixed(2)} 能够较好地应对短期支出。`;
   }
 
   return "";
@@ -161,56 +161,56 @@ function generateDebtToEquityRatioCommentary(
     stockOneDebtToEquityRatioCategory === "Negative" &&
     stockTwoDebtToEquityRatioCategory === "Negative"
   ) {
-    return `${stockOneSymbol} (${stockOneDebtToEquityRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoDebtToEquityRatio.toFixed(2)}) both carry negative D/E ratios, a sign of negative equity—likely from piling up losses or aggressive buybacks. This setup might catch some eyes, though certain companies run this way on purpose.`;
+    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoDebtToEquityRatio.toFixed(2)}，均为负值，表明股东权益为负，可能是持续亏损或大规模回购所致。部分公司可能有意为之，但需关注其长期稳定性。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "High" &&
     stockTwoDebtToEquityRatioCategory === "High"
   ) {
-    return `With D/E ratios topping 3.0, ${stockOneSymbol} at ${stockOneDebtToEquityRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} lean heavily on debt over equity. That kind of leverage ups the stakes, particularly if cash gets squeezed by interest or tough times.`;
+    return `${stockOneSymbol} 的 D/E 高达 ${stockOneDebtToEquityRatio.toFixed(2)}，${stockTwoSymbol} 达 ${stockTwoDebtToEquityRatio.toFixed(2)}，均超过 3.0，显示债务水平较高。若利率上升或经济环境恶化，可能面临较大风险。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "Negative" &&
     stockTwoDebtToEquityRatioCategory === "High"
   ) {
-    return `${stockOneSymbol} logs a D/E of ${stockOneDebtToEquityRatio.toFixed(2)} in the red, hinting at negative equity—think losses or buybacks pushing it there. Flip to ${stockTwoSymbol}, where ${stockTwoDebtToEquityRatio.toFixed(2)} sails past 3.0, piling on debt that could magnify risks.`;
+    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，负值表明股东权益为负，可能由持续亏损或回购引起。而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 超过 3.0，债务负担较重，存在一定风险。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "High" &&
     stockTwoDebtToEquityRatioCategory === "Negative"
   ) {
-    return `${stockOneSymbol} hits ${stockOneDebtToEquityRatio.toFixed(2)} beyond 3.0, stacking debt high against equity—a risky play if borrowing costs bite. Meanwhile, ${stockTwoSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} dips negative, tied to equity in the hole, maybe from losses or repurchasing shares.`;
+    return `${stockOneSymbol} 的 D/E 达 ${stockOneDebtToEquityRatio.toFixed(2)}，超过 3.0，债务水平较高，风险值得关注；而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 为负值，股东权益为负，可能源于亏损或回购。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "Negative" &&
     stockTwoDebtToEquityRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol}’s D/E of ${stockOneDebtToEquityRatio.toFixed(2)} turns negative, likely from eroded equity via losses or buybacks—an odd financial twist. By comparison, ${stockTwoSymbol} holds a tame ${stockTwoDebtToEquityRatio.toFixed(2)}, keeping things steady.`;
+    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，负值表明股东权益为负，可能因长期亏损或回购导致。而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 处于合理范围，较为稳健。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "Normal" &&
     stockTwoDebtToEquityRatioCategory === "Negative"
   ) {
-    return `${stockTwoSymbol} shows a D/E of ${stockTwoDebtToEquityRatio.toFixed(2)} below zero, suggesting equity’s gone south—perhaps from losses or heavy buybacks. On the flip side, ${stockOneSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} sticks to a safer lane.`;
+    return `${stockTwoSymbol} 的 D/E 为 ${stockTwoDebtToEquityRatio.toFixed(2)}，负值显示股东权益为负，可能由亏损或回购引起；而 ${stockOneSymbol} 的 ${stockOneDebtToEquityRatio.toFixed(2)} 保持在稳健水平。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "High" &&
     stockTwoDebtToEquityRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} racks up a D/E of ${stockOneDebtToEquityRatio.toFixed(2)} over 3.0, leaning hard into debt and flirting with higher risk. Meanwhile, ${stockTwoSymbol} clocks in at ${stockTwoDebtToEquityRatio.toFixed(2)}, staying on firmer ground.`;
+    return `${stockOneSymbol} 的 D/E 高达 ${stockOneDebtToEquityRatio.toFixed(2)}，超过 3.0，债务负担较重，风险相对较高；而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 控制在合理范围。`;
   }
 
   if (
     stockOneDebtToEquityRatioCategory === "Normal" &&
     stockTwoDebtToEquityRatioCategory === "High"
   ) {
-    return `${stockTwoSymbol}’s ${stockTwoDebtToEquityRatio.toFixed(2)} D/E breaches 3.0, loading up on debt that could test its resilience. In contrast, ${stockOneSymbol} at ${stockOneDebtToEquityRatio.toFixed(2)} plays it closer to the vest with borrowing.`;
+    return `${stockTwoSymbol} 的 D/E 达 ${stockTwoDebtToEquityRatio.toFixed(2)}，超过 3.0，债务水平较高，抗风险能力可能较弱；而 ${stockOneSymbol} 的 ${stockOneDebtToEquityRatio.toFixed(2)} 较为稳健。`;
   }
 
   return "";
@@ -242,21 +242,21 @@ function generateDebtToAssetsRatioCommentary(
     stockOneDebtToAssetsRatioCategory === "High" &&
     stockTwoDebtToAssetsRatioCategory === "High"
   ) {
-    return `${stockOneSymbol} at ${stockOneDebtToAssetsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoDebtToAssetsRatio.toFixed(2)} both push D/A ratios past 0.8, with over 80% of assets tied to debt. That kind of borrowing heft could shake things up if asset prices slip or interest rates climb, though it’s not unusual for heavy-investment businesses.`;
+    return `${stockOneSymbol} 的 D/A 为 ${stockOneDebtToAssetsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoDebtToAssetsRatio.toFixed(2)}，均超过 0.8，资产中债务占比过高。若资产价值波动或利率上升，可能带来一定风险，这在重资产行业中较为常见。`;
   }
 
   if (
     stockOneDebtToAssetsRatioCategory === "High" &&
     stockTwoDebtToAssetsRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} clocks a D/A ratio of ${stockOneDebtToAssetsRatio.toFixed(2)} beyond 0.8, meaning debt funds most of its assets—a setup that might get dicey with financial hiccups. By contrast, ${stockTwoSymbol} rolls in at ${stockTwoDebtToAssetsRatio.toFixed(2)}, keeping borrowing in a lighter range.`;
+    return `${stockOneSymbol} 的 D/A 高达 ${stockOneDebtToAssetsRatio.toFixed(2)}，超过 0.8，资产主要依赖债务支持，市场波动可能带来压力。而 ${stockTwoSymbol} 的 ${stockTwoDebtToAssetsRatio.toFixed(2)} 较低，财务结构更稳健。`;
   }
 
   if (
     stockOneDebtToAssetsRatioCategory === "Normal" &&
     stockTwoDebtToAssetsRatioCategory === "High"
   ) {
-    return `${stockTwoSymbol}’s D/A ratio hits ${stockTwoDebtToAssetsRatio.toFixed(2)} above 0.8, leaning heavily on debt to back its assets—tricky if the market turns sour. Meanwhile, ${stockOneSymbol} at ${stockTwoDebtToAssetsRatio.toFixed(2)} opts for a less debt-driven approach.`;
+    return `${stockTwoSymbol} 的 D/A 达 ${stockTwoDebtToAssetsRatio.toFixed(2)}，超过 0.8，债务占资产比例较高，市场下行时可能承压。而 ${stockOneSymbol} 的 ${stockOneDebtToAssetsRatio.toFixed(2)} 较低，风险相对较小。`;
   }
 
   return "";
@@ -292,56 +292,56 @@ function generateInterestCoverageRatioCommentary(
     stockOneInterestCoverageRatioCategory === "Low" &&
     stockTwoInterestCoverageRatioCategory === "Low"
   ) {
-    return `${stockOneSymbol} at ${stockOneInterestCoverageRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} both scrape by with interest coverage under 1.5. Earnings are stretched thin against interest bills, leaving little wiggle room if profits drop.`;
+    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，${stockTwoSymbol} 也仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，均低于 1.5，利润仅能勉强覆盖利息，若盈利下滑，可能面临偿债压力。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `For ${stockOneSymbol} and ${stockTwoSymbol}, interest coverage shows as “--”, pointing to negligible interest costs—often a sign of slim debt or rock-bottom rates keeping expenses near zero.`;
+    return `${stockOneSymbol} 和 ${stockTwoSymbol} 的利息保障倍数均为 “--”，通常表明公司无有息债务或利息支出微乎其微，例如主要靠股权融资或债务成本极低。这种情况在低杠杆公司中常见。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Low" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `${stockOneSymbol}’s ${stockOneInterestCoverageRatio.toFixed(2)} interest coverage dips below 1.5, with earnings just nudging past interest—tight if pressure hits. Meanwhile, ${stockTwoSymbol} displays “--”, reflecting an interest burden so small it barely registers, likely from minimal debt.`;
+    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，低于 1.5，利润仅够支付利息，存在一定风险；而 ${stockTwoSymbol} 为 “--”，显示其几乎没有利息负担，可能因无有息借款或利率极低，财务压力很小。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Low"
   ) {
-    return `${stockOneSymbol}’s interest coverage reads “--”, suggesting interest expenses are next to nothing—think tiny debt or ultra-low rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} teeters below 1.5, earnings barely clearing interest.`;
+    return `${stockOneSymbol} 的利息保障倍数为 “--”，说明利息支出极低或不存在，通常依赖自有资金而非借贷，财务负担轻；而 ${stockTwoSymbol} 仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，低于 1.5，利润与利息支出接近，需关注盈利稳定性。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Low" &&
     stockTwoInterestCoverageRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} clocks in at ${stockOneInterestCoverageRatio.toFixed(2)} below 1.5, earnings just keeping ahead of interest—dicey if profits stumble. By contrast, ${stockTwoSymbol}’s ${stockTwoInterestCoverageRatio.toFixed(2)} sails through with plenty of cushion.`;
+    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，低于 1.5，利润仅能覆盖利息，波动时可能承压。而 ${stockTwoSymbol} 的 ${stockTwoInterestCoverageRatio.toFixed(2)} 较为宽裕，偿债能力较强。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Normal" &&
     stockTwoInterestCoverageRatioCategory === "Low"
   ) {
-    return `${stockTwoSymbol}’s ${stockTwoInterestCoverageRatio.toFixed(2)} sits under 1.5, where earnings hug interest costs too closely—a squeeze if income dips. Meanwhile, ${stockOneSymbol} at ${stockOneInterestCoverageRatio.toFixed(2)} has room to breathe.`;
+    return `${stockTwoSymbol} 的利息保障倍数仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，低于 1.5，利润与利息支出接近，收入波动可能带来风险；而 ${stockOneSymbol} 的 ${stockOneInterestCoverageRatio.toFixed(2)} 较为稳健。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Zero" &&
     stockTwoInterestCoverageRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} posts an interest coverage of “--”, hinting at interest costs so low they’re negligible—often from scant debt or dirt-cheap rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} handles interest with solid earnings.`;
+    return `${stockOneSymbol} 的利息保障倍数为 “--”，反映出极低的债务利息成本，通常无需支付显著利息，财务灵活性高；而 ${stockTwoSymbol} 的 ${stockTwoInterestCoverageRatio.toFixed(2)} 表现稳健，能轻松覆盖利息支出。`;
   }
 
   if (
     stockOneInterestCoverageRatioCategory === "Normal" &&
     stockTwoInterestCoverageRatioCategory === "Zero"
   ) {
-    return `${stockTwoSymbol}’s interest coverage comes up “--”, reflecting interest demands so faint they’re barely there—likely minimal debt or tiny rates—whereas ${stockOneSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} cruises past interest with ease.`;
+    return `${stockTwoSymbol} 的利息保障倍数为 “--”，表明几乎无须承担利息开支，可能因债务结构简单或无贷款，财务负担小；而 ${stockOneSymbol} 的 ${stockOneInterestCoverageRatio.toFixed(2)} 也显示出较强的偿债能力。`;
   }
 
   return "";
@@ -360,10 +360,8 @@ export async function FinancialStrengthMetricsComparisonSection({
   if (!stockOneFinancialMetrics || !stockTwoFinancialMetrics) {
     return (
       <Section ariaLabelledby="financial-strength-metrics-comparison">
-        <H2 id="financial-strength-metrics-comparison">
-          Financial Strength Metrics Comparison
-        </H2>
-        <P>Financial strength metrics data is currently unavailable.</P>
+        <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
+        <P>暂时无法加载财务状况数据。</P>
       </Section>
     );
   }
@@ -410,16 +408,12 @@ export async function FinancialStrengthMetricsComparisonSection({
 
   return (
     <Section ariaLabelledby="financial-strength-metrics-comparison">
-      <H2 id="financial-strength-metrics-comparison">
-        Financial Strength Metrics Comparison
-      </H2>
+      <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
       {hasCommentary ? (
         <>
           <P>
-            This section dives into the financial resilience of {stockOneSymbol}{" "}
-            and {stockTwoSymbol}, spotlighting key metrics like liquidity,
-            leverage, and debt coverage. Check out the standout observations
-            below where notable differences or extremes pop up.
+            这里对比了 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
+            的财务状况，重点看流动性、杠杆和债务情况。下方列出关键点，突出明显差异或极端情况。
           </P>
           <Ul>
             {currentRatioCommentary && <Ul.Li>{currentRatioCommentary}</Ul.Li>}
@@ -434,28 +428,24 @@ export async function FinancialStrengthMetricsComparisonSection({
               <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>Take a closer look at the full breakdown in the table below.</P>
+          <P>详情请参考下表。</P>
         </>
       ) : (
         <P>
-          Explore the financial strength details for {stockOneSymbol} and{" "}
-          {stockTwoSymbol}
-          in the table below.
+          请查看下方表格，了解 {stockOneSymbol} 和 {stockTwoSymbol} 的财务状况。
         </P>
       )}
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
         <Table.Tbody>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Current Ratio (TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneFinancialMetrics.currentRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -464,7 +454,7 @@ export async function FinancialStrengthMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">Quick Ratio (TTM)</Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneFinancialMetrics.quickRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -474,7 +464,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              Debt-to-Equity Ratio (TTM)
+              负债股东权益比 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneFinancialMetrics.debtToEquityRatioTTM.toFixed(2)}
@@ -485,7 +475,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              Debt-to-Assets Ratio (TTM)
+              负债资产比率 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneFinancialMetrics.debtToAssetsRatioTTM.toFixed(2)}
@@ -496,7 +486,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              Interest Coverage Ratio (TTM)
+              利息保障倍数 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneFinancialMetrics.interestCoverageRatioTTM === 0

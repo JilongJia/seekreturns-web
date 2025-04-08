@@ -394,7 +394,9 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">Forward PEG Ratio</Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">
+              Forward PEG Ratio (TTM)
+            </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
                 2,

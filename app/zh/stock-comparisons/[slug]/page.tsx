@@ -1,12 +1,12 @@
 import clsx from "clsx";
-import { AdvertisementSidebar } from "@/app/components/en/content/page/AdvertisementSidebar";
-import { Footer } from "@/app/components/en/content/page/Footer";
-import { Header as PageHeader } from "@/app/components/en/content/page/Header";
-import { TableOfContentsSidebar } from "@/app/components/en/content/page/TableOfContentsSidebar";
-import { H1 } from "@/app/components/en/content/page/main/article/H1";
-import { Header as ArticleHeader } from "@/app/components/en/content/page/main/article/Header";
-import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
-import { P } from "@/app/components/en/content/page/main/article/P";
+import { AdvertisementSidebar } from "@/app/components/zh/content/page/AdvertisementSidebar";
+import { Footer } from "@/app/components/zh/content/page/Footer";
+import { Header as PageHeader } from "@/app/components/zh/content/page/Header";
+import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
+import { H1 } from "@/app/components/zh/content/page/main/article/H1";
+import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/article/Header";
+import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";
+import { P } from "@/app/components/zh/content/page/main/article/P";
 import { tableOfContentsData } from "./tableOfContents";
 
 import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
@@ -26,7 +26,7 @@ async function Page({ params }: PageProps) {
   return (
     <>
       <PageHeader
-        pathname={`/en/stock-comparisons/${slug}`}
+        pathname={`/zh/stock-comparisons/${slug}`}
         className={clsx(styles.pageHeader, "layoutContainer")}
       />
       <div className={clsx(styles.contentContainer, "layoutContainer")}>
@@ -38,16 +38,13 @@ async function Page({ params }: PageProps) {
           <article>
             <ArticleHeader className={styles.articleHeader}>
               <H1>
-                {stockOneSymbol} vs. {stockTwoSymbol}: A Head-to-Head Stock
-                Comparison
+                {stockOneSymbol} 与 {stockTwoSymbol}：股票综合比较
               </H1>
               <ModifiedDate />
             </ArticleHeader>
             <P>
-              Here’s a clear look at {stockOneSymbol} and {stockTwoSymbol},
-              comparing key factors like performance, valuation metrics,
-              dividends, and financial strength. It’s built for investors or
-              anyone curious to see how these two stocks match up.
+              本文对 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
+              进行了全面对比，涵盖历史表现、估值、股息以及财务实力等方面。无论您是寻求投资洞察，还是希望了解这两只股票的相对优势，这里都能为您提供清晰的参考。
             </P>
             <PerformanceComparisonSection
               stockOneSymbol={stockOneSymbol}

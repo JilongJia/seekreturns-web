@@ -1,8 +1,8 @@
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
-import { Ul } from "@/app/components/en/content/page/main/article/Ul";
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
 
 type ValuationMetricsData = {
   priceToEarningsRatioTTM: number;
@@ -52,49 +52,49 @@ function generatePriceToEarningsRatioCommentary(
     stockOnePriceToEarningsRatioCategory === "Negative" &&
     stockTwoPriceToEarningsRatioCategory === "Negative"
   ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} have negative P/E values over the past twelve months. This reflects consistent losses rather than profits, meaning their current operations aren’t generating positive net income—a situation that could challenge their financial stability if prolonged.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，均为负值，表明过去一年均未实现盈利。若持续如此，可能对财务稳定性构成挑战。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "Negative" &&
     stockTwoPriceToEarningsRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} has a negative P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, indicating it’s been unprofitable over the past year with no net earnings to support its stock price. On the other hand, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} has maintained positive earnings, showing a healthier profit profile.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，负值显示过去一年未盈利，股价缺乏利润支撑。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 表明其具备正收益，盈利能力较为稳健。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "Negative" &&
     stockTwoPriceToEarningsRatioCategory === "High"
   ) {
-    return `${stockOneSymbol} posts a negative P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, meaning it’s been running at a loss over the past twelve months with no positive earnings. Conversely, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} commands a notably elevated P/E, where its stock price reflects a premium far exceeding its current earnings—a sign investors are betting heavily on future gains.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，负值表明过去一年未实现盈利。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 显著偏高，股价远超当前利润，反映市场对其未来增长的强烈预期。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "Normal" &&
     stockTwoPriceToEarningsRatioCategory === "Negative"
   ) {
-    return `${stockTwoSymbol} shows a negative P/E of ${stockTwoPriceToEarningsRatio.toFixed(2)}, highlighting a year of losses with no net profit generated. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} has sustained positive earnings, offering a more stable earnings foundation.`;
+    return `${stockTwoSymbol} 的市盈率为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，负值显示过去一年未盈利。而 ${stockOneSymbol} 的 ${stockOnePriceToEarningsRatio.toFixed(2)} 保持正收益，盈利基础较为稳固。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "High" &&
     stockTwoPriceToEarningsRatioCategory === "Negative"
   ) {
-    return `${stockOneSymbol} carries a lofty P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, where its market price towers over its earnings from the past year—investors are paying a significant premium for each dollar of profit. In stark contrast, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} is negative, revealing a complete absence of net earnings over the same period.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，远高于当前利润，显示市场对其未来高度看好。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 为负值，表明过去一年未实现盈利。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "High" &&
     stockTwoPriceToEarningsRatioCategory === "High"
   ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} exhibit P/E values well above typical levels. Their stock prices are trading at substantial multiples of their current earnings, suggesting the market anticipates robust future profitability or sees value beyond today’s income statements.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，均显著偏高，股价远超当前利润，显示市场对两者未来增长的乐观预期。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "High" &&
     stockTwoPriceToEarningsRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} stands out with a P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, far exceeding conventional benchmarks. This elevated figure means its stock price is disproportionately large compared to its earnings over the past twelve months, often reflecting strong investor optimism about its future. Meanwhile, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} aligns with more typical earnings multiples.`;
+    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，明显高于当前利润，反映市场对其未来增长的强烈信心。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 较为合理，与当前盈利水平更匹配。`;
   }
   if (
     stockOnePriceToEarningsRatioCategory === "Normal" &&
     stockTwoPriceToEarningsRatioCategory === "High"
   ) {
-    return `${stockTwoSymbol} has a notably high P/E of ${stockTwoPriceToEarningsRatio.toFixed(2)}, where its market price commands a steep multiple of its earnings from the past year—indicating investors are pricing in significant future potential. On the flip side, ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} maintains a P/E within a more standard range, tied closer to its current profitability.`;
+    return `${stockTwoSymbol} 的市盈率为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，远超当前利润，表明市场对其未来预期较高。而 ${stockOneSymbol} 的 ${stockOnePriceToEarningsRatio.toFixed(2)} 相对合理，与实际盈利较为一致。`;
   }
 
   return "";
@@ -129,19 +129,19 @@ function generateForwardPEGRatioCommentary(
     stockOneForwardPEGRatioCategory === "Negative" &&
     stockTwoForwardPEGRatioCategory === "Negative"
   ) {
-    return `Both ${stockOneSymbol} at ${stockOneForwardPEGRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoForwardPEGRatio.toFixed(2)} show negative Forward PEG values. This signals that analysts foresee either outright losses or a decline in earnings over the next period—a troubling outlook that casts doubt on their near-term profit potential.`;
+    return `${stockOneSymbol} 的前瞻 PEG 比率为 ${stockOneForwardPEGRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoForwardPEGRatio.toFixed(2)}，均为负值，表明分析师预计未来可能出现亏损或盈利增长放缓，需关注潜在风险。`;
   }
   if (
     stockOneForwardPEGRatioCategory === "Negative" &&
     stockTwoForwardPEGRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} carries a negative Forward PEG of ${stockOneForwardPEGRatio.toFixed(2)}, hinting at analyst expectations of losses or shrinking earnings in the coming period—a potential warning for its future performance. On the flip side, ${stockTwoSymbol} at ${stockTwoForwardPEGRatio.toFixed(2)} sidesteps this concern with a more favorable outlook.`;
+    return `${stockOneSymbol} 的前瞻 PEG 比率为 ${stockOneForwardPEGRatio.toFixed(2)}，负值暗示分析师预测可能出现亏损或盈利下滑。而 ${stockTwoSymbol} 的 ${stockTwoForwardPEGRatio.toFixed(2)} 则显示出较为乐观的前景。`;
   }
   if (
     stockOneForwardPEGRatioCategory === "Normal" &&
     stockTwoForwardPEGRatioCategory === "Negative"
   ) {
-    return `${stockTwoSymbol} has a negative Forward PEG of ${stockTwoForwardPEGRatio.toFixed(2)}, suggesting analysts predict either a drop in earnings or no profits at all in the near future—a red flag for its growth trajectory. Meanwhile, ${stockOneSymbol} at ${stockOneForwardPEGRatio.toFixed(2)} avoids such a pessimistic forecast.`;
+    return `${stockTwoSymbol} 的前瞻 PEG 比率为 ${stockTwoForwardPEGRatio.toFixed(2)}，负值表明分析师预计可能出现亏损或盈利减少，存在一定风险。而 ${stockOneSymbol} 的 ${stockOneForwardPEGRatio.toFixed(2)} 则展现更积极的前景。`;
   }
 
   return "";
@@ -176,19 +176,19 @@ function generatePriceToBookRatioCommentary(
     stockOnePriceToBookRatioCategory === "Negative" &&
     stockTwoPriceToBookRatioCategory === "Negative"
   ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToBookRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToBookRatio.toFixed(2)} have negative Price-to-Book values. This means their liabilities outstrip their assets, leaving them with negative net worth—a dire signal that their financial foundations are deeply strained, potentially teetering on the edge of insolvency.`;
+    return `${stockOneSymbol} 的市净率为 ${stockOnePriceToBookRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToBookRatio.toFixed(2)}，均为负值，表明债务超过资产，净值已为负，可能反映财务状况的脆弱性。`;
   }
   if (
     stockOnePriceToBookRatioCategory === "Negative" &&
     stockTwoPriceToBookRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} shows a negative Price-to-Book of ${stockOnePriceToBookRatio.toFixed(2)}, revealing that its liabilities surpass its assets. This precarious position suggests a fragile balance sheet, where the company’s market value hinges on factors beyond its tangible worth. On the other hand, ${stockTwoSymbol} at ${stockTwoPriceToBookRatio.toFixed(2)} maintains a positive net worth, free of this troubling indicator.`;
+    return `${stockOneSymbol} 的市净率为 ${stockOnePriceToBookRatio.toFixed(2)}，负值显示债务超出资产，财务结构较脆弱。而 ${stockTwoSymbol} 的 ${stockTwoPriceToBookRatio.toFixed(2)} 保持正值，账面价值更稳健。`;
   }
   if (
     stockOnePriceToBookRatioCategory === "Normal" &&
     stockTwoPriceToBookRatioCategory === "Negative"
   ) {
-    return `${stockTwoSymbol} posts a negative Price-to-Book of ${stockTwoPriceToBookRatio.toFixed(2)}, where its liabilities exceed its assets—a stark warning of underlying financial weakness that could threaten its long-term viability. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToBookRatio.toFixed(2)} stands on firmer ground with a positive book value.`;
+    return `${stockTwoSymbol} 的市净率为 ${stockTwoPriceToBookRatio.toFixed(2)}，负值表明债务超过资产，财务状况存在一定风险。而 ${stockOneSymbol} 的 ${stockOnePriceToBookRatio.toFixed(2)} 为正值，基础较为稳固。`;
   }
 
   return "";
@@ -224,19 +224,19 @@ function generatePriceToFreeCashFlowRatioCommentary(
     stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
     stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
   ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} have negative Price-to-Free Cash Flow values. This reveals they’ve been consuming more cash than they generate over the past year—a persistent cash drain that could strain their ability to operate without external funding.`;
+    return `${stockOneSymbol} 的市现率为 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}，均为负值，表明过去一年自由现金流为负，现金消耗大于生成，可能需外部融资支持。`;
   }
   if (
     stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
     stockTwoPriceToFreeCashFlowRatioCategory === "Normal"
   ) {
-    return `${stockOneSymbol} shows a negative Price-to-Free Cash Flow of ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}, meaning it’s been burning through cash faster than it can produce it over the past twelve months—a troubling sign for its financial resilience. On the flip side, ${stockTwoSymbol} at ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} has managed to keep its cash flow in positive territory.`;
+    return `${stockOneSymbol} 的市现率为 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}，负值显示过去一年现金流出超过流入，存在一定风险。而 ${stockTwoSymbol} 的 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} 为正值，现金流状况较为健康。`;
   }
   if (
     stockOnePriceToFreeCashFlowRatioCategory === "Normal" &&
     stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
   ) {
-    return `${stockTwoSymbol} has a negative Price-to-Free Cash Flow of ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}, indicating it’s spent more cash than it’s brought in over the past year—a cash flow shortfall that raises questions about its operational sustainability. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} maintains a positive cash position.`;
+    return `${stockTwoSymbol} 的市现率为 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}，负值表明过去一年现金流为负，可能面临资金压力。而 ${stockOneSymbol} 的 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} 为正值，现金流表现稳健。`;
   }
 
   return "";
@@ -299,8 +299,8 @@ export async function ValuationMetricsComparisonSection({
   if (!stockOneValuationMetricsData || !stockTwoValuationMetricsData) {
     return (
       <Section ariaLabelledby="valuation-metrics-comparison">
-        <H2 id="valuation-metrics-comparison">Valuation Metrics Comparison</H2>
-        <P>Valuation metrics data is currently unavailable.</P>
+        <H2 id="valuation-metrics-comparison">估值指标比较</H2>
+        <P>暂时无法加载估值指标数据。</P>
       </Section>
     );
   }
@@ -341,14 +341,13 @@ export async function ValuationMetricsComparisonSection({
 
   return (
     <Section ariaLabelledby="valuation-metrics-comparison">
-      <H2 id="valuation-metrics-comparison">Valuation Metrics Comparison</H2>
+      <H2 id="valuation-metrics-comparison">估值指标比较</H2>
       {hasCommentary ? (
         <>
           <P>
-            The section examines key financial ratios to assess the valuation of{" "}
-            {stockOneSymbol} and {stockTwoSymbol} based on earnings, cash flow,
-            sales, and book value. Pay attention to the following notable points
-            where extreme values stand out.
+            这里通过盈利、现金流、销售和账面价值等关键指标，评估{" "}
+            {stockOneSymbol} 和 {stockTwoSymbol}{" "}
+            的估值。以下几点尤其值得注意，特别是极端情况。
           </P>
           <Ul>
             {priceToEarningsRatioCommentary && (
@@ -364,28 +363,24 @@ export async function ValuationMetricsComparisonSection({
               <Ul.Li>{priceToFreeCashFlowRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>For a detailed comparison, please refer to the table below.</P>
+          <P>更多信息，见下方表格。</P>
         </>
       ) : (
         <P>
-          For a detailed comparison of valuation metrics between{" "}
-          {stockOneSymbol} and {stockTwoSymbol}, please refer to the table
-          below.
+          想了解 {stockOneSymbol} 和 {stockTwoSymbol} 的估值对比，请看下表。
         </P>
       )}
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
         <Table.Tbody>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Earnings Ratio (P/E, TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">市盈率 (P/E, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.priceToEarningsRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -394,7 +389,9 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">Forward PEG Ratio</Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">
+              前瞻 PEG 比率 (TTM)
+            </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
                 2,
@@ -407,9 +404,7 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Sales Ratio (P/S, TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">市销率 (P/S, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.priceToSalesRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -418,9 +413,7 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Book Ratio (P/B, TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">市净率 (P/B, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.priceToBookRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -430,7 +423,7 @@ export async function ValuationMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              Price-to-Free Cash Flow Ratio (P/FCF, TTM)
+              市现率 (P/FCF, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.priceToFreeCashFlowRatioTTM.toFixed(
@@ -444,9 +437,7 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              EV-to-EBITDA (TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">EV/EBITDA (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.evToEBITDATTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -455,7 +446,9 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">EV-to-Sales (TTM)</Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">
+              企业价值/销售额 (TTM)
+            </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.evToSalesTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
@@ -465,7 +458,7 @@ export async function ValuationMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              EV-to-Free Cash Flow (TTM)
+              企业价值/自由现金流 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneValuationMetricsData.evToFreeCashFlowTTM.toFixed(2)}

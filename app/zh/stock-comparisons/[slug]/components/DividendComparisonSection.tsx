@@ -1,7 +1,7 @@
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { Table } from "@/app/components/zh/content/page/main/article/Table";
 
 type DividendData = {
   symbol: string;
@@ -53,19 +53,19 @@ function generateDividendYieldCommentary(
   const stockTwoCategory = getDividendYieldCategory(stockTwoDividendYield);
 
   if (stockOneCategory === "None" && stockTwoCategory === "None") {
-    return `Neither ${stockOneSymbol} nor ${stockTwoSymbol} pays dividends, suggesting both reinvest all profits into growth—likely expansion or innovation—favoring long-term value over immediate income.`;
+    return `${stockOneSymbol} 和 ${stockTwoSymbol} 均不支付股息，利润主要用于再投资，可能优先考虑业务扩展或长期增长而非短期股东回报。`;
   }
 
   if (stockOneCategory === "None" && stockTwoCategory === "Has") {
-    return `${stockOneSymbol} pays no dividends, focusing all profits on growth, appealing to capital-gains investors. Meanwhile, ${stockTwoSymbol}’s ${stockTwoDividendYield.toFixed(2)}% yield rewards shareholders, showing financial confidence while supporting objectives—a contrast to ${stockOneSymbol}’s growth-only approach.`;
+    return `${stockOneSymbol} 不支付股息，利润更多用于支持公司发展，适合追求资本增值的投资者。而 ${stockTwoSymbol} 的股息率为 ${stockTwoDividendYield.toFixed(2)}%，通过分红直接回报股东，反映出较稳定的盈利能力，两者策略形成对比。`;
   }
 
   if (stockOneCategory === "Has" && stockTwoCategory === "None") {
-    return `${stockOneSymbol}’s ${stockOneDividendYield.toFixed(2)}% yield offers steady income while retaining earnings for growth, unlike ${stockTwoSymbol}, which pays none, reinvesting fully—likely in expansion or R&D—for investors eyeing future gains. This pits ${stockOneSymbol}’s balanced approach against ${stockTwoSymbol}’s long-term focus.`;
+    return `${stockOneSymbol} 的股息率为 ${stockOneDividendYield.toFixed(2)}%，在回报股东的同时兼顾增长；而 ${stockTwoSymbol} 不支付股息，利润主要投入未来发展，如业务扩展或研发，体现出不同的经营策略。`;
   }
 
   if (stockOneCategory === "Has" && stockTwoCategory === "Has") {
-    const baseCommentary = `Both ${stockOneSymbol} at ${stockOneDividendYield.toFixed(2)}% and ${stockTwoSymbol} at ${stockTwoDividendYield.toFixed(2)}% pay dividends, blending income with growth in their strategies.`;
+    const baseCommentary = `${stockOneSymbol} 的股息率为 ${stockOneDividendYield.toFixed(2)}%，${stockTwoSymbol} 为 ${stockTwoDividendYield.toFixed(2)}%，两者均在股东回报与公司发展之间取得平衡。`;
 
     const higherYield = Math.max(stockOneDividendYield, stockTwoDividendYield);
     const lowerYield = Math.min(stockOneDividendYield, stockTwoDividendYield);
@@ -82,11 +82,10 @@ function generateDividendYieldCommentary(
           ? stockTwoSymbol
           : stockOneSymbol;
       const higherYieldValue = higherYield.toFixed(2);
-      const lowerYieldValue = lowerYield.toFixed(2);
-      return `${baseCommentary} Yet ${higherStock}’s ${higherYieldValue}% yield, ${percentageDifference}% above ${lowerStock}’s ${lowerYieldValue}%, suggests a focus on generous payouts—possibly from stronger profits—while ${lowerStock} leans toward reinvestment, perhaps due to tighter margins.`;
+      return `${baseCommentary} 其中，${higherStock} 的股息率达 ${higherYieldValue}%，高出 ${lowerStock} 约 ${percentageDifference}%，显示其更倾向于回报股东，而 ${lowerStock} 则更多保留利润用于发展。`;
     }
 
-    return `${baseCommentary} Their yields align closely, indicating similar income-growth balances.`;
+    return `${baseCommentary} 两者的股息率差距较小，显示出相似的分红与增长策略。`;
   }
 
   return "";
@@ -102,8 +101,8 @@ export async function DividendComparisonSection({
   if (!stockOneDividendData || !stockTwoDividendData) {
     return (
       <Section ariaLabelledby="dividend-comparison">
-        <H2 id="dividend-comparison">Dividend Comparison</H2>
-        <P>Dividend data is currently unavailable.</P>
+        <H2 id="dividend-comparison">股息比较</H2>
+        <P>暂时无法加载股息数据。</P>
       </Section>
     );
   }
@@ -117,21 +116,19 @@ export async function DividendComparisonSection({
 
   return (
     <Section ariaLabelledby="dividend-comparison">
-      <H2 id="dividend-comparison">Dividend Comparison</H2>
+      <H2 id="dividend-comparison">股息比较</H2>
       <P>{dividendYieldCommentary}</P>
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
             <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
         <Table.Tbody>
           <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Dividend Yield (TTM)
-            </Table.Tbody.Tr.Th>
+            <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {(stockOneDividendData.dividendYieldTTM * 100).toFixed(2)}%
             </Table.Tbody.Tr.Td>
