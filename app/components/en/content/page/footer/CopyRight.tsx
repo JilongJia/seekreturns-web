@@ -7,7 +7,7 @@ type CopyRightProps = { className?: string };
 export function CopyRight({ className }: CopyRightProps) {
   return (
     <small className={clsx(styles.copyRight, className)}>
-      Copyright © 2025 Canny Trading
+      Copyright © 2025 Seek Returns
     </small>
   );
 }
