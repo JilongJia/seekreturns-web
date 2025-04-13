@@ -1,0 +1,29 @@
+.link {
+  display: block;
+  position: relative;
+  padding: 0.25rem;
+}
+
+.link:focus-visible {
+  outline-style: none;
+}
+
+.link::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transition-duration: 500ms;
+  border-bottom: 2px solid #525252;
+  width: 0;
+  content: "";
+}
+
+.link:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.link:focus-visible::after {
+  left: 0;
+  width: 100%;
+}
