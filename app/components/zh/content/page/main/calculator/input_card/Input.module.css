@@ -7,7 +7,7 @@
 
 .input {
   display: block;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 1px solid var(--outline-color);
   border-radius: 0.5rem;
   padding-top: 0.5rem;

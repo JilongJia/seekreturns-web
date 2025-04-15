@@ -1,17 +1,17 @@
 .link {
   display: block;
   position: relative;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   padding: 0.75rem 2rem;
 }
 
 .link:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   background-color: #dbeafe;
 }
 
 .link:focus-visible {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   outline-style: none;
   background-color: #dbeafe;
 }
@@ -20,17 +20,17 @@
   position: absolute;
   top: 0;
   left: 0;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   height: 100%;
   content: "";
 }
 
 .link:hover::before {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   border-left: 3px solid #2563eb;
 }
 
 .link:focus-visible::before {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   border-left: 3px solid #2563eb;
 }

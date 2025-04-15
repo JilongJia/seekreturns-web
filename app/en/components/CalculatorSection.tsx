@@ -9,21 +9,18 @@ type CalculatorSectionProps = { className?: string };
 export function CalculatorSection({ className }: CalculatorSectionProps) {
   return (
     <section className={clsx(styles.calculatorSection, className)}>
-      <div className={styles.text}>
+      <div className={styles.textContainer}>
         <h2 className={styles.h2}>
-          A Full Set of Calculators for Smarter Investing
+          Streamline Investing with Financial Calculators
         </h2>
         <p className={styles.p}>
-          Our site offers a wide range of financial calculators to help you make
-          sense of complex numbers fast and hassle-free.
+          Our suite of financial calculators simplifies complex investment math.
+          From ROI to portfolio analysis, these tools provide clear results in
+          seconds, helping you evaluate opportunities efficiently.
         </p>
         <p className={styles.p}>
-          The one you see here is our ROI calculator. lt crunches ROI to help
-          you focus on making decisions.
-        </p>
-        <p className={styles.p}>
-          Ready to explore more? Head over to the Calculator page and try out
-          the full collection.
+          Explore the Calculators page to access the full collection and analyze
+          your investments with precision.
         </p>
       </div>
       <Calculator />

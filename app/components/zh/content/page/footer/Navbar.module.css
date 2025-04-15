@@ -9,7 +9,7 @@
 }
 
 .link {
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
 }
 
 .link:hover {

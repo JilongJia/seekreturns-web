@@ -1,6 +1,6 @@
 .openDialogButton {
   vertical-align: middle;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   outline-offset: 2px;
   border-radius: 0.25rem;
@@ -8,7 +8,7 @@
 }
 
 .openDialogButton:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   color: #262626;
 }
 
@@ -61,7 +61,7 @@
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   outline-offset: 2px;
   border-radius: 0.25rem;
@@ -69,7 +69,7 @@
 }
 
 .closeButton:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   color: #262626;
 }
 
@@ -103,7 +103,7 @@
 
 .input {
   display: block;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 1px solid var(--outline-color);
   border-radius: 9999px;
   padding: 0.5rem 2.5rem 0.5rem 1rem;
@@ -117,7 +117,8 @@
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--outline-focus-color);
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
 }
 
 .submitButton {
@@ -125,7 +126,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   border-radius: 0 9999px 9999px 0;
   padding: 0 0.5rem;
@@ -134,7 +135,7 @@
 }
 
 .submitButton:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   color: #262626;
 }
 

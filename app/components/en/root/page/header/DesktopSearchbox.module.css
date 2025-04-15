@@ -20,7 +20,7 @@
 
 .input {
   display: block;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 1px solid var(--outline-color);
   outline-offset: 0;
   border-radius: 9999px;
@@ -35,7 +35,8 @@
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--outline-focus-color);
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
 }
 
 .button {
@@ -43,7 +44,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   border-radius: 0 9999px 9999px 0;
   padding: 0 0.5rem;
@@ -52,7 +53,7 @@
 }
 
 .button:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   color: #262626;
 }
 

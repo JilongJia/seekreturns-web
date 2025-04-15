@@ -60,18 +60,19 @@ export async function StockComparisonSection({
       aria-labelledby="stock-comparison"
       className={clsx(styles.stockComparisonSection, className)}
     >
-      <div className={styles.text}>
+      <div className={styles.textContainer}>
         <h2 id="stock-comparison" className={styles.h2}>
-          Build and Explore Stock Comparisons
+          Visualize Stock Performance with Custom Charts
         </h2>
         <p className={styles.p}>
-          Easily create custom charts to compare stock performance over time.
-          For example, this one tracks a $10,000 investment in AAPL and NVDA—
-          hover to see value and total return on any date.
+          Our charting tool makes it simple to compare stock performance over
+          time. For example, track how a $10,000 investment in stocks like AAPL
+          or NVDA evolves, with interactive charts showing values and returns
+          for any date.
         </p>
         <p className={styles.p}>
-          Want to try it yourself? Just pick the tickers and see the full
-          picture in seconds.
+          Choose your tickers and build tailored comparisons quickly to analyze
+          market trends with clarity.
         </p>
       </div>
       <Form className={styles.form} />

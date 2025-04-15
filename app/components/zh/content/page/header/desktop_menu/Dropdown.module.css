@@ -8,7 +8,7 @@
   top: 100%;
   left: 50%;
   z-index: 20;
-  transition-duration: 500ms;
+  transition-duration: 0.5s;
   border-bottom: 2px solid #525252;
   width: 0;
   content: "";
@@ -35,7 +35,7 @@
   visibility: hidden;
   opacity: 0;
   z-index: 10;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   list-style: none;
 }
 
@@ -43,5 +43,5 @@
   transform: translateY(0);
   visibility: visible;
   opacity: 1;
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
 }

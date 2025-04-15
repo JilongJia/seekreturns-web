@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   align-items: center;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   outline-offset: -2px;
   padding: 0.75rem 1.5rem;
@@ -10,12 +10,12 @@
 }
 
 .button:not(.expand):hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   background-color: #dbeafe;
 }
 
 .button.expand {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   background-color: #dbeafe;
 }
 
@@ -28,13 +28,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   height: 100%;
   content: "";
 }
 
 .button.expand::before {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   border-left: 3px solid #2563eb;
 }
 

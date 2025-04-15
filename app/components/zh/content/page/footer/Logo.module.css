@@ -1,5 +1,5 @@
 .logo {
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   outline-offset: 2px;
   border-radius: 0.25rem;

@@ -4,7 +4,7 @@
   color: #262626;
 }
 
-.text {
+.textContainer {
   margin-bottom: 2rem;
 }
 
@@ -34,7 +34,7 @@
     padding-left: 4rem;
   }
 
-  .text {
+  .textContainer {
     margin-bottom: 0;
   }
 

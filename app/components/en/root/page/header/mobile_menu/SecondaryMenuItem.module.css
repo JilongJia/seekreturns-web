@@ -1,13 +1,13 @@
 .link {
   display: block;
-  transition-duration: 100ms;
+  transition-duration: 0.1s;
   outline: 0 solid var(--outline-color);
   outline-offset: -2px;
   padding: 0.75rem 1.5rem 0.75rem 2.5rem;
 }
 
 .link:hover {
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   background-color: #dbeafe;
 }
 

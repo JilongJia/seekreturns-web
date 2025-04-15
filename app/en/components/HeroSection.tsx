@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styles from "./HeroSection.module.css";
 
-import coin from "../images/coin.gif";
+import seekReturnsStrategically from "../images/seek-returns-strategically.gif";
 
 type HeroSectionProps = { className?: string };
 
@@ -21,7 +21,11 @@ export function HeroSection({ className }: HeroSectionProps) {
           investment decisions.
         </p>
       </div>
-      <Image src={coin} alt="Animated illustration" className={styles.image} />
+      <Image
+        src={seekReturnsStrategically}
+        alt="Seek returns strategically"
+        className={styles.image}
+      />
     </section>
   );
 }

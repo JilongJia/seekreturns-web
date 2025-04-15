@@ -19,7 +19,7 @@
 
 .input::-webkit-slider-thumb {
   appearance: none;
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   cursor: grab;
   outline: 1px solid transparent;
   box-shadow: 0 0 6px 0 rgba(10, 10, 10, 0.3);
@@ -31,7 +31,7 @@
 
 .input::-moz-range-thumb {
   appearance: none;
-  transition-duration: 200ms;
+  transition-duration: 0.2s;
   cursor: grab;
   outline: 1px solid transparent;
   box-shadow: 0 0 6px 0 rgba(10, 10, 10, 0.3);
