@@ -1,23 +1,18 @@
 .header {
   position: relative;
   align-items: center;
-  margin-bottom: 2.5rem;
 }
 
-.contentContainer {
-  margin-bottom: 1.5rem;
+.heroSection {
+  margin-bottom: 4rem;
 }
 
-.tableOfContentsSidebar {
-  display: none;
+.stockComparisonSection {
+  margin-bottom: 4rem;
 }
 
-.main {
-  grid-column: 1 / -1;
-}
-
-.advertisementSidebar {
-  display: none;
+.calculatorSection {
+  margin-bottom: 4rem;
 }
 
 .footer {
@@ -27,27 +22,61 @@
 }
 
 @media (min-width: 640px) {
+  .heroSection {
+    margin-bottom: 5rem;
+  }
+
+  .stockComparisonSection {
+    margin-bottom: 5rem;
+  }
+
+  .calculatorSection {
+    margin-bottom: 5rem;
+  }
+
   .footer {
     row-gap: 0.5rem;
   }
 }
 
+@media (min-width: 768px) {
+  .heroSection {
+    margin-bottom: 6rem;
+  }
+
+  .stockComparisonSection {
+    margin-bottom: 6rem;
+  }
+
+  .calculatorSection {
+    margin-bottom: 6rem;
+  }
+}
+
 @media (min-width: 1024px) {
-  .header {
-    margin-bottom: 4rem;
+  .heroSection {
+    margin-bottom: 7rem;
   }
 
-  .tableOfContentsSidebar {
-    display: block;
-    grid-column: 1 / 4;
+  .stockComparisonSection {
+    margin-bottom: 7rem;
   }
 
-  .main {
-    grid-column: 4 / 10;
+  .calculatorSection {
+    margin-bottom: 7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .heroSection {
+    margin-bottom: 8rem;
   }
 
-  .advertisementSidebar {
-    display: block;
-    grid-column: 10 / 13;
+  .stockComparisonSection {
+    margin-bottom: 8rem;
+  }
+
+  .calculatorSection {
+    margin-bottom: 8rem;
   }
 }

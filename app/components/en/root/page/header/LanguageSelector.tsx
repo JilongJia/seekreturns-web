@@ -8,14 +8,10 @@ import { LuLanguages, LuChevronUp, LuChevronDown } from "react-icons/lu";
 import styles from "./LanguageSelector.module.css";
 
 type LanguageSelectorProps = {
-  hreflangAlternates: { path: string }[];
   className?: string;
 };
 
-export function LanguageSelector({
-  hreflangAlternates,
-  className,
-}: LanguageSelectorProps) {
+export function LanguageSelector({ className }: LanguageSelectorProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
@@ -42,25 +38,10 @@ export function LanguageSelector({
     setIsExpanded((prev) => !prev);
   };
 
-  const availableLanguages = hreflangAlternates
-    .map(({ path }) => {
-      let label = "";
-      let languageClassName = "";
-
-      if (path.startsWith("/en")) {
-        label = "English";
-        languageClassName = styles.english;
-      } else if (path.startsWith("/zh")) {
-        label = "中文";
-        languageClassName = styles.simplifiedChinese;
-      } else if (path.startsWith("/ja")) {
-        label = "日本語";
-        languageClassName = "";
-      }
-
-      return { label, path, languageClassName };
-    })
-    .filter(({ label }) => label !== "");
+  const availableLanguages = [
+    { label: "English", path: "/en", languageClassName: styles.english },
+    { label: "中文", path: "/zh", languageClassName: styles.simplifiedChinese },
+  ];
 
   return (
     <nav ref={navRef} className={clsx(styles.languageSelector, className)}>
@@ -87,7 +68,6 @@ export function LanguageSelector({
       >
         {availableLanguages.map(({ label, path, languageClassName }) => {
           const isCurrentLanguage = label === "English";
-
           return (
             <li key={path} className={languageClassName}>
               {isCurrentLanguage ? (

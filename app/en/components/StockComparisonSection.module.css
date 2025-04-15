@@ -1,0 +1,74 @@
+.stockComparisonSection {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  color: #262626;
+}
+
+.text {
+  margin-bottom: 2rem;
+}
+
+.form {
+  margin-bottom: 2rem;
+}
+
+.h2 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .stockComparisonSection {
+    padding-right: 4rem;
+    padding-left: 4rem;
+  }
+
+  .h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stockComparisonSection {
+    padding-right: 6rem;
+    padding-left: 6rem;
+  }
+
+  .h2 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stockComparisonSection {
+    padding-right: 8rem;
+    padding-left: 8rem;
+  }
+
+  .h2 {
+    margin-bottom: 3rem;
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .stockComparisonSection {
+    padding-right: 10rem;
+    padding-left: 10rem;
+  }
+
+  .h2 {
+    font-size: 3.2rem;
+  }
+}
