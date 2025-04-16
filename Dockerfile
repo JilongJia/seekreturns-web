@@ -13,7 +13,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN --mount=type=secret,id=financial-modeling-prep-api-key,FINANCIAL_MODELING_PREP_API_KEY=/run/secrets/financial-modeling-prep-api-key npm run build
+RUN --mount=type=secret,id=financial-modeling-prep-api-key,env=FINANCIAL_MODELING_PREP_API_KEY npm run build
 
 # Production image, copy files and run
 FROM base AS runner
