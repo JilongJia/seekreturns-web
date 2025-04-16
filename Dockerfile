@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM node:23-slim AS base
 
 # Install dependencies only when needed
@@ -12,7 +13,9 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN --mount=type=secret,id=FINANCIAL_MODELING_PREP_API_KEY,env=FINANCIAL_MODELING_PREP_API_KEY npm run build
+ARG FINANCIAL_MODELING_PREP_API_KEY
+ENV FINANCIAL_MODELING_PREP_API_KEY=$FINANCIAL_MODELING_PREP_API_KEY
+RUN npm run build
 
 # Production image, copy files and run
 FROM base AS runner
