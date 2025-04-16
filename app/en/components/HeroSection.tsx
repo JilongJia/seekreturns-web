@@ -12,9 +12,8 @@ export function HeroSection({ className }: HeroSectionProps) {
     <section className={clsx(styles.heroSection, className)}>
       <div>
         <h1 className={styles.h1}>
-          Seek Returns.
-          <br />
-          Strategically.
+          <span>Seek Returns.</span>
+          <span>Strategically.</span>
         </h1>
         <p className={styles.p}>
           Combining essential knowledge and practical tools for smarter
