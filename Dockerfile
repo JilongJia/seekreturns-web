@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:23-slim AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -12,9 +12,9 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN --mount=type=secret,id=FINANCIAL_MODELING_PREP_API_KEY,env=FINANCIAL_MODELING_PREP_API_KEY npm run build
 
-# Production image, copy all the files and run next
+# Production image, copy files and run
 FROM base AS runner
 WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
