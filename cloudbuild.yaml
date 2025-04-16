@@ -7,7 +7,6 @@ steps:
     args:
       [
         "build",
-        "--network=cloudbuild",
         "--secret",
         "id=financial-modeling-prep-api-key,env=FINANCIAL_MODELING_PREP_API_KEY",
         "-t",
