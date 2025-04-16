@@ -6,8 +6,8 @@ steps:
       [
         "build",
         "--network=cloudbuild",
-        "--build-arg",
-        "FINANCIAL_MODELING_PREP_API_KEY=$$FINANCIAL_MODELING_PREP_API_KEY",
+        "--secret",
+        "id=financial-modeling-prep-api-key,env=FINANCIAL_MODELING_PREP_API_KEY",
         "-t",
         "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA",
         ".",
