@@ -1,0 +1,29 @@
+.inputCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.numberInput {
+  justify-self: end;
+  width: 8rem;
+}
+
+@media (min-width: 640px) {
+  .numberInput {
+    width: 9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .numberInput {
+    width: 8rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .numberInput {
+    width: 9rem;
+  }
+}
