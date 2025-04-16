@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:23-slim AS base
+FROM node:23-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
