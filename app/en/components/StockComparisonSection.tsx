@@ -29,7 +29,7 @@ async function fetchPriceSeriesData(
       await response.json();
     if (!historicalPriceRawData || historicalPriceRawData.length === 0)
       return null;
-    console.log(historicalPriceRawData);
+    console.log(apiKey);
     historicalPriceRawData.reverse();
     const data: PriceSeriesData = historicalPriceRawData.map(
       (item: HistoricalPriceDataPoint) => ({
