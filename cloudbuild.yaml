@@ -1,6 +1,7 @@
 steps:
   # Build the image
   - name: "gcr.io/cloud-builders/docker"
+    secretEnv: ["FINANCIAL_MODELING_PREP_API_KEY"]
     args:
       [
         "build",
