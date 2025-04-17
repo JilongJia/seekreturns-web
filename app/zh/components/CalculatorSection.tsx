@@ -14,13 +14,13 @@ export function CalculatorSection({ className }: CalculatorSectionProps) {
     >
       <div className={styles.textContainer}>
         <h2 id="calculator" className={styles.h2}>
-          投资计算工具
+          多种多样的投资交易计算器
         </h2>
         <p className={styles.p}>
-          以下工具用于计算投资相关指标，包括投资回报率（ROI）和投资组合表现。输入数据后，可获得清晰的计算结果，用于评估投资方案。
+          我们丰富的金融计算器简化了复杂的投资计算。从投资回报率（ROI）到投资组合分析，这些工具能在几秒内提供清晰结果，助您高效评估投资机会。
         </p>
         <p className={styles.p}>
-          在“计算器”页面查看所有工具，分析您的投资数据。
+          访问“计算器”页面，体验完整工具集合，清晰分析您的投资机会。
         </p>
       </div>
       <Calculator />

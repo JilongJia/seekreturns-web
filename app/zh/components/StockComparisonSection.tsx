@@ -62,16 +62,14 @@ export async function StockComparisonSection({
     >
       <div className={styles.textContainer}>
         <h2 id="stock-comparison" className={styles.h2}>
-          使用自定义图表可视化股票表现
+          定制图表，助力高效投资决策
         </h2>
         <p className={styles.p}>
-          我们的图表工具让您轻松比较股票随时间的表现。例如，跟踪对 AAPL 或 NVDA
-          等股票投入 10,000
-          美元的投资如何演变，并通过交互式图表查看任意日期的价值和回报。
+          通过定制化图表工具，您可以追踪并对比重点关注的股票（如
+          AAPL、NVDA）表现。设置初始投资金额（如 1
+          万元），清晰呈现不同标的随时间的回报变化。图表支持交互操作，便于深入分析数据，提升决策效率。
         </p>
-        <p className={styles.p}>
-          选择您的股票代码，快速构建定制化对比，以便清晰分析市场趋势。
-        </p>
+        <p className={styles.p}>输入股票代码，即可快速生成对比图表。</p>
       </div>
       <Form className={styles.form} />
       <Chart
