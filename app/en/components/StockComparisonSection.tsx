@@ -53,7 +53,7 @@ export async function StockComparisonSection({
   const stockTwoPriceSeriesData = await fetchPriceSeriesData(stockTwoSymbol);
 
   if (!stockOnePriceSeriesData || !stockTwoPriceSeriesData) return null;
-  console.log("success at build time!!!");
+
   return (
     <section
       aria-labelledby="stock-comparison"
