@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Chart } from "@/app/en/stock-comparisons/[slug]/components/performance_comparison_section/Chart";
+import { Chart } from "@/app/zh/stock-comparisons/[slug]/components/performance_comparison_section/Chart";
 import { Form } from "./stock_comparison_section/Form";
 
 import styles from "./StockComparisonSection.module.css";
@@ -62,17 +62,15 @@ export async function StockComparisonSection({
     >
       <div className={styles.textContainer}>
         <h2 id="stock-comparison" className={styles.h2}>
-          Visualize Stock Performance with Custom Charts
+          使用自定义图表可视化股票表现
         </h2>
         <p className={styles.p}>
-          Our charting tool makes it simple to compare stock performance over
-          time. For example, track how a $10,000 investment in stocks like AAPL
-          or NVDA evolves, with interactive charts showing values and returns
-          for any date.
+          我们的图表工具让您轻松比较股票随时间的表现。例如，跟踪对 AAPL 或 NVDA
+          等股票投入 10,000
+          美元的投资如何演变，并通过交互式图表查看任意日期的价值和回报。
         </p>
         <p className={styles.p}>
-          Choose your tickers and build tailored comparisons quickly to analyze
-          market trends with clarity.
+          选择您的股票代码，快速构建定制化对比，以便清晰分析市场趋势。
         </p>
       </div>
       <Form className={styles.form} />

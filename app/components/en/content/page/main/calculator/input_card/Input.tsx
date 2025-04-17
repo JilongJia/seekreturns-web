@@ -8,7 +8,7 @@ type NumberInputProps = {
   min?: string;
   max?: string;
   step?: string;
-  unit?: "dollar" | "percent" | "year" | "month" | "day";
+  unit?: "usd" | "cny" | "percent" | "year" | "month" | "day";
   className?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -25,8 +25,11 @@ export function NumberInput({
 }: NumberInputProps) {
   return (
     <div className={styles.numberInput}>
-      {unit === "dollar" && (
+      {unit === "usd" && (
         <span className={clsx(styles.unitLabel, styles.left)}>$</span>
+      )}
+      {unit === "cny" && (
+        <span className={clsx(styles.unitLabel, styles.left)}>¥</span>
       )}
       <input
         id={id}
@@ -43,7 +46,8 @@ export function NumberInput({
             [styles.month]: unit === "month",
             [styles.day]: unit === "day",
             [styles.percent]: unit === "percent",
-            [styles.dollar]: unit === "dollar",
+            [styles.usd]: unit === "usd",
+            [styles.cny]: unit === "cny",
             [styles.default]: !unit,
           },
           className,

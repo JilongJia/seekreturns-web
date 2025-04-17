@@ -40,7 +40,12 @@
   padding-left: 1rem;
 }
 
-.input.dollar {
+.input.usd {
+  padding-right: 0.75rem;
+  padding-left: 1.625rem;
+}
+
+.input.cny {
   padding-right: 0.75rem;
   padding-left: 1.625rem;
 }

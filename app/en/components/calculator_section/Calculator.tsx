@@ -61,7 +61,7 @@ export function Calculator({ className }: CalculatorProps) {
             id="initial-investment-number-input"
             value={initialInvestmentInput}
             min="0"
-            unit="dollar"
+            unit="usd"
             className={styles.numberInput}
             onChange={(e) => setInitialInvestmentInput(e.target.value)}
           />
@@ -73,7 +73,7 @@ export function Calculator({ className }: CalculatorProps) {
             id="final-value-number-input"
             value={finalValueInput}
             min="0"
-            unit="dollar"
+            unit="usd"
             className={styles.numberInput}
             onChange={(e) => setFinalValueInput(e.target.value)}
           />

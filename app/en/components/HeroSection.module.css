@@ -13,6 +13,14 @@
   font-size: 2.4rem;
 }
 
+.h1 .lineOne {
+  display: block;
+}
+
+.h1 .lineTwo {
+  display: block;
+}
+
 .p {
   font-size: 1rem;
 }
@@ -38,6 +46,10 @@
 
   .h1 {
     margin-bottom: 1.5rem;
+  }
+
+  .h1 .lineTwo .highlight {
+    color: #fde047;
   }
 
   .image {

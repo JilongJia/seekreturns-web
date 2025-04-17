@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import { ErrorMessageCard } from "@/app/components/en/content/page/main/calculator/ErrorMessageCard";
-import { Form } from "@/app/components/en/content/page/main/calculator/Form";
-import { InputCard } from "@/app/components/en/content/page/main/calculator/InputCard";
-import { OutputCard } from "@/app/components/en/content/page/main/calculator/OutputCard";
-import { Section } from "@/app/components/en/content/page/main/calculator/Section";
-import { ScreenReaderH2 } from "@/app/components/en/content/page/main/calculator/ScreenReaderH2";
+import { ErrorMessageCard } from "@/app/components/zh/content/page/main/calculator/ErrorMessageCard";
+import { Form } from "@/app/components/zh/content/page/main/calculator/Form";
+import { InputCard } from "@/app/components/zh/content/page/main/calculator/InputCard";
+import { OutputCard } from "@/app/components/zh/content/page/main/calculator/OutputCard";
+import { Section } from "@/app/components/zh/content/page/main/calculator/Section";
+import { ScreenReaderH2 } from "@/app/components/zh/content/page/main/calculator/ScreenReaderH2";
 import styles from "./Calculator.module.css";
 
 type CalculatorProps = { className?: string };
@@ -21,20 +21,20 @@ export function Calculator({ className }: CalculatorProps) {
 
   let initialInvestmentError = "";
   if (initialInvestmentInput.trim() === "") {
-    initialInvestmentError = "Please enter the initial investment.";
+    initialInvestmentError = "请输入初始投资金额";
   } else if (Number.isNaN(initialInvestmentValue)) {
-    initialInvestmentError = "Please enter a valid numeric initial investment.";
+    initialInvestmentError = "初始投资金额必须为有效数字";
   } else if (initialInvestmentValue <= 0) {
-    initialInvestmentError = "Initial investment must be greater than 0.";
+    initialInvestmentError = "初始投资金额必须大于0";
   }
 
   let finalValueError = "";
   if (finalValueInput.trim() === "") {
-    finalValueError = "Please enter the final value.";
+    finalValueError = "请输入最终价值";
   } else if (Number.isNaN(finalValueValue)) {
-    finalValueError = "Please enter a valid numeric final value.";
+    finalValueError = "最终价值必须为有效数字";
   } else if (finalValueValue < 0) {
-    finalValueError = "Final value must not be less than 0.";
+    finalValueError = "最终价值不能为负数";
   }
 
   const errorMessages = [initialInvestmentError, finalValueError].filter(
@@ -51,29 +51,29 @@ export function Calculator({ className }: CalculatorProps) {
 
   return (
     <Section className={className}>
-      <ScreenReaderH2>Return on Investment (ROI) Calculator</ScreenReaderH2>
+      <ScreenReaderH2>投资回报率（ROI）计算器</ScreenReaderH2>
       <Form>
         <InputCard className={styles.inputCard}>
           <InputCard.Label htmlFor="initial-investment-number-input">
-            Initial Investment:
+            初始投资：
           </InputCard.Label>
           <InputCard.NumberInput
             id="initial-investment-number-input"
             value={initialInvestmentInput}
             min="0"
-            unit="dollar"
+            unit="cny"
             className={styles.numberInput}
             onChange={(e) => setInitialInvestmentInput(e.target.value)}
           />
 
           <InputCard.Label htmlFor="final-value-number-input">
-            Final Value:
+            最终价值：
           </InputCard.Label>
           <InputCard.NumberInput
             id="final-value-number-input"
             value={finalValueInput}
             min="0"
-            unit="dollar"
+            unit="cny"
             className={styles.numberInput}
             onChange={(e) => setFinalValueInput(e.target.value)}
           />
@@ -82,7 +82,7 @@ export function Calculator({ className }: CalculatorProps) {
         {roi && (
           <OutputCard>
             <OutputCard.Label htmlFor="roi-output">
-              Return on Investment (ROI):
+              投资回报率（ROI）：
             </OutputCard.Label>
             <OutputCard.Output
               id="roi-output"
@@ -91,8 +91,8 @@ export function Calculator({ className }: CalculatorProps) {
               {roi}%
             </OutputCard.Output>
             <OutputCard.P>
-              With an initial investment of ${initialInvestmentValue} and a
-              final value of ${finalValueValue}, the ROI is {roi}%.
+              投资{initialInvestmentValue}元，最终价值{finalValueValue}
+              元，回报率为{roi}%。
             </OutputCard.P>
           </OutputCard>
         )}

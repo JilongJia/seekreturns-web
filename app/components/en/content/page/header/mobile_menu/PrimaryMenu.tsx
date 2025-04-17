@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { type PrimaryMenuData } from "@/app/data/en/menu";
 
+import { type PrimaryMenuData } from "@/app/data/en/menu";
 import { Dropdown } from "./Dropdown";
 import { PrimaryMenuItem } from "./PrimaryMenuItem";
 import styles from "./PrimaryMenu.module.css";

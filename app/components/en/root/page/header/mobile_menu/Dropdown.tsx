@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { LuChevronUp, LuChevronDown } from "react-icons/lu";
-import { type SecondaryMenuData } from "@/app/data/en/menu";
 
+import { type SecondaryMenuData } from "@/app/data/en/menu";
 import { SecondaryMenu } from "./SecondaryMenu";
 import styles from "./Dropdown.module.css";
 

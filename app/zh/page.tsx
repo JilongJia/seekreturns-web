@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { Header } from "@/app/components/en/root/page/Header";
-import { Footer } from "@/app/components/en/root/page/Footer";
+import { Header } from "@/app/components/zh/root/page/Header";
+import { Footer } from "@/app/components/zh/root/page/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { StockComparisonSection } from "./components/StockComparisonSection";
 import { CalculatorSection } from "./components/CalculatorSection";

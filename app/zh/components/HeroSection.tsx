@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import Image from "next/image";
+import clsx from "clsx";
 
 import styles from "./HeroSection.module.css";
 
@@ -9,9 +9,12 @@ type HeroSectionProps = { className?: string };
 
 export function HeroSection({ className }: HeroSectionProps) {
   return (
-    <section className={clsx(styles.heroSection, className)}>
+    <section
+      aria-labelledby="hero"
+      className={clsx(styles.heroSection, className)}
+    >
       <div>
-        <h1 className={styles.h1}>
+        <h1 id="hero" className={styles.h1}>
           <span className={styles.lineOne}>探索、分析、决策——</span>
           <span className={styles.lineTwo}>
             让投资回报<span className={styles.hightlight}>水涨船高</span>
@@ -20,7 +23,7 @@ export function HeroSection({ className }: HeroSectionProps) {
       </div>
       <Image
         src={seekReturnsStrategically}
-        alt="Seek returns strategically"
+        alt="策略性追求回报"
         className={styles.image}
       />
     </section>

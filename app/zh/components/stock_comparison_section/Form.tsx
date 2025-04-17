@@ -28,7 +28,7 @@ export function Form({ className }: FormProps) {
 
     if (!trimmedTickerOne || !trimmedTickerTwo) return;
 
-    const destinationUrl = `/en/stock-comparisons/${trimmedTickerOne.toLowerCase()}-vs-${trimmedTickerTwo.toLowerCase()}`;
+    const destinationUrl = `/zh/stock-comparisons/${trimmedTickerOne.toLowerCase()}-vs-${trimmedTickerTwo.toLowerCase()}`;
     router.push(destinationUrl);
   };
 
@@ -42,7 +42,7 @@ export function Form({ className }: FormProps) {
           onChange={handleTickerOneChange}
           className={styles.input}
         />
-        <span className={styles.vsText}> vs. </span>
+        <span className={styles.vsText}> 对比 </span>
         <input
           type="text"
           placeholder="NVDA"
@@ -52,7 +52,7 @@ export function Form({ className }: FormProps) {
         />
       </div>
       <button type="submit" className={styles.button}>
-        Compare
+        比较
       </button>
     </form>
   );

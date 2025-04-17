@@ -11,7 +11,7 @@ type RangeInputProps = {
   min: string;
   max: string;
   step: string;
-  unit?: "dollar" | "percent" | "year" | "month" | "day";
+  unit?: "usd" | "cny" | "percent" | "year" | "month" | "day";
   className?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -59,10 +59,16 @@ export function RangeInput({
         className={styles.input}
         onChange={onChange}
       />
-      {unit === "dollar" && (
+      {unit === "usd" && (
         <>
           <span className={clsx(styles.unitLabel, styles.left)}>${min}</span>
           <span className={clsx(styles.unitLabel, styles.right)}>${max}</span>
+        </>
+      )}
+      {unit === "cny" && (
+        <>
+          <span className={clsx(styles.unitLabel, styles.left)}>¥{min}</span>
+          <span className={clsx(styles.unitLabel, styles.right)}>¥{max}</span>
         </>
       )}
       {unit === "year" && (

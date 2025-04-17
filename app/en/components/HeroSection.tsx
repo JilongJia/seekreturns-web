@@ -9,11 +9,16 @@ type HeroSectionProps = { className?: string };
 
 export function HeroSection({ className }: HeroSectionProps) {
   return (
-    <section className={clsx(styles.heroSection, className)}>
+    <section
+      aria-labelledby="hero"
+      className={clsx(styles.heroSection, className)}
+    >
       <div>
-        <h1 className={styles.h1}>
-          <span>Seek Returns.</span>
-          <span>Strategically.</span>
+        <h1 id="hero" className={styles.h1}>
+          <span className={styles.lineOne}>Seek Returns.</span>
+          <span className={styles.lineTwo}>
+            <span className={styles.highlight}>Strategically.</span>
+          </span>
         </h1>
         <p className={styles.p}>
           Combining essential knowledge and practical tools for smarter

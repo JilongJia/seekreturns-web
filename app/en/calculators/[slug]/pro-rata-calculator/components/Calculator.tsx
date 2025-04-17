@@ -98,7 +98,7 @@ export function Calculator({ className }: CalculatorProps) {
           <InputCard.NumberInput
             id="total-amount-number-input"
             value={totalAmountInput}
-            unit="dollar"
+            unit="usd"
             className={styles.numberInput}
             onChange={(e) => setTotalAmountInput(e.target.value)}
           />

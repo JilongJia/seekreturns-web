@@ -8,9 +8,12 @@ type CalculatorSectionProps = { className?: string };
 
 export function CalculatorSection({ className }: CalculatorSectionProps) {
   return (
-    <section className={clsx(styles.calculatorSection, className)}>
+    <section
+      aria-labelledby="calculator"
+      className={clsx(styles.calculatorSection, className)}
+    >
       <div className={styles.textContainer}>
-        <h2 className={styles.h2}>
+        <h2 id="calculator" className={styles.h2}>
           Streamline Investing with Financial Calculators
         </h2>
         <p className={styles.p}>

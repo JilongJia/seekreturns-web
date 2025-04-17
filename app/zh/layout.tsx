@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${noto_sans_sc.variable}`}>
+    <html lang="zh" className={`${inter.variable} ${noto_sans_sc.variable}`}>
       <body className={styles.body}>{children}</body>
     </html>
   );

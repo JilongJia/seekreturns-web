@@ -12,18 +12,14 @@
   font-weight: 700;
 }
 
-.lineOne {
+.h1 .lineOne {
   display: block;
   font-size: 1.6rem;
 }
 
-.lineTwo {
+.h1 .lineTwo {
   display: block;
   font-size: 2.4rem;
-}
-
-.hightlight {
-  color: #fde047;
 }
 
 .p {
@@ -53,6 +49,10 @@
     margin-bottom: 1.5rem;
   }
 
+  .h1 .lineTwo .hightlight {
+    color: #fde047;
+  }
+
   .image {
     display: block;
   }
@@ -71,11 +71,11 @@
     margin-bottom: 2rem;
   }
 
-  .lineOne {
+  .h1 .lineOne {
     font-size: 2rem;
   }
 
-  .lineTwo {
+  .h1 .lineTwo {
     font-size: 2.8rem;
   }
 
@@ -97,11 +97,11 @@
     margin-bottom: 2.5rem;
   }
 
-  .lineOne {
+  .h1 .lineOne {
     font-size: 2.4rem;
   }
 
-  .lineTwo {
+  .h1 .lineTwo {
     font-size: 3.2rem;
   }
 
@@ -123,11 +123,11 @@
     margin-bottom: 3rem;
   }
 
-  .lineOne {
+  .h1 .lineOne {
     font-size: 2.8rem;
   }
 
-  .lineTwo {
+  .h1 .lineTwo {
     font-size: 3.6rem;
   }
 
