@@ -1,0 +1,12 @@
+.copyRight {
+  color: #737373;
+  font-size: 0.875rem;
+  text-align: center;
+  text-wrap: nowrap;
+}
+
+@media (min-width: 640px) {
+  .copyRight {
+    text-align: left;
+  }
+}

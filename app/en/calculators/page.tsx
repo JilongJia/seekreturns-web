@@ -2,15 +2,17 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import { getSectionPages } from "@/app/lib/db/getSectionPages";
-
 import { Header as PageHeader } from "@/app/components/en/section/page/Header";
 import { Footer } from "@/app/components/en/section/page/Footer";
 
 import styles from "./page.module.css";
 
-type PageData = { path: string; title: string };
+type PageData = {
+  title: string;
+  path: string;
+};
 
-async function Page() {
+export default async function Page() {
   const pages: PageData[] = await getSectionPages("en", "calculators");
 
   const groups: Record<string, PageData[]> = pages.reduce(
@@ -23,10 +25,13 @@ async function Page() {
     {} as Record<string, PageData[]>,
   );
 
-  const sortedLetters = Object.keys(groups).sort();
-  sortedLetters.forEach((letter) =>
-    groups[letter].sort((a, b) => a.title.localeCompare(b.title)),
+  const sortedLetters = Object.keys(groups).sort((a, b) =>
+    a.localeCompare(b, "en"),
   );
+
+  sortedLetters.forEach((letter) => {
+    groups[letter].sort((a, b) => a.title.localeCompare(b.title, "en"));
+  });
 
   return (
     <>
@@ -58,5 +63,3 @@ async function Page() {
     </>
   );
 }
-
-export default Page;
