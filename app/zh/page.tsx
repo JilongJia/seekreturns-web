@@ -11,9 +11,11 @@ async function Page() {
   return (
     <>
       <Header className={clsx(styles.header, "layoutContainer")} />
-      <HeroSection className={styles.heroSection} />
-      <StockComparisonSection className={styles.stockComparisonSection} />
-      <CalculatorSection className={styles.calculatorSection} />
+      <main>
+        <HeroSection className={styles.heroSection} />
+        <StockComparisonSection className={styles.stockComparisonSection} />
+        <CalculatorSection className={styles.calculatorSection} />
+      </main>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
     </>
   );

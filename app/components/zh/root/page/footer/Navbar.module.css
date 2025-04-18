@@ -8,10 +8,6 @@
   list-style: none;
 }
 
-.link {
-  transition-duration: 0.1s;
-}
-
 .link:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
