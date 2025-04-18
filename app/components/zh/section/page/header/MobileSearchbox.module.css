@@ -62,6 +62,7 @@
   top: 0.75rem;
   right: 0.75rem;
   transition-duration: 0.1s;
+  cursor: pointer;
   outline: 0 solid var(--outline-color);
   outline-offset: 2px;
   border-radius: 0.25rem;
@@ -127,6 +128,7 @@
   right: 0;
   bottom: 0;
   transition-duration: 0.1s;
+  cursor: pointer;
   outline: 0 solid var(--outline-color);
   border-radius: 0 9999px 9999px 0;
   padding: 0 0.5rem;

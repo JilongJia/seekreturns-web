@@ -1,7 +1,5 @@
 import clsx from "clsx";
 
-import { getHreflangAlternates } from "@/app/lib/db/getHreflangAlternates";
-
 import { MobileMenu } from "./header/MobileMenu";
 import { Logo } from "./header/Logo";
 import { DesktopMenu } from "./header/DesktopMenu";
@@ -13,18 +11,13 @@ import styles from "./Header.module.css";
 type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
-  let hreflangAlternates;
   const pathSegments = pathname.split("/");
+  const sectionSegment = pathSegments[1];
 
-  if (pathSegments.length > 2 && pathSegments[2] === "stock-comparisons") {
-    const languages = ["en", "zh"];
-    const remainingPath = pathSegments.slice(2).join("/");
-    hreflangAlternates = languages.map((lang) => ({
-      path: `/${lang}/${remainingPath}`,
-    }));
-  } else {
-    hreflangAlternates = await getHreflangAlternates(pathname);
-  }
+  const languages = ["en", "zh"];
+  const hreflangAlternates = languages.map((lang) => ({
+    path: `/${lang}/${sectionSegment}`,
+  }));
 
   return (
     <header className={clsx(styles.header, className)}>

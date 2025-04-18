@@ -7,10 +7,7 @@ import { Footer } from "@/app/components/en/section/page/Footer";
 
 import styles from "./page.module.css";
 
-type PageData = {
-  title: string;
-  path: string;
-};
+type PageData = { title: string; path: string };
 
 export default async function Page() {
   const pages: PageData[] = await getSectionPages("en", "calculators");

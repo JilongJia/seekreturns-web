@@ -45,6 +45,7 @@
   right: 0;
   bottom: 0;
   transition-duration: 0.1s;
+  cursor: pointer;
   outline: 0 solid var(--outline-color);
   border-radius: 0 9999px 9999px 0;
   padding: 0 0.5rem;
