@@ -39,13 +39,13 @@ options:
 
 availableSecrets:
   secretManager:
-    - versionName: "projects/cannytrading-prod/secrets/FINANCIAL_MODELING_PREP_API_KEY/versions/latest"
+    - versionName: "projects/seekreturns-prod/secrets/FINANCIAL_MODELING_PREP_API_KEY/versions/latest"
       env: "FINANCIAL_MODELING_PREP_API_KEY"
 
 substitutions:
-  _PROJECT_ID: cannytrading-prod
+  _PROJECT_ID: seekreturns-prod
   _ARTIFACT_REGISTRY_REGION: us-west1
   _ARTIFACT_REGISTRY_REPO_NAME: web-repository
   _ARTIFACT_REGISTRY_IMAGE_NAME: main
   _CLOUD_RUN_REGION: us-west1
-  _CLOUD_RUN_SERVICE_NAME: cannytrading-web
+  _CLOUD_RUN_SERVICE_NAME: seekreturns-web
