@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 
 type PageData = { title: string; path: string };
 
-export default async function Page() {
+async function Page() {
   const pages: PageData[] = await getSectionPages("en", "calculators");
 
   const groups: Record<string, PageData[]> = pages.reduce(
@@ -60,3 +60,5 @@ export default async function Page() {
     </>
   );
 }
+
+export default Page;
