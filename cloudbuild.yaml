@@ -45,7 +45,7 @@ availableSecrets:
 substitutions:
   _PROJECT_ID: seekreturns-prod
   _ARTIFACT_REGISTRY_REGION: us-west1
-  _ARTIFACT_REGISTRY_REPO_NAME: web-repository
+  _ARTIFACT_REGISTRY_REPO_NAME: web-repo
   _ARTIFACT_REGISTRY_IMAGE_NAME: main
   _CLOUD_RUN_REGION: us-west1
   _CLOUD_RUN_SERVICE_NAME: seekreturns-web
