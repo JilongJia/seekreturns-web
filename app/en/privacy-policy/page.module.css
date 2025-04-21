@@ -1,0 +1,145 @@
+.pageHeader {
+  position: relative;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.main {
+  margin-bottom: 2.5em;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+.mainHeader {
+  margin-bottom: 1.25rem;
+}
+
+.h1 {
+  margin-bottom: 1rem;
+  color: var(--article-heading-color);
+  font-weight: 600;
+  font-size: 1.875rem;
+  line-height: 2.5rem;
+}
+
+.modifiedDate {
+  color: #737373;
+  font-size: 0.875rem;
+}
+
+.h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 100px;
+  color: var(--article-heading-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 100px;
+  color: var(--article-heading-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.h4 {
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 100px;
+  color: var(--article-heading-color);
+  font-weight: 600;
+}
+
+.ul {
+  margin-bottom: 1rem;
+  color: var(--article-text-color);
+  line-height: 1.75rem;
+  list-style: none;
+}
+
+.li {
+  position: relative;
+  margin-bottom: 0.75rem;
+  padding-left: 1em;
+}
+
+.li:last-child {
+  margin-bottom: 0;
+}
+
+.li:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "•";
+}
+
+.p {
+  margin-bottom: 1rem;
+  color: var(--article-text-color);
+  line-height: 1.75rem;
+}
+
+.li .p {
+  margin-bottom: 0.75rem;
+  line-height: 1.75rem;
+}
+
+.link {
+  color: var(--article-link-color);
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:focus-visible {
+  outline-style: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer {
+  row-gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .main {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+
+  .footer {
+    row-gap: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 4rem;
+    padding-left: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pageHeader {
+    margin-bottom: 4rem;
+  }
+
+  .main {
+    margin-bottom: 4em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .main {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}

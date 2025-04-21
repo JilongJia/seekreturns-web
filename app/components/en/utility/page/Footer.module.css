@@ -1,0 +1,50 @@
+.logo {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.socialIcons {
+  grid-column: 1 / -1;
+}
+
+.navbar {
+  grid-column: 1 / -1;
+}
+
+.copyRight {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .logo {
+    grid-column: 1 / 5;
+    justify-self: start;
+  }
+
+  .socialIcons {
+    grid-column: 5 / 9;
+  }
+
+  .navbar {
+    grid-column: 4 / 9;
+    order: 1;
+  }
+
+  .copyRight {
+    grid-column: 1 / 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .socialIcons {
+    grid-column: 5 / 13;
+  }
+
+  .navbar {
+    grid-column: 5 / 13;
+  }
+
+  .copyRight {
+    grid-column: 1 / 5;
+  }
+}

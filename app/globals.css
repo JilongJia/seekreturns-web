@@ -206,6 +206,7 @@ input:where([type="button"], [type="reset"], [type="submit"]),
   --outline-focus-color: #2563eb;
   --article-heading-color: #262626;
   --article-text-color: #262626;
+  --article-link-color: #2563eb;
 }
 
 @media (prefers-color-scheme: dark) {
