@@ -1,0 +1,31 @@
+.link {
+  display: block;
+  transition-duration: 0.1s;
+  outline: 0 solid var(--outline-color);
+  outline-offset: -2px;
+  padding: 0.75rem 1.5rem;
+}
+
+.link:hover {
+  transition-duration: 0.2s;
+  background-color: #dbeafe;
+}
+
+.link:focus-visible {
+  outline-color: var(--outline-focus-color);
+  outline-width: 2px;
+}
+
+@media (min-width: 640px) {
+  .link {
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .link {
+    padding-right: 3.5rem;
+    padding-left: 3.5rem;
+  }
+}

@@ -8,10 +8,7 @@ import { DesktopSearchbox } from "./header/DesktopSearchbox";
 import { LanguageSelector } from "./header/LanguageSelector";
 import styles from "./Header.module.css";
 
-type HeaderProps = {
-  pathname: string;
-  className?: string;
-};
+type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
   const pathSegments = pathname.split("/");
