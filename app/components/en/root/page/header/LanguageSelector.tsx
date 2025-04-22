@@ -39,8 +39,12 @@ export function LanguageSelector({ className }: LanguageSelectorProps) {
   };
 
   const availableLanguages = [
-    { label: "English", path: "/en", languageClassName: styles.english },
-    { label: "中文", path: "/zh", languageClassName: styles.simplifiedChinese },
+    { label: "English", pathname: "/en", languageClassName: styles.english },
+    {
+      label: "中文",
+      pathname: "/zh",
+      languageClassName: styles.simplifiedChinese,
+    },
   ];
 
   return (
@@ -66,14 +70,14 @@ export function LanguageSelector({ className }: LanguageSelectorProps) {
         aria-labelledby="language-selector-button"
         className={clsx(styles.menu, { [styles.expanded]: isExpanded })}
       >
-        {availableLanguages.map(({ label, path, languageClassName }) => {
+        {availableLanguages.map(({ label, pathname, languageClassName }) => {
           const isCurrentLanguage = label === "English";
           return (
-            <li key={path} className={languageClassName}>
+            <li key={pathname} className={languageClassName}>
               {isCurrentLanguage ? (
                 <span className={styles.menuItemText}>{label}</span>
               ) : (
-                <Link href={path} className={styles.menuItemLink}>
+                <Link href={pathname} className={styles.menuItemLink}>
                   {label}
                 </Link>
               )}

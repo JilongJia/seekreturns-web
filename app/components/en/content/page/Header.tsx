@@ -14,13 +14,16 @@ type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
   let hreflangAlternates;
-  const pathSegments = pathname.split("/");
+  const pathnameSegments = pathname.split("/");
 
-  if (pathSegments.length > 2 && pathSegments[2] === "stock-comparisons") {
+  if (
+    pathnameSegments.length > 2 &&
+    pathnameSegments[2] === "stock-comparisons"
+  ) {
     const languages = ["en", "zh"];
-    const remainingPath = pathSegments.slice(2).join("/");
+    const remainingPathname = pathnameSegments.slice(2).join("/");
     hreflangAlternates = languages.map((lang) => ({
-      path: `/${lang}/${remainingPath}`,
+      pathname: `/${lang}/${remainingPathname}`,
     }));
   } else {
     hreflangAlternates = await getHreflangAlternates(pathname);

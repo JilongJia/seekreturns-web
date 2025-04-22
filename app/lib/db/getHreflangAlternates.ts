@@ -1,13 +1,16 @@
 import { adminDb } from "./firebaseAdmin";
 
-type HreflangAlternate = { path: string };
+type HreflangAlternate = { pathname: string };
 
 export async function getHreflangAlternates(
-  path: string,
+  pathname: string,
 ): Promise<HreflangAlternate[]> {
   const pagesRef = adminDb.collection("pages");
 
-  const pagesSnapshot = await pagesRef.where("path", "==", path).limit(1).get();
+  const pagesSnapshot = await pagesRef
+    .where("pathname", "==", pathname)
+    .limit(1)
+    .get();
 
   if (pagesSnapshot.empty) return [];
 
@@ -18,6 +21,6 @@ export async function getHreflangAlternates(
     .get();
 
   return hreflangAlternatesSnapshot.docs.map((doc) => ({
-    path: doc.data().path,
+    pathname: doc.data().pathname,
   }));
 }

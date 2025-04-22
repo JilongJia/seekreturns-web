@@ -8,7 +8,7 @@ import { LuLanguages, LuChevronUp, LuChevronDown } from "react-icons/lu";
 import styles from "./LanguageSelector.module.css";
 
 type LanguageSelectorProps = {
-  hreflangAlternates: { path: string }[];
+  hreflangAlternates: { pathname: string }[];
   className?: string;
 };
 
@@ -43,22 +43,22 @@ export function LanguageSelector({
   };
 
   const availableLanguages = hreflangAlternates
-    .map(({ path }) => {
+    .map(({ pathname }) => {
       let label = "";
       let languageClassName = "";
 
-      if (path.startsWith("/en")) {
+      if (pathname.startsWith("/en")) {
         label = "English";
         languageClassName = styles.english;
-      } else if (path.startsWith("/zh")) {
+      } else if (pathname.startsWith("/zh")) {
         label = "中文";
         languageClassName = styles.simplifiedChinese;
-      } else if (path.startsWith("/ja")) {
+      } else if (pathname.startsWith("/ja")) {
         label = "日本語";
         languageClassName = "";
       }
 
-      return { label, path, languageClassName };
+      return { label, pathname, languageClassName };
     })
     .filter(({ label }) => label !== "");
 
@@ -85,15 +85,15 @@ export function LanguageSelector({
         aria-labelledby="language-selector-button"
         className={clsx(styles.menu, { [styles.expanded]: isExpanded })}
       >
-        {availableLanguages.map(({ label, path, languageClassName }) => {
+        {availableLanguages.map(({ label, pathname, languageClassName }) => {
           const isCurrentLanguage = label === "中文";
 
           return (
-            <li key={path} className={languageClassName}>
+            <li key={pathname} className={languageClassName}>
               {isCurrentLanguage ? (
                 <span className={styles.menuItemText}>{label}</span>
               ) : (
-                <Link href={path} className={styles.menuItemLink}>
+                <Link href={pathname} className={styles.menuItemLink}>
                   {label}
                 </Link>
               )}

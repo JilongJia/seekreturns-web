@@ -7,7 +7,7 @@ import { Footer } from "@/app/components/en/section/page/Footer";
 
 import styles from "./page.module.css";
 
-type PageData = { title: string; path: string };
+type PageData = { title: string; pathname: string };
 
 async function Page() {
   const pages: PageData[] = await getSectionPages("en", "tables");
@@ -46,8 +46,8 @@ async function Page() {
             <h2 className={styles.h2}>{letter}</h2>
             <ul className={styles.ul}>
               {groups[letter].map((page) => (
-                <li key={page.path} className={styles.li}>
-                  <Link href={page.path} className={styles.link}>
+                <li key={page.pathname} className={styles.li}>
+                  <Link href={page.pathname} className={styles.link}>
                     {page.title}
                   </Link>
                 </li>

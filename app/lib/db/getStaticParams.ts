@@ -8,15 +8,15 @@ export async function getStaticParams(
   const pagesRef = adminDb.collection("pages");
 
   const pagesSnapshot = await pagesRef
-    .where("path", ">=", prefix)
-    .where("path", "<=", prefix + "\uf8ff")
+    .where("pathname", ">=", prefix)
+    .where("pathname", "<=", prefix + "\uf8ff")
     .get();
 
   return pagesSnapshot.docs.flatMap((doc) => {
-    const path = doc.data().path;
-    if (!path) return [];
+    const pathname = doc.data().pathname;
+    if (!pathname) return [];
 
-    const slug = path.replace(prefix, "").replace(/\/$/, "");
+    const slug = pathname.replace(prefix, "").replace(/\/$/, "");
     return [{ slug }];
   });
 }
