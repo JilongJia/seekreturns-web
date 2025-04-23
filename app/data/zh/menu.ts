@@ -1,9 +1,13 @@
-export type SecondaryMenuData = { id: string; label: string; href: string }[];
+export type SecondaryMenuData = {
+  id: string;
+  label: string;
+  pathname: string;
+}[];
 
 export type PrimaryMenuData = {
   id: string;
   label: string;
-  href?: string;
+  pathname?: string;
   secondaryMenuData?: SecondaryMenuData;
 }[];
 
@@ -12,18 +16,18 @@ export const primaryMenuData: PrimaryMenuData = [
     id: "knowledge",
     label: "百科",
     secondaryMenuData: [
-      { id: "concepts", label: "概念", href: "/zh/concepts" },
-      { id: "guides", label: "教程", href: "/zh/guides" },
+      { id: "concepts", label: "概念", pathname: "/zh/concepts" },
+      { id: "guides", label: "教程", pathname: "/zh/guides" },
     ],
   },
   {
     id: "tools",
     label: "工具",
     secondaryMenuData: [
-      { id: "calculators", label: "计算器", href: "/zh/calculators" },
-      { id: "charts", label: "图表", href: "/zh/charts" },
-      { id: "tables", label: "表格", href: "/zh/tables" },
+      { id: "calculators", label: "计算器", pathname: "/zh/calculators" },
+      { id: "charts", label: "图表", pathname: "/zh/charts" },
+      { id: "tables", label: "表格", pathname: "/zh/tables" },
     ],
   },
-  { id: "blog", label: "博客", href: "/zh/blog" },
+  { id: "blog", label: "博客", pathname: "/zh/blog" },
 ];

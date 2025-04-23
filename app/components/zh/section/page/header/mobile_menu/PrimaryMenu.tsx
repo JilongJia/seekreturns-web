@@ -41,10 +41,10 @@ export function PrimaryMenu({
                 onClick={() => dispatch(action)}
               />
             )}
-            {primaryMenuItemData.href && (
+            {primaryMenuItemData.pathname && (
               <PrimaryMenuItem
                 label={primaryMenuItemData.label}
-                href={primaryMenuItemData.href}
+                href={primaryMenuItemData.pathname}
               />
             )}
           </React.Fragment>

@@ -20,7 +20,7 @@ export function SecondaryMenu({
         <SecondaryMenuItem
           key={secondaryMenuItemData.id}
           label={secondaryMenuItemData.label}
-          href={secondaryMenuItemData.href}
+          href={secondaryMenuItemData.pathname}
         />
       ))}
     </menu>

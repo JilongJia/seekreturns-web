@@ -18,10 +18,10 @@ export function PrimaryMenu({ data, className }: PrimaryMenuProps) {
               data={primaryMenuItemData.secondaryMenuData}
             />
           )}
-          {primaryMenuItemData.href && (
+          {primaryMenuItemData.pathname && (
             <PrimaryMenuItem
               label={primaryMenuItemData.label}
-              href={primaryMenuItemData.href}
+              href={primaryMenuItemData.pathname}
             />
           )}
         </React.Fragment>
