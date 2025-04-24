@@ -16,11 +16,11 @@ export async function getHreflangAlternates(
 
   const hreflangGroupId = pagesSnapshot.docs[0].data().hreflangGroupId;
 
-  const hreflangAlternatesSnapshot = await pagesRef
+  const hreflangAlternatePagesSnapshot = await pagesRef
     .where("hreflangGroupId", "==", hreflangGroupId)
     .get();
 
-  return hreflangAlternatesSnapshot.docs.map((doc) => ({
+  return hreflangAlternatePagesSnapshot.docs.map((doc) => ({
     pathname: doc.data().pathname,
   }));
 }

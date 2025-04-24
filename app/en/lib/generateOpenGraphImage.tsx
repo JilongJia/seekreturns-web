@@ -21,6 +21,7 @@ export async function generateOpenGraphImage(text: string) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          gap: "2rem",
           backgroundImage: "linear-gradient(to bottom, #dbeafe, #fafafa)",
           paddingRight: "4rem",
           paddingLeft: "4rem",
@@ -32,7 +33,6 @@ export async function generateOpenGraphImage(text: string) {
           src={iconSrc}
           alt="Seek Returns logo"
           style={{
-            marginBottom: "2rem",
             width: "25%",
           }}
         />

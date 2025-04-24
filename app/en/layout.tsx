@@ -12,9 +12,9 @@ const noto_sans_sc = Noto_Sans_SC({
   variable: "--font-noto-sans-sc",
 });
 
-// export const metadata = {
-//   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
-// };
+export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
+};
 
 function RootLayout({ children }: RootLayoutProps) {
   return (

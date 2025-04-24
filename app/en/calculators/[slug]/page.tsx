@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import clsx from "clsx";
 
+import { getInfo } from "@/app/lib/db/getInfo";
+import { generateArticleMetadata } from "@/app/en/lib/generateMetadata";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
@@ -9,7 +11,33 @@ import { TableOfContentsSidebar } from "@/app/components/en/content/page/TableOf
 import { Footer } from "@/app/components/en/content/page/Footer";
 import styles from "./page.module.css";
 
+type generateMetadataProps = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: generateMetadataProps) {
+  const { slug } = await params;
+  const pageInfo = await getInfo(`/en/calculators/${slug}`);
+
+  if (!pageInfo) {
+    return {};
+  }
+  const {
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  } = pageInfo;
+  return generateArticleMetadata(
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  );
+}
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;

@@ -7,6 +7,7 @@ steps:
       - -c
       - |
         docker build --network=cloudbuild \
+          --build-arg NEXT_PUBLIC_BASE_URL=$_NEXT_PUBLIC_BASE_URL \
           --build-arg FINANCIAL_MODELING_PREP_API_KEY=$$FINANCIAL_MODELING_PREP_API_KEY \
           --tag "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA" \
           .
@@ -28,6 +29,7 @@ steps:
         gcloud run deploy "$_CLOUD_RUN_SERVICE_NAME" \
           --image "$_ARTIFACT_REGISTRY_REGION-docker.pkg.dev/$_PROJECT_ID/$_ARTIFACT_REGISTRY_REPO_NAME/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA" \
           --region "$_CLOUD_RUN_REGION" \
+          --set-env-vars NEXT_PUBLIC_BASE_URL=$_NEXT_PUBLIC_BASE_URL \
           --set-secrets FINANCIAL_MODELING_PREP_API_KEY=FINANCIAL_MODELING_PREP_API_KEY:latest \
           --allow-unauthenticated
 
@@ -49,3 +51,4 @@ substitutions:
   _ARTIFACT_REGISTRY_IMAGE_NAME: main
   _CLOUD_RUN_REGION: us-west1
   _CLOUD_RUN_SERVICE_NAME: seekreturns-web
+  _NEXT_PUBLIC_BASE_URL: "https://seekreturns.com"
