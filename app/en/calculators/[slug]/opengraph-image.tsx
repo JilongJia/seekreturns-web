@@ -1,12 +1,13 @@
 import { getTitle } from "@/app/lib/db/getTitle";
 import { generateOpenGraphImage } from "@/app/en/lib/generateOpenGraphImage";
 
-type GenerateImageMetadataParams = { params: { slug: string } };
-type OpenGraphImageParams = { params: { slug: string }; id: string };
+type GenerateImageMetadataParams = { params: Promise<{ slug: string }> };
+type OpenGraphImageParams = { params: Promise<{ slug: string }>; id: string };
 
 export async function generateImageMetadata({
-  params: { slug },
+  params,
 }: GenerateImageMetadataParams) {
+  const slug = (await params).slug;
   const title = await getTitle(`/en/calculators/${slug}`);
 
   return [
@@ -20,7 +21,8 @@ export async function generateImageMetadata({
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function OpenGraphImage({ params: { slug }, id }: OpenGraphImageParams) {
+async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
+  const slug = (await params).slug;
   const title = await getTitle(`/en/calculators/${slug}`);
 
   return generateOpenGraphImage(title || "Seek Returns");

@@ -15,7 +15,7 @@ type generateMetadataProps = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: generateMetadataProps) {
-  const { slug } = await params;
+  const slug = (await params).slug;
   const pageInfo = await getInfo(`/en/calculators/${slug}`);
 
   if (!pageInfo) {
