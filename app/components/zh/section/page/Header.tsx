@@ -12,7 +12,7 @@ type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
   const pathnameSegments = pathname.split("/");
-  const sectionSegment = pathnameSegments[1];
+  const sectionSegment = pathnameSegments[2];
 
   const languages = ["en", "zh"];
   const hreflangAlternates = languages.map((lang) => ({
