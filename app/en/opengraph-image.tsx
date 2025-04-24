@@ -5,12 +5,10 @@ export const size = {
   height: 630,
 };
 export const contentType = "image/png";
-export const alt = "Seek Returns";
+export const alt = "Seek Returns. Strategically.";
 
-async function OpenGraphImage() {
-  return generateOpenGraphImage(
-    "Visualize Stock Performance with Custom Charts",
-  );
+function OpenGraphImage() {
+  return generateOpenGraphImage("Seek Returns. Strategically.");
 }
 
 export default OpenGraphImage;
