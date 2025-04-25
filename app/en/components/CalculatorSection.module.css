@@ -1,6 +1,6 @@
 .calculatorSection {
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
   color: #262626;
 }
 
@@ -30,8 +30,8 @@
     grid-template-columns: 3fr 2fr;
     column-gap: 2rem;
     align-items: start;
-    padding-right: 4rem;
-    padding-left: 4rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
   }
 
   .textContainer {
@@ -46,16 +46,16 @@
 @media (min-width: 768px) {
   .calculatorSection {
     column-gap: 3rem;
-    padding-right: 6rem;
-    padding-left: 6rem;
+    padding-right: 4.5rem;
+    padding-left: 4.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .calculatorSection {
     column-gap: 4rem;
-    padding-right: 8rem;
-    padding-left: 8rem;
+    padding-right: 7rem;
+    padding-left: 7rem;
   }
 
   .h2 {

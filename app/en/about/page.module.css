@@ -23,11 +23,6 @@
   text-align: center;
 }
 
-.modifiedDate {
-  color: #737373;
-  font-size: 0.875rem;
-}
-
 .image {
   margin-right: auto;
   margin-left: auto;
@@ -84,21 +79,6 @@
 .li .p {
   margin-bottom: 0.75rem;
   line-height: 1.75rem;
-}
-
-.link {
-  color: var(--article-link-color);
-}
-
-.link:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.link:focus-visible {
-  outline-style: none;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .footer {
