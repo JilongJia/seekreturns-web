@@ -220,8 +220,8 @@ input:where([type="button"], [type="reset"], [type="submit"]),
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 0.5rem;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -236,8 +236,8 @@ input:where([type="button"], [type="reset"], [type="submit"]),
 @media (min-width: 768px) {
   .layoutContainer {
     column-gap: 2rem;
-    padding-right: 4rem;
-    padding-left: 4rem;
+    padding-right: 4.5rem;
+    padding-left: 4.5rem;
   }
 }
 
@@ -251,8 +251,8 @@ input:where([type="button"], [type="reset"], [type="submit"]),
 @media (min-width: 1280px) {
   .layoutContainer {
     column-gap: 4rem;
-    padding-right: 5rem;
-    padding-left: 5rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
   }
 }
 

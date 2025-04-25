@@ -55,14 +55,14 @@
 
 @media (min-width: 640px) {
   .button {
-    padding-right: 2.5rem;
-    padding-left: 2.5rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
   }
 }
 
 @media (min-width: 768px) {
   .button {
-    padding-right: 3.5rem;
-    padding-left: 3.5rem;
+    padding-right: 4.5rem;
+    padding-left: 4.5rem;
   }
 }

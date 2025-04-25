@@ -6,8 +6,8 @@
 
 .main {
   margin-bottom: 2.5rem;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .mainHeader {
@@ -88,8 +88,8 @@
 
 @media (min-width: 768px) {
   .main {
-    padding-right: 4rem;
-    padding-left: 4rem;
+    padding-right: 4.5rem;
+    padding-left: 4.5rem;
   }
 }
 
@@ -101,7 +101,7 @@
   .main {
     column-gap: 3rem;
     column-count: 2;
-    margin-bottom: 4em;
+    margin-bottom: 4rem;
   }
 
   .mainHeader {
@@ -112,7 +112,7 @@
 @media (min-width: 1280px) {
   .main {
     column-gap: 4rem;
-    padding-right: 5rem;
-    padding-left: 5rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
   }
 }

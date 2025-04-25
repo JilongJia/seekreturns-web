@@ -11,20 +11,27 @@
 }
 
 .mainHeader {
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .h1 {
   margin-bottom: 1rem;
   color: var(--article-heading-color);
   font-weight: 600;
-  font-size: 1.875rem;
+  font-size: 3rem;
   line-height: 2.5rem;
+  text-align: center;
 }
 
 .modifiedDate {
   color: #737373;
   font-size: 0.875rem;
+}
+
+.image {
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 0.25rem;
 }
 
 .h2 {
@@ -34,15 +41,6 @@
   color: var(--article-heading-color);
   font-weight: 600;
   font-size: 1.5rem;
-}
-
-.h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  scroll-margin-top: 100px;
-  color: var(--article-heading-color);
-  font-weight: 600;
-  font-size: 1.1rem;
 }
 
 .ul {
@@ -73,6 +71,14 @@
   margin-bottom: 1rem;
   color: var(--article-text-color);
   line-height: 1.75rem;
+}
+
+.p.introduction {
+  margin-bottom: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  font-weight: 500;
+  text-align: center;
 }
 
 .li .p {
@@ -107,6 +113,18 @@
     padding-left: 3rem;
   }
 
+  .p.introduction {
+    margin-bottom: 3rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
+    font-weight: 500;
+  }
+
+  .section {
+    padding-right: 4rem;
+    padding-left: 4rem;
+  }
+
   .footer {
     row-gap: 0.5rem;
   }
@@ -131,7 +149,7 @@
 
 @media (min-width: 1280px) {
   .main {
-    padding-right: 6rem;
-    padding-left: 6rem;
+    padding-right: 16rem;
+    padding-left: 16rem;
   }
 }

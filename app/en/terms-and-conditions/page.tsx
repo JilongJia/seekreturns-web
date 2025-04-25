@@ -1,8 +1,8 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import { Header as PageHeader } from "@/app/components/en/section/page/Header";
-import { Footer } from "@/app/components/en/section/page/Footer";
+import { Header as PageHeader } from "@/app/components/en/utility/page/Header";
+import { Footer } from "@/app/components/en/utility/page/Footer";
 
 import styles from "./page.module.css";
 
