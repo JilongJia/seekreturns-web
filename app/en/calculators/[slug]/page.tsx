@@ -41,66 +41,18 @@ export async function generateMetadata({ params }: generateMetadataProps) {
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const { softwareSchema } = await import(`./${slug}/softwareSchema`);
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://seekreturns.com/en/calculators/pvifa",
-        url: "https://seekreturns.com/en/calculators/pvifa",
-        name: "PVIFA calculator | SeekReturns",
-        description:
-          "Calculate the present value interest factor of an annuity for any interest rate and number of periods.",
-        inLanguage: "en-US",
-        isAccessibleForFree: true,
-        datePublished: "2025-04-26",
-        dateModified: "2025-04-26",
-        breadcrumb: {
-          "@id": "https://seekreturns.com/en/calculators/pvifa#breadcrumb",
-        },
-        potentialAction: {
-          "@type": "ComputeAction",
-          name: "Calculate PVIFA",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate:
-              "https://seekreturns.com/en/calculators/pvifa?rate={rate}&periods={periods}",
-          },
-          result: {
-            "@type": "PropertyValue",
-            name: "PVIFA",
-          },
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://seekreturns.com/en/calculators/pvifa#breadcrumb",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: "https://seekreturns.com/",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Calculators",
-            item: "https://seekreturns.com/en/calculators",
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: "PVIFA calculator",
-            item: "https://seekreturns.com/en/calculators/pvifa",
-          },
-        ],
-      },
-      softwareSchema,
-    ],
-  };
-
+  const { generateJsonLd } = await import(`./${slug}/jsonLd`);
+  const pageInfo = await getInfo(`/en/calculators/${slug}`);
+  if (!pageInfo) {
+    return {};
+  }
+  const jsonLd = generateJsonLd({
+    title: pageInfo.title,
+    pathname: pageInfo.pathname,
+    description: pageInfo.description,
+    publishedDate: pageInfo.publishedDate,
+    modifiedDate: pageInfo.modifiedDate,
+  });
   const { tableOfContentsData } = await import(`./${slug}/tableOfContents`);
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
