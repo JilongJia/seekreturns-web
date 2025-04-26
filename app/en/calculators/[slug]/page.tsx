@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: generateMetadataProps) {
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-
+  const { softwareSchema } = await import(`./${slug}/softwareSchema`);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -97,22 +97,7 @@ async function Page({ params }: PageProps) {
           },
         ],
       },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://seekreturns.com/en/calculators/pvifa#software",
-        name: "PVIFA Calculator",
-        applicationCategory: "FinanceApplication",
-        description:
-          "Web-based tool for computing the present value interest factor of an annuity.",
-        url: "https://seekreturns.com/en/calculators/pvifa",
-        operatingSystem: "All",
-        isAccessibleForFree: true,
-        publisher: {
-          "@type": "Organization",
-          name: "SeekReturns",
-          url: "https://seekreturns.com",
-        },
-      },
+      softwareSchema,
     ],
   };
 
