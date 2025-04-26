@@ -64,9 +64,8 @@ async function Page() {
           <ul className={styles.ul}>
             <li className={styles.li}>
               <strong>Educational Content</strong>: Clear explanations of key
-              financial concepts, important metrics (like Price-to-Earnings
-              ratios), and various methodologies, presented in an understandable
-              format.
+              financial concepts, important metrics, and various methodologies,
+              presented in an understandable format.
             </li>
             <li className={styles.li}>
               <strong>Analytical Tools</strong>: A suite of practical resources,
