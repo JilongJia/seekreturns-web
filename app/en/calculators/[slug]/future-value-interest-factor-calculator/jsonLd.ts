@@ -21,29 +21,30 @@ export function generateJsonLd({
   modifiedDate,
 }: GeneratePageJsonLdParams) {
   const url = `${process.env.NEXT_PUBLIC_BASE_URL}${pathname}`;
-  const datePublished = publishedDate.toISOString().split("T")[0];
-  const dateModified = modifiedDate.toISOString().split("T")[0];
+  const datePublished = publishedDate.toISOString();
+  const dateModified = modifiedDate.toISOString();
 
-  const breadcrumbListId = `${url}#breadcrumb`;
+  const webPageId = `${url}#web-page`;
+  const breadcrumbListId = `${url}#breadcrumb-list`;
   const articleId = `${url}#article`;
 
   const webPageSchema = {
     "@type": "WebPage",
-    "@id": url,
-    url: url,
+    "@id": webPageId,
     name: title,
+    url: url,
     description: description,
-    inLanguage: "en-US",
+    inLanguage: "en",
     datePublished: datePublished,
     dateModified: dateModified,
-    isPartOf: {
-      "@id": webSiteId,
-    },
     publisher: {
       "@id": organizationId,
     },
     breadcrumb: {
       "@id": breadcrumbListId,
+    },
+    isPartOf: {
+      "@id": webSiteId,
     },
     mainEntity: {
       "@id": articleId,
@@ -57,20 +58,14 @@ export function generateJsonLd({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
-        item: `${process.env.NEXT_PUBLIC_BASE_URL}/`,
+        name: "Calculators",
+        item: `${process.env.NEXT_PUBLIC_BASE_URL}/en/calculators`,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Calculators", // ** ACTION: Adjust if the parent category is different **
-        item: `${process.env.NEXT_PUBLIC_BASE_URL}/en/calculators`, // ** ACTION: Adjust URL if needed **
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: title, // Use the full page title
-        item: url, // Current page URL
+        name: title,
+        item: url,
       },
     ],
   };
@@ -78,19 +73,17 @@ export function generateJsonLd({
   const articleSchema = {
     "@type": "Article",
     "@id": articleId,
-    headline: "Future Value Interest Factor (FVIF) Calculator",
+    headline: title,
     description:
-      "Future Value Interest Factor (FVIF) Calculator test description",
-    datePublished: datePublished,
-    dateModified: dateModified,
+      "Learn what Future Value Interest Factor (FVIF) is, understand its formula, and use our calculator to find FVIF values quickly.",
+    image: [],
     author: {
       "@id": organizationId,
     },
-    publisher: {
-      "@id": organizationId,
-    },
+    datePublished: datePublished,
+    dateModified: dateModified,
     mainEntityOfPage: {
-      "@id": url,
+      "@id": webPageId,
     },
   };
 
