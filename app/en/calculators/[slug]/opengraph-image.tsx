@@ -1,5 +1,5 @@
 import { getTitle } from "@/app/lib/db/getTitle";
-import { generateOpenGraphImage } from "@/app/en/lib/generateOpenGraphImage";
+import { generateOpenGraphImage } from "@/app/lib/en/generateOpenGraphImage";
 
 type GenerateImageMetadataParams = { params: Promise<{ slug: string }> };
 type OpenGraphImageParams = { params: Promise<{ slug: string }>; id: string };

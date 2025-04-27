@@ -1,4 +1,4 @@
-import { generateOpenGraphImage } from "@/app/zh/lib/generateOpenGraphImage";
+import { generateOpenGraphImage } from "@/app/lib/zh/generateOpenGraphImage";
 
 export const size = {
   width: 1200,

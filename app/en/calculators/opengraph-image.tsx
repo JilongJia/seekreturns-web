@@ -1,4 +1,4 @@
-import { generateOpenGraphImage } from "@/app/en/lib/generateOpenGraphImage";
+import { generateOpenGraphImage } from "@/app/lib/en/generateOpenGraphImage";
 
 type OpenGraphImageParams = { id: string };
 

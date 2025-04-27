@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import clsx from "clsx";
 
 import { getInfo } from "@/app/lib/db/getInfo";
-import { generateArticleMetadata } from "@/app/en/lib/generateMetadata";
+import { generateArticleMetadata } from "@/app/lib/en/generateMetadata";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
