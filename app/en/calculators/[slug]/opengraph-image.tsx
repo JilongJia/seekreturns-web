@@ -24,15 +24,24 @@ export async function generateImageMetadata({
 async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
   const slug = (await params).slug;
   const info = await getInfo(`/en/calculators/${slug}`);
-  if (!info) return;
+  if (!info) {
+    return new Response("Image Not Found", { status: 404 });
+  }
   const { title, description, modifiedDate } = info;
-  const { tableOfContents } = await import(`./${slug}/tableOfContents`);
+  const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
   const section = "Calculator";
   const breadcrumbList = [
-    { name: "Calculator", url: "https://seekreturns.com/en/calculators" },
-    { name: title, url: `https://seekreturns.com/en/calculators/${slug}` },
+    {
+      name: "Calculator",
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/en/calculators`,
+    },
+    {
+      name: title,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/en/calculators/${slug}`,
+    },
   ];
-  return generateFeaturedImage(
+
+  const openGraphImage = generateFeaturedImage(
     title,
     description,
     modifiedDate,
@@ -40,6 +49,8 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
     section,
     breadcrumbList,
   );
+
+  return openGraphImage;
 }
 
 export default OpenGraphImage;

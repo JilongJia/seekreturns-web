@@ -84,7 +84,7 @@ export function generateWebSiteJsonLd({
 type ImageObject = {
   "@type": "ImageObject";
   url: string;
-  description: string;
+  caption: string;
   width: number;
   height: number;
 };
@@ -93,6 +93,7 @@ type GenerateWebPageJsonLdParams = {
   webPageId: string;
   organizationId: string;
   webSiteId: string;
+  breadcrumbListId: string;
   articleId: string;
   name: string;
   url: string;
@@ -101,13 +102,13 @@ type GenerateWebPageJsonLdParams = {
   publishedDate: Date;
   modifiedDate: Date;
   primaryImageOfPage: ImageObject;
-  breadcrumbListId: string;
 };
 
 export function generateWebPageJsonLd({
   webPageId,
   organizationId,
   webSiteId,
+  breadcrumbListId,
   articleId,
   name,
   url,
@@ -116,7 +117,6 @@ export function generateWebPageJsonLd({
   publishedDate,
   modifiedDate,
   primaryImageOfPage,
-  breadcrumbListId,
 }: GenerateWebPageJsonLdParams) {
   const datePublished = publishedDate.toISOString();
   const dateModified = modifiedDate.toISOString();
@@ -153,14 +153,14 @@ type BreadcrumbListItem = {
 
 type GenerateBreadcrumbListJsonLdParams = {
   breadcrumbListId: string;
-  breadcrumbItems: BreadcrumbListItem[];
+  breadcrumbList: BreadcrumbListItem[];
 };
 
 export function generateBreadcrumbListJsonLd({
   breadcrumbListId,
-  breadcrumbItems,
+  breadcrumbList,
 }: GenerateBreadcrumbListJsonLdParams) {
-  const itemListElement = breadcrumbItems.map((item, index) => ({
+  const itemListElement = breadcrumbList.map((item, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: item.name,

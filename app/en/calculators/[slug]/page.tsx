@@ -1,9 +1,11 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import clsx from "clsx";
 
 import { getInfo } from "@/app/lib/db/getInfo";
-import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
+import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
 import { Header } from "@/app/components/en/content/page/Header";
@@ -19,8 +21,9 @@ export async function generateMetadata({ params }: generateMetadataProps) {
   const pageInfo = await getInfo(`/en/calculators/${slug}`);
 
   if (!pageInfo) {
-    return {};
+    notFound();
   }
+
   const {
     title,
     pathname,
@@ -29,7 +32,8 @@ export async function generateMetadata({ params }: generateMetadataProps) {
     modifiedDate,
     alternateLanguageUrls,
   } = pageInfo;
-  return generateArticleMetadata(
+
+  const metadata = generateArticleMetadata(
     title,
     pathname,
     description,
@@ -37,23 +41,30 @@ export async function generateMetadata({ params }: generateMetadataProps) {
     modifiedDate,
     alternateLanguageUrls,
   );
+
+  return metadata;
 }
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const { generateJsonLd } = await import(`./${slug}/jsonLd`);
   const pageInfo = await getInfo(`/en/calculators/${slug}`);
   if (!pageInfo) {
-    return {};
+    notFound();
   }
+  const { title, pathname, description, publishedDate, modifiedDate } =
+    pageInfo;
+  const { images } = await import(`./${slug}/data/images`);
+
   const jsonLd = generateJsonLd({
-    title: pageInfo.title,
-    pathname: pageInfo.pathname,
-    description: pageInfo.description,
-    publishedDate: pageInfo.publishedDate,
-    modifiedDate: pageInfo.modifiedDate,
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    images,
   });
-  const { tableOfContents } = await import(`./${slug}/tableOfContents`);
+
+  const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
   );

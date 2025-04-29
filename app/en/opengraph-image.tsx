@@ -8,7 +8,9 @@ export const contentType = "image/png";
 export const alt = "Seek Returns. Strategically.";
 
 function OpenGraphImage() {
-  return generateFeaturedImage("Seek Returns. Strategically.");
+  const featuredImage = generateFeaturedImage("Seek Returns. Strategically.");
+
+  return featuredImage;
 }
 
 export default OpenGraphImage;
