@@ -28,7 +28,7 @@ type GenerateJsonLdParams = {
   images: ImageObject[];
 };
 
-export async function generateJsonLd({
+export function generateJsonLd({
   title,
   pathname,
   description,
