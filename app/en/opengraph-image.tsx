@@ -1,4 +1,4 @@
-import { generateOpenGraphImage } from "@/app/lib/en/generateOpenGraphImage";
+import { generateFeaturedImage } from "@/app/lib/en/root/generateFeaturedImage";
 
 export const size = {
   width: 1200,
@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export const alt = "Seek Returns. Strategically.";
 
 function OpenGraphImage() {
-  return generateOpenGraphImage("Seek Returns. Strategically.");
+  return generateFeaturedImage("Seek Returns. Strategically.");
 }
 
 export default OpenGraphImage;

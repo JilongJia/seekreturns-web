@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import clsx from "clsx";
 
 import { getInfo } from "@/app/lib/db/getInfo";
-import { generateArticleMetadata } from "@/app/lib/en/generateMetadata";
+import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
@@ -53,7 +53,7 @@ async function Page({ params }: PageProps) {
     publishedDate: pageInfo.publishedDate,
     modifiedDate: pageInfo.modifiedDate,
   });
-  const { tableOfContentsData } = await import(`./${slug}/tableOfContents`);
+  const { tableOfContents } = await import(`./${slug}/tableOfContents`);
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
   );
@@ -70,7 +70,7 @@ async function Page({ params }: PageProps) {
       />
       <div className={clsx(styles.contentContainer, "layoutContainer")}>
         <TableOfContentsSidebar
-          tableOfContentsData={tableOfContentsData}
+          tableOfContents={tableOfContents}
           className={styles.tableOfContentsSidebar}
         />
         <Main pathname={`/en/calculators/${slug}`} className={styles.main} />

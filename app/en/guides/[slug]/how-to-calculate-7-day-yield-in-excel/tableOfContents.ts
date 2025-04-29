@@ -1,4 +1,4 @@
-export const tableOfContentsData = [
+export const tableOfContents = [
   {
     id: "formula",
     label: "The 7-day yield formula",

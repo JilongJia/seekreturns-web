@@ -1,4 +1,4 @@
-export const tableOfContentsData = [
+export const tableOfContents = [
   {
     id: "definition",
     label: "什么是年金现值系数？",

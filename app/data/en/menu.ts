@@ -8,14 +8,14 @@ export type PrimaryMenuData = {
   id: string;
   label: string;
   pathname?: string;
-  secondaryMenuData?: SecondaryMenuData;
+  secondaryMenu?: SecondaryMenuData;
 }[];
 
-export const primaryMenuData: PrimaryMenuData = [
+export const primaryMenu: PrimaryMenuData = [
   {
     id: "knowledge",
     label: "Knowledge",
-    secondaryMenuData: [
+    secondaryMenu: [
       { id: "concepts", label: "Concepts", pathname: "/en/concepts" },
       { id: "guides", label: "Guides", pathname: "/en/guides" },
     ],
@@ -23,7 +23,7 @@ export const primaryMenuData: PrimaryMenuData = [
   {
     id: "tools",
     label: "Tools",
-    secondaryMenuData: [
+    secondaryMenu: [
       { id: "calculators", label: "Calculators", pathname: "/en/calculators" },
       { id: "charts", label: "Charts", pathname: "/en/charts" },
       { id: "tables", label: "Tables", pathname: "/en/tables" },

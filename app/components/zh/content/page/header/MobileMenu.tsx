@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { LuMenu, LuX } from "react-icons/lu";
 
-import { primaryMenuData, type PrimaryMenuData } from "@/app/data/zh/menu";
+import { primaryMenu, type PrimaryMenuData } from "@/app/data/zh/menu";
 import { PrimaryMenu } from "./mobile_menu/PrimaryMenu";
 import styles from "./MobileMenu.module.css";
 
@@ -41,10 +41,7 @@ function reducer(state: State, action: Action) {
   }
 }
 
-export function MobileMenu({
-  data = primaryMenuData,
-  className,
-}: MobileMenuProps) {
+export function MobileMenu({ data = primaryMenu, className }: MobileMenuProps) {
   const [{ mobileMenuOpen, knowledgeExpanded, toolsExpanded }, dispatch] =
     useReducer(reducer, initialState);
 

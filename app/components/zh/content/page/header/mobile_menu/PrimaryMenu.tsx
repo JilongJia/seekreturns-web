@@ -32,11 +32,11 @@ export function PrimaryMenu({
 
         return (
           <React.Fragment key={primaryMenuItemData.id}>
-            {primaryMenuItemData.secondaryMenuData && (
+            {primaryMenuItemData.secondaryMenu && (
               <Dropdown
                 id={primaryMenuItemData.id}
                 label={primaryMenuItemData.label}
-                data={primaryMenuItemData.secondaryMenuData}
+                data={primaryMenuItemData.secondaryMenu}
                 isExpanded={state}
                 onClick={() => dispatch(action)}
               />

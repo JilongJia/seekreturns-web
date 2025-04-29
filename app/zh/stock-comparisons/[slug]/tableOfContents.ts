@@ -1,4 +1,4 @@
-export const tableOfContentsData = [
+export const tableOfContents = [
   { id: "performance-comparison", label: "历史表现比较" },
   { id: "company-overview", label: "公司概况" },
   { id: "valuation-metrics-comparison", label: "估值指标比较" },

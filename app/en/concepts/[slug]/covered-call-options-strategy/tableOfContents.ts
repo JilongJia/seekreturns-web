@@ -1,4 +1,4 @@
-export const tableOfContentsData = [
+export const tableOfContents = [
   {
     id: "definition",
     label: "What is the covered call options trading strategy?",

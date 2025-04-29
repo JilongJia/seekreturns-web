@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export async function generateOpenGraphImage(text: string) {
+export async function generateFeaturedImage(text: string) {
   const interSemiBold = await readFile(
     join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
   );

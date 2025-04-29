@@ -5,18 +5,18 @@ import {
 import styles from "./TableOfContentsSidebar.module.css";
 
 type TableOfContentsSidebarProps = {
-  tableOfContentsData: TableOfContentsData;
+  tableOfContents: TableOfContentsData;
   className?: string;
 };
 
 export function TableOfContentsSidebar({
-  tableOfContentsData,
+  tableOfContents,
   className,
 }: TableOfContentsSidebarProps) {
   return (
     <aside className={className}>
       <TableOfContents
-        data={tableOfContentsData}
+        data={tableOfContents}
         className={styles.tableOfContents}
       />
     </aside>

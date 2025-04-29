@@ -1,4 +1,4 @@
-export const tableOfContentsData = [
+export const tableOfContents = [
   {
     id: "adrs-definition",
     label: "What are ADRs?",

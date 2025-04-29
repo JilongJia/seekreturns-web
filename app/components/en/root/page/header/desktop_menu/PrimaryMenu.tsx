@@ -11,11 +11,11 @@ export function PrimaryMenu({ data, className }: PrimaryMenuProps) {
     <menu className={className}>
       {data.map((primaryMenuItemData) => (
         <React.Fragment key={primaryMenuItemData.id}>
-          {primaryMenuItemData.secondaryMenuData && (
+          {primaryMenuItemData.secondaryMenu && (
             <Dropdown
               id={primaryMenuItemData.id}
               label={primaryMenuItemData.label}
-              data={primaryMenuItemData.secondaryMenuData}
+              data={primaryMenuItemData.secondaryMenu}
             />
           )}
           {primaryMenuItemData.pathname && (

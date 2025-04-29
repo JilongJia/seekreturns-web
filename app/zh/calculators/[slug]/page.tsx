@@ -13,7 +13,7 @@ type PageProps = { params: Promise<{ slug: string }> };
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const { tableOfContentsData } = await import(`./${slug}/tableOfContents`);
+  const { tableOfContents } = await import(`./${slug}/tableOfContents`);
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
   );
@@ -26,7 +26,7 @@ async function Page({ params }: PageProps) {
       />
       <div className={clsx(styles.contentContainer, "layoutContainer")}>
         <TableOfContentsSidebar
-          tableOfContentsData={tableOfContentsData}
+          tableOfContents={tableOfContents}
           className={styles.tableOfContentsSidebar}
         />
         <Main pathname={`/zh/calculators/${slug}`} className={styles.main} />

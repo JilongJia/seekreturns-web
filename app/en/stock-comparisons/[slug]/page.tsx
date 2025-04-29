@@ -7,7 +7,7 @@ import { H1 } from "@/app/components/en/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/en/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
-import { tableOfContentsData } from "./tableOfContents";
+import { tableOfContents } from "./tableOfContents";
 
 import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
@@ -31,7 +31,7 @@ async function Page({ params }: PageProps) {
       />
       <div className={clsx(styles.contentContainer, "layoutContainer")}>
         <TableOfContentsSidebar
-          tableOfContentsData={tableOfContentsData}
+          tableOfContents={tableOfContents}
           className={styles.tableOfContentsSidebar}
         />
         <main className={styles.main}>
