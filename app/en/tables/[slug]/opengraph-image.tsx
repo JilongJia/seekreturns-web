@@ -42,14 +42,14 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
     },
   ];
 
-  const openGraphImage = generateFeaturedImage(
+  const openGraphImage = generateFeaturedImage({
     title,
     description,
     modifiedDate,
     tableOfContents,
     section,
     breadcrumbList,
-  );
+  });
 
   return openGraphImage;
 }

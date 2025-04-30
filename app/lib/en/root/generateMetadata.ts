@@ -1,9 +1,16 @@
-export function generateWebsiteMetadata(
-  title: string,
-  pathname: string,
-  description: string,
-  alternateLanguageUrls: { [key: string]: string },
-) {
+type GenerateWebsiteMetadataParams = {
+  title: string;
+  pathname: string;
+  description: string;
+  alternateLanguageUrls: { [key: string]: string };
+};
+
+export function generateWebsiteMetadata({
+  title,
+  pathname,
+  description,
+  alternateLanguageUrls,
+}: GenerateWebsiteMetadataParams) {
   return {
     title: title,
     description: description,

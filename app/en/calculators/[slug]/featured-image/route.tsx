@@ -26,14 +26,14 @@ export async function GET(request: Request, { params }: GetRouteContext) {
     },
   ];
 
-  const featuredImage = generateFeaturedImage(
+  const featuredImage = generateFeaturedImage({
     title,
     description,
     modifiedDate,
     tableOfContents,
     section,
     breadcrumbList,
-  );
+  });
 
   return featuredImage;
 }

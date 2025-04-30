@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export const alt = "Seek Returns";
 
 async function OpenGraphImage() {
-  return generateFeaturedImage("测试中文");
+  return generateFeaturedImage({ text: "测试中文" });
 }
 
 export default OpenGraphImage;

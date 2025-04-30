@@ -1,11 +1,20 @@
-export function generateArticleMetadata(
-  title: string,
-  pathname: string,
-  description: string,
-  publishedDate: Date,
-  modifiedDate: Date,
-  alternateLanguageUrls: { [key: string]: string },
-) {
+type GenerateArticleMetadataParams = {
+  title: string;
+  pathname: string;
+  description: string;
+  publishedDate: Date;
+  modifiedDate: Date;
+  alternateLanguageUrls: { [key: string]: string };
+};
+
+export function generateArticleMetadata({
+  title,
+  pathname,
+  description,
+  publishedDate,
+  modifiedDate,
+  alternateLanguageUrls,
+}: GenerateArticleMetadataParams) {
   return {
     title: title,
     description: description,

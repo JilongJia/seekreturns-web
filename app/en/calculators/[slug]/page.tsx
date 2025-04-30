@@ -33,14 +33,14 @@ export async function generateMetadata({ params }: generateMetadataProps) {
     alternateLanguageUrls,
   } = pageInfo;
 
-  const metadata = generateArticleMetadata(
+  const metadata = generateArticleMetadata({
     title,
     pathname,
     description,
     publishedDate,
     modifiedDate,
     alternateLanguageUrls,
-  );
+  });
 
   return metadata;
 }

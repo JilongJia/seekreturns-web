@@ -16,14 +16,23 @@ type TableOfContentsItem = {
   subHeadingsData?: { id: string; label: string }[];
 };
 
-export async function generateFeaturedImage(
-  title: string,
-  description: string,
-  modifiedDate: Date,
-  tableOfContents: TableOfContentsItem[],
-  section: string,
-  breadcrumbList: BreadcrumbListItem[],
-) {
+type GenerateFeaturedImageParams = {
+  title: string;
+  description: string;
+  modifiedDate: Date;
+  tableOfContents: TableOfContentsItem[];
+  section: string;
+  breadcrumbList: BreadcrumbListItem[];
+};
+
+export async function generateFeaturedImage({
+  title,
+  description,
+  modifiedDate,
+  tableOfContents,
+  section,
+  breadcrumbList,
+}: GenerateFeaturedImageParams) {
   const interRegular = await readFile(
     join(process.cwd(), "app/fonts/Inter_28pt-Regular.ttf"),
   );
