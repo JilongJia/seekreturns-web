@@ -71,10 +71,6 @@ async function Page({ params }: PageProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <Header
         pathname={`/en/calculators/${slug}`}
         className={clsx(styles.header, "layoutContainer")}
@@ -87,6 +83,10 @@ async function Page({ params }: PageProps) {
         <Main pathname={`/en/calculators/${slug}`} className={styles.main} />
       </div>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

@@ -64,8 +64,8 @@ export function generateJsonLd({
 
   const breadcrumbList: BreadcrumbListItem[] = [
     {
-      name: "Calculators",
-      url: `${baseUrl}/en/calculators`,
+      name: "Guides",
+      url: `${baseUrl}/en/guides`,
     },
     {
       name: title,

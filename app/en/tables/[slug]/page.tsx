@@ -1,7 +1,11 @@
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 import clsx from "clsx";
 
+import { getInfo } from "@/app/lib/db/getInfo";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
+import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
 import { Header } from "@/app/components/en/content/page/Header";
@@ -10,11 +14,58 @@ import { AdvertisementSidebar } from "@/app/components/en/content/page/Advertise
 import { Footer } from "@/app/components/en/content/page/Footer";
 import styles from "./page.module.css";
 
+type generateMetadataProps = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: generateMetadataProps) {
+  const slug = (await params).slug;
+  const pageInfo = await getInfo(`/en/tables/${slug}`);
+
+  if (!pageInfo) {
+    notFound();
+  }
+
+  const {
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  } = pageInfo;
+
+  const metadata = generateArticleMetadata(
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  );
+
+  return metadata;
+}
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const { tableOfContents } = await import(`./${slug}/tableOfContents`);
+  const pageInfo = await getInfo(`/en/tables/${slug}`);
+  if (!pageInfo) {
+    notFound();
+  }
+  const { title, pathname, description, publishedDate, modifiedDate } =
+    pageInfo;
+  const { images } = await import(`./${slug}/data/images`);
+
+  const jsonLd = generateJsonLd({
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    images,
+  });
+
+  const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
   );
@@ -34,6 +85,10 @@ async function Page({ params }: PageProps) {
         <AdvertisementSidebar className={styles.advertisementSidebar} />
       </div>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

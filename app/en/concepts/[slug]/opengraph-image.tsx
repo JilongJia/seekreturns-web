@@ -8,7 +8,7 @@ export async function generateImageMetadata({
   params,
 }: GenerateImageMetadataParams) {
   const slug = (await params).slug;
-  const title = await getInfo(`/en/calculators/${slug}`);
+  const title = await getInfo(`/en/concepts/${slug}`);
 
   return [
     {
@@ -23,22 +23,22 @@ export async function generateImageMetadata({
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
   const slug = (await params).slug;
-  const info = await getInfo(`/en/calculators/${slug}`);
+  const info = await getInfo(`/en/concepts/${slug}`);
   if (!info) {
     return new Response("Image Not Found", { status: 404 });
   }
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const { title, description, modifiedDate } = info;
   const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
-  const section = "Calculator";
+  const section = "Concept";
   const breadcrumbList = [
     {
-      name: "Calculator",
-      url: `${baseUrl}/en/calculators`,
+      name: "Concept",
+      url: `${baseUrl}/en/concepts`,
     },
     {
       name: title,
-      url: `${baseUrl}/en/calculators/${slug}`,
+      url: `${baseUrl}/en/concepts/${slug}`,
     },
   ];
 
