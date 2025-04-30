@@ -1,4 +1,4 @@
-import { generateOpenGraphImage } from "@/app/lib/zh/root/generateOpenGraphImage";
+import { generateFeaturedImage } from "@/app/lib/zh/root/generateFeaturedImage";
 
 export const size = {
   width: 1200,
@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export const alt = "Seek Returns";
 
 async function OpenGraphImage() {
-  return generateOpenGraphImage("测试中文");
+  return generateFeaturedImage("测试中文");
 }
 
 export default OpenGraphImage;

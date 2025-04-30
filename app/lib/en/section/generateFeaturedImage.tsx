@@ -3,13 +3,13 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export async function generateOpenGraphImage(text: string) {
-  const notoSansSCSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/NotoSansSC-SemiBold.ttf"),
+export async function generateFeaturedImage(text: string) {
+  const interSemiBold = await readFile(
+    join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
   );
 
   const iconData = await readFile(
-    join(process.cwd(), "app/images/zh/seekreturns-icon.svg"),
+    join(process.cwd(), "app/images/en/seekreturns-icon.svg"),
   );
   const iconSrc = `data:image/svg+xml;base64,${iconData.toString("base64")}`;
 
@@ -31,7 +31,7 @@ export async function generateOpenGraphImage(text: string) {
       >
         <img
           src={iconSrc}
-          alt="Seek Returns 标志"
+          alt="Seek Returns logo"
           style={{
             width: "25%",
           }}
@@ -41,7 +41,6 @@ export async function generateOpenGraphImage(text: string) {
             color: "#262626",
             fontSize: "3rem",
             lineHeight: "1.3em",
-            letterSpacing: "0.1em",
             textAlign: "center",
           }}
         >
@@ -52,8 +51,8 @@ export async function generateOpenGraphImage(text: string) {
     {
       fonts: [
         {
-          name: "Noto Sans Simplified Chinese",
-          data: notoSansSCSemiBold,
+          name: "Inter",
+          data: interSemiBold,
         },
       ],
     },
