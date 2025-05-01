@@ -19,9 +19,10 @@ type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: generateMetadataProps) {
   const slug = (await params).slug;
-  const pageInfo = await getInfo(`/en/guides/${slug}`);
 
-  if (!pageInfo) {
+  const info = await getInfo(`/en/guides/${slug}`);
+
+  if (!info) {
     notFound();
   }
 
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: generateMetadataProps) {
     publishedDate,
     modifiedDate,
     alternateLanguageUrls,
-  } = pageInfo;
+  } = info;
 
   const metadata = generateArticleMetadata({
     title,
@@ -48,12 +49,15 @@ export async function generateMetadata({ params }: generateMetadataProps) {
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const pageInfo = await getInfo(`/en/guides/${slug}`);
-  if (!pageInfo) {
+
+  const info = await getInfo(`/en/guides/${slug}`);
+
+  if (!info) {
     notFound();
   }
-  const { title, pathname, description, publishedDate, modifiedDate } =
-    pageInfo;
+
+  const { title, pathname, description, publishedDate, modifiedDate } = info;
+
   const { images } = await import(`./${slug}/data/images`);
 
   const jsonLd = generateJsonLd({
@@ -66,6 +70,7 @@ async function Page({ params }: PageProps) {
   });
 
   const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
+
   const Main = dynamic<MainProps>(() =>
     import(`./${slug}/Main`).then((mod) => mod.Main),
   );

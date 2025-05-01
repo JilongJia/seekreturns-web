@@ -4,11 +4,11 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 type GenerateFeaturedImageParams = {
-  text: string;
+  title: string;
 };
 
 export async function generateFeaturedImage({
-  text,
+  title,
 }: GenerateFeaturedImageParams) {
   const interSemiBold = await readFile(
     join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
@@ -50,11 +50,13 @@ export async function generateFeaturedImage({
             textAlign: "center",
           }}
         >
-          {text}
+          {title}
         </div>
       </div>
     ),
     {
+      width: 1200,
+      height: 630,
       fonts: [
         {
           name: "Inter",

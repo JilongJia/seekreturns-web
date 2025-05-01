@@ -7,14 +7,21 @@ type GetRouteContext = {
 
 export async function GET(request: Request, { params }: GetRouteContext) {
   const slug = (await params).slug;
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const info = await getInfo(`/en/guides/${slug}`);
+
   if (!info) {
     return new Response("Image Not Found", { status: 404 });
   }
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const { title, description, modifiedDate } = info;
+
   const { tableOfContents } = await import(`../${slug}/data/tableOfContents`);
+
   const section = "Guide";
+
   const breadcrumbList = [
     {
       name: "Guide",

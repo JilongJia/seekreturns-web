@@ -9,7 +9,7 @@ export const alt = "Seek Returns. Strategically.";
 
 function OpenGraphImage() {
   const featuredImage = generateFeaturedImage({
-    text: "Seek Returns. Strategically.",
+    title: "Seek Returns. Strategically.",
   });
 
   return featuredImage;

@@ -4,7 +4,8 @@ import { info } from "../data/info";
 
 export function GET() {
   const { title } = info;
-  const featuredImage = generateFeaturedImage({ text: title });
+
+  const featuredImage = generateFeaturedImage({ title });
 
   return featuredImage;
 }

@@ -8,7 +8,7 @@ export function generateImageMetadata() {
   return [
     {
       id: "normal",
-      alt: `${title} - Seek Returns"`,
+      alt: `${title} - Seek Returns`,
       size: { width: 1200, height: 630 },
       contentType: "image/png",
     },
@@ -17,7 +17,8 @@ export function generateImageMetadata() {
 
 function OpenGraphImage() {
   const { title } = info;
-  const featuredImage = generateFeaturedImage({ text: title });
+
+  const featuredImage = generateFeaturedImage({ title });
 
   return featuredImage;
 }
