@@ -28,7 +28,7 @@ export function generateArticleMetadata({
       title: title,
       url: pathname,
       description: description,
-      locale: "en_US",
+      locale: "zh_CN",
       type: "article",
       authors: ["Jilong Jia"],
       publishedTime: publishedDate.toISOString(),

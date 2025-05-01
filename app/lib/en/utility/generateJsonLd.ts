@@ -97,7 +97,6 @@ type GenerateWebPageJsonLdParams = {
   name: string;
   url: string;
   description: string;
-  inLanguage: string;
   publishedDate: Date;
   modifiedDate: Date;
   primaryImageOfPage: ImageObject;
@@ -111,7 +110,6 @@ export function generateWebPageJsonLd({
   name,
   url,
   description,
-  inLanguage,
   publishedDate,
   modifiedDate,
   primaryImageOfPage,
@@ -125,7 +123,7 @@ export function generateWebPageJsonLd({
     name: name,
     url: url,
     description: description,
-    inLanguage: inLanguage,
+    inLanguage: "en",
     datePublished: datePublished,
     dateModified: dateModified,
     primaryImageOfPage: primaryImageOfPage,

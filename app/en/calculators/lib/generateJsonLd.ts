@@ -77,7 +77,6 @@ export function generateJsonLd({
     name: title,
     url: pageUrl,
     description,
-    inLanguage: "en",
     publishedDate,
     modifiedDate,
     primaryImageOfPage,

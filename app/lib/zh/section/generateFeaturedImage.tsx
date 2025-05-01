@@ -10,7 +10,7 @@ type GenerateFeaturedImageParams = {
 export async function generateFeaturedImage({
   text,
 }: GenerateFeaturedImageParams) {
-  const notoSansSCSemiBold = await readFile(
+  const notoSansScSemiBold = await readFile(
     join(process.cwd(), "app/fonts/NotoSansSC-SemiBold.ttf"),
   );
 
@@ -59,7 +59,7 @@ export async function generateFeaturedImage({
       fonts: [
         {
           name: "Noto Sans Simplified Chinese",
-          data: notoSansSCSemiBold,
+          data: notoSansScSemiBold,
         },
       ],
     },

@@ -24,7 +24,7 @@ export function generateWebsiteMetadata({
       title: title,
       url: pathname,
       description: description,
-      locale: "en_US",
+      locale: "zh_CN",
       type: "website",
     },
     twitter: {

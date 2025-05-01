@@ -33,18 +33,18 @@ export async function generateFeaturedImage({
   section,
   breadcrumbList,
 }: GenerateFeaturedImageParams) {
-  const interRegular = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-Regular.ttf"),
+  const notoSansScRegular = await readFile(
+    join(process.cwd(), "app/fonts/NotoSansSC-Regular.ttf"),
   );
-  const interMedium = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-Medium.ttf"),
+  const notoSansScMedium = await readFile(
+    join(process.cwd(), "app/fonts/NotoSansSC-Medium.ttf"),
   );
-  const interSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
+  const notoSansScSemiBold = await readFile(
+    join(process.cwd(), "app/fonts/NotoSansSC-SemiBold.ttf"),
   );
 
   const logoData = await readFile(
-    join(process.cwd(), "app/images/en/seekreturns-logo.png"),
+    join(process.cwd(), "app/images/zh/seekreturns-logo.png"),
   );
   const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 
@@ -57,8 +57,8 @@ export async function generateFeaturedImage({
           flexDirection: "column",
           justifyContent: "center",
           backgroundImage: "linear-gradient(to top right, #dbeafe, #2563eb)",
-          width: "1200px",
-          height: "630px",
+          width: "100%",
+          height: "100%",
         }}
       >
         <div
@@ -97,7 +97,7 @@ export async function generateFeaturedImage({
 
         <img
           src={logoSrc}
-          alt="Seek Returns logo"
+          alt="Seek Returns 标志"
           style={{
             position: "absolute",
             bottom: "10%",
@@ -130,7 +130,11 @@ export async function generateFeaturedImage({
               padding: "1rem 2rem",
             }}
           >
-            <img src={logoSrc} alt="logo" style={{ width: "200px" }} />
+            <img
+              src={logoSrc}
+              alt="Seek Returns 标志"
+              style={{ width: "200px" }}
+            />
             <ul
               style={{
                 display: "flex",
@@ -140,9 +144,9 @@ export async function generateFeaturedImage({
                 fontWeight: 500,
               }}
             >
-              <li>Knowledge</li>
-              <li>Tools</li>
-              <li>Blog</li>
+              <li>百科</li>
+              <li>工具</li>
+              <li>博客</li>
             </ul>
           </div>
 
@@ -162,7 +166,7 @@ export async function generateFeaturedImage({
                   fontSize: "1.125rem",
                 }}
               >
-                On this page
+                目录
               </div>
               <ul
                 style={{
@@ -227,7 +231,7 @@ export async function generateFeaturedImage({
                 <IoHome />
                 {breadcrumbList.map((item, index) => (
                   <div
-                    key={item.name}
+                    key={item.url}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -272,7 +276,7 @@ export async function generateFeaturedImage({
                   fontSize: "1rem",
                 }}
               >
-                {`Updated ${modifiedDate.toLocaleDateString("en", {
+                {`更新于 ${modifiedDate.toLocaleDateString("zh", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -299,20 +303,20 @@ export async function generateFeaturedImage({
       height: 630,
       fonts: [
         {
-          name: "Inter",
-          data: interRegular,
+          name: "Noto Sans Simplified Chinese",
+          data: notoSansScRegular,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Inter",
-          data: interMedium,
+          name: "Noto Sans Simplified Chinese",
+          data: notoSansScMedium,
           weight: 500,
           style: "normal",
         },
         {
-          name: "Inter",
-          data: interSemiBold,
+          name: "Noto Sans Simplified Chinese",
+          data: notoSansScSemiBold,
           weight: 600,
           style: "normal",
         },

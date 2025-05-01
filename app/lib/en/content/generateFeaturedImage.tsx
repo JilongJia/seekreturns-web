@@ -57,8 +57,8 @@ export async function generateFeaturedImage({
           flexDirection: "column",
           justifyContent: "center",
           backgroundImage: "linear-gradient(to top right, #dbeafe, #2563eb)",
-          width: "1200px",
-          height: "630px",
+          width: "100%",
+          height: "100%",
         }}
       >
         <div
@@ -130,7 +130,11 @@ export async function generateFeaturedImage({
               padding: "1rem 2rem",
             }}
           >
-            <img src={logoSrc} alt="logo" style={{ width: "200px" }} />
+            <img
+              src={logoSrc}
+              alt="Seek Returns logo"
+              style={{ width: "200px" }}
+            />
             <ul
               style={{
                 display: "flex",
@@ -227,7 +231,7 @@ export async function generateFeaturedImage({
                 <IoHome />
                 {breadcrumbList.map((item, index) => (
                   <div
-                    key={item.name}
+                    key={item.url}
                     style={{
                       display: "flex",
                       alignItems: "center",
