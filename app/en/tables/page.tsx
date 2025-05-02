@@ -1,13 +1,23 @@
 import Link from "next/link";
 import clsx from "clsx";
 
+import { generateWebsiteMetadata } from "@/app/lib/en/section/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
+
 import { getSectionPages } from "@/app/lib/db/getSectionPages";
 import { Header as PageHeader } from "@/app/components/en/section/page/Header";
 import { Footer } from "@/app/components/en/section/page/Footer";
-
 import styles from "./page.module.css";
 
+import { info } from "./data/info";
+
 type PageData = { title: string; pathname: string };
+
+export async function generateMetadata() {
+  const metadata = generateWebsiteMetadata(info);
+
+  return metadata;
+}
 
 async function Page() {
   const pages: PageData[] = await getSectionPages("en", "tables");
@@ -29,6 +39,8 @@ async function Page() {
   sortedLetters.forEach((letter) => {
     groups[letter].sort((a, b) => a.title.localeCompare(b.title, "en"));
   });
+
+  const jsonLd = generateJsonLd(info);
 
   return (
     <>
@@ -57,6 +69,10 @@ async function Page() {
         ))}
       </main>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

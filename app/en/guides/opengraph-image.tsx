@@ -1,7 +1,9 @@
-import { generateFeaturedImage } from "@/app/lib/en/root/generateFeaturedImage";
+import { generateFeaturedImage } from "@/app/lib/en/section/generateFeaturedImage";
+
+import { info } from "./data/info";
 
 export function generateImageMetadata() {
-  const title = "Home";
+  const { title } = info;
 
   return [
     {
@@ -14,9 +16,9 @@ export function generateImageMetadata() {
 }
 
 function OpenGraphImage() {
-  const featuredImage = generateFeaturedImage({
-    title: "Seek Returns. Strategically.",
-  });
+  const { title } = info;
+
+  const featuredImage = generateFeaturedImage({ title });
 
   return featuredImage;
 }
