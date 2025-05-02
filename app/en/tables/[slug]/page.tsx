@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import clsx from "clsx";
 
-import { getInfo } from "@/app/lib/db/getInfo";
+import { getPageInfo } from "@/app/lib/db/getPageInfo";
 import { getStaticParams } from "@/app/lib/db/getStaticParams";
 import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
@@ -20,9 +20,9 @@ type PageProps = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: generateMetadataProps) {
   const slug = (await params).slug;
 
-  const info = await getInfo(`/en/tables/${slug}`);
+  const pageInfo = await getPageInfo(`/en/tables/${slug}`);
 
-  if (!info) {
+  if (!pageInfo) {
     notFound();
   }
 
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: generateMetadataProps) {
     publishedDate,
     modifiedDate,
     alternateLanguageUrls,
-  } = info;
+  } = pageInfo;
 
   const metadata = generateArticleMetadata({
     title,
@@ -50,13 +50,14 @@ export async function generateMetadata({ params }: generateMetadataProps) {
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
-  const info = await getInfo(`/en/tables/${slug}`);
+  const pageInfo = await getPageInfo(`/en/tables/${slug}`);
 
-  if (!info) {
+  if (!pageInfo) {
     notFound();
   }
 
-  const { title, pathname, description, publishedDate, modifiedDate } = info;
+  const { title, pathname, description, publishedDate, modifiedDate } =
+    pageInfo;
 
   const { images } = await import(`./${slug}/data/images`);
 

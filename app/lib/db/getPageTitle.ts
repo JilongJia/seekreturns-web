@@ -1,6 +1,6 @@
 import { adminDb } from "./firebaseAdmin";
 
-export async function getTitle(pathname: string): Promise<string | null> {
+export async function getPageTitle(pathname: string): Promise<string | null> {
   const pagesRef = adminDb.collection("pages");
 
   const pagesSnapshot = await pagesRef

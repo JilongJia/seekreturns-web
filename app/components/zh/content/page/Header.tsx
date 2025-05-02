@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { getHreflangAlternates } from "@/app/lib/db/getHreflangAlternates";
+import { getHreflangAlternatePages } from "@/app/lib/db/getHreflangAlternatePages";
 
 import { MobileMenu } from "./header/MobileMenu";
 import { Logo } from "./header/Logo";
@@ -13,7 +13,7 @@ import styles from "./Header.module.css";
 type HeaderProps = { pathname: string; className?: string };
 
 export async function Header({ pathname, className }: HeaderProps) {
-  let hreflangAlternates;
+  let hreflangAlternatePages;
   const pathnameSegments = pathname.split("/");
 
   if (
@@ -22,11 +22,11 @@ export async function Header({ pathname, className }: HeaderProps) {
   ) {
     const languages = ["en", "zh"];
     const remainingPathname = pathnameSegments.slice(2).join("/");
-    hreflangAlternates = languages.map((lang) => ({
+    hreflangAlternatePages = languages.map((lang) => ({
       pathname: `/${lang}/${remainingPathname}`,
     }));
   } else {
-    hreflangAlternates = await getHreflangAlternates(pathname);
+    hreflangAlternatePages = await getHreflangAlternatePages(pathname);
   }
 
   return (
@@ -37,7 +37,7 @@ export async function Header({ pathname, className }: HeaderProps) {
       <MobileSearchbox className={styles.mobileSearchbox} />
       <DesktopSearchbox className={styles.desktopSearchbox} />
       <LanguageSelector
-        hreflangAlternates={hreflangAlternates}
+        hreflangAlternatePages={hreflangAlternatePages}
         className={styles.languageSelector}
       />
     </header>

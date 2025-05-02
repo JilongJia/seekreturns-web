@@ -18,7 +18,7 @@ export async function Header({ pathname, className }: HeaderProps) {
   const sectionSegment = pathnameSegments[2];
 
   const languages = ["en", "zh"];
-  const hreflangAlternates = languages.map((lang) => ({
+  const hreflangAlternatePages = languages.map((lang) => ({
     pathname: `/${lang}/${sectionSegment}`,
   }));
 
@@ -30,7 +30,7 @@ export async function Header({ pathname, className }: HeaderProps) {
       <MobileSearchbox className={styles.mobileSearchbox} />
       <DesktopSearchbox className={styles.desktopSearchbox} />
       <LanguageSelector
-        hreflangAlternates={hreflangAlternates}
+        hreflangAlternatePages={hreflangAlternatePages}
         className={styles.languageSelector}
       />
     </header>

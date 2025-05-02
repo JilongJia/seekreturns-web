@@ -8,12 +8,12 @@ import { LuLanguages, LuChevronUp, LuChevronDown } from "react-icons/lu";
 import styles from "./LanguageSelector.module.css";
 
 type LanguageSelectorProps = {
-  hreflangAlternates: { pathname: string }[];
+  hreflangAlternatePages: { pathname: string }[];
   className?: string;
 };
 
 export function LanguageSelector({
-  hreflangAlternates,
+  hreflangAlternatePages,
   className,
 }: LanguageSelectorProps) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -42,7 +42,7 @@ export function LanguageSelector({
     setIsExpanded((prev) => !prev);
   };
 
-  const availableLanguages = hreflangAlternates
+  const availableLanguages = hreflangAlternatePages
     .map(({ pathname }) => {
       let label = "";
       let languageClassName = "";

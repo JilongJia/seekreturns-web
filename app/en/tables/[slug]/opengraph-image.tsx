@@ -1,4 +1,5 @@
-import { getInfo } from "@/app/lib/db/getInfo";
+import { getPageInfo } from "@/app/lib/db/getPageInfo";
+import { getPageTitle } from "@/app/lib/db/getPageTitle";
 import { generateFeaturedImage } from "@/app/lib/en/content/generateFeaturedImage";
 
 type GenerateImageMetadataParams = { params: Promise<{ slug: string }> };
@@ -9,7 +10,7 @@ export async function generateImageMetadata({
 }: GenerateImageMetadataParams) {
   const slug = (await params).slug;
 
-  const title = await getInfo(`/en/tables/${slug}`);
+  const title = await getPageTitle(`/en/tables/${slug}`);
 
   return [
     {
@@ -27,13 +28,13 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const info = await getInfo(`/en/tables/${slug}`);
+  const pageInfo = await getPageInfo(`/en/tables/${slug}`);
 
-  if (!info) {
+  if (!pageInfo) {
     return new Response("Image Not Found", { status: 404 });
   }
 
-  const { title, description, modifiedDate } = info;
+  const { title, description, modifiedDate } = pageInfo;
 
   const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);
 
