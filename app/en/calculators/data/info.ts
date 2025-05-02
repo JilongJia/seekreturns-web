@@ -1,4 +1,4 @@
-export const info = {
+export const pageInfo = {
   title: "Calculator Index",
   pathname: "/en/calculators",
   description:

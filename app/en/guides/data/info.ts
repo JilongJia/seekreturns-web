@@ -1,4 +1,4 @@
-export const info = {
+export const pageInfo = {
   title: "Guide Index",
   pathname: "/en/guides",
   description:

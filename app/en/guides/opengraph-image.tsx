@@ -1,9 +1,9 @@
 import { generateFeaturedImage } from "@/app/lib/en/section/generateFeaturedImage";
 
-import { info } from "./data/info";
+import { pageInfo } from "./data/info";
 
 export function generateImageMetadata() {
-  const { title } = info;
+  const { title } = pageInfo;
 
   return [
     {
@@ -16,7 +16,7 @@ export function generateImageMetadata() {
 }
 
 function OpenGraphImage() {
-  const { title } = info;
+  const { title } = pageInfo;
 
   const featuredImage = generateFeaturedImage({ title });
 

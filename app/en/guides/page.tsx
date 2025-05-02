@@ -9,12 +9,12 @@ import { Header as PageHeader } from "@/app/components/en/section/page/Header";
 import { Footer } from "@/app/components/en/section/page/Footer";
 import styles from "./page.module.css";
 
-import { info } from "./data/info";
+import { pageInfo } from "./data/info";
 
 type PageData = { title: string; pathname: string };
 
 export async function generateMetadata() {
-  const metadata = generateWebsiteMetadata(info);
+  const metadata = generateWebsiteMetadata(pageInfo);
 
   return metadata;
 }
@@ -40,7 +40,7 @@ async function Page() {
     groups[letter].sort((a, b) => a.title.localeCompare(b.title, "en"));
   });
 
-  const jsonLd = generateJsonLd(info);
+  const jsonLd = generateJsonLd(pageInfo);
 
   return (
     <>

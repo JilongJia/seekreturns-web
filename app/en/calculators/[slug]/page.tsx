@@ -55,18 +55,30 @@ async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const { title, pathname, description, publishedDate, modifiedDate } =
-    pageInfo;
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
 
-  const { images } = await import(`./${slug}/data/images`);
+  const { articleInfo } = await import(`./${slug}/data/info`);
+  const {
+    title: articleTitle,
+    description: articleDescription,
+    images: articleImages,
+  } = articleInfo;
 
   const jsonLd = generateJsonLd({
-    title,
-    pathname,
-    description,
-    publishedDate,
-    modifiedDate,
-    images,
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
+    articleTitle,
+    articleDescription,
+    articleImages,
   });
 
   const { tableOfContents } = await import(`./${slug}/data/tableOfContents`);

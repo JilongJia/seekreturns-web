@@ -1,9 +1,9 @@
 import { generateFeaturedImage } from "@/app/lib/en/section/generateFeaturedImage";
 
-import { info } from "../data/info";
+import { pageInfo } from "../data/info";
 
 export function GET() {
-  const { title } = info;
+  const { title } = pageInfo;
 
   const featuredImage = generateFeaturedImage({ title });
 
