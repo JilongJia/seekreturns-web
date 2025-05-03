@@ -1,13 +1,39 @@
 import clsx from "clsx";
 import Image from "next/image";
 
+import { generateWebsiteMetadata } from "@/app/lib/zh/utility/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
+
 import { Header as PageHeader } from "@/app/components/zh/utility/page/Header";
 import { Footer } from "@/app/components/zh/utility/page/Footer";
 import styles from "./page.module.css";
 
+import { pageInfo } from "./data/info";
 import jilongAndSunica from "./images/jilong-and-sunica.png";
 
-async function Page() {
+export function generateMetadata() {
+  const metadata = generateWebsiteMetadata(pageInfo);
+
+  return metadata;
+}
+
+function Page() {
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
+
+  const jsonLd = generateJsonLd({
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
+  });
+
   return (
     <>
       <PageHeader
@@ -86,6 +112,10 @@ async function Page() {
         </section>
       </main>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

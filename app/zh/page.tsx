@@ -12,13 +12,13 @@ import styles from "./page.module.css";
 
 import { pageInfo } from "./data/info";
 
-export async function generateMetadata() {
+export function generateMetadata() {
   const metadata = generateWebsiteMetadata(pageInfo);
 
   return metadata;
 }
 
-async function Page() {
+function Page() {
   const {
     title: pageTitle,
     pathname: pagePathname,
