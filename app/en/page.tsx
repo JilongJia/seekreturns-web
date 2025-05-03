@@ -1,13 +1,40 @@
 import clsx from "clsx";
+
+import { generateWebsiteMetadata } from "@/app/lib/en/root/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
+
 import { Header } from "@/app/components/en/root/page/Header";
 import { Footer } from "@/app/components/en/root/page/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { StockComparisonSection } from "./components/StockComparisonSection";
 import { CalculatorSection } from "./components/CalculatorSection";
-
 import styles from "./page.module.css";
 
+import { pageInfo } from "./data/info";
+
+export async function generateMetadata() {
+  const metadata = generateWebsiteMetadata(pageInfo);
+
+  return metadata;
+}
+
 async function Page() {
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
+
+  const jsonLd = generateJsonLd({
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
+  });
+
   return (
     <>
       <Header className={clsx(styles.header, "layoutContainer")} />
@@ -17,6 +44,10 @@ async function Page() {
         <CalculatorSection className={styles.calculatorSection} />
       </main>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

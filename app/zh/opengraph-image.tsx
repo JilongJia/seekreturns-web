@@ -1,14 +1,24 @@
 import { generateFeaturedImage } from "@/app/lib/zh/root/generateFeaturedImage";
 
-export const size = {
-  width: 1200,
-  height: 630,
-};
-export const contentType = "image/png";
-export const alt = "Seek Returns";
+import { pageInfo } from "./data/info";
 
-async function OpenGraphImage() {
-  return generateFeaturedImage({ title: "测试中文" });
+export function generateImageMetadata() {
+  return [
+    {
+      id: "normal",
+      alt: "首页 - Seek Returns",
+      size: { width: 1200, height: 630 },
+      contentType: "image/png",
+    },
+  ];
+}
+
+function OpenGraphImage() {
+  const { title } = pageInfo;
+
+  const featuredImage = generateFeaturedImage({ title });
+
+  return featuredImage;
 }
 
 export default OpenGraphImage;
