@@ -20,24 +20,28 @@ type BreadcrumbListItem = {
 };
 
 type GenerateJsonLdParams = {
-  title: string;
-  pathname: string;
-  description: string;
-  publishedDate: Date;
-  modifiedDate: Date;
-  images: ImageObject[];
+  pageTitle: string;
+  pagePathname: string;
+  pageDescription: string;
+  pagePublishedDate: Date;
+  pageModifiedDate: Date;
+  articleTitle: string;
+  articleDescription: string;
+  articleImages: ImageObject[];
 };
 
 export function generateJsonLd({
-  title,
-  pathname,
-  description,
-  publishedDate,
-  modifiedDate,
-  images,
+  pageTitle,
+  pagePathname,
+  pageDescription,
+  pagePublishedDate,
+  pageModifiedDate,
+  articleTitle,
+  articleDescription,
+  articleImages,
 }: GenerateJsonLdParams) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
-  const pageUrl = `${baseUrl}${pathname}`;
+  const pageUrl = `${baseUrl}${pagePathname}`;
 
   const organizationId = `${baseUrl}/#organization`;
   const webSiteId = `${baseUrl}/#web-site`;
@@ -48,19 +52,22 @@ export function generateJsonLd({
   const featuredImage: ImageObject = {
     "@type": "ImageObject",
     url: `${pageUrl}/featured-image`,
-    caption: `“${title}” page by Seek Returns`,
+    caption: `“${pageTitle}” page by Seek Returns`,
     width: 1200,
     height: 630,
   };
 
   const primaryImageOfPage: ImageObject = featuredImage;
 
-  const processedImages: ImageObject[] = images.map((img) => ({
+  const processedArticleImages: ImageObject[] = articleImages.map((img) => ({
     ...img,
     url: `${baseUrl}${img.url}`,
   }));
 
-  const allImages: ImageObject[] = [featuredImage, ...processedImages];
+  const allArticleImages: ImageObject[] = [
+    featuredImage,
+    ...processedArticleImages,
+  ];
 
   const breadcrumbList: BreadcrumbListItem[] = [
     {
@@ -68,7 +75,7 @@ export function generateJsonLd({
       url: `${baseUrl}/en/concepts`,
     },
     {
-      name: title,
+      name: pageTitle,
       url: pageUrl,
     },
   ];
@@ -90,11 +97,11 @@ export function generateJsonLd({
     webSiteId,
     breadcrumbListId,
     articleId,
-    name: title,
+    name: pageTitle,
     url: pageUrl,
-    description,
-    publishedDate,
-    modifiedDate,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
     primaryImageOfPage,
   });
 
@@ -107,11 +114,11 @@ export function generateJsonLd({
     articleId,
     organizationId,
     webPageId,
-    headline: title,
-    description,
-    publishedDate,
-    modifiedDate,
-    images: allImages,
+    headline: articleTitle,
+    description: articleDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+    images: allArticleImages,
   });
 
   const jsonLd = {

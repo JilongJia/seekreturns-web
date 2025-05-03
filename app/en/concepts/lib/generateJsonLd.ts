@@ -19,22 +19,22 @@ type BreadcrumbListItem = {
 };
 
 type GenerateJsonLdParams = {
-  title: string;
-  pathname: string;
-  description: string;
-  publishedDate: Date;
-  modifiedDate: Date;
+  pageTitle: string;
+  pagePathname: string;
+  pageDescription: string;
+  pagePublishedDate: Date;
+  pageModifiedDate: Date;
 };
 
 export function generateJsonLd({
-  title,
-  pathname,
-  description,
-  publishedDate,
-  modifiedDate,
+  pageTitle,
+  pagePathname,
+  pageDescription,
+  pagePublishedDate,
+  pageModifiedDate,
 }: GenerateJsonLdParams) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
-  const pageUrl = `${baseUrl}${pathname}`;
+  const pageUrl = `${baseUrl}${pagePathname}`;
 
   const organizationId = `${baseUrl}/#organization`;
   const webSiteId = `${baseUrl}/#web-site`;
@@ -44,7 +44,7 @@ export function generateJsonLd({
   const featuredImage: ImageObject = {
     "@type": "ImageObject",
     url: `${pageUrl}/featured-image`,
-    caption: `“${title}” page by Seek Returns`,
+    caption: `“${pageTitle}” page by Seek Returns`,
     width: 1200,
     height: 630,
   };
@@ -74,11 +74,11 @@ export function generateJsonLd({
     organizationId,
     webSiteId,
     breadcrumbListId,
-    name: title,
+    name: pageTitle,
     url: pageUrl,
-    description,
-    publishedDate,
-    modifiedDate,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
     primaryImageOfPage,
   });
 

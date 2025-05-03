@@ -64,6 +64,7 @@ async function Page({ params }: PageProps) {
   } = pageInfo;
 
   const { articleInfo } = await import(`./${slug}/data/info`);
+
   const {
     title: articleTitle,
     description: articleDescription,

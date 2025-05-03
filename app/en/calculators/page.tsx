@@ -40,7 +40,21 @@ async function Page() {
     groups[letter].sort((a, b) => a.title.localeCompare(b.title, "en"));
   });
 
-  const jsonLd = generateJsonLd(pageInfo);
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
+
+  const jsonLd = generateJsonLd({
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
+  });
 
   return (
     <>
