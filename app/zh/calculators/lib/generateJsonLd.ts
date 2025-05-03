@@ -3,8 +3,7 @@ import {
   generateWebSiteJsonLd,
   generateWebPageJsonLd,
   generateBreadcrumbListJsonLd,
-  generateArticleJsonLd,
-} from "@/app/lib/zh/content/generateJsonLd";
+} from "@/app/lib/zh/section/generateJsonLd";
 
 type ImageObject = {
   "@type": "ImageObject";
@@ -25,9 +24,6 @@ type GenerateJsonLdParams = {
   pageDescription: string;
   pagePublishedDate: Date;
   pageModifiedDate: Date;
-  articleTitle: string;
-  articleDescription: string;
-  articleImages: ImageObject[];
 };
 
 export function generateJsonLd({
@@ -36,9 +32,6 @@ export function generateJsonLd({
   pageDescription,
   pagePublishedDate,
   pageModifiedDate,
-  articleTitle,
-  articleDescription,
-  articleImages,
 }: GenerateJsonLdParams) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
   const pageUrl = `${baseUrl}${pagePathname}`;
@@ -46,7 +39,6 @@ export function generateJsonLd({
   const organizationId = `${baseUrl}/#organization`;
   const webSiteId = `${baseUrl}/#web-site`;
   const webPageId = `${pageUrl}#web-page`;
-  const articleId = `${pageUrl}#article`;
   const breadcrumbListId = `${pageUrl}#breadcrumb-list`;
 
   const featuredImage: ImageObject = {
@@ -59,23 +51,9 @@ export function generateJsonLd({
 
   const primaryImageOfPage: ImageObject = featuredImage;
 
-  const processedArticleImages: ImageObject[] = articleImages.map((img) => ({
-    ...img,
-    url: `${baseUrl}${img.url}`,
-  }));
-
-  const allArticleImages: ImageObject[] = [
-    featuredImage,
-    ...processedArticleImages,
-  ];
-
   const breadcrumbList: BreadcrumbListItem[] = [
     {
       name: "计算器",
-      url: `${baseUrl}/zh/calculators`,
-    },
-    {
-      name: pageTitle,
       url: pageUrl,
     },
   ];
@@ -96,7 +74,6 @@ export function generateJsonLd({
     organizationId,
     webSiteId,
     breadcrumbListId,
-    articleId,
     name: pageTitle,
     url: pageUrl,
     description: pageDescription,
@@ -110,17 +87,6 @@ export function generateJsonLd({
     breadcrumbList,
   });
 
-  const articleJsonLd = generateArticleJsonLd({
-    articleId,
-    organizationId,
-    webPageId,
-    headline: articleTitle,
-    description: articleDescription,
-    publishedDate: pagePublishedDate,
-    modifiedDate: pageModifiedDate,
-    images: allArticleImages,
-  });
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -128,7 +94,6 @@ export function generateJsonLd({
       webSiteJsonLd,
       webPageJsonLd,
       breadcrumbListJsonLd,
-      articleJsonLd,
     ],
   };
 

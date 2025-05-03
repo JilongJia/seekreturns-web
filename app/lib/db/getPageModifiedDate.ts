@@ -1,6 +1,8 @@
 import { adminDb } from "./firebaseAdmin";
 
-export async function getModifiedDate(pathname: string): Promise<Date | null> {
+export async function getPageModifiedDate(
+  pathname: string,
+): Promise<Date | null> {
   const pagesRef = adminDb.collection("pages");
 
   const pagesSnapshot = await pagesRef

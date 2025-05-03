@@ -1,13 +1,23 @@
 import Link from "next/link";
 import clsx from "clsx";
 
+import { generateWebsiteMetadata } from "@/app/lib/zh/section/generateMetadata";
+import { generateJsonLd } from "./lib/generateJsonLd";
+
 import { getSectionPages } from "@/app/lib/db/getSectionPages";
 import { Header as PageHeader } from "@/app/components/zh/section/page/Header";
 import { Footer } from "@/app/components/zh/section/page/Footer";
-
 import styles from "./page.module.css";
 
+import { pageInfo } from "./data/info";
+
 type PageData = { title: string; pathname: string };
+
+export async function generateMetadata() {
+  const metadata = generateWebsiteMetadata(pageInfo);
+
+  return metadata;
+}
 
 async function Page() {
   const pages: PageData[] = await getSectionPages("zh", "calculators");
@@ -28,6 +38,22 @@ async function Page() {
 
   sortedLetters.forEach((letter) => {
     groups[letter].sort((a, b) => a.title.localeCompare(b.title, "zh"));
+  });
+
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
+
+  const jsonLd = generateJsonLd({
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
   });
 
   return (
@@ -57,6 +83,10 @@ async function Page() {
         ))}
       </main>
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }
