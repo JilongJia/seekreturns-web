@@ -5,7 +5,7 @@ type HreflangAlternate = { pathname: string };
 export async function getHreflangAlternatePages(
   pathname: string,
 ): Promise<HreflangAlternate[]> {
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const pagesSnapshot = await pagesRef
     .where("pathname", "==", pathname)

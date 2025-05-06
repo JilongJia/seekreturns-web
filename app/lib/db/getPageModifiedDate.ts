@@ -3,7 +3,7 @@ import { adminDb } from "./firebaseAdmin";
 export async function getPageModifiedDate(
   pathname: string,
 ): Promise<Date | null> {
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const pagesSnapshot = await pagesRef
     .where("pathname", "==", pathname)

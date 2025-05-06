@@ -15,7 +15,7 @@ export async function getPageInfo(pathname: string): Promise<{
   modifiedDate: Date;
   alternateLanguageUrls: AlternateLanguageUrls;
 } | null> {
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const pageSnapshot = await pagesRef
     .where("pathname", "==", pathname)

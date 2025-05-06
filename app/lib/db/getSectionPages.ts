@@ -5,7 +5,7 @@ export async function getSectionPages(
   section: string,
 ): Promise<{ title: string; pathname: string }[]> {
   const prefix = `/${language}/${section}/`;
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const snapshot = await pagesRef
     .where("pathname", ">=", prefix)

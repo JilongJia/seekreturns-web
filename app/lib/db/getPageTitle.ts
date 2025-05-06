@@ -1,7 +1,7 @@
 import { adminDb } from "./firebaseAdmin";
 
 export async function getPageTitle(pathname: string): Promise<string | null> {
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const pagesSnapshot = await pagesRef
     .where("pathname", "==", pathname)

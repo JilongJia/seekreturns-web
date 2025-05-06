@@ -5,7 +5,7 @@ export async function getStaticParams(
   section: string,
 ): Promise<{ slug: string }[]> {
   const prefix = `/${language}/${section}/`;
-  const pagesRef = adminDb.collection("pages");
+  const pagesRef = adminDb.collection("informationalPages");
 
   const pagesSnapshot = await pagesRef
     .where("pathname", ">=", prefix)
