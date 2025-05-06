@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { notFound } from "next/navigation";
+
 import { AdvertisementSidebar } from "@/app/components/en/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/en/content/page/Footer";
 import { Header as PageHeader } from "@/app/components/en/content/page/Header";
@@ -7,7 +9,6 @@ import { H1 } from "@/app/components/en/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/en/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
-import { tableOfContents } from "./tableOfContents";
 
 import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
@@ -16,12 +17,32 @@ import { DividendComparisonSection } from "./components/DividendComparisonSectio
 import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
 import styles from "./page.module.css";
 
+import slugs from "@/app/data/stock-comparisons/slugs.json";
+import { tableOfContents } from "./data/tableOfContents";
+
 type PageProps = { params: Promise<{ slug: string }> };
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-  const stockOneSymbol = "AAPL";
-  const stockTwoSymbol = "TSLA";
+
+  if (!slugs.includes(slug)) {
+    notFound();
+  }
+
+  const parts = slug.split("-vs-");
+
+  if (parts.length !== 2) {
+    notFound();
+  }
+
+  const [leftSlug, rightSlug] = parts;
+
+  if (!leftSlug || !rightSlug) {
+    notFound();
+  }
+
+  const stockOneSymbol = leftSlug.toUpperCase();
+  const stockTwoSymbol = rightSlug.toUpperCase();
 
   return (
     <>

@@ -439,8 +439,7 @@ export async function FinancialStrengthMetricsComparisonSection({
       ) : (
         <P>
           Explore the financial strength details for {stockOneSymbol} and{" "}
-          {stockTwoSymbol}
-          in the table below.
+          {stockTwoSymbol} in the table below.
         </P>
       )}
       <Table>

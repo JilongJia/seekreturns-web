@@ -21,26 +21,67 @@ type StockComparisonSectionProps = { className?: string };
 async function fetchPriceSeriesData(
   symbol: string,
 ): Promise<PriceSeriesData | null> {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
-  const endpoint = `https://financialmodelingprep.com/stable/historical-price-eod/dividend-adjusted?symbol=${symbol}&apikey=${apiKey}`;
-  try {
-    const response = await fetch(endpoint);
-    const historicalPriceRawData: HistoricalPriceDataPoint[] =
-      await response.json();
-    if (!historicalPriceRawData || historicalPriceRawData.length === 0)
-      return null;
-    historicalPriceRawData.reverse();
-    const data: PriceSeriesData = historicalPriceRawData.map(
-      (item: HistoricalPriceDataPoint) => ({
-        date: item.date,
-        price: item.adjClose,
-      }),
-    );
-    return data;
-  } catch (error) {
-    console.error("Error fetching price series data for", symbol, error);
-    return null;
+  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY!;
+  const baseEndpoint =
+    "https://financialmodelingprep.com/stable/historical-price-eod/dividend-adjusted";
+
+  const maxRetryAttempts = 3;
+  const retryDelayMs = 1000;
+  const sixMonthThresholdMs = 6 * 30 * 24 * 60 * 60 * 1000;
+  const fiveYearsInMs = 5 * 365 * 24 * 60 * 60 * 1000;
+
+  const fromDateObj = new Date(Date.now() - fiveYearsInMs);
+  const fromDateString = fromDateObj.toISOString().split("T")[0];
+  const url = `${baseEndpoint}?symbol=${symbol}&from=${fromDateString}&apikey=${apiKey}`;
+
+  for (
+    let attemptNumber = 1;
+    attemptNumber <= maxRetryAttempts;
+    attemptNumber++
+  ) {
+    try {
+      const response = await fetch(url);
+      const rawData: HistoricalPriceDataPoint[] = await response.json();
+
+      if (!Array.isArray(rawData) || rawData.length === 0) {
+        throw new Error("No historical price data returned");
+      }
+
+      const dataInAscendingDate = [...rawData].reverse();
+
+      const earliestReturnedDateString = dataInAscendingDate[0].date;
+      const earliestReturnedDateMs = new Date(
+        earliestReturnedDateString,
+      ).getTime();
+      const requestedFromDateMs = fromDateObj.getTime();
+
+      if (
+        Math.abs(earliestReturnedDateMs - requestedFromDateMs) >
+        sixMonthThresholdMs
+      ) {
+        console.warn(
+          `Attempt ${attemptNumber}: earliest returned date (${earliestReturnedDateString}) is too far from requested from-date (${fromDateString})`,
+        );
+        throw new Error("Returned data outside acceptable date range");
+      }
+
+      return dataInAscendingDate.map(({ date, adjClose }) => ({
+        date,
+        price: adjClose,
+      }));
+    } catch (error) {
+      console.error(
+        `Error fetching price series for ${symbol} (attempt ${attemptNumber}):`,
+        (error as Error).message,
+      );
+
+      if (attemptNumber < maxRetryAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      }
+    }
   }
+
+  return null;
 }
 
 export async function StockComparisonSection({

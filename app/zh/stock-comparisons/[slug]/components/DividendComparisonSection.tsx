@@ -52,37 +52,48 @@ function generateDividendYieldCommentary(
   const stockOneCategory = getDividendYieldCategory(stockOneDividendYield);
   const stockTwoCategory = getDividendYieldCategory(stockTwoDividendYield);
 
+  const stockOneDividendYieldPercent = (stockOneDividendYield * 100).toFixed(2);
+  const stockTwoDividendYieldPercent = (stockTwoDividendYield * 100).toFixed(2);
+
   if (stockOneCategory === "None" && stockTwoCategory === "None") {
     return `${stockOneSymbol} 和 ${stockTwoSymbol} 均不支付股息，利润主要用于再投资，可能优先考虑业务扩展或长期增长而非短期股东回报。`;
   }
 
   if (stockOneCategory === "None" && stockTwoCategory === "Has") {
-    return `${stockOneSymbol} 不支付股息，利润更多用于支持公司发展，适合追求资本增值的投资者。而 ${stockTwoSymbol} 的股息率为 ${stockTwoDividendYield.toFixed(2)}%，通过分红直接回报股东，反映出较稳定的盈利能力，两者策略形成对比。`;
+    return `${stockOneSymbol} 不支付股息，利润更多用于支持公司发展，适合追求资本增值的投资者。而 ${stockTwoSymbol} 的股息率为 ${stockTwoDividendYieldPercent}% ，通过分红直接回报股东，反映出较稳定的盈利能力，两者策略形成对比。`;
   }
 
   if (stockOneCategory === "Has" && stockTwoCategory === "None") {
-    return `${stockOneSymbol} 的股息率为 ${stockOneDividendYield.toFixed(2)}%，在回报股东的同时兼顾增长；而 ${stockTwoSymbol} 不支付股息，利润主要投入未来发展，如业务扩展或研发，体现出不同的经营策略。`;
+    return `${stockOneSymbol} 的股息率为 ${stockOneDividendYieldPercent}% ，在回报股东的同时兼顾增长；而 ${stockTwoSymbol} 不支付股息，利润主要投入未来发展，如业务扩展或研发，体现出不同的经营策略。`;
   }
 
   if (stockOneCategory === "Has" && stockTwoCategory === "Has") {
-    const baseCommentary = `${stockOneSymbol} 的股息率为 ${stockOneDividendYield.toFixed(2)}%，${stockTwoSymbol} 为 ${stockTwoDividendYield.toFixed(2)}%，两者均在股东回报与公司发展之间取得平衡。`;
+    const baseCommentary = `${stockOneSymbol} 的股息率为 ${stockOneDividendYieldPercent}% ，${stockTwoSymbol} 为 ${stockTwoDividendYieldPercent}% ，两者均在股东回报与公司发展之间取得平衡。`;
 
-    const higherYield = Math.max(stockOneDividendYield, stockTwoDividendYield);
-    const lowerYield = Math.min(stockOneDividendYield, stockTwoDividendYield);
-    const relativeDifference = (higherYield - lowerYield) / lowerYield;
-    const percentageDifference = (relativeDifference * 100).toFixed(0);
+    const higherDividendYield = Math.max(
+      stockOneDividendYield,
+      stockTwoDividendYield,
+    );
+    const lowerDividendYield = Math.min(
+      stockOneDividendYield,
+      stockTwoDividendYield,
+    );
+    const relativeDifference =
+      (higherDividendYield - lowerDividendYield) / lowerDividendYield;
+    const relativeDifferencePercent = (relativeDifference * 100).toFixed(0);
 
     if (relativeDifference > DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP) {
-      const higherStock =
+      const higherStockSymbol =
         stockOneDividendYield > stockTwoDividendYield
           ? stockOneSymbol
           : stockTwoSymbol;
-      const lowerStock =
+      const lowerStockSymbol =
         stockOneDividendYield > stockTwoDividendYield
           ? stockTwoSymbol
           : stockOneSymbol;
-      const higherYieldValue = higherYield.toFixed(2);
-      return `${baseCommentary} 其中，${higherStock} 的股息率达 ${higherYieldValue}%，高出 ${lowerStock} 约 ${percentageDifference}%，显示其更倾向于回报股东，而 ${lowerStock} 则更多保留利润用于发展。`;
+      const higherDividendYieldPercent = (higherDividendYield * 100).toFixed(2);
+
+      return `${baseCommentary} 其中，${higherStockSymbol} 的股息率达 ${higherDividendYieldPercent}% ，高出 ${lowerStockSymbol} 约 ${relativeDifferencePercent}% ，显示其更倾向于回报股东，而 ${lowerStockSymbol} 则更多保留利润用于发展。`;
     }
 
     return `${baseCommentary} 两者的股息率差距较小，显示出相似的分红与增长策略。`;
