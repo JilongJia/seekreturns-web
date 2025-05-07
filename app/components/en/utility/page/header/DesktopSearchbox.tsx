@@ -13,7 +13,7 @@ export function DesktopSearchbox({ className }: DesktopSearchboxProps) {
       aria-label="Sitewide search"
       className={clsx(styles.searchbox, className)}
     >
-      <form className={styles.form} action="/search">
+      <form className={styles.form} action="/en/search">
         <label
           htmlFor="desktop-searchbox-input"
           className={styles.screenReaderLabel}

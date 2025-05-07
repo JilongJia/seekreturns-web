@@ -17,7 +17,7 @@ import { DividendComparisonSection } from "./components/DividendComparisonSectio
 import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
 import styles from "./page.module.css";
 
-import slugs from "@/app/data/stock-comparisons/slugs.json";
+import pages from "@/app/data/stock-comparisons/pages.json";
 import { tableOfContents } from "./data/tableOfContents";
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -25,24 +25,15 @@ type PageProps = { params: Promise<{ slug: string }> };
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
-  if (!slugs.includes(slug)) {
+  const page = pages.find((page) => page.slug === slug);
+
+  if (!page) {
     notFound();
   }
 
-  const parts = slug.split("-vs-");
-
-  if (parts.length !== 2) {
-    notFound();
-  }
-
-  const [leftSlug, rightSlug] = parts;
-
-  if (!leftSlug || !rightSlug) {
-    notFound();
-  }
-
-  const stockOneSymbol = leftSlug.toUpperCase();
-  const stockTwoSymbol = rightSlug.toUpperCase();
+  const { symbolOne, symbolTwo } = page;
+  const stockOneSymbol = symbolOne;
+  const stockTwoSymbol = symbolTwo;
 
   return (
     <>

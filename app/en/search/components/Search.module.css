@@ -1,0 +1,12 @@
+/* make it half the viewport, center it, no borders except a bottom line */
+.underlineInput {
+  display: block;
+  margin: 2rem auto;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem 0;
+  width: 50vw;
+  max-width: 600px; /* optional cap on very wide screens */
+  font-size: 1.5rem;
+}

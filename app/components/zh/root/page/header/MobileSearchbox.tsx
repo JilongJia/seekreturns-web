@@ -32,7 +32,7 @@ export function MobileSearchbox({ className }: MobileSearchboxProps) {
           <span className={styles.screenReaderText}>关闭搜索框</span>
           <LuX aria-hidden={true} className={styles.xMarkIcon} />
         </button>
-        <form action="/search" className={styles.form}>
+        <form action="/zh/search" className={styles.form}>
           <label
             htmlFor="mobile-searchbox-input"
             className={styles.screenReaderLabel}

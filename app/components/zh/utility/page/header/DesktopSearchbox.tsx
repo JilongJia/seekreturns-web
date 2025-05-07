@@ -10,7 +10,7 @@ type DesktopSearchboxProps = {
 export function DesktopSearchbox({ className }: DesktopSearchboxProps) {
   return (
     <search aria-label="全站搜索" className={clsx(styles.searchbox, className)}>
-      <form className={styles.form} action="/search">
+      <form className={styles.form} action="/zh/search">
         <label
           htmlFor="desktop-searchbox-input"
           className={styles.screenReaderLabel}
