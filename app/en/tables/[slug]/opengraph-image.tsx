@@ -42,7 +42,7 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
 
   const breadcrumbList = [
     {
-      name: "Table",
+      name: "Tables",
       url: `${baseUrl}/en/tables`,
     },
     {

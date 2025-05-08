@@ -1,4 +1,4 @@
-/* make it half the viewport, center it, no borders except a bottom line */
+/* center the search input, underline style */
 .underlineInput {
   display: block;
   margin: 2rem auto;
@@ -7,6 +7,64 @@
   border-bottom: 1px solid #ccc;
   padding: 0.5rem 0;
   width: 50vw;
-  max-width: 600px; /* optional cap on very wide screens */
+  max-width: 600px;
   font-size: 1.5rem;
+}
+
+/* reset list and center it under the input */
+.resultsList {
+  margin: 0 auto;
+  padding: 0;
+  width: 50vw;
+  max-width: 600px;
+  list-style: none;
+}
+
+/* each hit is spaced out a bit */
+.resultItem {
+  margin-bottom: 1.5rem;
+}
+
+/* make the entire row clickable, remove default link styles */
+.resultLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* horizontal layout: label on left, content on right */
+.resultRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* left-hand “Informational Pages” label */
+.label {
+  flex: 0 0 auto;
+  min-width: 120px;
+  color: #888;
+  font-weight: 600;
+}
+
+/* right-hand container for title + description */
+.content {
+  flex: 1 1 auto;
+}
+
+/* hit title */
+.title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+/* hit description/snippet */
+.description {
+  margin: 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.4;
 }

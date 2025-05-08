@@ -1,5 +1,4 @@
-// app/search/page.js or app/search/page.tsx
-import { Search } from "./components/Search"; // change this with the path to your <Search> component
+import { Search } from "./components/Search";
 
 export const dynamic = "force-dynamic";
 

@@ -24,7 +24,7 @@ export async function GET(request: Request, { params }: GetRouteContext) {
 
   const breadcrumbList = [
     {
-      name: "Guide",
+      name: "Guides",
       url: `${baseUrl}/en/guides`,
     },
     {
