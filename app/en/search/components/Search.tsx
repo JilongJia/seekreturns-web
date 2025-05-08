@@ -17,15 +17,25 @@ function SearchBox() {
   const { query, refine } = useSearchBox();
 
   return (
-    <input
-      className={styles.underlineInput}
-      type="search"
-      value={query}
-      onChange={(e) => refine(e.currentTarget.value)}
-      placeholder="Search…"
+    <form
       aria-label="Sitewide search"
-      autoComplete="off"
-    />
+      role="search"
+      className={styles.form}
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <label htmlFor="search-input" className={styles.label}>
+        Your Search
+      </label>
+      <input
+        id="search-input"
+        className={styles.input}
+        type="search"
+        placeholder="Search…"
+        autoComplete="off"
+        value={query}
+        onChange={(e) => refine(e.currentTarget.value)}
+      />
+    </form>
   );
 }
 
@@ -33,21 +43,26 @@ function Hits() {
   const { items } = useHits<AlgoliaHit>();
 
   return (
-    <ul className={styles.resultsList}>
-      {items.map((hit) => (
-        <li key={hit.objectID} className={styles.resultItem}>
-          <Link href={hit.pathname} className={styles.resultLink}>
-            <div className={styles.resultRow}>
-              <div className={styles.label}>{hit.section}</div>
-              <div className={styles.content}>
-                <h2 className={styles.title}>{hit.title}</h2>
-                <p className={styles.description}>{hit.description}</p>
-              </div>
-            </div>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <section aria-labelledby="search-results">
+      <h1 id="search-results" className={styles.h1}>
+        Your Search Results
+      </h1>
+      <ol className={styles.ol}>
+        {items.map((hit) => (
+          <li key={hit.objectID} className={styles.li}>
+            <Link href={hit.pathname} className={styles.link}>
+              <article className={styles.article}>
+                <div className={styles.sectionLabel}>{hit.section}</div>
+                <div className={styles.content}>
+                  <h2 className={styles.h2}>{hit.title}</h2>
+                  <p className={styles.p}>{hit.description}</p>
+                </div>
+              </article>
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
