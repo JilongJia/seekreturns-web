@@ -13,13 +13,13 @@ import { pageInfo } from "./data/info";
 
 type PageData = { title: string; pathname: string };
 
-export async function generateMetadata() {
+export function generateMetadata() {
   const metadata = generateWebsiteMetadata(pageInfo);
 
   return metadata;
 }
 
-async function Page() {
+function Page() {
   const pages: PageData[] = pagesRaw.map(({ symbolOne, symbolTwo, slug }) => ({
     title: `${symbolOne} vs. ${symbolTwo}`,
     pathname: `/en/stock-comparisons/${slug}`,

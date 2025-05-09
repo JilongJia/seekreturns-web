@@ -14,10 +14,8 @@ export async function PerformanceComparisonSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: PerformanceComparisonSectionProps) {
-  const [seriesOne, seriesTwo] = await Promise.all([
-    fetchPriceSeriesData(stockOneSymbol),
-    fetchPriceSeriesData(stockTwoSymbol),
-  ]);
+  const seriesOne = await fetchPriceSeriesData(stockOneSymbol);
+  const seriesTwo = await fetchPriceSeriesData(stockTwoSymbol);
 
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);

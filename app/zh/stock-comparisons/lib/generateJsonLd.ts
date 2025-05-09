@@ -3,7 +3,7 @@ import {
   generateWebSiteJsonLd,
   generateWebPageJsonLd,
   generateBreadcrumbListJsonLd,
-} from "@/app/lib/en/section/generateJsonLd";
+} from "@/app/lib/zh/section/generateJsonLd";
 
 type ImageObject = {
   "@type": "ImageObject";
@@ -44,7 +44,7 @@ export function generateJsonLd({
   const featuredImage: ImageObject = {
     "@type": "ImageObject",
     url: `${pageUrl}/featured-image`,
-    caption: `“${pageTitle}” page by Seek Returns`,
+    caption: `Seek Returns 的《${pageTitle}》页面`,
     width: 1200,
     height: 630,
   };
@@ -53,7 +53,7 @@ export function generateJsonLd({
 
   const breadcrumbList: BreadcrumbListItem[] = [
     {
-      name: "Stock Comparisons",
+      name: "个股对比",
       url: pageUrl,
     },
   ];

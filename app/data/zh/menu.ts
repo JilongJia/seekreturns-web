@@ -29,7 +29,7 @@ export const primaryMenu: PrimaryMenuData = [
       { id: "tables", label: "表格", pathname: "/zh/tables" },
       {
         id: "stock-comparisons",
-        label: "股票对比",
+        label: "个股对比",
         pathname: "/zh/stock-comparisons",
       },
     ],
