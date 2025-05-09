@@ -1,0 +1,118 @@
+.pageHeader {
+  position: relative;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.main {
+  margin-bottom: 2.5rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.mainHeader {
+  margin-bottom: 1rem;
+}
+
+.h1 {
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.hr {
+  column-span: all;
+  margin-bottom: 2rem;
+  margin-left: 0;
+  border: 0;
+  border-bottom: 4px solid #1e40af;
+  width: 6.5rem;
+}
+
+.section {
+  break-inside: avoid-column;
+  margin-bottom: 2rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.h2 {
+  margin-bottom: 0.5rem;
+  color: #1e40af;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
+
+.ul {
+  color: #262626;
+  list-style: none;
+}
+
+.li {
+  margin-bottom: 0.75rem;
+}
+
+.li:last-child {
+  margin-bottom: 0;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:focus-visible {
+  outline-style: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer {
+  row-gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .main {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+
+  .footer {
+    row-gap: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 4.5rem;
+    padding-left: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pageHeader {
+    margin-bottom: 4rem;
+  }
+
+  .main {
+    column-gap: 3rem;
+    column-count: 2;
+    margin-bottom: 4rem;
+  }
+
+  .mainHeader {
+    column-span: all;
+  }
+}
+
+@media (min-width: 1280px) {
+  .main {
+    column-gap: 4rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
+  }
+}

@@ -25,9 +25,20 @@ export const primaryMenu: PrimaryMenuData = [
     label: "Tools",
     secondaryMenu: [
       { id: "calculators", label: "Calculators", pathname: "/en/calculators" },
-      { id: "charts", label: "Charts", pathname: "/en/charts" },
+      // { id: "charts", label: "Charts", pathname: "/en/charts" },
       { id: "tables", label: "Tables", pathname: "/en/tables" },
+      {
+        id: "stock-comparisons",
+        label: "Stock Comparisons",
+        pathname: "/en/stock-comparisons",
+      },
     ],
   },
-  { id: "blog", label: "Blog", pathname: "/en/blog" },
+  {
+    id: "blog",
+    label: "Blog",
+    secondaryMenu: [
+      { id: "reviews", label: "Reviews", pathname: "/en/reviews" },
+    ],
+  },
 ];

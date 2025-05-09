@@ -25,9 +25,18 @@ export const primaryMenu: PrimaryMenuData = [
     label: "工具",
     secondaryMenu: [
       { id: "calculators", label: "计算器", pathname: "/zh/calculators" },
-      { id: "charts", label: "图表", pathname: "/zh/charts" },
+      // { id: "charts", label: "图表", pathname: "/zh/charts" },
       { id: "tables", label: "表格", pathname: "/zh/tables" },
+      {
+        id: "stock-comparisons",
+        label: "股票对比",
+        pathname: "/zh/stock-comparisons",
+      },
     ],
   },
-  { id: "blog", label: "博客", pathname: "/zh/blog" },
+  {
+    id: "blog",
+    label: "博客",
+    secondaryMenu: [{ id: "reviews", label: "测评", pathname: "/zh/reviews" }],
+  },
 ];
