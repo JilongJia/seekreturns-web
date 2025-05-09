@@ -14,10 +14,10 @@ import { AdvertisementSidebar } from "@/app/components/en/content/page/Advertise
 import { Footer } from "@/app/components/en/content/page/Footer";
 import styles from "./page.module.css";
 
-type generateMetadataProps = { params: Promise<{ slug: string }> };
+type GenerateMetadataParams = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
 
-export async function generateMetadata({ params }: generateMetadataProps) {
+export async function generateMetadata({ params }: GenerateMetadataParams) {
   const slug = (await params).slug;
 
   const pageInfo = await getPageInfo(`/en/concepts/${slug}`);

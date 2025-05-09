@@ -13,10 +13,10 @@ import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOf
 import { Footer } from "@/app/components/zh/content/page/Footer";
 import styles from "./page.module.css";
 
-type generateMetadataProps = { params: Promise<{ slug: string }> };
+type GenerateMetadataParams = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
 
-export async function generateMetadata({ params }: generateMetadataProps) {
+export async function generateMetadata({ params }: GenerateMetadataParams) {
   const slug = (await params).slug;
 
   const pageInfo = await getPageInfo(`/zh/calculators/${slug}`);
