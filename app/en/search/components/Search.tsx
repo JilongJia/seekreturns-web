@@ -14,6 +14,8 @@ const searchClient = algoliasearch(
 );
 
 function SearchBox() {
+  console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID);
+
   const { query, refine } = useSearchBox();
 
   return (
