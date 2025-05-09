@@ -1,0 +1,92 @@
+.form {
+  margin-bottom: 5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #737373;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.input {
+  display: block;
+  outline: none;
+  border-bottom: 1px solid #d4d4d4;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.h1 {
+  margin-bottom: 1rem;
+  color: var(--article-heading-color);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.5rem;
+}
+
+.ol {
+  list-style: none;
+}
+
+.li {
+  margin-bottom: 1.5rem;
+}
+
+.li:last-child {
+  margin-bottom: 0;
+}
+
+.link {
+  display: block;
+  transition-duration: 0.1s;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.link:hover {
+  transition-duration: 0.2s;
+  border-color: #262626;
+}
+
+.article {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.sectionLabel {
+  margin-bottom: 1rem;
+  color: #525252;
+  font-weight: 500;
+  line-height: 1.75rem;
+}
+
+.h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.p {
+  color: #525252;
+  font-size: 1rem;
+  line-height: 1.75rem;
+}
+
+@media (min-width: 1024px) {
+  .h1 {
+    margin-bottom: 2rem;
+  }
+
+  .article {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    gap: 2rem;
+  }
+
+  .sectionLabel {
+    margin-bottom: 0;
+  }
+}
