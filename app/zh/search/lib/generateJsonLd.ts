@@ -3,7 +3,7 @@ import {
   generateWebSiteJsonLd,
   generateWebPageJsonLd,
   generateBreadcrumbListJsonLd,
-} from "@/app/lib/en/utility/generateJsonLd";
+} from "@/app/lib/zh/utility/generateJsonLd";
 
 type ImageObject = {
   "@type": "ImageObject";
@@ -44,7 +44,7 @@ export function generateJsonLd({
   const featuredImage: ImageObject = {
     "@type": "ImageObject",
     url: `${pageUrl}/featured-image`,
-    caption: "Search - Seek Returns",
+    caption: "搜索 - Seek Returns",
     width: 1200,
     height: 630,
   };
@@ -53,7 +53,7 @@ export function generateJsonLd({
 
   const breadcrumbList: BreadcrumbListItem[] = [
     {
-      name: "Search",
+      name: "搜索",
       url: pageUrl,
     },
   ];

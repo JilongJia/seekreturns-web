@@ -52,7 +52,7 @@ function Hits() {
           <li key={hit.objectID} className={styles.li}>
             <Link href={hit.pathname} className={styles.link}>
               <article className={styles.article}>
-                <div className={styles.sectionLabel}>{hit.section}</div>
+                <div className={styles.sectionName}>{hit.section}</div>
                 <div className={styles.content}>
                   <h2 className={styles.h2}>{hit.title}</h2>
                   <p className={styles.p}>{hit.description}</p>

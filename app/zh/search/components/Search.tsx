@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import { useSearchBox, useHits, Configure } from "react-instantsearch";
@@ -15,25 +16,52 @@ const searchClient = algoliasearch(
 
 function SearchBox() {
   const { query, refine } = useSearchBox();
+  const [isComposing, setIsComposing] = useState(false);
+  const [value, setValue] = useState(query);
+
+  useEffect(() => {
+    setValue(query);
+  }, [query]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setValue(value);
+    if (!isComposing) {
+      refine(value);
+    }
+  };
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = (
+    e: React.CompositionEvent<HTMLInputElement>,
+  ) => {
+    setIsComposing(false);
+    refine(e.currentTarget.value);
+  };
 
   return (
     <form
-      aria-label="Sitewide search"
+      aria-label="全站搜索"
       role="search"
       className={styles.form}
       onSubmit={(e) => e.preventDefault()}
     >
       <label htmlFor="search-input" className={styles.label}>
-        Your Search
+        搜索
       </label>
       <input
         id="search-input"
         className={styles.input}
         type="search"
-        placeholder="Search…"
+        placeholder="搜索……"
         autoComplete="off"
-        value={query}
-        onChange={(e) => refine(e.currentTarget.value)}
+        value={value}
+        onChange={handleChange}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
       />
     </form>
   );
@@ -45,14 +73,14 @@ function Hits() {
   return (
     <section aria-labelledby="search-results">
       <h1 id="search-results" className={styles.h1}>
-        Your Search Results
+        搜索结果
       </h1>
       <ol className={styles.ol}>
         {items.map((hit) => (
           <li key={hit.objectID} className={styles.li}>
             <Link href={hit.pathname} className={styles.link}>
               <article className={styles.article}>
-                <div className={styles.sectionLabel}>{hit.section}</div>
+                <div className={styles.sectionName}>{hit.section}</div>
                 <div className={styles.content}>
                   <h2 className={styles.h2}>{hit.title}</h2>
                   <p className={styles.p}>{hit.description}</p>
@@ -82,8 +110,8 @@ export function Search() {
           windowTitle(routeState) {
             const query = routeState.q;
             return query
-              ? `Search Results for “${query}” - Seek Returns`
-              : "Search - Seek Returns";
+              ? `“${query}” 的搜索结果 – Seek Returns`
+              : "搜索 - Seek Returns";
           },
         },
         stateMapping: {
@@ -104,7 +132,7 @@ export function Search() {
       }}
       future={{ preserveSharedStateOnUnmount: true }}
     >
-      <Configure filters="language:English" hitsPerPage={10} />
+      <Configure filters="language:中文" hitsPerPage={10} />
       <SearchBox />
       <Hits />
     </InstantSearchNext>

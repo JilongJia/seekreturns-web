@@ -1,4 +1,4 @@
-import { generateFeaturedImage } from "@/app/lib/en/utility/generateFeaturedImage";
+import { generateFeaturedImage } from "@/app/lib/zh/utility/generateFeaturedImage";
 
 import { pageInfo } from "../data/info";
 
