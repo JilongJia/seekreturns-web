@@ -1,6 +1,11 @@
 import clsx from "clsx";
 import { notFound } from "next/navigation";
 
+import { generateArticleMetadata } from "@/app/lib/zh/content/generateMetadata";
+import { generatePageInfo } from "./lib/generatePageInfo";
+import { generateArticleInfo } from "./lib/generateArticleInfo";
+import { generateJsonLd } from "./lib/generateJsonLd";
+
 import { AdvertisementSidebar } from "@/app/components/zh/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/zh/content/page/Footer";
 import { Header as PageHeader } from "@/app/components/zh/content/page/Header";
@@ -9,7 +14,6 @@ import { H1 } from "@/app/components/zh/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";
-
 import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
@@ -17,23 +21,85 @@ import { DividendComparisonSection } from "./components/DividendComparisonSectio
 import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
 import styles from "./page.module.css";
 
-import pages from "@/app/data/stock-comparisons/pages.json";
+import pagesRaw from "@/app/data/stock-comparisons/pages.json";
 import { tableOfContents } from "./data/tableOfContents";
 
+type GenerateMetadataParams = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: GenerateMetadataParams) {
+  const slug = (await params).slug;
+
+  const pageRaw = pagesRaw.find((page) => page.slug === slug);
+
+  if (!pageRaw) {
+    notFound();
+  }
+
+  const pageInfo = generatePageInfo(pageRaw);
+
+  const {
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  } = pageInfo;
+
+  const metadata = generateArticleMetadata({
+    title,
+    pathname,
+    description,
+    publishedDate,
+    modifiedDate,
+    alternateLanguageUrls,
+  });
+
+  return metadata;
+}
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
-  const page = pages.find((page) => page.slug === slug);
+  const pageRaw = pagesRaw.find((page) => page.slug === slug);
 
-  if (!page) {
+  if (!pageRaw) {
     notFound();
   }
 
-  const { symbolOne, symbolTwo } = page;
+  const { symbolOne, symbolTwo } = pageRaw;
   const stockOneSymbol = symbolOne;
   const stockTwoSymbol = symbolTwo;
+
+  const pageInfo = generatePageInfo({ symbolOne, symbolTwo, slug });
+
+  const {
+    title: pageTitle,
+    pathname: pagePathname,
+    description: pageDescription,
+    publishedDate: pagePublishedDate,
+    modifiedDate: pageModifiedDate,
+  } = pageInfo;
+
+  const articleInfo = generateArticleInfo({ symbolOne, symbolTwo });
+
+  const {
+    title: articleTitle,
+    description: articleDescription,
+    images: articleImages,
+  } = articleInfo;
+
+  const jsonLd = generateJsonLd({
+    pageTitle,
+    pagePathname,
+    pageDescription,
+    pagePublishedDate,
+    pageModifiedDate,
+    articleTitle,
+    articleDescription,
+    articleImages,
+  });
 
   return (
     <>
@@ -83,6 +149,10 @@ async function Page({ params }: PageProps) {
       </div>
       <AdvertisementSidebar className={styles.advertisementSidebar} />
       <Footer className={clsx(styles.footer, "layoutContainer")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   );
 }

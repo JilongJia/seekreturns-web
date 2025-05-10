@@ -15,8 +15,8 @@ export function generateArticleInfo({
   symbolOne,
   symbolTwo,
 }: GenerateArticleInfoParams) {
-  const title = `${symbolOne} vs. ${symbolTwo}: A Head-to-Head Stock Comparison`;
-  const description = `Explore a head-to-head stock comparison of ${symbolOne} versus ${symbolTwo}. This analysis covers their performance, company overviews, valuation metrics, dividend yields, and financial strength.`;
+  const title = `${symbolOne} 与 ${symbolTwo}：股票综合比较`;
+  const description = `${symbolOne} 与 ${symbolTwo} 股票对比解读：本报告围绕历史表现、公司概况、估值、股息及财务状况五大核心方面，进行数据对比与分析，力求为投资者提供清晰的比较视角与决策依据。`;
   const images: Image[] = [];
 
   return {
