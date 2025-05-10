@@ -13,7 +13,7 @@ type HeaderProps = {
   className?: string;
 };
 
-export async function Header({ pathname, className }: HeaderProps) {
+export function Header({ pathname, className }: HeaderProps) {
   const pathnameSegments = pathname.split("/");
   const utilitySegment = pathnameSegments[2];
 

@@ -363,7 +363,6 @@ export async function ValuationMetricsComparisonSection({
               <Ul.Li>{priceToFreeCashFlowRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>更多信息，见下方表格。</P>
         </>
       ) : (
         <P>

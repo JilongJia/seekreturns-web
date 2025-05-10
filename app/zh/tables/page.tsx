@@ -13,7 +13,7 @@ import { pageInfo } from "./data/info";
 
 type PageData = { title: string; pathname: string };
 
-export async function generateMetadata() {
+export function generateMetadata() {
   const metadata = generateWebsiteMetadata(pageInfo);
 
   return metadata;

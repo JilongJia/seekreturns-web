@@ -10,7 +10,7 @@ import styles from "./Header.module.css";
 
 type HeaderProps = { pathname: string; className?: string };
 
-export async function Header({ pathname, className }: HeaderProps) {
+export function Header({ pathname, className }: HeaderProps) {
   const pathnameSegments = pathname.split("/");
   const sectionSegment = pathnameSegments[2];
 

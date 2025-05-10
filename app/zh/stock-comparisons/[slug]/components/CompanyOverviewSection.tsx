@@ -167,7 +167,6 @@ export async function CompanyOverviewSection({
       <P>{marketCapComparisonCommentary}</P>
       <P>{betaComparisonCommentary}</P>
       {adrCommentary && <P>{adrCommentary}</P>}
-      <P>具体信息，见下表。</P>
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>

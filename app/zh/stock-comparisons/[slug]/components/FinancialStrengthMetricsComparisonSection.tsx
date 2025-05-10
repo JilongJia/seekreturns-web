@@ -428,7 +428,6 @@ export async function FinancialStrengthMetricsComparisonSection({
               <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>详情请参考下表。</P>
         </>
       ) : (
         <P>

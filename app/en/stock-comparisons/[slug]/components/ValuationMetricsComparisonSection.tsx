@@ -364,7 +364,6 @@ export async function ValuationMetricsComparisonSection({
               <Ul.Li>{priceToFreeCashFlowRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>For a detailed comparison, please refer to the table below.</P>
         </>
       ) : (
         <P>

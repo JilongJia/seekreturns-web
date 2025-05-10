@@ -10,7 +10,7 @@ import styles from "./Header.module.css";
 
 type HeaderProps = { className?: string };
 
-export async function Header({ className }: HeaderProps) {
+export function Header({ className }: HeaderProps) {
   return (
     <header className={clsx(styles.header, className)}>
       <MobileMenu className={styles.mobileMenu} />

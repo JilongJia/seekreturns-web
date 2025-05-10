@@ -434,7 +434,6 @@ export async function FinancialStrengthMetricsComparisonSection({
               <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
             )}
           </Ul>
-          <P>Take a closer look at the full breakdown in the table below.</P>
         </>
       ) : (
         <P>
