@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { getPageModifiedDate } from "@/app/lib/db/getPageModifiedDate";
+import { fetchPageModifiedDate } from "@/app/lib/db/fetchPageModifiedDate";
 
 import styles from "./ModifiedDate.module.css";
 
@@ -7,7 +7,7 @@ type ModifiedDateProps = { pathname?: string; className?: string };
 
 export async function ModifiedDate({ pathname, className }: ModifiedDateProps) {
   const modifiedDate = pathname
-    ? await getPageModifiedDate(pathname)
+    ? await fetchPageModifiedDate(pathname)
     : new Date();
   if (!modifiedDate) return null;
 

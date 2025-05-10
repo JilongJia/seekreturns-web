@@ -1,6 +1,8 @@
 import { adminDb } from "./firebaseAdmin";
 
-export async function getPageTitle(pathname: string): Promise<string | null> {
+export async function fetchPageModifiedDate(
+  pathname: string,
+): Promise<Date | null> {
   const pagesRef = adminDb.collection("informationalPages");
 
   const pagesSnapshot = await pagesRef
@@ -10,7 +12,7 @@ export async function getPageTitle(pathname: string): Promise<string | null> {
 
   if (pagesSnapshot.empty) return null;
 
-  const title = pagesSnapshot.docs[0].data().title;
+  const modifiedDate = pagesSnapshot.docs[0].data().modifiedDate;
 
-  return title ? title : null;
+  return modifiedDate ? modifiedDate.toDate() : null;
 }

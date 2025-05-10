@@ -1,4 +1,4 @@
-import { getPageInfo } from "@/app/lib/db/getPageInfo";
+import { fetchPageInfo } from "@/app/lib/db/fetchPageInfo";
 import { generateFeaturedImage } from "@/app/lib/zh/content/generateFeaturedImage";
 
 type GetRouteContext = {
@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: GetRouteContext) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const pageInfo = await getPageInfo(`/zh/calculators/${slug}`);
+  const pageInfo = await fetchPageInfo(`/zh/calculators/${slug}`);
 
   if (!pageInfo) {
     return new Response("图片未找到", { status: 404 });

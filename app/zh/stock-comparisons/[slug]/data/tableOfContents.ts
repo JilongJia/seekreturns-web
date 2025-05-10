@@ -1,6 +1,6 @@
 export const tableOfContents = [
-  { id: "performance-comparison", label: "历史表现比较" },
   { id: "company-overview", label: "公司概况" },
+  { id: "performance-comparison", label: "历史表现比较" },
   { id: "valuation-metrics-comparison", label: "估值指标比较" },
   { id: "dividend-comparison", label: "股息比较" },
   {

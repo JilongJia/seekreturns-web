@@ -14,8 +14,8 @@ import { H1 } from "@/app/components/zh/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";
-import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
+import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
 import { DividendComparisonSection } from "./components/DividendComparisonSection";
 import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
@@ -124,11 +124,11 @@ async function Page({ params }: PageProps) {
               本文对 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
               进行了全面对比，涵盖历史表现、估值、股息以及财务实力等方面。无论您是寻求投资洞察，还是希望了解这两只股票的相对优势，这里都能为您提供清晰的参考。
             </P>
-            <PerformanceComparisonSection
+            <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <CompanyOverviewSection
+            <PerformanceComparisonSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

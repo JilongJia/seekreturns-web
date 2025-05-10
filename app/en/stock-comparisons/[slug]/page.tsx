@@ -14,8 +14,8 @@ import { H1 } from "@/app/components/en/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/en/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
-import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
+import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
 import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
 import { DividendComparisonSection } from "./components/DividendComparisonSection";
 import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
@@ -127,11 +127,11 @@ async function Page({ params }: PageProps) {
               dividends, and financial strength. It’s built for investors or
               anyone curious to see how these two stocks match up.
             </P>
-            <PerformanceComparisonSection
+            <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <CompanyOverviewSection
+            <PerformanceComparisonSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

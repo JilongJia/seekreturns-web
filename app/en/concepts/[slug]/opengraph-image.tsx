@@ -1,5 +1,5 @@
-import { getPageInfo } from "@/app/lib/db/getPageInfo";
-import { getPageTitle } from "@/app/lib/db/getPageTitle";
+import { fetchPageInfo } from "@/app/lib/db/fetchPageInfo";
+import { fetchPageTitle } from "@/app/lib/db/fetchPageTitle";
 import { generateFeaturedImage } from "@/app/lib/en/content/generateFeaturedImage";
 
 type GenerateImageMetadataParams = { params: Promise<{ slug: string }> };
@@ -10,7 +10,7 @@ export async function generateImageMetadata({
 }: GenerateImageMetadataParams) {
   const slug = (await params).slug;
 
-  const title = await getPageTitle(`/en/concepts/${slug}`);
+  const title = await fetchPageTitle(`/en/concepts/${slug}`);
 
   return [
     {
@@ -28,7 +28,7 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const pageInfo = await getPageInfo(`/en/concepts/${slug}`);
+  const pageInfo = await fetchPageInfo(`/en/concepts/${slug}`);
 
   if (!pageInfo) {
     return new Response("Image Not Found", { status: 404 });

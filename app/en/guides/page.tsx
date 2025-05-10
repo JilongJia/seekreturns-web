@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { generateWebsiteMetadata } from "@/app/lib/en/section/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { getSectionPages } from "@/app/lib/db/getSectionPages";
+import { fetchSectionPages } from "@/app/lib/db/fetchSectionPages";
 import { Header as PageHeader } from "@/app/components/en/section/page/Header";
 import { Footer } from "@/app/components/en/section/page/Footer";
 import styles from "./page.module.css";
@@ -20,7 +20,7 @@ export async function generateMetadata() {
 }
 
 async function Page() {
-  const pages: PageData[] = await getSectionPages("en", "guides");
+  const pages: PageData[] = await fetchSectionPages("en", "guides");
 
   const groups: Record<string, PageData[]> = pages.reduce(
     (acc, page) => {

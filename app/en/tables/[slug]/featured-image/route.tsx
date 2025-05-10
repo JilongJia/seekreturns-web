@@ -1,4 +1,4 @@
-import { getPageInfo } from "@/app/lib/db/getPageInfo";
+import { fetchPageInfo } from "@/app/lib/db/fetchPageInfo";
 import { generateFeaturedImage } from "@/app/lib/en/content/generateFeaturedImage";
 
 type GetRouteContext = {
@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: GetRouteContext) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const pageInfo = await getPageInfo(`/en/tables/${slug}`);
+  const pageInfo = await fetchPageInfo(`/en/tables/${slug}`);
 
   if (!pageInfo) {
     return new Response("Image Not Found", { status: 404 });

@@ -1,6 +1,6 @@
 export const tableOfContents = [
-  { id: "performance-comparison", label: "Performance Comparison" },
   { id: "company-overview", label: "Company Overview" },
+  { id: "performance-comparison", label: "Performance Comparison" },
   { id: "valuation-metrics-comparison", label: "Valuation Metrics Comparison" },
   { id: "dividend-comparison", label: "Dividend Comparison" },
   {

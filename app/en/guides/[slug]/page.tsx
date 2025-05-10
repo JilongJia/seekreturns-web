@@ -2,8 +2,8 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import clsx from "clsx";
 
-import { getPageInfo } from "@/app/lib/db/getPageInfo";
-import { getStaticParams } from "@/app/lib/db/getStaticParams";
+import { fetchPageInfo } from "@/app/lib/db/fetchPageInfo";
+import { fetchStaticParams } from "@/app/lib/db/fetchStaticParams";
 import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
@@ -20,7 +20,7 @@ type PageProps = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: GenerateMetadataParams) {
   const slug = (await params).slug;
 
-  const pageInfo = await getPageInfo(`/en/guides/${slug}`);
+  const pageInfo = await fetchPageInfo(`/en/guides/${slug}`);
 
   if (!pageInfo) {
     notFound();
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: GenerateMetadataParams) {
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
-  const pageInfo = await getPageInfo(`/en/guides/${slug}`);
+  const pageInfo = await fetchPageInfo(`/en/guides/${slug}`);
 
   if (!pageInfo) {
     notFound();
@@ -115,7 +115,7 @@ async function Page({ params }: PageProps) {
 export async function generateStaticParams() {
   const language = "en";
   const section = "guides";
-  const staticParams = await getStaticParams(language, section);
+  const staticParams = await fetchStaticParams(language, section);
   return staticParams;
 }
 

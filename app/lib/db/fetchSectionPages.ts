@@ -1,6 +1,6 @@
 import { adminDb } from "./firebaseAdmin";
 
-export async function getSectionPages(
+export async function fetchSectionPages(
   language: string,
   section: string,
 ): Promise<{ title: string; pathname: string }[]> {

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { getHreflangAlternatePages } from "@/app/lib/db/getHreflangAlternatePages";
+import { fetchHreflangAlternatePages } from "@/app/lib/db/fetchHreflangAlternatePages";
 
 import { MobileMenu } from "./header/MobileMenu";
 import { Logo } from "./header/Logo";
@@ -26,7 +26,7 @@ export async function Header({ pathname, className }: HeaderProps) {
       pathname: `/${lang}/${remainingPathname}`,
     }));
   } else {
-    hreflangAlternatePages = await getHreflangAlternatePages(pathname);
+    hreflangAlternatePages = await fetchHreflangAlternatePages(pathname);
   }
 
   return (

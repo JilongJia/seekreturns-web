@@ -2,7 +2,7 @@ import { adminDb } from "./firebaseAdmin";
 
 type HreflangAlternate = { pathname: string };
 
-export async function getHreflangAlternatePages(
+export async function fetchHreflangAlternatePages(
   pathname: string,
 ): Promise<HreflangAlternate[]> {
   const pagesRef = adminDb.collection("informationalPages");

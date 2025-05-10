@@ -1,6 +1,6 @@
 import { adminDb } from "./firebaseAdmin";
 
-export async function getStaticParams(
+export async function fetchStaticParams(
   language: string,
   section: string,
 ): Promise<{ slug: string }[]> {

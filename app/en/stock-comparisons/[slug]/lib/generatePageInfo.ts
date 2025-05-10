@@ -12,7 +12,7 @@ export function generatePageInfo({
   const title = `${symbolOne} vs. ${symbolTwo}: A Head-to-Head Stock Comparison`;
   const pathname = `/en/stock-comparisons/${slug}`;
 
-  const description = `Compare ${symbolOne} and ${symbolTwo} financial strength, dividends, valuation & more. Get our detailed side-by-side stock analysis to inform your view.`;
+  const description = `Compare ${symbolOne} and ${symbolTwo} valuation, dividends, financial strength & more. Get our detailed side-by-side stock analysis to inform your view.`;
 
   const publishedDate = new Date("2025-05-05");
   const modifiedDate = new Date();

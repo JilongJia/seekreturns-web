@@ -7,7 +7,7 @@ type AlternateLanguageUrls = {
   zh?: string;
 };
 
-export async function getPageInfo(pathname: string): Promise<{
+export async function fetchPageInfo(pathname: string): Promise<{
   title: string;
   pathname: string;
   description: string;
