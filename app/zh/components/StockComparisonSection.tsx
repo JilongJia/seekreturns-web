@@ -14,8 +14,10 @@ export async function StockComparisonSection({
   const stockOneSymbol = "AAPL";
   const stockTwoSymbol = "NVDA";
 
-  const stockOnePriceSeries = await fetchPriceSeriesData(stockOneSymbol);
-  const stockTwoPriceSeries = await fetchPriceSeriesData(stockTwoSymbol);
+  const [stockOnePriceSeries, stockTwoPriceSeries] = await Promise.all([
+    fetchPriceSeriesData(stockOneSymbol),
+    fetchPriceSeriesData(stockTwoSymbol),
+  ]);
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) return null;
 

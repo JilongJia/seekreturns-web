@@ -14,8 +14,13 @@ export async function fetchSectionPages(
 
   return snapshot.docs.flatMap((doc) => {
     const data = doc.data();
+
     const { title, pathname } = data;
-    if (!title || !pathname) return [];
+
+    if (!title || !pathname) {
+      return [];
+    }
+
     return [{ title, pathname }];
   });
 }
