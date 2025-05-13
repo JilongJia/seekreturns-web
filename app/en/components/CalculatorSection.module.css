@@ -24,6 +24,15 @@
   margin-bottom: 0;
 }
 
+.link {
+  color: #2563eb;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 @media (min-width: 640px) {
   .calculatorSection {
     display: grid;

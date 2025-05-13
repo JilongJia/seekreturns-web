@@ -1,3 +1,4 @@
+import Link from "next/link";
 import clsx from "clsx";
 
 import { Calculator } from "./calculator_section/Calculator";
@@ -22,8 +23,12 @@ export function CalculatorSection({ className }: CalculatorSectionProps) {
           seconds, helping you evaluate opportunities efficiently.
         </p>
         <p className={styles.p}>
-          Explore the Calculators page to access the full collection and analyze
-          your investments with precision.
+          Explore the{" "}
+          <Link href="/en/calculators" className={styles.link}>
+            Calculators page
+          </Link>{" "}
+          to access the full collection and analyze your investments with
+          precision.
         </p>
       </div>
       <Calculator />

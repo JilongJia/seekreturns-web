@@ -33,6 +33,7 @@ steps:
           --region "$_CLOUD_RUN_REGION" \
           --set-env-vars NEXT_PUBLIC_BASE_URL=$_NEXT_PUBLIC_BASE_URL,NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=$_NEXT_PUBLIC_ALGOLIA_APPLICATION_ID,NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=$_NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY \
           --set-secrets FINANCIAL_MODELING_PREP_API_KEY=FINANCIAL_MODELING_PREP_API_KEY:latest \
+          --min-instances 1 \
           --allow-unauthenticated
 
 images:
