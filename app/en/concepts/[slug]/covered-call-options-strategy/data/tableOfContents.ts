@@ -1,41 +1,30 @@
 export const tableOfContents = [
   {
     id: "definition",
-    label: "What is the covered call options trading strategy?",
-    subHeadingsData: [{ id: "example", label: "Example" }],
+    label: "What Is a Covered Call?",
   },
   {
-    id: "when-to-use",
-    label: "When should you use the covered call options trading strategy?",
-    subHeadingsData: [
-      {
-        id: "increase-income",
-        label: "Increase income through the covered call strategy",
-      },
-      {
-        id: "cover-losses",
-        label: "Make up for losses through the covered call strategy",
-      },
-    ],
+    id: "how-it-works",
+    label: "How the Covered Call Strategy Works",
   },
   {
-    id: "risk",
-    label: "Risk of the covered call strategy",
-    subHeadingsData: [
-      { id: "stock-plummet", label: "Losses caused by stock plummet" },
-      {
-        id: "profit-reduction",
-        label: "The profit reduction caused by the rapid rise of the stock",
-      },
-    ],
+    id: "profit-and-loss-dynamics",
+    label: "Profit and Loss Dynamics",
   },
   {
-    id: "tips",
-    label: "Covered call strategy tips",
-    subHeadingsData: [
-      { id: "choose-underlying", label: "Choose an excellent underlying" },
-      { id: "buy-low", label: "Buy stocks at low prices" },
-      { id: "sell-high", label: "Regularly sell call options at high prices" },
-    ],
+    id: "guide",
+    label: "Step-by-Step Guide to Implementing a Covered Call",
+  },
+  {
+    id: "pros-and-cons",
+    label: "Pros and Cons of Covered Calls",
+  },
+  {
+    id: "considerations",
+    label: "Key Considerations",
+  },
+  {
+    id: "frequently-asked-questions",
+    label: "Frequently Asked Questions (FAQ)",
   },
 ];
