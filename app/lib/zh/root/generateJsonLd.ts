@@ -66,7 +66,6 @@ export function generateWebSiteJsonLd({
           urlTemplate: `${url}/en/search?q={query}`,
         },
         "query-input": "required name=query",
-        inLanguage: "en",
       },
       {
         "@type": "SearchAction",
@@ -75,7 +74,6 @@ export function generateWebSiteJsonLd({
           urlTemplate: `${url}/zh/search?q={query}`,
         },
         "query-input": "required name=query",
-        inLanguage: "zh",
       },
     ],
   };

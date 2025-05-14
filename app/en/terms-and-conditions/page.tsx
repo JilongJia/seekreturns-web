@@ -124,7 +124,7 @@ function Page() {
             <li className={styles.li}>
               <p className={styles.p}>
                 <strong>Website</strong> refers to Seek Returns, accessible from{" "}
-                <Link href="/" className={styles.link}>
+                <Link href="/en" className={styles.link}>
                   https://seekreturns.com
                 </Link>
                 .
