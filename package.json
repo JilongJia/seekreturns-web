@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "algoliasearch": "^5.24.0",
+    "algoliasearch": "^5.25.0",
     "clsx": "^2.1.1",
-    "firebase-admin": "^13.3.0",
+    "firebase-admin": "^13.4.0",
     "katex": "^0.16.22",
     "lightweight-charts": "^5.0.6",
     "next": "15.3.2",
