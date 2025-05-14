@@ -1,6 +1,6 @@
 export const articleInfo = {
-  title:
-    "Master FVIFA calculations in Excel with this tutorial. Learn how the Future Value Interest Factor of Annuity helps estimate the future worth of periodic investments and follow the guide to apply the formula in your spreadsheet cells.",
-  description: "",
+  title: "How to Calculate FVIFA in Excel",
+  description:
+    "Learn how to calculate the Future Value Interest Factor of Annuity (FVIFA) in Excel. This step-by-step guide shows you how to input the formula to find the FVIFA, helping you project the future value of regular payments with compound interest.",
   images: [],
 };
