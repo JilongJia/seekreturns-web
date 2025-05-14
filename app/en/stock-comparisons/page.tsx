@@ -76,7 +76,11 @@ function Page() {
             <ul className={styles.ul}>
               {groups[letter].map((page) => (
                 <li key={page.pathname} className={styles.li}>
-                  <Link href={page.pathname} className={styles.link}>
+                  <Link
+                    href={page.pathname}
+                    prefetch={false}
+                    className={styles.link}
+                  >
                     {page.title}
                   </Link>
                 </li>
