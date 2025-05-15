@@ -9,17 +9,23 @@ import { primaryMenu, type PrimaryMenuData } from "@/app/data/en/menu";
 import { PrimaryMenu } from "./mobile_menu/PrimaryMenu";
 import styles from "./MobileMenu.module.css";
 
-type State = Record<string, boolean>;
-type Action = Record<"type", string>;
+type State = {
+  mobileMenuOpen: boolean;
+  knowledgeExpanded: boolean;
+  toolsExpanded: boolean;
+  blogExpanded: boolean;
+};
+type Action = { type: string };
 type MobileMenuProps = { data?: PrimaryMenuData; className?: string };
 
-const initialState = {
+const initialState: State = {
   mobileMenuOpen: false,
   knowledgeExpanded: false,
   toolsExpanded: false,
+  blogExpanded: false,
 };
 
-function reducer(state: State, action: Action) {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "toggle_mobile_menu":
       return {
@@ -29,6 +35,7 @@ function reducer(state: State, action: Action) {
           ? false
           : state.knowledgeExpanded,
         toolsExpanded: state.mobileMenuOpen ? false : state.toolsExpanded,
+        blogExpanded: state.mobileMenuOpen ? false : state.blogExpanded,
       };
     case "close_mobile_menu":
       return { ...initialState };
@@ -36,14 +43,18 @@ function reducer(state: State, action: Action) {
       return { ...state, knowledgeExpanded: !state.knowledgeExpanded };
     case "toggle_tools":
       return { ...state, toolsExpanded: !state.toolsExpanded };
+    case "toggle_blog":
+      return { ...state, blogExpanded: !state.blogExpanded };
     default:
       return state;
   }
 }
 
 export function MobileMenu({ data = primaryMenu, className }: MobileMenuProps) {
-  const [{ mobileMenuOpen, knowledgeExpanded, toolsExpanded }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { mobileMenuOpen, knowledgeExpanded, toolsExpanded, blogExpanded },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const pathname = usePathname();
   useEffect(() => {
@@ -57,6 +68,7 @@ export function MobileMenu({ data = primaryMenu, className }: MobileMenuProps) {
         action: { type: "toggle_knowledge" },
       },
       tools: { state: toolsExpanded, action: { type: "toggle_tools" } },
+      blog: { state: blogExpanded, action: { type: "toggle_blog" } },
     };
 
   return (
@@ -70,12 +82,13 @@ export function MobileMenu({ data = primaryMenu, className }: MobileMenuProps) {
         <span className={styles.screenReaderText}>
           {mobileMenuOpen ? "Close main menu" : "Open main menu"}
         </span>
-        {!mobileMenuOpen ? (
-          <LuMenu aria-hidden={true} className={styles.icon} />
-        ) : (
+        {mobileMenuOpen ? (
           <LuX aria-hidden={true} className={styles.icon} />
+        ) : (
+          <LuMenu aria-hidden={true} className={styles.icon} />
         )}
       </button>
+
       {mobileMenuOpen && (
         <PrimaryMenu
           id="mobile-menu"
