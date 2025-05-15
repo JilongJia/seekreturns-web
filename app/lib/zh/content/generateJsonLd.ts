@@ -29,9 +29,8 @@ export function generateOrganizationJsonLd({
     },
     foundingDate: "2025-04-27",
     sameAs: [
-      // ** ACTION: Add links to social media profiles later **
-      // e.g., "https://www.facebook.com/Profile",
-      //       "https://www.linkedin.com/company/company"
+      "https://www.youtube.com/@SeekReturnsOfficial",
+      "https://x.com/SeekReturns",
     ],
   };
 }

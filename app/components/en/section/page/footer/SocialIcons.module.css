@@ -33,19 +33,19 @@
   white-space: nowrap;
 }
 
-.facebookIcon {
-  width: 1.5rem;
-  height: 1.5rem;
+.youtubeIcon {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .xIcon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .envelopeIcon {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 @media (min-width: 640px) {

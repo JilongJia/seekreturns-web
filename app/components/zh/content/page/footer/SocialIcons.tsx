@@ -1,4 +1,4 @@
-import { SiFacebook, SiX } from "react-icons/si";
+import { SiYoutube, SiX } from "react-icons/si";
 import { LuMail } from "react-icons/lu";
 
 import styles from "./SocialIcons.module.css";
@@ -11,27 +11,27 @@ export function SocialIcons({ className }: SocialIconsProps) {
       <menu className={styles.menu}>
         <li>
           <a
-            href="https://www.facebook.com/cannytrading"
+            href="https://www.youtube.com/@SeekReturnsOfficial"
             className={styles.link}
           >
             <span className={styles.screenReaderText}>
-              在 Facebook 上访问 Canny Trading
+              在 YouTube 上访问 Seek Returns
             </span>
-            <SiFacebook aria-hidden={true} className={styles.facebookIcon} />
+            <SiYoutube aria-hidden={true} className={styles.youtubeIcon} />
           </a>
         </li>
         <li>
-          <a href="https://x.com/CannyTrading" className={styles.link}>
+          <a href="https://x.com/SeekReturns" className={styles.link}>
             <span className={styles.screenReaderText}>
-              在 X 上访问 Canny Trading
+              在 X 上访问 Seek Returns
             </span>
             <SiX aria-hidden={true} className={styles.xIcon} />
           </a>
         </li>
         <li>
-          <a href="mailto:contact@contact.com" className={styles.link}>
+          <a href="mailto:contact@seekreturns.com" className={styles.link}>
             <span className={styles.screenReaderText}>
-              发送电子邮件到 Canny Trading
+              发送电子邮件到 Seek Returns
             </span>
             <LuMail aria-hidden={true} className={styles.envelopeIcon} />
           </a>
