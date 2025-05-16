@@ -1,37 +1,14 @@
+import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
+
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 
-type DividendData = {
-  symbol: string;
-  dividendYieldTTM: number;
-};
-
 type DividendComparisonSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
-
-async function fetchDividendData(symbol: string): Promise<DividendData | null> {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
-  const endpoint = `https://financialmodelingprep.com/stable/ratios-ttm?symbol=${symbol}&apikey=${apiKey}`;
-  try {
-    const response = await fetch(endpoint);
-    const dividendRawData = await response.json();
-    if (!dividendRawData || dividendRawData.length === 0) return null;
-
-    const dividendData = dividendRawData[0];
-    const data: DividendData = {
-      symbol: dividendData.symbol,
-      dividendYieldTTM: dividendData.dividendYieldTTM,
-    };
-    return data;
-  } catch (error) {
-    console.error("Error fetching dividend data for", symbol, error);
-    return null;
-  }
-}
 
 function generateDividendYieldCommentary(
   stockOneSymbol: string,
@@ -108,10 +85,10 @@ export async function DividendComparisonSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: DividendComparisonSectionProps) {
-  const stockOneDividendData = await fetchDividendData(stockOneSymbol);
-  const stockTwoDividendData = await fetchDividendData(stockTwoSymbol);
+  const stockOneRatiosData = await fetchRatiosData(stockOneSymbol);
+  const stockTwoRatiosData = await fetchRatiosData(stockTwoSymbol);
 
-  if (!stockOneDividendData || !stockTwoDividendData) {
+  if (!stockOneRatiosData || !stockTwoRatiosData) {
     return (
       <Section ariaLabelledby="dividend-comparison">
         <H2 id="dividend-comparison">Dividend Comparison</H2>
@@ -122,9 +99,9 @@ export async function DividendComparisonSection({
 
   const dividendYieldCommentary = generateDividendYieldCommentary(
     stockOneSymbol,
-    stockOneDividendData.dividendYieldTTM,
+    stockOneRatiosData.dividendYieldTTM,
     stockTwoSymbol,
-    stockTwoDividendData.dividendYieldTTM,
+    stockTwoRatiosData.dividendYieldTTM,
   );
 
   return (
@@ -145,10 +122,10 @@ export async function DividendComparisonSection({
               Dividend Yield (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {(stockOneDividendData.dividendYieldTTM * 100).toFixed(2)}%
+              {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {(stockTwoDividendData.dividendYieldTTM * 100).toFixed(2)}%
+              {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

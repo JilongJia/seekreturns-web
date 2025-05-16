@@ -19,7 +19,7 @@ export async function fetchPriceSeriesData(
   const url = `${baseEndpoint}?symbol=${symbol}&apikey=${apiKey}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 300 } });
 
     if (!response.ok) {
       throw new Error(

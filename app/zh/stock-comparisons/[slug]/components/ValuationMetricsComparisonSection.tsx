@@ -1,19 +1,11 @@
+import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
+import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
+
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
-
-type ValuationMetricsData = {
-  priceToEarningsRatioTTM: number;
-  forwardPriceToEarningsGrowthRatioTTM: number;
-  priceToSalesRatioTTM: number;
-  priceToBookRatioTTM: number;
-  priceToFreeCashFlowRatioTTM: number;
-  evToEBITDATTM: number;
-  evToSalesTTM: number;
-  evToFreeCashFlowTTM: number;
-};
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -242,61 +234,28 @@ function generatePriceToFreeCashFlowRatioCommentary(
   return "";
 }
 
-async function fetchValuationMetricsData(
-  symbol: string,
-): Promise<ValuationMetricsData | null> {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
-  const keyMetricsEndpoint = `https://financialmodelingprep.com/stable/key-metrics-ttm?symbol=${symbol}&apikey=${apiKey}`;
-  const ratiosEndpoint = `https://financialmodelingprep.com/stable/ratios-ttm?symbol=${symbol}&apikey=${apiKey}`;
-  try {
-    const [keyMetricsResponse, ratiosResponse] = await Promise.all([
-      fetch(keyMetricsEndpoint),
-      fetch(ratiosEndpoint),
-    ]);
-    const keyMetricsRawData = await keyMetricsResponse.json();
-    const ratiosRawData = await ratiosResponse.json();
-
-    if (
-      !keyMetricsRawData ||
-      keyMetricsRawData.length === 0 ||
-      !ratiosRawData ||
-      ratiosRawData.length === 0
-    ) {
-      return null;
-    }
-
-    const keyMetricsData = keyMetricsRawData[0];
-    const ratiosData = ratiosRawData[0];
-
-    const data: ValuationMetricsData = {
-      priceToEarningsRatioTTM: ratiosData.priceToEarningsRatioTTM,
-      forwardPriceToEarningsGrowthRatioTTM:
-        ratiosData.forwardPriceToEarningsGrowthRatioTTM,
-      priceToSalesRatioTTM: ratiosData.priceToSalesRatioTTM,
-      priceToBookRatioTTM: ratiosData.priceToBookRatioTTM,
-      priceToFreeCashFlowRatioTTM: ratiosData.priceToFreeCashFlowRatioTTM,
-      evToEBITDATTM: keyMetricsData.evToEBITDATTM,
-      evToSalesTTM: keyMetricsData.evToSalesTTM,
-      evToFreeCashFlowTTM: keyMetricsData.evToFreeCashFlowTTM,
-    };
-    return data;
-  } catch (error) {
-    console.error("Error fetching valuation metrics for", symbol, error);
-    return null;
-  }
-}
-
 export async function ValuationMetricsComparisonSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: ValuationMetricsComparisonSectionProps) {
-  const [stockOneValuationMetricsData, stockTwoValuationMetricsData] =
-    await Promise.all([
-      fetchValuationMetricsData(stockOneSymbol),
-      fetchValuationMetricsData(stockTwoSymbol),
-    ]);
+  const [
+    stockOneRatiosData,
+    stockOneKeyMetricsData,
+    stockTwoRatiosData,
+    stockTwoKeyMetricsData,
+  ] = await Promise.all([
+    fetchRatiosData(stockOneSymbol),
+    fetchKeyMetricsData(stockOneSymbol),
+    fetchRatiosData(stockTwoSymbol),
+    fetchKeyMetricsData(stockTwoSymbol),
+  ]);
 
-  if (!stockOneValuationMetricsData || !stockTwoValuationMetricsData) {
+  if (
+    !stockOneRatiosData ||
+    !stockOneKeyMetricsData ||
+    !stockTwoRatiosData ||
+    !stockTwoKeyMetricsData
+  ) {
     return (
       <Section ariaLabelledby="valuation-metrics-comparison">
         <H2 id="valuation-metrics-comparison">估值指标比较</H2>
@@ -307,29 +266,29 @@ export async function ValuationMetricsComparisonSection({
 
   const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
     stockOneSymbol,
-    stockOneValuationMetricsData.priceToEarningsRatioTTM,
+    stockOneRatiosData.priceToEarningsRatioTTM,
     stockTwoSymbol,
-    stockTwoValuationMetricsData.priceToEarningsRatioTTM,
+    stockTwoRatiosData.priceToEarningsRatioTTM,
   );
   const forwardPriceToEarningsGrowthRatioCommentary =
     generateForwardPEGRatioCommentary(
       stockOneSymbol,
-      stockOneValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM,
+      stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
       stockTwoSymbol,
-      stockTwoValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM,
+      stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
     );
   const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
     stockOneSymbol,
-    stockOneValuationMetricsData.priceToBookRatioTTM,
+    stockOneRatiosData.priceToBookRatioTTM,
     stockTwoSymbol,
-    stockTwoValuationMetricsData.priceToBookRatioTTM,
+    stockTwoRatiosData.priceToBookRatioTTM,
   );
   const priceToFreeCashFlowRatioCommentary =
     generatePriceToFreeCashFlowRatioCommentary(
       stockOneSymbol,
-      stockOneValuationMetricsData.priceToFreeCashFlowRatioTTM,
+      stockOneRatiosData.priceToFreeCashFlowRatioTTM,
       stockTwoSymbol,
-      stockTwoValuationMetricsData.priceToFreeCashFlowRatioTTM,
+      stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
     );
 
   const hasCommentary = [
@@ -381,10 +340,10 @@ export async function ValuationMetricsComparisonSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">市盈率 (P/E, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.priceToEarningsRatioTTM.toFixed(2)}
+              {stockOneRatiosData.priceToEarningsRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.priceToEarningsRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.priceToEarningsRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -392,12 +351,12 @@ export async function ValuationMetricsComparisonSection({
               前瞻 PEG 比率 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
+              {stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
                 2,
               )}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
+              {stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
                 2,
               )}
             </Table.Tbody.Tr.Td>
@@ -405,19 +364,19 @@ export async function ValuationMetricsComparisonSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">市销率 (P/S, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.priceToSalesRatioTTM.toFixed(2)}
+              {stockOneRatiosData.priceToSalesRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.priceToSalesRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.priceToSalesRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">市净率 (P/B, TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.priceToBookRatioTTM.toFixed(2)}
+              {stockOneRatiosData.priceToBookRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.priceToBookRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.priceToBookRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -425,23 +384,19 @@ export async function ValuationMetricsComparisonSection({
               市现率 (P/FCF, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.priceToFreeCashFlowRatioTTM.toFixed(
-                2,
-              )}
+              {stockOneRatiosData.priceToFreeCashFlowRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.priceToFreeCashFlowRatioTTM.toFixed(
-                2,
-              )}
+              {stockTwoRatiosData.priceToFreeCashFlowRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">EV/EBITDA (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.evToEBITDATTM.toFixed(2)}
+              {stockOneKeyMetricsData.evToEBITDATTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.evToEBITDATTM.toFixed(2)}
+              {stockTwoKeyMetricsData.evToEBITDATTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -449,10 +404,10 @@ export async function ValuationMetricsComparisonSection({
               企业价值/销售额 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.evToSalesTTM.toFixed(2)}
+              {stockOneKeyMetricsData.evToSalesTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.evToSalesTTM.toFixed(2)}
+              {stockTwoKeyMetricsData.evToSalesTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -460,10 +415,10 @@ export async function ValuationMetricsComparisonSection({
               企业价值/自由现金流 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneValuationMetricsData.evToFreeCashFlowTTM.toFixed(2)}
+              {stockOneKeyMetricsData.evToFreeCashFlowTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoValuationMetricsData.evToFreeCashFlowTTM.toFixed(2)}
+              {stockTwoKeyMetricsData.evToFreeCashFlowTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

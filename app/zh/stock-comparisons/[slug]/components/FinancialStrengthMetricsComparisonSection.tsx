@@ -1,50 +1,15 @@
+import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
+
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
 
-type FinancialStrengthMetricsData = {
-  currentRatioTTM: number;
-  quickRatioTTM: number;
-  debtToEquityRatioTTM: number;
-  debtToAssetsRatioTTM: number;
-  interestCoverageRatioTTM: number;
-};
-
 type FinancialStrengthMetricsComparisonSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
-
-async function fetchFinancialStrengthMetricsData(
-  symbol: string,
-): Promise<FinancialStrengthMetricsData | null> {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
-  const endpoint = `https://financialmodelingprep.com/stable/ratios-ttm?symbol=${symbol}&apikey=${apiKey}`;
-  try {
-    const response = await fetch(endpoint);
-    const ratiosRawData = await response.json();
-    if (!ratiosRawData || ratiosRawData.length === 0) return null;
-
-    const ratiosData = ratiosRawData[0];
-    const data: FinancialStrengthMetricsData = {
-      currentRatioTTM: ratiosData.currentRatioTTM,
-      quickRatioTTM: ratiosData.quickRatioTTM,
-      debtToEquityRatioTTM: ratiosData.debtToEquityRatioTTM,
-      debtToAssetsRatioTTM: ratiosData.debtToAssetsRatioTTM,
-      interestCoverageRatioTTM: ratiosData.interestCoverageRatioTTM,
-    };
-    return data;
-  } catch (error) {
-    console.error(
-      "Error fetching financial strength metrics data for",
-      symbol,
-      error,
-    );
-    return null;
-  }
-}
 
 function generateCurrentRatioCommentary(
   stockOneSymbol: string,
@@ -351,13 +316,12 @@ export async function FinancialStrengthMetricsComparisonSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: FinancialStrengthMetricsComparisonSectionProps) {
-  const [stockOneFinancialMetrics, stockTwoFinancialMetrics] =
-    await Promise.all([
-      fetchFinancialStrengthMetricsData(stockOneSymbol),
-      fetchFinancialStrengthMetricsData(stockTwoSymbol),
-    ]);
+  const [stockOneRatiosData, stockTwoRatiosData] = await Promise.all([
+    fetchRatiosData(stockOneSymbol),
+    fetchRatiosData(stockTwoSymbol),
+  ]);
 
-  if (!stockOneFinancialMetrics || !stockTwoFinancialMetrics) {
+  if (!stockOneRatiosData || !stockTwoRatiosData) {
     return (
       <Section ariaLabelledby="financial-strength-metrics-comparison">
         <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
@@ -368,34 +332,34 @@ export async function FinancialStrengthMetricsComparisonSection({
 
   const currentRatioCommentary = generateCurrentRatioCommentary(
     stockOneSymbol,
-    stockOneFinancialMetrics.currentRatioTTM,
+    stockOneRatiosData.currentRatioTTM,
     stockTwoSymbol,
-    stockTwoFinancialMetrics.currentRatioTTM,
+    stockTwoRatiosData.currentRatioTTM,
   );
   const quickRatioCommentary = generateQuickRatioCommentary(
     stockOneSymbol,
-    stockOneFinancialMetrics.quickRatioTTM,
+    stockOneRatiosData.quickRatioTTM,
     stockTwoSymbol,
-    stockTwoFinancialMetrics.quickRatioTTM,
+    stockTwoRatiosData.quickRatioTTM,
   );
   const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
     stockOneSymbol,
-    stockOneFinancialMetrics.debtToEquityRatioTTM,
+    stockOneRatiosData.debtToEquityRatioTTM,
     stockTwoSymbol,
-    stockTwoFinancialMetrics.debtToEquityRatioTTM,
+    stockTwoRatiosData.debtToEquityRatioTTM,
   );
   const debtToAssetsRatioCommentary = generateDebtToAssetsRatioCommentary(
     stockOneSymbol,
-    stockOneFinancialMetrics.debtToAssetsRatioTTM,
+    stockOneRatiosData.debtToAssetsRatioTTM,
     stockTwoSymbol,
-    stockTwoFinancialMetrics.debtToAssetsRatioTTM,
+    stockTwoRatiosData.debtToAssetsRatioTTM,
   );
   const interestCoverageRatioCommentary =
     generateInterestCoverageRatioCommentary(
       stockOneSymbol,
-      stockOneFinancialMetrics.interestCoverageRatioTTM,
+      stockOneRatiosData.interestCoverageRatioTTM,
       stockTwoSymbol,
-      stockTwoFinancialMetrics.interestCoverageRatioTTM,
+      stockTwoRatiosData.interestCoverageRatioTTM,
     );
 
   const hasCommentary = [
@@ -446,19 +410,19 @@ export async function FinancialStrengthMetricsComparisonSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneFinancialMetrics.currentRatioTTM.toFixed(2)}
+              {stockOneRatiosData.currentRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoFinancialMetrics.currentRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.currentRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneFinancialMetrics.quickRatioTTM.toFixed(2)}
+              {stockOneRatiosData.quickRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoFinancialMetrics.quickRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.quickRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -466,10 +430,10 @@ export async function FinancialStrengthMetricsComparisonSection({
               负债股东权益比 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneFinancialMetrics.debtToEquityRatioTTM.toFixed(2)}
+              {stockOneRatiosData.debtToEquityRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoFinancialMetrics.debtToEquityRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.debtToEquityRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -477,10 +441,10 @@ export async function FinancialStrengthMetricsComparisonSection({
               负债资产比率 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneFinancialMetrics.debtToAssetsRatioTTM.toFixed(2)}
+              {stockOneRatiosData.debtToAssetsRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoFinancialMetrics.debtToAssetsRatioTTM.toFixed(2)}
+              {stockTwoRatiosData.debtToAssetsRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
@@ -488,14 +452,14 @@ export async function FinancialStrengthMetricsComparisonSection({
               利息保障倍数 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneFinancialMetrics.interestCoverageRatioTTM === 0
+              {stockOneRatiosData.interestCoverageRatioTTM === 0
                 ? "--"
-                : stockOneFinancialMetrics.interestCoverageRatioTTM.toFixed(2)}
+                : stockOneRatiosData.interestCoverageRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoFinancialMetrics.interestCoverageRatioTTM === 0
+              {stockTwoRatiosData.interestCoverageRatioTTM === 0
                 ? "--"
-                : stockTwoFinancialMetrics.interestCoverageRatioTTM.toFixed(2)}
+                : stockTwoRatiosData.interestCoverageRatioTTM.toFixed(2)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

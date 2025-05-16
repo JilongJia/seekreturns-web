@@ -1,59 +1,14 @@
+import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
+
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 
-type CompanyProfileData = {
-  companyName: string;
-  country: string;
-  sector: string;
-  industry: string;
-  ceo: string;
-  price: number;
-  marketCap: number;
-  beta: number;
-  exchange: string;
-  ipoDate: string;
-  isAdr: boolean;
-  currency: string;
-};
-
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
-
-async function fetchCompanyProfileData(
-  symbol: string,
-): Promise<CompanyProfileData | null> {
-  const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
-  const endpoint = `https://financialmodelingprep.com/stable/profile?symbol=${symbol}&apikey=${apiKey}`;
-  try {
-    const response = await fetch(endpoint);
-    const profileRawData = await response.json();
-    if (!profileRawData || profileRawData.length === 0) return null;
-
-    const profileData = profileRawData[0];
-    const data: CompanyProfileData = {
-      companyName: profileData.companyName,
-      country: profileData.country,
-      sector: profileData.sector,
-      industry: profileData.industry,
-      ceo: profileData.ceo,
-      price: profileData.price,
-      marketCap: profileData.marketCap,
-      beta: profileData.beta,
-      exchange: profileData.exchange,
-      ipoDate: profileData.ipoDate,
-      isAdr: profileData.isAdr,
-      currency: profileData.currency,
-    };
-    return data;
-  } catch (error) {
-    console.error("Error fetching company profile data for", symbol, error);
-    return null;
-  }
-}
 
 function generateMarketCapComparisonCommentary(
   stockOneSymbol: string,
@@ -124,12 +79,10 @@ export async function CompanyOverviewSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: CompanyOverviewSectionProps) {
-  const stockOneCompanyProfileData =
-    await fetchCompanyProfileData(stockOneSymbol);
-  const stockTwoCompanyProfileData =
-    await fetchCompanyProfileData(stockTwoSymbol);
+  const stockOneProfileData = await fetchProfileData(stockOneSymbol);
+  const stockTwoProfileData = await fetchProfileData(stockTwoSymbol);
 
-  if (!stockOneCompanyProfileData || !stockTwoCompanyProfileData) {
+  if (!stockOneProfileData || !stockTwoProfileData) {
     return (
       <Section ariaLabelledby="company-overview">
         <H2 id="company-overview">Company Overview</H2>
@@ -140,25 +93,25 @@ export async function CompanyOverviewSection({
 
   const marketCapComparisonCommentary = generateMarketCapComparisonCommentary(
     stockOneSymbol,
-    stockOneCompanyProfileData.marketCap,
-    stockOneCompanyProfileData.currency,
+    stockOneProfileData.marketCap,
+    stockOneProfileData.currency,
     stockTwoSymbol,
-    stockTwoCompanyProfileData.marketCap,
-    stockTwoCompanyProfileData.currency,
+    stockTwoProfileData.marketCap,
+    stockTwoProfileData.currency,
   );
 
   const betaComparisonCommentary = generateBetaComparisonCommentary(
     stockOneSymbol,
-    stockOneCompanyProfileData.beta,
+    stockOneProfileData.beta,
     stockTwoSymbol,
-    stockTwoCompanyProfileData.beta,
+    stockTwoProfileData.beta,
   );
 
   const adrCommentary = generateAdrCommentary(
     stockOneSymbol,
-    stockOneCompanyProfileData.isAdr,
+    stockOneProfileData.isAdr,
     stockTwoSymbol,
-    stockTwoCompanyProfileData.isAdr,
+    stockTwoProfileData.isAdr,
   );
 
   return (
@@ -179,128 +132,108 @@ export async function CompanyOverviewSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Company Name</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.companyName}
+              {stockOneProfileData.companyName}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.companyName}
+              {stockTwoProfileData.companyName}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Country</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.country}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.country}
-            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockOneProfileData.country}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockTwoProfileData.country}</Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Sector</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.sector}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.sector}
-            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockOneProfileData.sector}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockTwoProfileData.sector}</Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Industry</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.industry}
+              {stockOneProfileData.industry}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.industry}
+              {stockTwoProfileData.industry}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">CEO</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.ceo}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.ceo}
-            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockOneProfileData.ceo}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockTwoProfileData.ceo}</Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Price</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.price.toLocaleString()}{" "}
-              {stockOneCompanyProfileData.currency}
+              {stockOneProfileData.price.toLocaleString("en")}{" "}
+              {stockOneProfileData.currency}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.price.toLocaleString()}{" "}
-              {stockTwoCompanyProfileData.currency}
+              {stockTwoProfileData.price.toLocaleString("en")}{" "}
+              {stockTwoProfileData.currency}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Market Cap</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {(
-                stockOneCompanyProfileData.marketCap / 1000000000
-              ).toLocaleString("en", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
-              billion {stockOneCompanyProfileData.currency}
+              {(stockOneProfileData.marketCap / 1000000000).toLocaleString(
+                "en",
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                },
+              )}{" "}
+              billion {stockOneProfileData.currency}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {(
-                stockTwoCompanyProfileData.marketCap / 1000000000
-              ).toLocaleString("en", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
-              billion {stockTwoCompanyProfileData.currency}
+              {(stockTwoProfileData.marketCap / 1000000000).toLocaleString(
+                "en",
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                },
+              )}{" "}
+              billion {stockTwoProfileData.currency}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Beta</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.beta}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.beta}
-            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockOneProfileData.beta}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>{stockTwoProfileData.beta}</Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Exchange</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.exchange}
+              {stockOneProfileData.exchange}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.exchange}
+              {stockTwoProfileData.exchange}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">IPO Date</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {new Date(stockOneCompanyProfileData.ipoDate).toLocaleDateString(
-                "en",
-                {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                },
-              )}
+              {new Date(stockOneProfileData.ipoDate).toLocaleDateString("en", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {new Date(stockTwoCompanyProfileData.ipoDate).toLocaleDateString(
-                "en",
-                {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                },
-              )}
+              {new Date(stockTwoProfileData.ipoDate).toLocaleDateString("en", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">ADR</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneCompanyProfileData.isAdr ? "Yes" : "No"}
+              {stockOneProfileData.isAdr ? "Yes" : "No"}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoCompanyProfileData.isAdr ? "Yes" : "No"}
+              {stockTwoProfileData.isAdr ? "Yes" : "No"}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>
