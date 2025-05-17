@@ -1,4 +1,5 @@
 import { Inter, Noto_Sans_SC } from "next/font/google";
+
 import "@/app/globals.css";
 
 import styles from "./layout.module.css";

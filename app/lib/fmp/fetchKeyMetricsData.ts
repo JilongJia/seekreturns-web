@@ -13,7 +13,7 @@ export async function fetchKeyMetricsData(
   const url = `${baseEndpoint}?symbol=${symbol}&apikey=${apiKey}`;
 
   try {
-    const response = await fetch(url, { next: { revalidate: 300 } });
+    const response = await fetch(url, { next: { revalidate: 3600 } });
     if (!response.ok) {
       throw new Error(
         `FMP API error: ${response.status} ${response.statusText}`,
