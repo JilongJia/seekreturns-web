@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:23-alpine AS base
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -31,8 +31,9 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/profiler.js ./
 USER nextjs
 EXPOSE 8080
 ENV NODE_ENV=production
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
+CMD ["node", "-r", "./profiler.js", "server.js"]

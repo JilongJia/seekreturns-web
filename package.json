@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google-cloud/profiler": "^6.0.3",
     "algoliasearch": "^5.25.0",
     "clsx": "^2.1.1",
     "firebase-admin": "^13.4.0",
