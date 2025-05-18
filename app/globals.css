@@ -204,8 +204,8 @@ input:where([type="button"], [type="reset"], [type="submit"]),
   --outline-color: #d4d4d4;
   --outline-hover-color: #2563eb;
   --outline-focus-color: #2563eb;
-  --article-heading-color: #262626;
-  --article-text-color: #262626;
+  --article-heading-color: #171717;
+  --article-text-color: #171717;
   --article-link-color: #2563eb;
 }
 

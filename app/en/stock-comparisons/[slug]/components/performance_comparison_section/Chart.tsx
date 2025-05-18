@@ -1,201 +1,197 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { createChart, ColorType, LineSeries } from "lightweight-charts";
+import {
+  createChart,
+  ColorType,
+  LineSeries,
+  type MouseEventParams,
+  type ISeriesApi,
+} from "lightweight-charts";
 
 import styles from "./Chart.module.css";
 
+type RawPoint = { date: string; price: number };
+
+type ProcessedPoint = { time: string; value: number };
+
 type ChartProps = {
   data: {
-    stockOne: {
-      symbol: string;
-      priceSeries: { date: string; price: number }[];
-    };
-    stockTwo: {
-      symbol: string;
-      priceSeries: { date: string; price: number }[];
-    };
+    stockOne: { symbol: string; priceSeries: RawPoint[] };
+    stockTwo: { symbol: string; priceSeries: RawPoint[] };
   };
 };
 
 function generateWeekdayArray(startDate: string, endDate: string): string[] {
-  const weekdayArray: string[] = [];
+  const weekdays: string[] = [];
   const current = new Date(startDate);
   const end = new Date(endDate);
+
   while (current <= end) {
-    const dayOfWeek = current.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      weekdayArray.push(current.toISOString().split("T")[0]);
+    const day = current.getDay();
+    if (day !== 0 && day !== 6) {
+      weekdays.push(current.toISOString().split("T")[0]);
     }
     current.setDate(current.getDate() + 1);
   }
-  return weekdayArray;
+
+  return weekdays;
 }
 
-function fillPriceSeries(
-  priceSeries: { date: string; price: number }[],
-  weekdayArray: string[],
+function fillMissingPrices(
+  originalSeries: RawPoint[],
+  weekdayDates: string[],
 ): { time: string; price: number }[] {
-  const priceMap = new Map(
-    priceSeries.map((point) => [point.date, point.price]),
+  const priceLookup = new Map(
+    originalSeries.map((point) => [point.date, point.price]),
   );
-  const filledPriceSeries: { time: string; price: number }[] = [];
-  let lastRecordedPrice: number | null = null;
+  const filledSeries: { time: string; price: number }[] = [];
+  let lastKnownPrice = originalSeries[0].price;
 
-  for (const weekday of weekdayArray) {
-    if (priceMap.has(weekday)) {
-      lastRecordedPrice = priceMap.get(weekday)!;
-    } else if (lastRecordedPrice === null) {
-      lastRecordedPrice = priceSeries[0].price;
+  weekdayDates.forEach((date) => {
+    if (priceLookup.has(date)) {
+      lastKnownPrice = priceLookup.get(date)!;
     }
-    filledPriceSeries.push({ time: weekday, price: lastRecordedPrice });
-  }
-  return filledPriceSeries;
+    filledSeries.push({ time: date, price: lastKnownPrice });
+  });
+
+  return filledSeries;
 }
 
-export function Chart({ data }: ChartProps) {
+export function Chart({ data }: ChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!chartContainerRef.current) return;
+    const container = chartContainerRef.current;
+    if (!container) return;
 
-    chartContainerRef.current.style.position = "relative";
-
-    const stockOneDates = data.stockOne.priceSeries.map((pt) => pt.date);
-    const stockTwoDates = data.stockTwo.priceSeries.map((pt) => pt.date);
-
+    // Prepare date ranges
+    const stockOneDates = data.stockOne.priceSeries.map((p) => p.date);
+    const stockTwoDates = data.stockTwo.priceSeries.map((p) => p.date);
     const startDate = [stockOneDates[0], stockTwoDates[0]].sort()[0];
     const endDate = [
       stockOneDates[stockOneDates.length - 1],
       stockTwoDates[stockTwoDates.length - 1],
     ].sort()[1];
+    const weekdayDates = generateWeekdayArray(startDate, endDate);
 
-    const weekdayArray = generateWeekdayArray(startDate, endDate);
-
-    const stockOneFilledPriceSeries = fillPriceSeries(
+    // Fill missing prices for weekends
+    const stockOneFilledSeries = fillMissingPrices(
       data.stockOne.priceSeries,
-      weekdayArray,
+      weekdayDates,
     );
-    const stockTwoFilledPriceSeries = fillPriceSeries(
+    const stockTwoFilledSeries = fillMissingPrices(
       data.stockTwo.priceSeries,
-      weekdayArray,
+      weekdayDates,
     );
 
-    const stockOneFirstPrice = stockOneFilledPriceSeries[0].price;
-    const stockTwoFirstPrice = stockTwoFilledPriceSeries[0].price;
+    // Normalize series to initial value of 10000
+    const stockOneBasePrice = stockOneFilledSeries[0].price;
+    const stockTwoBasePrice = stockTwoFilledSeries[0].price;
 
-    const stockOneValueSeries = stockOneFilledPriceSeries.map((point) => ({
-      time: point.time,
-      value: (point.price / stockOneFirstPrice) * 10000,
-    }));
+    const stockOneValueSeries: ProcessedPoint[] = stockOneFilledSeries.map(
+      (pt) => ({
+        time: pt.time,
+        value: (pt.price / stockOneBasePrice) * 10000,
+      }),
+    );
 
-    const stockTwoValueSeries = stockTwoFilledPriceSeries.map((point) => ({
-      time: point.time,
-      value: (point.price / stockTwoFirstPrice) * 10000,
-    }));
+    const stockTwoValueSeries: ProcessedPoint[] = stockTwoFilledSeries.map(
+      (pt) => ({
+        time: pt.time,
+        value: (pt.price / stockTwoBasePrice) * 10000,
+      }),
+    );
 
-    const chart = createChart(chartContainerRef.current, {
+    // Initialize chart
+    container.style.position = "relative";
+    const chart = createChart(container, {
       layout: {
-        attributionLogo: false,
         background: { type: ColorType.Solid, color: "#fafafa" },
         textColor: "#404040",
+        attributionLogo: false,
       },
-      width: chartContainerRef.current.clientWidth,
+      width: container.clientWidth,
       height: 300,
-      localization: {
-        locale: "en",
-      },
+      localization: { locale: "en" },
     });
-    chart.timeScale().fitContent();
 
-    const stockOneLineSeries = chart.addSeries(LineSeries, {
+    // Add series lines
+    const stockOneLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
       color: "#2563eb",
     });
-    stockOneLineSeries.setData(stockOneValueSeries);
-
-    const stockTwoLineSeries = chart.addSeries(LineSeries, {
+    const stockTwoLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
       color: "#ef4444",
     });
+    stockOneLineSeries.setData(stockOneValueSeries);
     stockTwoLineSeries.setData(stockTwoValueSeries);
+    chart.timeScale().fitContent();
 
-    const legend = document.createElement("ul");
-    legend.className = styles.legend;
-    chartContainerRef.current.appendChild(legend);
+    // Legend creation
+    const legendContainer = document.createElement("ul");
+    legendContainer.className = styles.legend;
+    container.appendChild(legendContainer);
 
-    const stockOneLastValue =
-      stockOneValueSeries[stockOneValueSeries.length - 1].value;
-    const stockOneFormattedLastValue = stockOneLastValue.toFixed(2);
-    const stockOneFormattedLastPercent = (
-      (stockOneLastValue / 10000 - 1) *
-      100
-    ).toFixed(2);
-
-    const stockTwoLastValue =
-      stockTwoValueSeries[stockTwoValueSeries.length - 1].value;
-    const stockTwoFormattedLastValue = stockTwoLastValue.toFixed(2);
-    const stockTwoFormattedLastPercent = (
-      (stockTwoLastValue / 10000 - 1) *
-      100
-    ).toFixed(2);
-
-    const stockOneLegendItem = document.createElement("li");
-    stockOneLegendItem.className = `${styles.legendItem} ${styles.blueBullet}`;
-    stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedLastValue} (${stockOneFormattedLastPercent}%)`;
-    legend.appendChild(stockOneLegendItem);
-
-    const stockTwoLegendItem = document.createElement("li");
-    stockTwoLegendItem.className = `${styles.legendItem} ${styles.redBullet}`;
-    stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedLastValue} (${stockTwoFormattedLastPercent}%)`;
-    legend.appendChild(stockTwoLegendItem);
-
-    chart.subscribeCrosshairMove((param) => {
-      if (!param.time) {
-        stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedLastValue} (${stockOneFormattedLastPercent}%)`;
-        stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedLastValue} (${stockTwoFormattedLastPercent}%)`;
-        return;
-      }
-
-      const stockOneData = param.seriesData.get(stockOneLineSeries) as {
-        time: string;
-        value: number;
-      };
-      const stockTwoData = param.seriesData.get(stockTwoLineSeries) as {
-        time: string;
-        value: number;
-      };
-
-      const stockOneCurrentValue =
-        stockOneData && stockOneData.value !== undefined
-          ? stockOneData.value
-          : stockOneLastValue;
-      const stockTwoCurrentValue =
-        stockTwoData && stockTwoData.value !== undefined
-          ? stockTwoData.value
-          : stockTwoLastValue;
-
-      const stockOneFormattedCurrentValue = stockOneCurrentValue.toFixed(2);
-      const stockTwoFormattedCurrentValue = stockTwoCurrentValue.toFixed(2);
-      const stockOneFormattedCurrentPercent = (
-        (stockOneCurrentValue / 10000 - 1) *
-        100
-      ).toFixed(2);
-      const stockTwoFormattedCurrentPercent = (
-        (stockTwoCurrentValue / 10000 - 1) *
-        100
-      ).toFixed(2);
-
-      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${stockOneFormattedCurrentValue} (${stockOneFormattedCurrentPercent}%)`;
-      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${stockTwoFormattedCurrentValue} (${stockTwoFormattedCurrentPercent}%)`;
-    });
-
-    const handleResize = () => {
-      if (!chartContainerRef.current) return;
-      chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+    const createLegendItem = (
+      symbol: string,
+      latestValue: number,
+      bulletClass: string,
+    ): HTMLLIElement => {
+      const listItem = document.createElement("li");
+      listItem.className = `${styles.legendItem} ${bulletClass}`;
+      const percentageChange = ((latestValue / 10000 - 1) * 100).toFixed(2);
+      listItem.innerHTML = `${symbol}: $${latestValue.toFixed(2)} (${percentageChange}%)`;
+      return listItem;
     };
 
-    window.addEventListener("resize", handleResize);
+    const latestStockOneValue =
+      stockOneValueSeries[stockOneValueSeries.length - 1].value;
+    const latestStockTwoValue =
+      stockTwoValueSeries[stockTwoValueSeries.length - 1].value;
+    const stockOneLegendItem = createLegendItem(
+      data.stockOne.symbol,
+      latestStockOneValue,
+      styles.blueBullet,
+    );
+    const stockTwoLegendItem = createLegendItem(
+      data.stockTwo.symbol,
+      latestStockTwoValue,
+      styles.redBullet,
+    );
+    legendContainer.append(stockOneLegendItem, stockTwoLegendItem);
+
+    // Crosshair move handler
+    const handleCrosshairMove = (params: MouseEventParams): void => {
+      if (!params.time) {
+        stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${latestStockOneValue.toFixed(2)} (${((latestStockOneValue / 10000 - 1) * 100).toFixed(2)}%)`;
+        stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${latestStockTwoValue.toFixed(2)} (${((latestStockTwoValue / 10000 - 1) * 100).toFixed(2)}%)`;
+        return;
+      }
+      const pointOne = params.seriesData.get(stockOneLineSeries) as
+        | ProcessedPoint
+        | undefined;
+      const pointTwo = params.seriesData.get(stockTwoLineSeries) as
+        | ProcessedPoint
+        | undefined;
+      const currentStockOneValue = pointOne?.value ?? latestStockOneValue;
+      const currentStockTwoValue = pointTwo?.value ?? latestStockTwoValue;
+      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}: $${currentStockOneValue.toFixed(2)} (${((currentStockOneValue / 10000 - 1) * 100).toFixed(2)}%)`;
+      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}: $${currentStockTwoValue.toFixed(2)} (${((currentStockTwoValue / 10000 - 1) * 100).toFixed(2)}%)`;
+    };
+    chart.subscribeCrosshairMove(handleCrosshairMove);
+
+    // Resize handler
+    const handleWindowResize = (): void => {
+      if (container) {
+        chart.applyOptions({ width: container.clientWidth });
+      }
+    };
+    window.addEventListener("resize", handleWindowResize);
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      chart.unsubscribeCrosshairMove(handleCrosshairMove);
+      window.removeEventListener("resize", handleWindowResize);
+      legendContainer.remove();
       chart.remove();
     };
   }, [data]);

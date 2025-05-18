@@ -75,17 +75,17 @@ export async function generateFeaturedImage({
         >
           <div
             style={{
-              border: "1px solid #262626",
+              border: "1px solid #171717",
               borderRadius: "9999px",
               padding: "0.3rem 1rem",
-              color: "#262626",
+              color: "#171717",
             }}
           >
             {section}
           </div>
           <div
             style={{
-              color: "#262626",
+              color: "#171717",
               fontWeight: 600,
               fontSize: "2.8rem",
               lineHeight: "1.3em",
@@ -161,7 +161,7 @@ export async function generateFeaturedImage({
             >
               <div
                 style={{
-                  color: "#262626",
+                  color: "#171717",
                   fontWeight: 600,
                   fontSize: "1.125rem",
                 }}
@@ -260,7 +260,7 @@ export async function generateFeaturedImage({
                 style={{
                   margin: 0,
                   marginBottom: "1.3rem",
-                  color: "#262626",
+                  color: "#171717",
                   fontWeight: 600,
                   fontSize: "2rem",
                   lineHeight: "1.3em",

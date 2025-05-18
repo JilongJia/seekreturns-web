@@ -9,7 +9,7 @@
 
 .openDialogButton:hover {
   transition-duration: 0.2s;
-  color: #262626;
+  color: #171717;
 }
 
 .openDialogButton:focus-visible {
@@ -71,7 +71,7 @@
 
 .closeButton:hover {
   transition-duration: 0.2s;
-  color: #262626;
+  color: #171717;
 }
 
 .closeButton:focus-visible {
@@ -109,7 +109,7 @@
   border-radius: 9999px;
   padding: 0.5rem 2.5rem 0.5rem 1rem;
   width: 100%;
-  color: #262626;
+  color: #171717;
   font-size: 0.875rem;
 }
 
@@ -138,7 +138,7 @@
 
 .submitButton:hover {
   transition-duration: 0.2s;
-  color: #262626;
+  color: #171717;
 }
 
 .submitButton:focus-visible {

@@ -44,7 +44,7 @@ export async function generateFeaturedImage({
         />
         <div
           style={{
-            color: "#262626",
+            color: "#171717",
             fontSize: "3rem",
             lineHeight: "1.3em",
             letterSpacing: "0.1em",
