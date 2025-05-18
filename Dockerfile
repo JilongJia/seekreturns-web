@@ -25,16 +25,15 @@ RUN npm run build
 
 # Production image, copy files and run
 FROM base AS runner
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/profiler.js ./
+COPY --from=builder --chown=nextjs:nodejs /app/start-server.js ./start-server.js
 USER nextjs
 EXPOSE 8080
 ENV NODE_ENV=production
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "-r", "./profiler.js", "server.js"]
+CMD ["node", "start-server.js"]
