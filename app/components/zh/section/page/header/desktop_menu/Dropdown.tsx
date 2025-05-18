@@ -34,7 +34,7 @@ export function Dropdown({ id, data, label, className }: DropdownProps) {
         className,
       )}
     >
-      <span
+      <button
         id={`${id}-desktop-menu-trigger`}
         aria-expanded={isExpanded}
         aria-haspopup="menu"
@@ -43,7 +43,7 @@ export function Dropdown({ id, data, label, className }: DropdownProps) {
         className={styles.trigger}
       >
         {label}
-      </span>
+      </button>
       <SecondaryMenu
         id={`${id}-desktop-menu`}
         data={data}
