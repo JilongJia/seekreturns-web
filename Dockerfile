@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1
-FROM node:22-slim AS base
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
+RUN apk add --no-cache libc6-compat python3 build-base
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -24,6 +25,7 @@ RUN npm run build
 
 # Production image, copy files and run
 FROM base AS runner
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
