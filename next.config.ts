@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...config.externals, "@google-cloud/profiler"];
+    }
+
+    return config;
+  },
 };
 
 export default nextConfig;
