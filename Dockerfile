@@ -1,12 +1,14 @@
 # syntax=docker/dockerfile:1
 FROM node:22-alpine AS base
 
+# Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 build-base
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -21,6 +23,7 @@ ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL \
     FINANCIAL_MODELING_PREP_API_KEY=$FINANCIAL_MODELING_PREP_API_KEY
 RUN npm run build
 
+# Production image, copy files and run
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
@@ -28,14 +31,10 @@ ENV NODE_ENV=production \
     PORT=8080
 RUN addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 --ingroup nodejs nextjs
-COPY package.json package-lock.json ./
-RUN apk add --no-cache libc6-compat python3 build-base && \
-    npm ci --omit=dev && \
-    npm cache clean --force && \
-    apk del python3 build-base
-COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-RUN chown -R nextjs:nodejs /app
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/start-server.js ./start-server.js
 USER nextjs
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD ["node", "start-server.js"]
