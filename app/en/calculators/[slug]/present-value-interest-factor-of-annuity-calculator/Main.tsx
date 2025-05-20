@@ -118,7 +118,7 @@ export function Main({ pathname, className }: MainProps) {
               <Strong>Ordinary Annuity</Strong>: This formula specifically
               applies to ordinary annuities. For an annuity due (payments at the
               beginning of the period), the PVIFA would be different (see{" "}
-              <InternalLink href="frequently-asked-questions">
+              <InternalLink href="#frequently-asked-questions">
                 FAQ Q5
               </InternalLink>
               ).
