@@ -158,5 +158,3 @@ async function Page({ params }: PageProps) {
 }
 
 export default Page;
-export const revalidate = 43200;
-export const dynamic = "force-static";
