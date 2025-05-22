@@ -26,57 +26,50 @@ function generateDividendYieldCommentary(
   ): DividendYieldCategory =>
     dividendYield <= DIVIDEND_YIELD_THRESHOLD_NONE ? "None" : "Has";
 
-  const stockOneCategory = getDividendYieldCategory(stockOneDividendYield);
-  const stockTwoCategory = getDividendYieldCategory(stockTwoDividendYield);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const categoryOne = getDividendYieldCategory(stockOneDividendYield);
+  const categoryTwo = getDividendYieldCategory(stockTwoDividendYield);
+  const dividendYieldOne = (stockOneDividendYield * 100).toFixed(2);
+  const dividendYieldTwo = (stockTwoDividendYield * 100).toFixed(2);
 
-  const stockOneDividendYieldPercent = (stockOneDividendYield * 100).toFixed(2);
-  const stockTwoDividendYieldPercent = (stockTwoDividendYield * 100).toFixed(2);
-
-  if (stockOneCategory === "None" && stockTwoCategory === "None") {
-    return `${stockOneSymbol} 和 ${stockTwoSymbol} 均不支付股息，利润主要用于再投资，可能优先考虑业务扩展或长期增长而非短期股东回报。`;
+  if (categoryOne === "None" && categoryTwo === "None") {
+    return `${symbolOne} 和 ${symbolTwo} 均不支付股息；两者似乎都将所有收益再投资于增长，优先考虑长期扩张而非即时现金回报。`;
   }
 
-  if (stockOneCategory === "None" && stockTwoCategory === "Has") {
-    return `${stockOneSymbol} 不支付股息，利润更多用于支持公司发展，适合追求资本增值的投资者。而 ${stockTwoSymbol} 的股息率为 ${stockTwoDividendYieldPercent}% ，通过分红直接回报股东，反映出较稳定的盈利能力，两者策略形成对比。`;
+  if (categoryOne === "None" && categoryTwo === "Has") {
+    return `${symbolOne} 不提供股息，似乎将所有现金重新投入到业务中，而 ${symbolTwo} 则提供 ${dividendYieldTwo}% 的股息率，为投资者带来稳定的收入流。`;
   }
 
-  if (stockOneCategory === "Has" && stockTwoCategory === "None") {
-    return `${stockOneSymbol} 的股息率为 ${stockOneDividendYieldPercent}% ，在回报股东的同时兼顾增长；而 ${stockTwoSymbol} 不支付股息，利润主要投入未来发展，如业务扩展或研发，体现出不同的经营策略。`;
+  if (categoryOne === "Has" && categoryTwo === "None") {
+    return `${symbolOne} 提供 ${dividendYieldOne}% 的股息率，实现了收入与增长的结合，而 ${symbolTwo} 则似乎保留全部利润用于资助运营和研发。`;
   }
 
-  if (stockOneCategory === "Has" && stockTwoCategory === "Has") {
-    const baseCommentary = `${stockOneSymbol} 的股息率为 ${stockOneDividendYieldPercent}% ，${stockTwoSymbol} 为 ${stockTwoDividendYieldPercent}% ，两者均在股东回报与公司发展之间取得平衡。`;
+  const absoluteGap = Math.abs(stockOneDividendYield - stockTwoDividendYield);
+  const smallerDividendYield = Math.min(
+    stockOneDividendYield,
+    stockTwoDividendYield,
+  );
+  const relativeGapPercent = (
+    (absoluteGap / smallerDividendYield) *
+    100
+  ).toFixed(0);
 
-    const higherDividendYield = Math.max(
-      stockOneDividendYield,
-      stockTwoDividendYield,
-    );
-    const lowerDividendYield = Math.min(
-      stockOneDividendYield,
-      stockTwoDividendYield,
-    );
-    const relativeDifference =
-      (higherDividendYield - lowerDividendYield) / lowerDividendYield;
-    const relativeDifferencePercent = (relativeDifference * 100).toFixed(0);
-
-    if (relativeDifference > DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP) {
-      const higherStockSymbol =
-        stockOneDividendYield > stockTwoDividendYield
-          ? stockOneSymbol
-          : stockTwoSymbol;
-      const lowerStockSymbol =
-        stockOneDividendYield > stockTwoDividendYield
-          ? stockTwoSymbol
-          : stockOneSymbol;
-      const higherDividendYieldPercent = (higherDividendYield * 100).toFixed(2);
-
-      return `${baseCommentary} 其中，${higherStockSymbol} 的股息率达 ${higherDividendYieldPercent}% ，高出 ${lowerStockSymbol} 约 ${relativeDifferencePercent}% ，显示其更倾向于回报股东，而 ${lowerStockSymbol} 则更多保留利润用于发展。`;
-    }
-
-    return `${baseCommentary} 两者的股息率差距较小，显示出相似的分红与增长策略。`;
+  if (
+    stockOneDividendYield >
+    stockTwoDividendYield * (1 + DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP)
+  ) {
+    return `${symbolOne} 的股息率 ${dividendYieldOne}% 比 ${symbolTwo} 的 ${dividendYieldTwo}% 大约高出 ${relativeGapPercent}%，突显其更侧重于向股东返还现金。`;
   }
 
-  return "";
+  if (
+    stockTwoDividendYield >
+    stockOneDividendYield * (1 + DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP)
+  ) {
+    return `${symbolTwo} 以 ${dividendYieldTwo}% 的股息率脱颖而出 — 比 ${symbolOne} 的 ${dividendYieldOne}% 大约高出 ${relativeGapPercent}% — 突显其对慷慨派息的重视。`;
+  }
+
+  return `${symbolOne} 和 ${symbolTwo} 提供相似的股息率 (分别为 ${dividendYieldOne}% 和 ${dividendYieldTwo}%)，表明两者在平衡收入与增长方面采取了类似的方法。`;
 }
 
 export async function DividendComparisonSection({

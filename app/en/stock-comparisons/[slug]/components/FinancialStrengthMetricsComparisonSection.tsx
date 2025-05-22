@@ -26,30 +26,23 @@ function generateCurrentRatioCommentary(
   ): CurrentRatioCategory =>
     currentRatio < CURRENT_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
-  const stockOneCurrentRatioCategory =
-    getCurrentRatioCategory(stockOneCurrentRatio);
-  const stockTwoCurrentRatioCategory =
-    getCurrentRatioCategory(stockTwoCurrentRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const currentRatioOne = stockOneCurrentRatio.toFixed(2);
+  const currentRatioTwo = stockTwoCurrentRatio.toFixed(2);
+  const categoryOne = getCurrentRatioCategory(stockOneCurrentRatio);
+  const categoryTwo = getCurrentRatioCategory(stockTwoCurrentRatio);
 
-  if (
-    stockOneCurrentRatioCategory === "Low" &&
-    stockTwoCurrentRatioCategory === "Low"
-  ) {
-    return `For both ${stockOneSymbol} (${stockOneCurrentRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoCurrentRatio.toFixed(2)}), current ratios sit below 1. With current assets trailing short-term liabilities, they might tap into cash flow or borrowing to stay afloat—a setup not uncommon in certain sectors, though it bears monitoring if cash gets tight.`;
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `With current ratios of ${currentRatioOne} and ${currentRatioTwo}, both ${symbolOne} and ${symbolTwo} have less current assets than short-term liabilities, which could strain their working capital and force reliance on additional financing.`;
   }
 
-  if (
-    stockOneCurrentRatioCategory === "Low" &&
-    stockTwoCurrentRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} posts a current ratio of ${stockOneCurrentRatio.toFixed(2)} under 1, where current assets fall short of covering short-term debts—manageable perhaps with solid cash inflows. Compare that to ${stockTwoSymbol}, sitting at ${stockTwoCurrentRatio.toFixed(2)}, where liabilities are comfortably met.`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne}’s current ratio of ${currentRatioOne} signals a possible liquidity squeeze, while ${symbolTwo} at ${currentRatioTwo} comfortably covers its short-term obligations.`;
   }
 
-  if (
-    stockOneCurrentRatioCategory === "Normal" &&
-    stockTwoCurrentRatioCategory === "Low"
-  ) {
-    return `${stockTwoSymbol}’s current ratio of ${stockTwoCurrentRatio.toFixed(2)} dips below 1, leaving short-term liabilities larger than current assets—a scenario that could hinge on cash flow support. On the other hand, ${stockOneSymbol} at ${stockOneCurrentRatio.toFixed(2)} has enough assets to handle its obligations.`;
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo}’s current ratio of ${currentRatioTwo} indicates its assets may not cover near-term debts, whereas ${symbolOne} at ${currentRatioOne} maintains healthy liquidity.`;
   }
 
   return "";
@@ -65,31 +58,26 @@ function generateQuickRatioCommentary(
 
   type QuickRatioCategory = "Low" | "Normal";
 
-  const getQuickRatioCategory = (quickRatio: number): QuickRatioCategory =>
-    quickRatio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
+  const getQuickRatioCategory = (ratio: number): QuickRatioCategory =>
+    ratio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
-  const stockOneQuickRatioCategory = getQuickRatioCategory(stockOneQuickRatio);
-  const stockTwoQuickRatioCategory = getQuickRatioCategory(stockTwoQuickRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const quickRatioOne = stockOneQuickRatio.toFixed(2);
+  const quickRatioTwo = stockTwoQuickRatio.toFixed(2);
+  const categoryOne = getQuickRatioCategory(stockOneQuickRatio);
+  const categoryTwo = getQuickRatioCategory(stockTwoQuickRatio);
 
-  if (
-    stockOneQuickRatioCategory === "Low" &&
-    stockTwoQuickRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} (${stockOneQuickRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoQuickRatio.toFixed(2)}) both clock quick ratios under 0.8. Without inventory, their liquid assets don’t match short-term debts, so they might lean on sales or loans to cover the difference—doable if cash keeps flowing.`;
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `Both ${symbolOne} (quick ratio ${quickRatioOne}) and ${symbolTwo} (quick ratio ${quickRatioTwo}) fall below 0.8, meaning their most liquid assets—excluding inventory—aren’t enough to meet short-term obligations. This could force them to rely on receivables, inventory turn, or external financing.`;
   }
 
-  if (
-    stockOneQuickRatioCategory === "Low" &&
-    stockTwoQuickRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol}’s quick ratio sits at ${stockOneQuickRatio.toFixed(2)} below 0.8, leaving its cash and near-cash assets shy of short-term obligations—potentially a stretch without extra funds. Meanwhile, ${stockTwoSymbol} lands at ${stockTwoQuickRatio.toFixed(2)}, with enough liquidity to spare.`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne}’s quick ratio of ${quickRatioOne} suggests it may struggle to cover immediate liabilities without selling inventory or raising cash, whereas ${symbolTwo} at ${quickRatioTwo} maintains a comfortable buffer of liquid assets.`;
   }
 
-  if (
-    stockOneQuickRatioCategory === "Normal" &&
-    stockTwoQuickRatioCategory === "Low"
-  ) {
-    return `At ${stockTwoQuickRatio.toFixed(2)}, ${stockTwoSymbol}’s quick ratio falls below 0.8, where liquid assets, minus inventory, can’t keep up with short-term bills—possibly riding on cash flow. By contrast, ${stockOneSymbol} hits ${stockOneQuickRatio.toFixed(2)}, covering its bases comfortably.`;
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo} posts a quick ratio of ${quickRatioTwo}, indicating limited coverage of short-term debts from its most liquid assets—while ${symbolOne} at ${quickRatioOne} enjoys stronger liquidity resilience.`;
   }
 
   return "";
@@ -107,75 +95,47 @@ function generateDebtToEquityRatioCommentary(
   type DebtToEquityRatioCategory = "Negative" | "High" | "Normal";
 
   const getDebtToEquityRatioCategory = (
-    debtToEquityRatio: number,
+    ratio: number,
   ): DebtToEquityRatioCategory => {
-    if (debtToEquityRatio < DEBT_TO_EQUITY_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    if (debtToEquityRatio > DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH) return "High";
+    if (ratio < DEBT_TO_EQUITY_RATIO_THRESHOLD_NEGATIVE) return "Negative";
+    if (ratio > DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH) return "High";
     return "Normal";
   };
 
-  const stockOneDebtToEquityRatioCategory = getDebtToEquityRatioCategory(
-    stockOneDebtToEquityRatio,
-  );
-  const stockTwoDebtToEquityRatioCategory = getDebtToEquityRatioCategory(
-    stockTwoDebtToEquityRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const debtToEquityRatioOne = stockOneDebtToEquityRatio.toFixed(2);
+  const debtToEquityRatioTwo = stockTwoDebtToEquityRatio.toFixed(2);
+  const categoryOne = getDebtToEquityRatioCategory(stockOneDebtToEquityRatio);
+  const categoryTwo = getDebtToEquityRatioCategory(stockTwoDebtToEquityRatio);
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} (${stockOneDebtToEquityRatio.toFixed(2)}) and ${stockTwoSymbol} (${stockTwoDebtToEquityRatio.toFixed(2)}) both carry negative D/E ratios, a sign of negative equity—likely from piling up losses or aggressive buybacks. This setup might catch some eyes, though certain companies run this way on purpose.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `Both ${symbolOne} (debt-to-equity ratio ${debtToEquityRatioOne}) and ${symbolTwo} (${debtToEquityRatioTwo}) exhibit negative shareholder equity—assets fall short of liabilities—signaling serious balance-sheet stress.`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `With D/E ratios topping 3.0, ${stockOneSymbol} at ${stockOneDebtToEquityRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} lean heavily on debt over equity. That kind of leverage ups the stakes, particularly if cash gets squeezed by interest or tough times.`;
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `${symbolOne} and ${symbolTwo} both have debt-to-equity ratios above ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH} (${debtToEquityRatioOne} and ${debtToEquityRatioTwo}), reflecting aggressive use of debt that can amplify gains but also increase vulnerability to rising rates.`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} logs a D/E of ${stockOneDebtToEquityRatio.toFixed(2)} in the red, hinting at negative equity—think losses or buybacks pushing it there. Flip to ${stockTwoSymbol}, where ${stockTwoDebtToEquityRatio.toFixed(2)} sails past 3.0, piling on debt that could magnify risks.`;
+  if (categoryOne === "Negative" && categoryTwo === "High") {
+    return `${symbolOne} shows negative equity (debt-to-equity ratio ${debtToEquityRatioOne}), while ${symbolTwo} is heavily leveraged (${debtToEquityRatioTwo}), illustrating two different balance-sheet risks.`;
+  }
+  if (categoryOne === "High" && categoryTwo === "Negative") {
+    return `${symbolOne} carries high leverage (debt-to-equity ratio ${debtToEquityRatioOne}), whereas ${symbolTwo} has negative equity (${debtToEquityRatioTwo}), each presenting distinct capital-structure concerns.`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} hits ${stockOneDebtToEquityRatio.toFixed(2)} beyond 3.0, stacking debt high against equity—a risky play if borrowing costs bite. Meanwhile, ${stockTwoSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} dips negative, tied to equity in the hole, maybe from losses or repurchasing shares.`;
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} has negative equity (debt-to-equity ratio ${debtToEquityRatioOne}), an unusual warning sign, while ${symbolTwo} at ${debtToEquityRatioTwo} maintains a conventional debt-to-equity balance.`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} has negative equity (debt-to-equity ratio ${debtToEquityRatioTwo}), suggesting asset shortfalls, whereas ${symbolOne} at ${debtToEquityRatioOne} preserves healthier equity coverage.`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol}’s D/E of ${stockOneDebtToEquityRatio.toFixed(2)} turns negative, likely from eroded equity via losses or buybacks—an odd financial twist. By comparison, ${stockTwoSymbol} holds a tame ${stockTwoDebtToEquityRatio.toFixed(2)}, keeping things steady.`;
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne} is heavily leveraged (debt-to-equity ratio ${debtToEquityRatioOne}), which can boost returns but raises risk if borrowing costs climb, while ${symbolTwo} at ${debtToEquityRatioTwo} keeps leverage at a more moderate level.`;
   }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "Normal" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} shows a D/E of ${stockTwoDebtToEquityRatio.toFixed(2)} below zero, suggesting equity’s gone south—perhaps from losses or heavy buybacks. On the flip side, ${stockOneSymbol} at ${stockTwoDebtToEquityRatio.toFixed(2)} sticks to a safer lane.`;
-  }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} racks up a D/E of ${stockOneDebtToEquityRatio.toFixed(2)} over 3.0, leaning hard into debt and flirting with higher risk. Meanwhile, ${stockTwoSymbol} clocks in at ${stockTwoDebtToEquityRatio.toFixed(2)}, staying on firmer ground.`;
-  }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "Normal" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol}’s ${stockTwoDebtToEquityRatio.toFixed(2)} D/E breaches 3.0, loading up on debt that could test its resilience. In contrast, ${stockOneSymbol} at ${stockOneDebtToEquityRatio.toFixed(2)} plays it closer to the vest with borrowing.`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} is highly leveraged (debt-to-equity ratio ${debtToEquityRatioTwo}), elevating both potential gains and risks, compared to ${symbolOne} at ${debtToEquityRatioOne}, which maintains a steadier capital structure.`;
   }
 
   return "";
@@ -192,36 +152,27 @@ function generateDebtToAssetsRatioCommentary(
   type DebtToAssetsRatioCategory = "High" | "Normal";
 
   const getDebtToAssetsRatioCategory = (
-    debtToAssetsRatio: number,
+    ratio: number,
   ): DebtToAssetsRatioCategory =>
-    debtToAssetsRatio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
+    ratio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
 
-  const stockOneDebtToAssetsRatioCategory = getDebtToAssetsRatioCategory(
-    stockOneDebtToAssetsRatio,
-  );
-  const stockTwoDebtToAssetsRatioCategory = getDebtToAssetsRatioCategory(
-    stockTwoDebtToAssetsRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const debtToAssetsRatioOne = stockOneDebtToAssetsRatio.toFixed(2);
+  const debtToAssetsRatioTwo = stockTwoDebtToAssetsRatio.toFixed(2);
+  const categoryOne = getDebtToAssetsRatioCategory(stockOneDebtToAssetsRatio);
+  const categoryTwo = getDebtToAssetsRatioCategory(stockTwoDebtToAssetsRatio);
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "High" &&
-    stockTwoDebtToAssetsRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} at ${stockOneDebtToAssetsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoDebtToAssetsRatio.toFixed(2)} both push D/A ratios past 0.8, with over 80% of assets tied to debt. That kind of borrowing heft could shake things up if asset prices slip or interest rates climb, though it’s not unusual for heavy-investment businesses.`;
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `With debt funding over 80% of their assets—${symbolOne} at ${debtToAssetsRatioOne} and ${symbolTwo} at ${debtToAssetsRatioTwo}—both firms use high leverage that can boost returns but also increases risk if asset values fall or borrowing costs climb.`;
   }
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "High" &&
-    stockTwoDebtToAssetsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} clocks a D/A ratio of ${stockOneDebtToAssetsRatio.toFixed(2)} beyond 0.8, meaning debt funds most of its assets—a setup that might get dicey with financial hiccups. By contrast, ${stockTwoSymbol} rolls in at ${stockTwoDebtToAssetsRatio.toFixed(2)}, keeping borrowing in a lighter range.`;
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne}’s debt-to-assets ratio of ${debtToAssetsRatioOne} indicates it relies heavily on debt to back its assets—potentially risky in a downturn—whereas ${symbolTwo} at ${debtToAssetsRatioTwo} keeps borrowing to a more moderate level.`;
   }
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "Normal" &&
-    stockTwoDebtToAssetsRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol}’s D/A ratio hits ${stockTwoDebtToAssetsRatio.toFixed(2)} above 0.8, leaning heavily on debt to back its assets—tricky if the market turns sour. Meanwhile, ${stockOneSymbol} at ${stockTwoDebtToAssetsRatio.toFixed(2)} opts for a less debt-driven approach.`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} carries a debt-to-assets ratio of ${debtToAssetsRatioTwo}, suggesting substantial asset funding via debt, while ${symbolOne} at ${debtToAssetsRatioOne} opts for a more conservative financing structure.`;
   }
 
   return "";
@@ -233,80 +184,81 @@ function generateInterestCoverageRatioCommentary(
   stockTwoSymbol: string,
   stockTwoInterestCoverageRatio: number,
 ): string {
-  const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1.5;
+  const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1;
   const INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO = 0;
 
-  type InterestCoverageRatioCategory = "Low" | "Zero" | "Normal";
+  type InterestCoverageRatioCategory = "Negative" | "Zero" | "Low" | "Normal";
 
   const getInterestCoverageRatioCategory = (
-    interestCoverageRatio: number,
+    ratio: number,
   ): InterestCoverageRatioCategory => {
-    if (interestCoverageRatio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO)
-      return "Zero";
-    if (interestCoverageRatio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW)
-      return "Low";
+    if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Negative";
+    if (ratio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Zero";
+    if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW) return "Low";
     return "Normal";
   };
 
-  const stockOneInterestCoverageRatioCategory =
-    getInterestCoverageRatioCategory(stockOneInterestCoverageRatio);
-  const stockTwoInterestCoverageRatioCategory =
-    getInterestCoverageRatioCategory(stockTwoInterestCoverageRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const interestCoverageRatioOne = stockOneInterestCoverageRatio.toFixed(2);
+  const interestCoverageRatioTwo = stockTwoInterestCoverageRatio.toFixed(2);
+  const categoryOne = getInterestCoverageRatioCategory(
+    stockOneInterestCoverageRatio,
+  );
+  const categoryTwo = getInterestCoverageRatioCategory(
+    stockTwoInterestCoverageRatio,
+  );
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} at ${stockOneInterestCoverageRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} both scrape by with interest coverage under 1.5. Earnings are stretched thin against interest bills, leaving little wiggle room if profits drop.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `Both ${symbolOne} and ${symbolTwo} report negative interest coverage ratios (${interestCoverageRatioOne}, ${interestCoverageRatioTwo}), meaning EBIT itself is negative—neither can cover interest, a critical solvency warning.`;
+  }
+  if (categoryOne === "Zero" && categoryTwo === "Zero") {
+    return `Neither ${symbolOne} nor ${symbolTwo} records interest coverage (both “--”), indicating virtually no interest expense—usually a sign of negligible debt.`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `Both ${symbolOne} (at ${interestCoverageRatioOne}) and ${symbolTwo} (at ${interestCoverageRatioTwo}) have low interest coverage, meaning their operating earnings do not fully cover interest expenses. This indicates financial strain.`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `For ${stockOneSymbol} and ${stockTwoSymbol}, interest coverage shows as “--”, pointing to negligible interest costs—often a sign of slim debt or rock-bottom rates keeping expenses near zero.`;
+  if (categoryOne === "Negative" && categoryTwo === "Zero") {
+    return `${symbolOne} has negative EBIT (interest coverage ${interestCoverageRatioOne}), unable to cover interest, while ${symbolTwo} shows “--” (negligible interest expense).`;
+  }
+  if (categoryOne === "Zero" && categoryTwo === "Negative") {
+    return `${symbolOne} shows “--” (minimal interest expense), but ${symbolTwo} is in the red with interest coverage ${interestCoverageRatioTwo}, signaling a net operating loss.`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `${stockOneSymbol}’s ${stockOneInterestCoverageRatio.toFixed(2)} interest coverage dips below 1.5, with earnings just nudging past interest—tight if pressure hits. Meanwhile, ${stockTwoSymbol} displays “--”, reflecting an interest burden so small it barely registers, likely from minimal debt.`;
+  if (categoryOne === "Negative" && categoryTwo === "Low") {
+    return `${symbolOne} posts a negative interest coverage ratio (${interestCoverageRatioOne}), reflecting an operating loss. ${symbolTwo}, with its ratio at ${interestCoverageRatioTwo}, also faces difficulty, as its operating earnings do not cover its interest expenses.`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Negative") {
+    return `${symbolOne} (at ${interestCoverageRatioOne}) is not covering its interest expenses from operating earnings, while ${symbolTwo} posts negative EBIT (interest coverage ${interestCoverageRatioTwo}).`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol}’s interest coverage reads “--”, suggesting interest expenses are next to nothing—think tiny debt or ultra-low rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} teeters below 1.5, earnings barely clearing interest.`;
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `With negative EBIT (${interestCoverageRatioOne}), ${symbolOne} cannot cover its interest payments. ${symbolTwo}, with an interest coverage of ${interestCoverageRatioTwo}, meets its interest obligations.`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolOne} meets its interest obligations (ratio ${interestCoverageRatioOne}). In stark contrast, ${symbolTwo}’s negative ratio (${interestCoverageRatioTwo}) means its operating earnings (EBIT) don't cover basic operations, let alone interest, signaling serious financial trouble.`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} clocks in at ${stockOneInterestCoverageRatio.toFixed(2)} below 1.5, earnings just keeping ahead of interest—dicey if profits stumble. By contrast, ${stockTwoSymbol}’s ${stockTwoInterestCoverageRatio.toFixed(2)} sails through with plenty of cushion.`;
+  if (categoryOne === "Zero" && categoryTwo === "Low") {
+    return `${symbolOne} shows “--” for interest coverage (indicating minimal interest cost). ${symbolTwo}, however, with a ratio of ${interestCoverageRatioTwo}, is not generating enough operating earnings to cover its current interest payments.`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Zero") {
+    return `${symbolOne} (at ${interestCoverageRatioOne}) fails to cover its interest expenses from operating earnings, whereas ${symbolTwo} shows “--” for minimal interest expense.`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Normal" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockTwoSymbol}’s ${stockTwoInterestCoverageRatio.toFixed(2)} sits under 1.5, where earnings hug interest costs too closely—a squeeze if income dips. Meanwhile, ${stockOneSymbol} at ${stockOneInterestCoverageRatio.toFixed(2)} has room to breathe.`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne}’s low ratio (${interestCoverageRatioOne}) indicates its earnings don't cover interest. ${symbolTwo} (at ${interestCoverageRatioTwo}) meets its interest obligations.`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo}’s low interest coverage (${interestCoverageRatioTwo}) means it doesn't cover interest from operating earnings. ${symbolOne} (at ${interestCoverageRatioOne}) meets its interest obligations.`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} posts an interest coverage of “--”, hinting at interest costs so low they’re negligible—often from scant debt or dirt-cheap rates—while ${stockTwoSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} handles interest with solid earnings.`;
+  if (categoryOne === "Zero" && categoryTwo === "Normal") {
+    return `${symbolOne} shows “--” for interest coverage, hinting at negligible interest costs, whereas ${symbolTwo} (at ${interestCoverageRatioTwo}) covers its interest obligations.`;
   }
-
-  if (
-    stockOneInterestCoverageRatioCategory === "Normal" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `${stockTwoSymbol}’s interest coverage comes up “--”, reflecting interest demands so faint they’re barely there—likely minimal debt or tiny rates—whereas ${stockOneSymbol} at ${stockTwoInterestCoverageRatio.toFixed(2)} cruises past interest with ease.`;
+  if (categoryOne === "Normal" && categoryTwo === "Zero") {
+    return `${symbolOne} (at ${interestCoverageRatioOne}) covers its interest payments, while ${symbolTwo} shows “--” for minimal debt service.`;
   }
 
   return "";

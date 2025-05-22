@@ -24,69 +24,51 @@ function generatePriceToEarningsRatioCommentary(
   type PriceToEarningsRatioCategory = "Negative" | "Normal" | "High";
 
   const getPriceToEarningsRatioCategory = (
-    priceToEarningsRatio: number,
+    ratio: number,
   ): PriceToEarningsRatioCategory => {
-    if (priceToEarningsRatio < PRICE_TO_EARNINGS_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    if (priceToEarningsRatio > PRICE_TO_EARNINGS_RATIO_THRESHOLD_HIGH)
-      return "High";
+    if (ratio < PRICE_TO_EARNINGS_RATIO_THRESHOLD_NEGATIVE) return "Negative";
+    if (ratio > PRICE_TO_EARNINGS_RATIO_THRESHOLD_HIGH) return "High";
     return "Normal";
   };
 
-  const stockOnePriceToEarningsRatioCategory = getPriceToEarningsRatioCategory(
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToEarningsRatioOne = stockOnePriceToEarningsRatio.toFixed(2);
+  const priceToEarningsRatioTwo = stockTwoPriceToEarningsRatio.toFixed(2);
+  const categoryOne = getPriceToEarningsRatioCategory(
     stockOnePriceToEarningsRatio,
   );
-  const stockTwoPriceToEarningsRatioCategory = getPriceToEarningsRatioCategory(
+  const categoryTwo = getPriceToEarningsRatioCategory(
     stockTwoPriceToEarningsRatio,
   );
 
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} have negative P/E values over the past twelve months. This reflects consistent losses rather than profits, meaning their current operations aren’t generating positive net income—a situation that could challenge their financial stability if prolonged.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `Neither ${symbolOne} nor ${symbolTwo} turned a profit—both carry negative P/E ratios of ${priceToEarningsRatioOne} and ${priceToEarningsRatioTwo}, underscoring continued losses that pressure their valuations.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} has a negative P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, indicating it’s been unprofitable over the past year with no net earnings to support its stock price. On the other hand, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} has maintained positive earnings, showing a healthier profit profile.`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} posts a negative P/E of ${priceToEarningsRatioOne}, reflecting last year’s net loss, while ${symbolTwo} at ${priceToEarningsRatioTwo} signals healthy earnings.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} posts a negative P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, meaning it’s been running at a loss over the past twelve months with no positive earnings. Conversely, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} commands a notably elevated P/E, where its stock price reflects a premium far exceeding its current earnings—a sign investors are betting heavily on future gains.`;
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} shows a negative P/E of ${priceToEarningsRatioTwo}, highlighting a year of losses, whereas ${symbolOne} at ${priceToEarningsRatioOne} trades on solid profitability.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Normal" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} shows a negative P/E of ${stockTwoPriceToEarningsRatio.toFixed(2)}, highlighting a year of losses with no net profit generated. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} has sustained positive earnings, offering a more stable earnings foundation.`;
+
+  if (categoryOne === "Negative" && categoryTwo === "High") {
+    return `${symbolOne} has a negative P/E (${priceToEarningsRatioOne}) due to recent losses. In contrast, ${symbolTwo} commands a premium multiple of ${priceToEarningsRatioTwo}, signaling strong market confidence in its future earnings growth to justify this high valuation.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} carries a lofty P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, where its market price towers over its earnings from the past year—investors are paying a significant premium for each dollar of profit. In stark contrast, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} is negative, revealing a complete absence of net earnings over the same period.`;
+  if (categoryOne === "High" && categoryTwo === "Negative") {
+    return `${symbolOne} trades at a lofty P/E of ${priceToEarningsRatioOne}, implying strong growth expectations, in contrast to ${symbolTwo}’s negative P/E of ${priceToEarningsRatioTwo} driven by recent losses.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} exhibit P/E values well above typical levels. Their stock prices are trading at substantial multiples of their current earnings, suggesting the market anticipates robust future profitability or sees value beyond today’s income statements.`;
+
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `${symbolOne} and ${symbolTwo} both trade above a 100× earnings multiple (${priceToEarningsRatioOne} and ${priceToEarningsRatioTwo}), reflecting lofty growth narratives priced into their shares.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} stands out with a P/E of ${stockOnePriceToEarningsRatio.toFixed(2)}, far exceeding conventional benchmarks. This elevated figure means its stock price is disproportionately large compared to its earnings over the past twelve months, often reflecting strong investor optimism about its future. Meanwhile, ${stockTwoSymbol} at ${stockTwoPriceToEarningsRatio.toFixed(2)} aligns with more typical earnings multiples.`;
+
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne} stands out with a premium P/E of ${priceToEarningsRatioOne}, while ${symbolTwo} at ${priceToEarningsRatioTwo} remains within a more conventional earnings multiple.`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Normal" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol} has a notably high P/E of ${stockTwoPriceToEarningsRatio.toFixed(2)}, where its market price commands a steep multiple of its earnings from the past year—indicating investors are pricing in significant future potential. On the flip side, ${stockOneSymbol} at ${stockOnePriceToEarningsRatio.toFixed(2)} maintains a P/E within a more standard range, tied closer to its current profitability.`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} features a high P/E of ${priceToEarningsRatioTwo}, indicating strong growth expectations, compared to ${symbolOne} at ${priceToEarningsRatioOne}, which trades at a more standard valuation based on its current earnings.`;
   }
 
   return "";
@@ -103,37 +85,27 @@ function generateForwardPEGRatioCommentary(
   type ForwardPEGRatioCategory = "Negative" | "Normal";
 
   const getForwardPEGRatioCategory = (
-    forwardPEGRatio: number,
-  ): ForwardPEGRatioCategory => {
-    if (forwardPEGRatio < FORWARD_PEG_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): ForwardPEGRatioCategory =>
+    ratio < FORWARD_PEG_RATIO_THRESHOLD_NEGATIVE ? "Negative" : "Normal";
 
-  const stockOneForwardPEGRatioCategory = getForwardPEGRatioCategory(
-    stockOneForwardPEGRatio,
-  );
-  const stockTwoForwardPEGRatioCategory = getForwardPEGRatioCategory(
-    stockTwoForwardPEGRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const forwardPEGRatioOne = stockOneForwardPEGRatio.toFixed(2);
+  const forwardPEGRatioTwo = stockTwoForwardPEGRatio.toFixed(2);
+  const categoryOne = getForwardPEGRatioCategory(stockOneForwardPEGRatio);
+  const categoryTwo = getForwardPEGRatioCategory(stockTwoForwardPEGRatio);
 
-  if (
-    stockOneForwardPEGRatioCategory === "Negative" &&
-    stockTwoForwardPEGRatioCategory === "Negative"
-  ) {
-    return `Both ${stockOneSymbol} at ${stockOneForwardPEGRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoForwardPEGRatio.toFixed(2)} show negative Forward PEG values. This signals that analysts foresee either outright losses or a decline in earnings over the next period—a troubling outlook that casts doubt on their near-term profit potential.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `Analysts assign negative forward PEG ratios to both ${symbolOne} (${forwardPEGRatioOne}) and ${symbolTwo} (${forwardPEGRatioTwo}), suggesting expectation of shrinking or negative earnings in the upcoming period—a worrying sign for their profit outlook.`;
   }
-  if (
-    stockOneForwardPEGRatioCategory === "Negative" &&
-    stockTwoForwardPEGRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} carries a negative Forward PEG of ${stockOneForwardPEGRatio.toFixed(2)}, hinting at analyst expectations of losses or shrinking earnings in the coming period—a potential warning for its future performance. On the flip side, ${stockTwoSymbol} at ${stockTwoForwardPEGRatio.toFixed(2)} sidesteps this concern with a more favorable outlook.`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} posts a negative forward PEG of ${forwardPEGRatioOne}, hinting at anticipated earnings decline, whereas ${symbolTwo} at ${forwardPEGRatioTwo} has projections for stable or growing earnings.`;
   }
-  if (
-    stockOneForwardPEGRatioCategory === "Normal" &&
-    stockTwoForwardPEGRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} has a negative Forward PEG of ${stockTwoForwardPEGRatio.toFixed(2)}, suggesting analysts predict either a drop in earnings or no profits at all in the near future—a red flag for its growth trajectory. Meanwhile, ${stockOneSymbol} at ${stockOneForwardPEGRatio.toFixed(2)} avoids such a pessimistic forecast.`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} shows a negative forward PEG of ${forwardPEGRatioTwo}, signaling expected earnings contraction, while ${symbolOne} at ${forwardPEGRatioOne} maintains analysts’ projections for stable or improved profits.`;
   }
 
   return "";
@@ -150,37 +122,27 @@ function generatePriceToBookRatioCommentary(
   type PriceToBookRatioCategory = "Negative" | "Normal";
 
   const getPriceToBookRatioCategory = (
-    priceToBookRatio: number,
-  ): PriceToBookRatioCategory => {
-    if (priceToBookRatio < PRICE_TO_BOOK_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): PriceToBookRatioCategory =>
+    ratio < PRICE_TO_BOOK_RATIO_THRESHOLD_NEGATIVE ? "Negative" : "Normal";
 
-  const stockOnePriceToBookRatioCategory = getPriceToBookRatioCategory(
-    stockOnePriceToBookRatio,
-  );
-  const stockTwoPriceToBookRatioCategory = getPriceToBookRatioCategory(
-    stockTwoPriceToBookRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToBookRatioOne = stockOnePriceToBookRatio.toFixed(2);
+  const priceToBookRatioTwo = stockTwoPriceToBookRatio.toFixed(2);
+  const categoryOne = getPriceToBookRatioCategory(stockOnePriceToBookRatio);
+  const categoryTwo = getPriceToBookRatioCategory(stockTwoPriceToBookRatio);
 
-  if (
-    stockOnePriceToBookRatioCategory === "Negative" &&
-    stockTwoPriceToBookRatioCategory === "Negative"
-  ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToBookRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToBookRatio.toFixed(2)} have negative Price-to-Book values. This means their liabilities outstrip their assets, leaving them with negative net worth—a dire signal that their financial foundations are deeply strained, potentially teetering on the edge of insolvency.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `Book value is underwater for both ${symbolOne} (${priceToBookRatioOne}) and ${symbolTwo} (${priceToBookRatioTwo}), meaning liabilities exceed assets—signaling a critical solvency risk for both companies.`;
   }
-  if (
-    stockOnePriceToBookRatioCategory === "Negative" &&
-    stockTwoPriceToBookRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} shows a negative Price-to-Book of ${stockOnePriceToBookRatio.toFixed(2)}, revealing that its liabilities surpass its assets. This precarious position suggests a fragile balance sheet, where the company’s market value hinges on factors beyond its tangible worth. On the other hand, ${stockTwoSymbol} at ${stockTwoPriceToBookRatio.toFixed(2)} maintains a positive net worth, free of this troubling indicator.`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} has a negative P/B ratio of ${priceToBookRatioOne}, indicating its liabilities exceed assets (negative equity). ${symbolTwo}, with a P/B of ${priceToBookRatioTwo}, maintains positive shareholder equity.`;
   }
-  if (
-    stockOnePriceToBookRatioCategory === "Normal" &&
-    stockTwoPriceToBookRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} posts a negative Price-to-Book of ${stockTwoPriceToBookRatio.toFixed(2)}, where its liabilities exceed its assets—a stark warning of underlying financial weakness that could threaten its long-term viability. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToBookRatio.toFixed(2)} stands on firmer ground with a positive book value.`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} carries a sub-zero price-to-book ratio of ${priceToBookRatioTwo}, indicating negative equity. In contrast, ${symbolOne} (P/B ${priceToBookRatioOne}) has positive book value.`;
   }
 
   return "";
@@ -197,38 +159,35 @@ function generatePriceToFreeCashFlowRatioCommentary(
   type PriceToFreeCashFlowRatioCategory = "Negative" | "Normal";
 
   const getPriceToFreeCashFlowRatioCategory = (
-    priceToFreeCashFlowRatio: number,
-  ): PriceToFreeCashFlowRatioCategory => {
-    if (
-      priceToFreeCashFlowRatio <
-      PRICE_TO_FREE_CASH_FLOW_RATIO_THRESHOLD_NEGATIVE
-    )
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): PriceToFreeCashFlowRatioCategory =>
+    ratio < PRICE_TO_FREE_CASH_FLOW_RATIO_THRESHOLD_NEGATIVE
+      ? "Negative"
+      : "Normal";
 
-  const stockOnePriceToFreeCashFlowRatioCategory =
-    getPriceToFreeCashFlowRatioCategory(stockOnePriceToFreeCashFlowRatio);
-  const stockTwoPriceToFreeCashFlowRatioCategory =
-    getPriceToFreeCashFlowRatioCategory(stockTwoPriceToFreeCashFlowRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToFreeCashFlowRatioOne =
+    stockOnePriceToFreeCashFlowRatio.toFixed(2);
+  const priceToFreeCashFlowRatioTwo =
+    stockTwoPriceToFreeCashFlowRatio.toFixed(2);
+  const categoryOne = getPriceToFreeCashFlowRatioCategory(
+    stockOnePriceToFreeCashFlowRatio,
+  );
+  const categoryTwo = getPriceToFreeCashFlowRatioCategory(
+    stockTwoPriceToFreeCashFlowRatio,
+  );
 
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
-  ) {
-    return `Both ${stockOneSymbol} at ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} have negative Price-to-Free Cash Flow values. This reveals they’ve been consuming more cash than they generate over the past year—a persistent cash drain that could strain their ability to operate without external funding.`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} and ${symbolTwo} both consumed more free cash flow than they generated last year—P/FCF of ${priceToFreeCashFlowRatioOne} and ${priceToFreeCashFlowRatioTwo}, respectively—highlighting persistent liquidity pressure.`;
   }
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} shows a negative Price-to-Free Cash Flow of ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}, meaning it’s been burning through cash faster than it can produce it over the past twelve months—a troubling sign for its financial resilience. On the flip side, ${stockTwoSymbol} at ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} has managed to keep its cash flow in positive territory.`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} has a negative Price-to-Free Cash Flow ratio of ${priceToFreeCashFlowRatioOne}, signaling it consumed more cash than it produced over the last year—an important liquidity warning. In contrast, ${symbolTwo} (P/FCF ${priceToFreeCashFlowRatioTwo}) indicates positive free cash flow generation.`;
   }
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Normal" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} has a negative Price-to-Free Cash Flow of ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}, indicating it’s spent more cash than it’s brought in over the past year—a cash flow shortfall that raises questions about its operational sustainability. Meanwhile, ${stockOneSymbol} at ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} maintains a positive cash position.`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} reports a negative Price-to-Free Cash Flow ratio of ${priceToFreeCashFlowRatioTwo}, showing a cash flow shortfall that could threaten its operational sustainability, while ${symbolOne} at ${priceToFreeCashFlowRatioOne} maintains positive cash flow.`;
   }
 
   return "";

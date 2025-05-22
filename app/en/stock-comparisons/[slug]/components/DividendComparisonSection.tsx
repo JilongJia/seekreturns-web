@@ -26,59 +26,50 @@ function generateDividendYieldCommentary(
   ): DividendYieldCategory =>
     dividendYield <= DIVIDEND_YIELD_THRESHOLD_NONE ? "None" : "Has";
 
-  const stockOneCategory = getDividendYieldCategory(stockOneDividendYield);
-  const stockTwoCategory = getDividendYieldCategory(stockTwoDividendYield);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const categoryOne = getDividendYieldCategory(stockOneDividendYield);
+  const categoryTwo = getDividendYieldCategory(stockTwoDividendYield);
+  const dividendYieldOne = (stockOneDividendYield * 100).toFixed(2);
+  const dividendYieldTwo = (stockTwoDividendYield * 100).toFixed(2);
 
-  const stockOneDividendYieldPercent = (stockOneDividendYield * 100).toFixed(2);
-  const stockTwoDividendYieldPercent = (stockTwoDividendYield * 100).toFixed(2);
-
-  if (stockOneCategory === "None" && stockTwoCategory === "None") {
-    return `Neither ${stockOneSymbol} nor ${stockTwoSymbol} pays dividends, suggesting both reinvest all profits into growth—likely expansion or innovation—favoring long-term value over immediate income.`;
+  if (categoryOne === "None" && categoryTwo === "None") {
+    return `Neither ${symbolOne} nor ${symbolTwo} currently pays a dividend yield; this often indicates they are reinvesting earnings for growth, prioritizing long-term expansion over immediate cash returns to shareholders.`;
   }
 
-  if (stockOneCategory === "None" && stockTwoCategory === "Has") {
-    return `${stockOneSymbol} pays no dividends, focusing all profits on growth, appealing to capital-gains investors. Meanwhile, ${stockTwoSymbol}’s ${stockTwoDividendYieldPercent}% yield rewards shareholders, showing financial confidence while supporting objectives—a contrast to ${stockOneSymbol}’s growth-only approach.`;
+  if (categoryOne === "None" && categoryTwo === "Has") {
+    return `${symbolOne} offers a 0% dividend yield, suggesting it may be reinvesting available cash back into the business for future growth, while ${symbolTwo} provides a ${dividendYieldTwo}% dividend yield, giving investors a steady income stream.`;
   }
 
-  if (stockOneCategory === "Has" && stockTwoCategory === "None") {
-    return `${stockOneSymbol}’s ${stockOneDividendYieldPercent}% yield offers steady income while retaining earnings for growth, unlike ${stockTwoSymbol}, which pays none, reinvesting fully—likely in expansion or R&D—for investors eyeing future gains. This pits ${stockOneSymbol}’s balanced approach against ${stockTwoSymbol}’s long-term focus.`;
+  if (categoryOne === "Has" && categoryTwo === "None") {
+    return `${symbolOne} delivers a ${dividendYieldOne}% dividend yield, blending income with growth, whereas ${symbolTwo} appears to retain its profits, possibly to fund operations, R&D, or other growth initiatives.`;
   }
 
-  if (stockOneCategory === "Has" && stockTwoCategory === "Has") {
-    const baseCommentary = `Both ${stockOneSymbol} at ${stockOneDividendYieldPercent}% and ${stockTwoSymbol} at ${stockTwoDividendYieldPercent}% pay dividends, blending income with growth in their strategies.`;
+  const absoluteGap = Math.abs(stockOneDividendYield - stockTwoDividendYield);
+  const smallerDividendYield = Math.min(
+    stockOneDividendYield,
+    stockTwoDividendYield,
+  );
+  const relativeGapPercent = (
+    (absoluteGap / smallerDividendYield) *
+    100
+  ).toFixed(0);
 
-    const higherDividendYield = Math.max(
-      stockOneDividendYield,
-      stockTwoDividendYield,
-    );
-    const lowerDividendYield = Math.min(
-      stockOneDividendYield,
-      stockTwoDividendYield,
-    );
-    const relativeDifference =
-      (higherDividendYield - lowerDividendYield) / lowerDividendYield;
-    const relativeDifferencePercent = (relativeDifference * 100).toFixed(0);
-
-    if (relativeDifference > DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP) {
-      const higherStockSymbol =
-        stockOneDividendYield > stockTwoDividendYield
-          ? stockOneSymbol
-          : stockTwoSymbol;
-      const lowerStockSymbol =
-        stockOneDividendYield > stockTwoDividendYield
-          ? stockTwoSymbol
-          : stockOneSymbol;
-
-      const higherDividendYieldPercent = (higherDividendYield * 100).toFixed(2);
-      const lowerDividendYieldPercent = (lowerDividendYield * 100).toFixed(2);
-
-      return `${baseCommentary} Yet ${higherStockSymbol}’s ${higherDividendYieldPercent}% yield, ${relativeDifferencePercent}% above ${lowerStockSymbol}’s ${lowerDividendYieldPercent}%, suggests a focus on generous payouts—possibly from stronger profits—while ${lowerStockSymbol} leans toward reinvestment, perhaps due to tighter margins.`;
-    }
-
-    return `${baseCommentary} Their yields align closely, indicating similar income-growth balances.`;
+  if (
+    stockOneDividendYield >
+    stockTwoDividendYield * (1 + DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP)
+  ) {
+    return `${symbolOne}’s dividend yield of ${dividendYieldOne}% is about ${relativeGapPercent}% higher than ${symbolTwo}’s ${dividendYieldTwo}%, underscoring its stronger focus on returning cash to shareholders.`;
   }
 
-  return "";
+  if (
+    stockTwoDividendYield >
+    stockOneDividendYield * (1 + DIVIDEND_THRESHOLD_SIGNIFICANT_RELATIVE_GAP)
+  ) {
+    return `${symbolTwo} stands out with a ${dividendYieldTwo}% dividend yield—around ${relativeGapPercent}% above ${symbolOne}’s ${dividendYieldOne}%—highlighting its emphasis on generous payouts.`;
+  }
+
+  return `Both ${symbolOne} and ${symbolTwo} offer similar dividend yields (${dividendYieldOne}% vs. ${dividendYieldTwo}%), indicating comparable approaches to balancing income and growth.`;
 }
 
 export async function DividendComparisonSection({

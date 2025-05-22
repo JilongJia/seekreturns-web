@@ -85,26 +85,28 @@ export function Chart({ data }: ChartProps): JSX.Element {
       weekdayDates,
     );
 
-    // Normalize series to initial value of 10000
     const stockOneBasePrice = stockOneFilledSeries[0].price;
     const stockTwoBasePrice = stockTwoFilledSeries[0].price;
 
-    const stockOneValueSeries: ProcessedPoint[] = stockOneFilledSeries.map(
+    const stockOnePercentageSeries: ProcessedPoint[] = stockOneFilledSeries.map(
       (pt) => ({
         time: pt.time,
-        value: (pt.price / stockOneBasePrice) * 10000,
+        value: (pt.price / stockOneBasePrice - 1) * 100,
       }),
     );
 
-    const stockTwoValueSeries: ProcessedPoint[] = stockTwoFilledSeries.map(
+    const stockTwoPercentageSeries: ProcessedPoint[] = stockTwoFilledSeries.map(
       (pt) => ({
         time: pt.time,
-        value: (pt.price / stockTwoBasePrice) * 10000,
+        value: (pt.price / stockTwoBasePrice - 1) * 100,
       }),
     );
 
     // Initialize chart
     container.style.position = "relative";
+    const formatPercentage = (price: number): string => {
+      return `${price.toFixed(2)}%`;
+    };
     const chart = createChart(container, {
       layout: {
         background: { type: ColorType.Solid, color: "#fafafa" },
@@ -113,7 +115,7 @@ export function Chart({ data }: ChartProps): JSX.Element {
       },
       width: container.clientWidth,
       height: 300,
-      localization: { locale: "zh" },
+      localization: { locale: "zh", priceFormatter: formatPercentage },
     });
 
     // Add series lines
@@ -123,8 +125,8 @@ export function Chart({ data }: ChartProps): JSX.Element {
     const stockTwoLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
       color: "#ef4444",
     });
-    stockOneLineSeries.setData(stockOneValueSeries);
-    stockTwoLineSeries.setData(stockTwoValueSeries);
+    stockOneLineSeries.setData(stockOnePercentageSeries);
+    stockTwoLineSeries.setData(stockTwoPercentageSeries);
     chart.timeScale().fitContent();
 
     // Legend creation
@@ -134,49 +136,56 @@ export function Chart({ data }: ChartProps): JSX.Element {
 
     const createLegendItem = (
       symbol: string,
-      latestValue: number,
+      latestPercentageValue: number,
       bulletClass: string,
     ): HTMLLIElement => {
       const listItem = document.createElement("li");
       listItem.className = `${styles.legendItem} ${bulletClass}`;
-      const percentageChange = ((latestValue / 10000 - 1) * 100).toFixed(2);
-      listItem.innerHTML = `${symbol}：$${latestValue.toFixed(2)}（${percentageChange}%）`;
+      const scaledValueEquivalent = (1 + latestPercentageValue / 100) * 10000;
+      listItem.innerHTML = `${symbol}：$${scaledValueEquivalent.toFixed(2)} (${latestPercentageValue.toFixed(2)}%)`;
       return listItem;
     };
 
-    const latestStockOneValue =
-      stockOneValueSeries[stockOneValueSeries.length - 1].value;
-    const latestStockTwoValue =
-      stockTwoValueSeries[stockTwoValueSeries.length - 1].value;
+    const latestStockOnePercentageValue =
+      stockOnePercentageSeries[stockOnePercentageSeries.length - 1].value;
+
+    const latestStockTwoPercentageValue =
+      stockTwoPercentageSeries[stockTwoPercentageSeries.length - 1].value;
+
     const stockOneLegendItem = createLegendItem(
       data.stockOne.symbol,
-      latestStockOneValue,
+      latestStockOnePercentageValue,
       styles.blueBullet,
     );
     const stockTwoLegendItem = createLegendItem(
       data.stockTwo.symbol,
-      latestStockTwoValue,
+      latestStockTwoPercentageValue,
       styles.redBullet,
     );
     legendContainer.append(stockOneLegendItem, stockTwoLegendItem);
 
     // Crosshair move handler
     const handleCrosshairMove = (params: MouseEventParams): void => {
-      if (!params.time) {
-        stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${latestStockOneValue.toFixed(2)}（${((latestStockOneValue / 10000 - 1) * 100).toFixed(2)}%）`;
-        stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${latestStockTwoValue.toFixed(2)}（${((latestStockTwoValue / 10000 - 1) * 100).toFixed(2)}%）`;
-        return;
+      let currentStockOnePerc = latestStockOnePercentageValue;
+      let currentStockTwoPerc = latestStockTwoPercentageValue;
+
+      if (params.time) {
+        const pointOne = params.seriesData.get(stockOneLineSeries) as
+          | ProcessedPoint
+          | undefined;
+        const pointTwo = params.seriesData.get(stockTwoLineSeries) as
+          | ProcessedPoint
+          | undefined;
+
+        if (pointOne?.value !== undefined) currentStockOnePerc = pointOne.value;
+        if (pointTwo?.value !== undefined) currentStockTwoPerc = pointTwo.value;
       }
-      const pointOne = params.seriesData.get(stockOneLineSeries) as
-        | ProcessedPoint
-        | undefined;
-      const pointTwo = params.seriesData.get(stockTwoLineSeries) as
-        | ProcessedPoint
-        | undefined;
-      const currentStockOneValue = pointOne?.value ?? latestStockOneValue;
-      const currentStockTwoValue = pointTwo?.value ?? latestStockTwoValue;
-      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${currentStockOneValue.toFixed(2)}（${((currentStockOneValue / 10000 - 1) * 100).toFixed(2)}%）`;
-      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${currentStockTwoValue.toFixed(2)}（${((currentStockTwoValue / 10000 - 1) * 100).toFixed(2)}%）`;
+
+      const stockOneScaledEquiv = (1 + currentStockOnePerc / 100) * 10000;
+      const stockTwoScaledEquiv = (1 + currentStockTwoPerc / 100) * 10000;
+
+      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneScaledEquiv.toFixed(2)} (${currentStockOnePerc.toFixed(2)}%)`;
+      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoScaledEquiv.toFixed(2)} (${currentStockTwoPerc.toFixed(2)}%)`;
     };
     chart.subscribeCrosshairMove(handleCrosshairMove);
 

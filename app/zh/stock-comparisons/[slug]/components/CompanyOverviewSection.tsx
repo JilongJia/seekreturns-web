@@ -18,28 +18,30 @@ function generateMarketCapComparisonCommentary(
   stockTwoMarketCap: number,
   stockTwoCurrency: string,
 ): string {
-  const marketCapRatio = stockOneMarketCap / stockTwoMarketCap;
-  const stockOneFormattedMarketCap = (
-    stockOneMarketCap / 100000000
-  ).toLocaleString("zh", {
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const marketCapOne = (stockOneMarketCap / 1e8).toLocaleString("zh-CN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const stockTwoFormattedMarketCap = (
-    stockTwoMarketCap / 100000000
-  ).toLocaleString("zh", {
+  const marketCapTwo = (stockTwoMarketCap / 1e8).toLocaleString("zh-CN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const currencyOne = stockOneCurrency;
+  const currencyTwo = stockTwoCurrency;
+  const ratio = stockOneMarketCap / stockTwoMarketCap;
 
-  if (marketCapRatio > 1.5) {
-    return `${stockOneSymbol} 的市值为 ${stockOneFormattedMarketCap} 亿 ${stockOneCurrency}，高于 ${stockTwoSymbol}，约为 ${stockTwoSymbol}（${stockTwoFormattedMarketCap} 亿 ${stockTwoCurrency}）的 ${marketCapRatio.toFixed(2)} 倍。`;
-  } else if (marketCapRatio < 0.67) {
-    const inverseRatio = 1 / marketCapRatio;
-    return `${stockTwoSymbol} 的市值为 ${stockTwoFormattedMarketCap} 亿 ${stockTwoCurrency}，高于 ${stockOneSymbol}，约为 ${stockOneSymbol}（${stockOneFormattedMarketCap} 亿 ${stockOneCurrency}）的 ${inverseRatio.toFixed(2)} 倍。`;
-  } else {
-    return `${stockOneSymbol}（${stockOneFormattedMarketCap} 亿 ${stockOneCurrency}）与 ${stockTwoSymbol}（${stockTwoFormattedMarketCap} 亿 ${stockTwoCurrency}）的市值差距较小。`;
+  if (ratio > 1.5) {
+    return `${symbolOne} 在市值上占据主导地位，其市值为 ${marketCapOne} 亿 ${currencyOne}，显著超过 ${symbolTwo} 的 ${marketCapTwo} 亿 ${currencyTwo}，大约是其 ${ratio.toFixed(2)} 倍。`;
   }
+
+  if (ratio < 0.67) {
+    const inverseRatio = (1 / ratio).toFixed(2);
+    return `${symbolTwo} 的市值更为突出，为 ${marketCapTwo} 亿 ${currencyTwo}，大约是 ${symbolOne} (${marketCapOne} 亿 ${currencyOne}) 市值的 ${inverseRatio} 倍。`;
+  }
+
+  return `${symbolOne} 的市值为 ${marketCapOne} 亿 ${currencyOne}，${symbolTwo} 的市值为 ${marketCapTwo} 亿 ${currencyTwo}，两者市值大致相当。`;
 }
 
 function generateBetaComparisonCommentary(
@@ -48,14 +50,21 @@ function generateBetaComparisonCommentary(
   stockTwoSymbol: string,
   stockTwoBeta: number,
 ): string {
-  const betaRatio = stockOneBeta / stockTwoBeta;
-  if (betaRatio > 1.5) {
-    return `${stockOneSymbol} 的 beta 值为 ${stockOneBeta.toFixed(2)}，显示出较高的市场波动性，相比之下，${stockTwoSymbol} 的 ${stockTwoBeta.toFixed(2)} 更为平稳。`;
-  } else if (betaRatio < 0.67) {
-    return `${stockTwoSymbol} 的 beta 值为 ${stockTwoBeta.toFixed(2)}，波动性较高，而 ${stockOneSymbol} 的 ${stockOneBeta.toFixed(2)} 则相对稳定。`;
-  } else {
-    return `${stockOneSymbol} 的 beta 值为 ${stockOneBeta.toFixed(2)} 与 ${stockTwoSymbol} 的 ${stockTwoBeta.toFixed(2)} 接近，两者的市场波动性差异不大。`;
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const betaOne = stockOneBeta.toFixed(2);
+  const betaTwo = stockTwoBeta.toFixed(2);
+  const ratio = stockOneBeta / stockTwoBeta;
+
+  if (ratio > 1.5) {
+    return `${symbolOne} 的 Beta 值 (${betaOne}) 表明其预期市场波动远大于 ${symbolTwo} 更为平稳的 Beta 值 (${betaTwo})，这意味着其潜在的上涨和下跌空间都可能更大。`;
   }
+
+  if (ratio < 0.67) {
+    return `${symbolTwo} 的 Beta 值 (${betaTwo}) 更高，表明其对市场变动更为敏感，而 ${symbolOne} (Beta ${betaOne}) 则表现相对更稳定。`;
+  }
+
+  return `${symbolOne} 的 Beta 值 (${betaOne}) 与 ${symbolTwo} 的 Beta 值 (${betaTwo}) 相近，表明两者相对于市场的波动性特征相似。`;
 }
 
 function generateAdrCommentary(
@@ -64,15 +73,24 @@ function generateAdrCommentary(
   stockTwoSymbol: string,
   stockTwoIsAdr: boolean,
 ): string {
-  if (stockOneIsAdr && stockTwoIsAdr) {
-    return `${stockOneSymbol} 和 ${stockTwoSymbol} 均以 ADR 形式在美国上市，代表海外企业进入美国市场。`;
-  } else if (stockOneIsAdr) {
-    return `${stockOneSymbol} 以 ADR 形式在美国上市，属于海外公司，而 ${stockTwoSymbol} 为美国本土企业。`;
-  } else if (stockTwoIsAdr) {
-    return `${stockTwoSymbol} 以 ADR 形式在美国上市，来自海外市场，而 ${stockOneSymbol} 为美国本地公司。`;
-  } else {
-    return "";
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const isAdrOne = stockOneIsAdr;
+  const isAdrTwo = stockTwoIsAdr;
+
+  if (isAdrOne && isAdrTwo) {
+    return `${symbolOne} 和 ${symbolTwo} 均为美国存托凭证 (ADR) — 这为美国投资者提供了便捷的途径来投资这两家外国公司的股票，而无需直接在海外交易所交易。`;
   }
+
+  if (isAdrOne && !isAdrTwo) {
+    return `${symbolOne} 作为 ADR 交易，为美国投资者提供了投资其外国股票的简单途径，而 ${symbolTwo} 则是标准的美国国内上市公司。`;
+  }
+
+  if (!isAdrOne && isAdrTwo) {
+    return `${symbolTwo} 是一种 ADR，使美国购买者可以直接投资其非美国业务；不同于 ${symbolOne}，后者为纯粹的美国国内公司。`;
+  }
+
+  return "";
 }
 
 export async function CompanyOverviewSection({
@@ -176,30 +194,28 @@ export async function CompanyOverviewSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">市值</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {(stockOneProfileData.marketCap / 100000000).toLocaleString(
-                "zh",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                },
-              )}{" "}
+              {(stockOneProfileData.marketCap / 1e8).toLocaleString("zh", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
               亿 {stockOneProfileData.currency}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {(stockTwoProfileData.marketCap / 100000000).toLocaleString(
-                "zh",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                },
-              )}{" "}
+              {(stockTwoProfileData.marketCap / 1e8).toLocaleString("zh", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
               亿 {stockTwoProfileData.currency}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">贝塔值 (波动性)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>{stockOneProfileData.beta}</Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>{stockTwoProfileData.beta}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>
+              {stockOneProfileData.beta.toFixed(2)}
+            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>
+              {stockTwoProfileData.beta.toFixed(2)}
+            </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">交易所</Table.Tbody.Tr.Th>

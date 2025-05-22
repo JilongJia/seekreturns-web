@@ -18,28 +18,30 @@ function generateMarketCapComparisonCommentary(
   stockTwoMarketCap: number,
   stockTwoCurrency: string,
 ): string {
-  const marketCapRatio = stockOneMarketCap / stockTwoMarketCap;
-  const stockOneFormattedMarketCap = (
-    stockOneMarketCap / 1000000000
-  ).toLocaleString("en", {
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const marketCapOne = (stockOneMarketCap / 1e9).toLocaleString("en", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  const stockTwoFormattedMarketCap = (
-    stockTwoMarketCap / 1000000000
-  ).toLocaleString("en", {
+  const marketCapTwo = (stockTwoMarketCap / 1e9).toLocaleString("en", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const currencyOne = stockOneCurrency;
+  const currencyTwo = stockTwoCurrency;
+  const ratio = stockOneMarketCap / stockTwoMarketCap;
 
-  if (marketCapRatio > 1.5) {
-    return `${stockOneSymbol} dwarfs ${stockTwoSymbol} in market cap, clocking in at ${stockOneFormattedMarketCap} billion ${stockOneCurrency}—about ${marketCapRatio.toFixed(2)} times the ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency} of its counterpart.`;
-  } else if (marketCapRatio < 0.67) {
-    const inverseRatio = 1 / marketCapRatio;
-    return `${stockTwoSymbol} towers over ${stockOneSymbol} with a market cap of ${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}, roughly ${inverseRatio.toFixed(2)} times the ${stockOneFormattedMarketCap} billion ${stockOneCurrency} of its peer.`;
-  } else {
-    return `${stockOneSymbol} (${stockOneFormattedMarketCap} billion ${stockOneCurrency}) and ${stockTwoSymbol} (${stockTwoFormattedMarketCap} billion ${stockTwoCurrency}) sit neck-and-neck in market cap terms.`;
+  if (ratio > 1.5) {
+    return `${symbolOne} dominates in value with a market cap of ${marketCapOne} billion ${currencyOne}, eclipsing ${symbolTwo}’s ${marketCapTwo} billion ${currencyTwo} by roughly ${ratio.toFixed(2)}×.`;
   }
+
+  if (ratio < 0.67) {
+    const inverseRatio = (1 / ratio).toFixed(2);
+    return `${symbolTwo} stands out with ${marketCapTwo} billion ${currencyTwo} in market value—about ${inverseRatio}× ${symbolOne}’s market cap of ${marketCapOne} billion ${currencyOne}.`;
+  }
+
+  return `With ${symbolOne} at ${marketCapOne} billion ${currencyOne} and ${symbolTwo} at ${marketCapTwo} billion ${currencyTwo}, their market capitalizations sit in the same ballpark.`;
 }
 
 function generateBetaComparisonCommentary(
@@ -48,14 +50,21 @@ function generateBetaComparisonCommentary(
   stockTwoSymbol: string,
   stockTwoBeta: number,
 ): string {
-  const betaRatio = stockOneBeta / stockTwoBeta;
-  if (betaRatio > 1.5) {
-    return `${stockOneSymbol} rides a wilder wave with a beta of ${stockOneBeta.toFixed(2)}, hinting at bigger swings than ${stockTwoSymbol}’s steadier ${stockTwoBeta.toFixed(2)}.`;
-  } else if (betaRatio < 0.67) {
-    return `${stockTwoSymbol} dances to a riskier tune, sporting a beta of ${stockTwoBeta.toFixed(2)}, while ${stockOneSymbol} keeps it calmer at ${stockOneBeta.toFixed(2)}.`;
-  } else {
-    return `${stockOneSymbol} at ${stockOneBeta.toFixed(2)} and ${stockTwoSymbol} at ${stockTwoBeta.toFixed(2)} move in sync when it comes to market volatility.`;
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const betaOne = stockOneBeta.toFixed(2);
+  const betaTwo = stockTwoBeta.toFixed(2);
+  const ratio = stockOneBeta / stockTwoBeta;
+
+  if (ratio > 1.5) {
+    return `${symbolOne}’s beta of ${betaOne} points to much larger expected swings compared to ${symbolTwo}’s calmer ${betaTwo}, suggesting both higher upside and downside potential.`;
   }
+
+  if (ratio < 0.67) {
+    return `${symbolTwo} carries a higher beta at ${betaTwo}, indicating it’s more sensitive to market moves, while ${symbolOne} remains steadier at ${betaOne}.`;
+  }
+
+  return `With betas of ${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}, both show similar volatility profiles relative to the overall market.`;
 }
 
 function generateAdrCommentary(
@@ -64,15 +73,24 @@ function generateAdrCommentary(
   stockTwoSymbol: string,
   stockTwoIsAdr: boolean,
 ): string {
-  if (stockOneIsAdr && stockTwoIsAdr) {
-    return `Heads up: ${stockOneSymbol} and ${stockTwoSymbol} both roll as ADRs, bridging foreign companies to U.S. markets for a taste of global exposure.`;
-  } else if (stockOneIsAdr) {
-    return `Worth noting: ${stockOneSymbol} flies the ADR flag, tying it to a foreign outfit on U.S. soil, while ${stockTwoSymbol} sticks to plain-vanilla U.S. listing.`;
-  } else if (stockTwoIsAdr) {
-    return `Quick note: ${stockTwoSymbol} sports an ADR tag, marking it as a foreign player on U.S. exchanges, unlike the homegrown ${stockOneSymbol}.`;
-  } else {
-    return "";
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const isAdrOne = stockOneIsAdr;
+  const isAdrTwo = stockTwoIsAdr;
+
+  if (isAdrOne && isAdrTwo) {
+    return `${symbolOne} and ${symbolTwo} are both ADRs—easy access for U.S. investors to foreign shares without dealing with overseas exchanges.`;
   }
+
+  if (isAdrOne && !isAdrTwo) {
+    return `${symbolOne} trades as an ADR, giving U.S. investors a simple on-ramp to its foreign shares, while ${symbolTwo} remains a standard domestic listing.`;
+  }
+
+  if (!isAdrOne && isAdrTwo) {
+    return `${symbolTwo} is an ADR, letting U.S. buyers tap its non-U.S. business directly, unlike ${symbolOne}, which is purely domestic.`;
+  }
+
+  return "";
 }
 
 export async function CompanyOverviewSection({
@@ -176,30 +194,28 @@ export async function CompanyOverviewSection({
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Market Cap</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {(stockOneProfileData.marketCap / 1000000000).toLocaleString(
-                "en",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                },
-              )}{" "}
+              {(stockOneProfileData.marketCap / 1e9).toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
               billion {stockOneProfileData.currency}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {(stockTwoProfileData.marketCap / 1000000000).toLocaleString(
-                "en",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                },
-              )}{" "}
+              {(stockTwoProfileData.marketCap / 1e9).toLocaleString("en", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
               billion {stockTwoProfileData.currency}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Beta</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>{stockOneProfileData.beta}</Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>{stockTwoProfileData.beta}</Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>
+              {stockOneProfileData.beta.toFixed(2)}
+            </Table.Tbody.Tr.Td>
+            <Table.Tbody.Tr.Td>
+              {stockTwoProfileData.beta.toFixed(2)}
+            </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Exchange</Table.Tbody.Tr.Th>

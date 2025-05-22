@@ -43,7 +43,7 @@ export async function PerformanceComparisonSection({
         下图展示了 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
         过去一年的历史表现，假设初始投资均为 1 万美元，以比较其投资回报表现。
       </P>
-      <P>将鼠标悬停在图表曲线上，可查看某日的投资价值和总回报率（%）。</P>
+      <P>将鼠标悬停在图表曲线上，可查看某日的投资价值和总回报率 (%)。</P>
       <P>数据已根据股息和股票拆分进行调整。</P>
       <Chart
         data={{

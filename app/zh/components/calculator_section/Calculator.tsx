@@ -51,7 +51,7 @@ export function Calculator({ className }: CalculatorProps) {
 
   return (
     <Section className={className}>
-      <ScreenReaderH2>投资回报率（ROI）计算器</ScreenReaderH2>
+      <ScreenReaderH2>投资回报率 (ROI) 计算器</ScreenReaderH2>
       <Form>
         <InputCard className={styles.inputCard}>
           <InputCard.Label htmlFor="initial-investment-number-input">
@@ -82,7 +82,7 @@ export function Calculator({ className }: CalculatorProps) {
         {roi && (
           <OutputCard>
             <OutputCard.Label htmlFor="roi-output">
-              投资回报率（ROI）：
+              投资回报率 (ROI)：
             </OutputCard.Label>
             <OutputCard.Output
               id="roi-output"

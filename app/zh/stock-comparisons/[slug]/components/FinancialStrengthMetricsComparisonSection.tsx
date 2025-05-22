@@ -26,30 +26,23 @@ function generateCurrentRatioCommentary(
   ): CurrentRatioCategory =>
     currentRatio < CURRENT_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
-  const stockOneCurrentRatioCategory =
-    getCurrentRatioCategory(stockOneCurrentRatio);
-  const stockTwoCurrentRatioCategory =
-    getCurrentRatioCategory(stockTwoCurrentRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const currentRatioOne = stockOneCurrentRatio.toFixed(2);
+  const currentRatioTwo = stockTwoCurrentRatio.toFixed(2);
+  const categoryOne = getCurrentRatioCategory(stockOneCurrentRatio);
+  const categoryTwo = getCurrentRatioCategory(stockTwoCurrentRatio);
 
-  if (
-    stockOneCurrentRatioCategory === "Low" &&
-    stockTwoCurrentRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} (${stockOneCurrentRatio.toFixed(2)}) 和 ${stockTwoSymbol} (${stockTwoCurrentRatio.toFixed(2)}) 的流动比率均低于 1，流动资产不足以覆盖短期债务，需依赖现金流或外部融资支持。这在某些行业较为常见，但若现金流紧张，则需谨慎管理。`;
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `鉴于 ${symbolOne} 的流动比率为 ${currentRatioOne}，${symbolTwo} 的流动比率为 ${currentRatioTwo}，两者的流动资产均低于短期负债。这可能导致其营运资金紧张，并迫使它们依赖额外融资。`;
   }
 
-  if (
-    stockOneCurrentRatioCategory === "Low" &&
-    stockTwoCurrentRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的流动比率仅为 ${stockOneCurrentRatio.toFixed(2)}，低于 1，流动资产不足以偿还短期债务，需依赖较强的现金流支撑。而 ${stockTwoSymbol} 的 ${stockTwoCurrentRatio.toFixed(2)} 则能充分覆盖短期债务。`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne} 的流动比率 ${currentRatioOne} 暗示可能存在流动性压力，而 ${symbolTwo} 的流动比率 ${currentRatioTwo} 则显示其能从容覆盖短期债务。`;
   }
 
-  if (
-    stockOneCurrentRatioCategory === "Normal" &&
-    stockTwoCurrentRatioCategory === "Low"
-  ) {
-    return `${stockTwoSymbol} 的流动比率仅为 ${stockTwoCurrentRatio.toFixed(2)}，低于 1，流动资产无法覆盖短期债务，需依靠现金流维持。而 ${stockOneSymbol} 的 ${stockOneCurrentRatio.toFixed(2)} 足以偿还短期债务。`;
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo} 的流动比率 ${currentRatioTwo} 表明其资产可能不足以覆盖近期债务，相较而言，${symbolOne} (流动比率 ${currentRatioOne}) 维持着较为健康的流动性。`;
   }
 
   return "";
@@ -65,31 +58,26 @@ function generateQuickRatioCommentary(
 
   type QuickRatioCategory = "Low" | "Normal";
 
-  const getQuickRatioCategory = (quickRatio: number): QuickRatioCategory =>
-    quickRatio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
+  const getQuickRatioCategory = (ratio: number): QuickRatioCategory =>
+    ratio < QUICK_RATIO_THRESHOLD_LOW ? "Low" : "Normal";
 
-  const stockOneQuickRatioCategory = getQuickRatioCategory(stockOneQuickRatio);
-  const stockTwoQuickRatioCategory = getQuickRatioCategory(stockTwoQuickRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const quickRatioOne = stockOneQuickRatio.toFixed(2);
+  const quickRatioTwo = stockTwoQuickRatio.toFixed(2);
+  const categoryOne = getQuickRatioCategory(stockOneQuickRatio);
+  const categoryTwo = getQuickRatioCategory(stockTwoQuickRatio);
 
-  if (
-    stockOneQuickRatioCategory === "Low" &&
-    stockTwoQuickRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} (${stockOneQuickRatio.toFixed(2)}) 和 ${stockTwoSymbol} (${stockTwoQuickRatio.toFixed(2)}) 的速动比率均低于 0.8，去除库存后流动资产不足以偿还债务，需依赖销售收入或融资支持。只要现金流稳定，通常问题不大。`;
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `${symbolOne} (速动比率 ${quickRatioOne}) 和 ${symbolTwo} (速动比率 ${quickRatioTwo}) 的速动比率均低于 ${QUICK_RATIO_THRESHOLD_LOW}，这意味着他们最具流动性的资产 (不包括存货) 不足以应付短期债务。这可能迫使他们依赖应收账款、存货周转或外部融资。`;
   }
 
-  if (
-    stockOneQuickRatioCategory === "Low" &&
-    stockTwoQuickRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的速动比率仅为 ${stockOneQuickRatio.toFixed(2)}，低于 0.8，现金类资产不足以覆盖短期债务，若缺乏额外资金来源可能面临压力。而 ${stockTwoSymbol} 的 ${stockTwoQuickRatio.toFixed(2)} 显示其流动性较为充足。`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne} 的速动比率 ${quickRatioOne} 表明，其可能难以在不出售存货或筹集现金的情况下覆盖即期负债，而 ${symbolTwo} (速动比率 ${quickRatioTwo}) 则维持着较为充裕的流动资产缓冲。`;
   }
 
-  if (
-    stockOneQuickRatioCategory === "Normal" &&
-    stockTwoQuickRatioCategory === "Low"
-  ) {
-    return `${stockTwoSymbol} 的速动比率仅为 ${stockTwoQuickRatio.toFixed(2)}，低于 0.8，去除库存后流动资产不足以偿还债务，需依赖现金流支持。而 ${stockOneSymbol} 的 ${stockOneQuickRatio.toFixed(2)} 能够较好地应对短期支出。`;
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo} 的速动比率 ${quickRatioTwo} 表明其以最具流动性的资产来覆盖短期债务的能力有限 — 而 ${symbolOne} (速动比率 ${quickRatioOne}) 则展现出更强的流动性韧性。`;
   }
 
   return "";
@@ -107,75 +95,47 @@ function generateDebtToEquityRatioCommentary(
   type DebtToEquityRatioCategory = "Negative" | "High" | "Normal";
 
   const getDebtToEquityRatioCategory = (
-    debtToEquityRatio: number,
+    ratio: number,
   ): DebtToEquityRatioCategory => {
-    if (debtToEquityRatio < DEBT_TO_EQUITY_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    if (debtToEquityRatio > DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH) return "High";
+    if (ratio < DEBT_TO_EQUITY_RATIO_THRESHOLD_NEGATIVE) return "Negative";
+    if (ratio > DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH) return "High";
     return "Normal";
   };
 
-  const stockOneDebtToEquityRatioCategory = getDebtToEquityRatioCategory(
-    stockOneDebtToEquityRatio,
-  );
-  const stockTwoDebtToEquityRatioCategory = getDebtToEquityRatioCategory(
-    stockTwoDebtToEquityRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const debtToEquityRatioOne = stockOneDebtToEquityRatio.toFixed(2);
+  const debtToEquityRatioTwo = stockTwoDebtToEquityRatio.toFixed(2);
+  const categoryOne = getDebtToEquityRatioCategory(stockOneDebtToEquityRatio);
+  const categoryTwo = getDebtToEquityRatioCategory(stockTwoDebtToEquityRatio);
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoDebtToEquityRatio.toFixed(2)}，均为负值，表明股东权益为负，可能是持续亏损或大规模回购所致。部分公司可能有意为之，但需关注其长期稳定性。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} (D/E ${debtToEquityRatioOne}) 和 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 均呈现负股东权益 — 其资产低于负债 — 表明两者均存在严重的资产负债表压力。`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} 的 D/E 高达 ${stockOneDebtToEquityRatio.toFixed(2)}，${stockTwoSymbol} 达 ${stockTwoDebtToEquityRatio.toFixed(2)}，均超过 3.0，显示债务水平较高。若利率上升或经济环境恶化，可能面临较大风险。`;
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `${symbolOne} 和 ${symbolTwo} 的 D/E 比率均高于 ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH.toFixed(1)} (分别为 ${debtToEquityRatioOne} 和 ${debtToEquityRatioTwo})，反映了其积极利用债务杠杆。这既可能放大收益，但也增加了在利率上升时的脆弱性。`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，负值表明股东权益为负，可能由持续亏损或回购引起。而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 超过 3.0，债务负担较重，存在一定风险。`;
+  if (categoryOne === "Negative" && categoryTwo === "High") {
+    return `${symbolOne} 显示为负股东权益 (D/E ${debtToEquityRatioOne})，而 ${symbolTwo} 则杠杆率过高 (D/E ${debtToEquityRatioTwo})，两者揭示了不同类型的资产负债表风险。`;
+  }
+  if (categoryOne === "High" && categoryTwo === "Negative") {
+    return `${symbolOne} 杠杆率较高 (D/E ${debtToEquityRatioOne})，而 ${symbolTwo} 则为负股东权益 (D/E ${debtToEquityRatioTwo})，两者均体现了显著的资本结构问题。`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的 D/E 达 ${stockOneDebtToEquityRatio.toFixed(2)}，超过 3.0，债务水平较高，风险值得关注；而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 为负值，股东权益为负，可能源于亏损或回购。`;
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} 的股东权益为负 (D/E ${debtToEquityRatioOne})，这是一个异常的警示信号；而 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 则维持着常规的债务股本平衡。`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} 的股东权益为负 (D/E ${debtToEquityRatioTwo})，可能意味着资产不足；相较而言，${symbolOne} (D/E ${debtToEquityRatioOne}) 保持着更健康的股东权益覆盖水平。`;
   }
 
-  if (
-    stockOneDebtToEquityRatioCategory === "Negative" &&
-    stockTwoDebtToEquityRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的 D/E 为 ${stockOneDebtToEquityRatio.toFixed(2)}，负值表明股东权益为负，可能因长期亏损或回购导致。而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 处于合理范围，较为稳健。`;
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne} 杠杆率较高 (D/E ${debtToEquityRatioOne})，这可能提高回报，但若借贷成本上升则会增加风险；而 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 的杠杆保持在更温和的水平。`;
   }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "Normal" &&
-    stockTwoDebtToEquityRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} 的 D/E 为 ${stockTwoDebtToEquityRatio.toFixed(2)}，负值显示股东权益为负，可能由亏损或回购引起；而 ${stockOneSymbol} 的 ${stockOneDebtToEquityRatio.toFixed(2)} 保持在稳健水平。`;
-  }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "High" &&
-    stockTwoDebtToEquityRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的 D/E 高达 ${stockOneDebtToEquityRatio.toFixed(2)}，超过 3.0，债务负担较重，风险相对较高；而 ${stockTwoSymbol} 的 ${stockTwoDebtToEquityRatio.toFixed(2)} 控制在合理范围。`;
-  }
-
-  if (
-    stockOneDebtToEquityRatioCategory === "Normal" &&
-    stockTwoDebtToEquityRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol} 的 D/E 达 ${stockTwoDebtToEquityRatio.toFixed(2)}，超过 3.0，债务水平较高，抗风险能力可能较弱；而 ${stockOneSymbol} 的 ${stockOneDebtToEquityRatio.toFixed(2)} 较为稳健。`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} 的杠杆率很高 (D/E ${debtToEquityRatioTwo})，同时推高了潜在收益和风险；相比之下，${symbolOne} (D/E ${debtToEquityRatioOne}) 维持着更稳健的资本结构。`;
   }
 
   return "";
@@ -192,36 +152,27 @@ function generateDebtToAssetsRatioCommentary(
   type DebtToAssetsRatioCategory = "High" | "Normal";
 
   const getDebtToAssetsRatioCategory = (
-    debtToAssetsRatio: number,
+    ratio: number,
   ): DebtToAssetsRatioCategory =>
-    debtToAssetsRatio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
+    ratio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
 
-  const stockOneDebtToAssetsRatioCategory = getDebtToAssetsRatioCategory(
-    stockOneDebtToAssetsRatio,
-  );
-  const stockTwoDebtToAssetsRatioCategory = getDebtToAssetsRatioCategory(
-    stockTwoDebtToAssetsRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const debtToAssetsRatioOne = stockOneDebtToAssetsRatio.toFixed(2);
+  const debtToAssetsRatioTwo = stockTwoDebtToAssetsRatio.toFixed(2);
+  const categoryOne = getDebtToAssetsRatioCategory(stockOneDebtToAssetsRatio);
+  const categoryTwo = getDebtToAssetsRatioCategory(stockTwoDebtToAssetsRatio);
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "High" &&
-    stockTwoDebtToAssetsRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} 的 D/A 为 ${stockOneDebtToAssetsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoDebtToAssetsRatio.toFixed(2)}，均超过 0.8，资产中债务占比过高。若资产价值波动或利率上升，可能带来一定风险，这在重资产行业中较为常见。`;
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `由于债务资金占总资产比例均超过80% (${symbolOne} 为 ${debtToAssetsRatioOne}，${symbolTwo} 为 ${debtToAssetsRatioTwo})，两家公司都运用了高杠杆。这既可能提高回报，但也增加了在资产价值下跌或借贷成本攀升时的风险。`;
   }
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "High" &&
-    stockTwoDebtToAssetsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的 D/A 高达 ${stockOneDebtToAssetsRatio.toFixed(2)}，超过 0.8，资产主要依赖债务支持，市场波动可能带来压力。而 ${stockTwoSymbol} 的 ${stockTwoDebtToAssetsRatio.toFixed(2)} 较低，财务结构更稳健。`;
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne} 的负债占资产比率 ${debtToAssetsRatioOne} 表明其严重依赖债务来支持资产 — 这在经济下行时可能具有风险 — 而 ${symbolTwo} (比率 ${debtToAssetsRatioTwo}) 则将借贷保持在更温和的水平。`;
   }
 
-  if (
-    stockOneDebtToAssetsRatioCategory === "Normal" &&
-    stockTwoDebtToAssetsRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol} 的 D/A 达 ${stockTwoDebtToAssetsRatio.toFixed(2)}，超过 0.8，债务占资产比例较高，市场下行时可能承压。而 ${stockOneSymbol} 的 ${stockOneDebtToAssetsRatio.toFixed(2)} 较低，风险相对较小。`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} 的负债占资产比率 ${debtToAssetsRatioTwo} 显示其资产主要通过债务融资，而 ${symbolOne} (比率 ${debtToAssetsRatioOne}) 则选择了更为保守的融资结构。`;
   }
 
   return "";
@@ -233,80 +184,81 @@ function generateInterestCoverageRatioCommentary(
   stockTwoSymbol: string,
   stockTwoInterestCoverageRatio: number,
 ): string {
-  const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1.5;
+  const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1;
   const INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO = 0;
 
-  type InterestCoverageRatioCategory = "Low" | "Zero" | "Normal";
+  type InterestCoverageRatioCategory = "Negative" | "Zero" | "Low" | "Normal";
 
   const getInterestCoverageRatioCategory = (
-    interestCoverageRatio: number,
+    ratio: number,
   ): InterestCoverageRatioCategory => {
-    if (interestCoverageRatio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO)
-      return "Zero";
-    if (interestCoverageRatio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW)
-      return "Low";
+    if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Negative";
+    if (ratio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Zero";
+    if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW) return "Low";
     return "Normal";
   };
 
-  const stockOneInterestCoverageRatioCategory =
-    getInterestCoverageRatioCategory(stockOneInterestCoverageRatio);
-  const stockTwoInterestCoverageRatioCategory =
-    getInterestCoverageRatioCategory(stockTwoInterestCoverageRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const interestCoverageRatioOne = stockOneInterestCoverageRatio.toFixed(2);
+  const interestCoverageRatioTwo = stockTwoInterestCoverageRatio.toFixed(2);
+  const categoryOne = getInterestCoverageRatioCategory(
+    stockOneInterestCoverageRatio,
+  );
+  const categoryTwo = getInterestCoverageRatioCategory(
+    stockTwoInterestCoverageRatio,
+  );
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，${stockTwoSymbol} 也仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，均低于 1.5，利润仅能勉强覆盖利息，若盈利下滑，可能面临偿债压力。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} 和 ${symbolTwo} 的利息保障倍数均为负 (分别为 ${interestCoverageRatioOne} 和 ${interestCoverageRatioTwo})，意味着息税前利润 (EBIT) 为负 — 两者均无法覆盖利息支出，这是严重的偿付能力警告。`;
+  }
+  if (categoryOne === "Zero" && categoryTwo === "Zero") {
+    return `${symbolOne} 和 ${symbolTwo} 的利息保障倍数均为“--”，表明几乎没有利息支出 — 通常是债务可忽略不计的信号。`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Low") {
+    return `${symbolOne} (${interestCoverageRatioOne}) 和 ${symbolTwo} (${interestCoverageRatioTwo}) 的利息保障倍数均较低，意味着其营业利润不足以完全覆盖利息支出。这表明存在财务压力。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `${stockOneSymbol} 和 ${stockTwoSymbol} 的利息保障倍数均为 “--”，通常表明公司无有息债务或利息支出微乎其微，例如主要靠股权融资或债务成本极低。这种情况在低杠杆公司中常见。`;
+  if (categoryOne === "Negative" && categoryTwo === "Zero") {
+    return `${symbolOne} 的息税前利润 (EBIT) 为负 (利息保障倍数 ${interestCoverageRatioOne})，无法覆盖利息，而 ${symbolTwo} 显示为“--”(利息支出可忽略不计)。`;
+  }
+  if (categoryOne === "Zero" && categoryTwo === "Negative") {
+    return `${symbolOne} 的利息保障倍数显示为“--”(利息支出极少)，但 ${symbolTwo} 的利息保障倍数为负 (${interestCoverageRatioTwo})，预示着经营性亏损。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，低于 1.5，利润仅够支付利息，存在一定风险；而 ${stockTwoSymbol} 为 “--”，显示其几乎没有利息负担，可能因无有息借款或利率极低，财务压力很小。`;
+  if (categoryOne === "Negative" && categoryTwo === "Low") {
+    return `${symbolOne} 的利息保障倍数为负 (${interestCoverageRatioOne})，反映了经营亏损。${symbolTwo} (比率 ${interestCoverageRatioTwo}) 也面临困难，因为其营业利润无法覆盖利息支出。`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Negative") {
+    return `${symbolOne} (低利息保障倍数 ${interestCoverageRatioOne}) 的营业利润无法覆盖其利息支出，而 ${symbolTwo} 的息税前利润 (EBIT) 为负 (利息保障倍数 ${interestCoverageRatioTwo})。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockOneSymbol} 的利息保障倍数为 “--”，说明利息支出极低或不存在，通常依赖自有资金而非借贷，财务负担轻；而 ${stockTwoSymbol} 仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，低于 1.5，利润与利息支出接近，需关注盈利稳定性。`;
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `由于息税前利润 (EBIT) 为负 (${interestCoverageRatioOne})，${symbolOne} 无法支付其利息。而 ${symbolTwo} (利息保障倍数 ${interestCoverageRatioTwo}) 则能履行其付息义务。`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolOne} 能履行其付息义务 (利息保障倍数 ${interestCoverageRatioOne})。与此形成鲜明对比的是，${symbolTwo} 的负比率 (${interestCoverageRatioTwo}) 意味着其营业利润 (EBIT) 不足以覆盖基本运营成本，更不用说利息了，这预示着严重的财务困境。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Low" &&
-    stockTwoInterestCoverageRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的利息保障倍数仅为 ${stockOneInterestCoverageRatio.toFixed(2)}，低于 1.5，利润仅能覆盖利息，波动时可能承压。而 ${stockTwoSymbol} 的 ${stockTwoInterestCoverageRatio.toFixed(2)} 较为宽裕，偿债能力较强。`;
+  if (categoryOne === "Zero" && categoryTwo === "Low") {
+    return `${symbolOne} 显示为“--”的利息保障倍数 (表明利息成本极低)。然而，${symbolTwo} (比率 ${interestCoverageRatioTwo}) 并未产生足够的营业利润来支付其当前的利息。`;
+  }
+  if (categoryOne === "Low" && categoryTwo === "Zero") {
+    return `${symbolOne} (低利息保障倍数 ${interestCoverageRatioOne}) 未能从营业利润中覆盖其利息支出，而 ${symbolTwo} 则显示为“--”(利息支出极少)。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Normal" &&
-    stockTwoInterestCoverageRatioCategory === "Low"
-  ) {
-    return `${stockTwoSymbol} 的利息保障倍数仅为 ${stockTwoInterestCoverageRatio.toFixed(2)}，低于 1.5，利润与利息支出接近，收入波动可能带来风险；而 ${stockOneSymbol} 的 ${stockOneInterestCoverageRatio.toFixed(2)} 较为稳健。`;
+  if (categoryOne === "Low" && categoryTwo === "Normal") {
+    return `${symbolOne} 的低利息保障倍数 (${interestCoverageRatioOne}) 表明其收益无法覆盖利息。${symbolTwo} (比率 ${interestCoverageRatioTwo}) 则能履行其付息义务。`;
+  }
+  if (categoryOne === "Normal" && categoryTwo === "Low") {
+    return `${symbolTwo} 的低利息保障倍数 (${interestCoverageRatioTwo}) 意味着其无法从营业利润中覆盖利息。${symbolOne} (比率 ${interestCoverageRatioOne}) 则能履行其付息义务。`;
   }
 
-  if (
-    stockOneInterestCoverageRatioCategory === "Zero" &&
-    stockTwoInterestCoverageRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的利息保障倍数为 “--”，反映出极低的债务利息成本，通常无需支付显著利息，财务灵活性高；而 ${stockTwoSymbol} 的 ${stockTwoInterestCoverageRatio.toFixed(2)} 表现稳健，能轻松覆盖利息支出。`;
+  if (categoryOne === "Zero" && categoryTwo === "Normal") {
+    return `${symbolOne} 显示为“--”的利息保障倍数，暗示利息成本可忽略不计，而 ${symbolTwo} (比率 ${interestCoverageRatioTwo}) 能够覆盖其利息债务。`;
   }
-
-  if (
-    stockOneInterestCoverageRatioCategory === "Normal" &&
-    stockTwoInterestCoverageRatioCategory === "Zero"
-  ) {
-    return `${stockTwoSymbol} 的利息保障倍数为 “--”，表明几乎无须承担利息开支，可能因债务结构简单或无贷款，财务负担小；而 ${stockOneSymbol} 的 ${stockOneInterestCoverageRatio.toFixed(2)} 也显示出较强的偿债能力。`;
+  if (categoryOne === "Normal" && categoryTwo === "Zero") {
+    return `${symbolOne} (利息保障倍数 ${interestCoverageRatioOne}) 能够支付其利息，而 ${symbolTwo} 则显示为“--”(债务维护成本极低)。`;
   }
 
   return "";

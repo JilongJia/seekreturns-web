@@ -24,69 +24,51 @@ function generatePriceToEarningsRatioCommentary(
   type PriceToEarningsRatioCategory = "Negative" | "Normal" | "High";
 
   const getPriceToEarningsRatioCategory = (
-    priceToEarningsRatio: number,
+    ratio: number,
   ): PriceToEarningsRatioCategory => {
-    if (priceToEarningsRatio < PRICE_TO_EARNINGS_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    if (priceToEarningsRatio > PRICE_TO_EARNINGS_RATIO_THRESHOLD_HIGH)
-      return "High";
+    if (ratio < PRICE_TO_EARNINGS_RATIO_THRESHOLD_NEGATIVE) return "Negative";
+    if (ratio > PRICE_TO_EARNINGS_RATIO_THRESHOLD_HIGH) return "High";
     return "Normal";
   };
 
-  const stockOnePriceToEarningsRatioCategory = getPriceToEarningsRatioCategory(
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToEarningsRatioOne = stockOnePriceToEarningsRatio.toFixed(2);
+  const priceToEarningsRatioTwo = stockTwoPriceToEarningsRatio.toFixed(2);
+  const categoryOne = getPriceToEarningsRatioCategory(
     stockOnePriceToEarningsRatio,
   );
-  const stockTwoPriceToEarningsRatioCategory = getPriceToEarningsRatioCategory(
+  const categoryTwo = getPriceToEarningsRatioCategory(
     stockTwoPriceToEarningsRatio,
   );
 
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，均为负值，表明过去一年均未实现盈利。若持续如此，可能对财务稳定性构成挑战。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} 和 ${symbolTwo} 均未实现盈利 — 两者均为负市盈率 (分别为 ${priceToEarningsRatioOne} 和 ${priceToEarningsRatioTwo})，突显了持续亏损对其估值造成的压力。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，负值显示过去一年未盈利，股价缺乏利润支撑。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 表明其具备正收益，盈利能力较为稳健。`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} 的市盈率为负 (${priceToEarningsRatioOne})，反映了上一财年的净亏损，而 ${symbolTwo} (市盈率 ${priceToEarningsRatioTwo}) 则显示出健康的盈利状况。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Negative" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，负值表明过去一年未实现盈利。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 显著偏高，股价远超当前利润，反映市场对其未来增长的强烈预期。`;
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} 的市盈率为负 (${priceToEarningsRatioTwo})，凸显了年度亏损，而 ${symbolOne} (市盈率 ${priceToEarningsRatioOne}) 则展现了稳健的盈利能力。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Normal" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} 的市盈率为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，负值显示过去一年未盈利。而 ${stockOneSymbol} 的 ${stockOnePriceToEarningsRatio.toFixed(2)} 保持正收益，盈利基础较为稳固。`;
+
+  if (categoryOne === "Negative" && categoryTwo === "High") {
+    return `${symbolOne} 由于近期亏损，市盈率为负 (${priceToEarningsRatioOne})。相比之下，${symbolTwo} 拥有较高的市盈率倍数 (${priceToEarningsRatioTwo})，表明市场对其未来盈利增长抱有强烈信心，从而支撑这一高估值。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，远高于当前利润，显示市场对其未来高度看好。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 为负值，表明过去一年未实现盈利。`;
+  if (categoryOne === "High" && categoryTwo === "Negative") {
+    return `${symbolOne} 的市盈率颇高 (${priceToEarningsRatioOne})，暗示着强劲的增长预期；与此相反，${symbolTwo} 的负市盈率 (${priceToEarningsRatioTwo}) 则是由近期亏损所致。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，均显著偏高，股价远超当前利润，显示市场对两者未来增长的乐观预期。`;
+
+  if (categoryOne === "High" && categoryTwo === "High") {
+    return `${symbolOne} 和 ${symbolTwo} 的市盈率均超过 100 倍 (分别为 ${priceToEarningsRatioOne} 和 ${priceToEarningsRatioTwo})，反映出其股价已计入了高远增长的预期。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "High" &&
-    stockTwoPriceToEarningsRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的市盈率为 ${stockOnePriceToEarningsRatio.toFixed(2)}，明显高于当前利润，反映市场对其未来增长的强烈信心。而 ${stockTwoSymbol} 的 ${stockTwoPriceToEarningsRatio.toFixed(2)} 较为合理，与当前盈利水平更匹配。`;
+
+  if (categoryOne === "High" && categoryTwo === "Normal") {
+    return `${symbolOne} 以其较高的市盈率 (${priceToEarningsRatioOne}) 脱颖而出，而 ${symbolTwo} (市盈率 ${priceToEarningsRatioTwo}) 则处于更常规的市盈率区间。`;
   }
-  if (
-    stockOnePriceToEarningsRatioCategory === "Normal" &&
-    stockTwoPriceToEarningsRatioCategory === "High"
-  ) {
-    return `${stockTwoSymbol} 的市盈率为 ${stockTwoPriceToEarningsRatio.toFixed(2)}，远超当前利润，表明市场对其未来预期较高。而 ${stockOneSymbol} 的 ${stockOnePriceToEarningsRatio.toFixed(2)} 相对合理，与实际盈利较为一致。`;
+  if (categoryOne === "Normal" && categoryTwo === "High") {
+    return `${symbolTwo} 拥有较高的市盈率 (${priceToEarningsRatioTwo})，表明市场对其有强烈的增长预期；相较而言，${symbolOne} (市盈率 ${priceToEarningsRatioOne}) 的估值则更多地基于其当前盈利水平，更为标准。`;
   }
 
   return "";
@@ -103,37 +85,27 @@ function generateForwardPEGRatioCommentary(
   type ForwardPEGRatioCategory = "Negative" | "Normal";
 
   const getForwardPEGRatioCategory = (
-    forwardPEGRatio: number,
-  ): ForwardPEGRatioCategory => {
-    if (forwardPEGRatio < FORWARD_PEG_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): ForwardPEGRatioCategory =>
+    ratio < FORWARD_PEG_RATIO_THRESHOLD_NEGATIVE ? "Negative" : "Normal";
 
-  const stockOneForwardPEGRatioCategory = getForwardPEGRatioCategory(
-    stockOneForwardPEGRatio,
-  );
-  const stockTwoForwardPEGRatioCategory = getForwardPEGRatioCategory(
-    stockTwoForwardPEGRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const forwardPEGRatioOne = stockOneForwardPEGRatio.toFixed(2);
+  const forwardPEGRatioTwo = stockTwoForwardPEGRatio.toFixed(2);
+  const categoryOne = getForwardPEGRatioCategory(stockOneForwardPEGRatio);
+  const categoryTwo = getForwardPEGRatioCategory(stockTwoForwardPEGRatio);
 
-  if (
-    stockOneForwardPEGRatioCategory === "Negative" &&
-    stockTwoForwardPEGRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的前瞻 PEG 比率为 ${stockOneForwardPEGRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoForwardPEGRatio.toFixed(2)}，均为负值，表明分析师预计未来可能出现亏损或盈利增长放缓，需关注潜在风险。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} (${forwardPEGRatioOne}) 和 ${symbolTwo} (${forwardPEGRatioTwo}) 的前瞻 PEG 比率均为负值，这表明分析师预期其在未来一期可能出现盈利萎缩或负增长 — 这是对其盈利前景的一个令人担忧的信号。`;
   }
-  if (
-    stockOneForwardPEGRatioCategory === "Negative" &&
-    stockTwoForwardPEGRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的前瞻 PEG 比率为 ${stockOneForwardPEGRatio.toFixed(2)}，负值暗示分析师预测可能出现亏损或盈利下滑。而 ${stockTwoSymbol} 的 ${stockTwoForwardPEGRatio.toFixed(2)} 则显示出较为乐观的前景。`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} 的前瞻 PEG 比率为负 (${forwardPEGRatioOne})，暗示了预期的盈利下滑；而 ${symbolTwo} (比率 ${forwardPEGRatioTwo}) 的预测则显示其盈利将保持稳定或有所增长。`;
   }
-  if (
-    stockOneForwardPEGRatioCategory === "Normal" &&
-    stockTwoForwardPEGRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} 的前瞻 PEG 比率为 ${stockTwoForwardPEGRatio.toFixed(2)}，负值表明分析师预计可能出现亏损或盈利减少，存在一定风险。而 ${stockOneSymbol} 的 ${stockOneForwardPEGRatio.toFixed(2)} 则展现更积极的前景。`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} 的前瞻 PEG 比率为负 (${forwardPEGRatioTwo})，预示着预期的盈利收缩；而 ${symbolOne} (比率 ${forwardPEGRatioOne}) 根据分析师的预测，其盈利将保持稳定或有所改善。`;
   }
 
   return "";
@@ -150,37 +122,27 @@ function generatePriceToBookRatioCommentary(
   type PriceToBookRatioCategory = "Negative" | "Normal";
 
   const getPriceToBookRatioCategory = (
-    priceToBookRatio: number,
-  ): PriceToBookRatioCategory => {
-    if (priceToBookRatio < PRICE_TO_BOOK_RATIO_THRESHOLD_NEGATIVE)
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): PriceToBookRatioCategory =>
+    ratio < PRICE_TO_BOOK_RATIO_THRESHOLD_NEGATIVE ? "Negative" : "Normal";
 
-  const stockOnePriceToBookRatioCategory = getPriceToBookRatioCategory(
-    stockOnePriceToBookRatio,
-  );
-  const stockTwoPriceToBookRatioCategory = getPriceToBookRatioCategory(
-    stockTwoPriceToBookRatio,
-  );
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToBookRatioOne = stockOnePriceToBookRatio.toFixed(2);
+  const priceToBookRatioTwo = stockTwoPriceToBookRatio.toFixed(2);
+  const categoryOne = getPriceToBookRatioCategory(stockOnePriceToBookRatio);
+  const categoryTwo = getPriceToBookRatioCategory(stockTwoPriceToBookRatio);
 
-  if (
-    stockOnePriceToBookRatioCategory === "Negative" &&
-    stockTwoPriceToBookRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的市净率为 ${stockOnePriceToBookRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToBookRatio.toFixed(2)}，均为负值，表明债务超过资产，净值已为负，可能反映财务状况的脆弱性。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} (${priceToBookRatioOne}) 和 ${symbolTwo} (${priceToBookRatioTwo}) 的账面价值均为负，意味着其负债超过资产 — 这对两家公司而言都是一个严重的偿付能力风险信号。`;
   }
-  if (
-    stockOnePriceToBookRatioCategory === "Negative" &&
-    stockTwoPriceToBookRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的市净率为 ${stockOnePriceToBookRatio.toFixed(2)}，负值显示债务超出资产，财务结构较脆弱。而 ${stockTwoSymbol} 的 ${stockTwoPriceToBookRatio.toFixed(2)} 保持正值，账面价值更稳健。`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} 的市净率 (${priceToBookRatioOne}) 为负，表明其负债超过资产 (即负股东权益)。而 ${symbolTwo} (市净率 ${priceToBookRatioTwo}) 则维持着正的股东权益。`;
   }
-  if (
-    stockOnePriceToBookRatioCategory === "Normal" &&
-    stockTwoPriceToBookRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} 的市净率为 ${stockTwoPriceToBookRatio.toFixed(2)}，负值表明债务超过资产，财务状况存在一定风险。而 ${stockOneSymbol} 的 ${stockOnePriceToBookRatio.toFixed(2)} 为正值，基础较为稳固。`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} 的市净率 (${priceToBookRatioTwo}) 低于零，表明其股东权益为负。相比之下，${symbolOne} (市净率 ${priceToBookRatioOne}) 拥有正的账面价值。`;
   }
 
   return "";
@@ -197,38 +159,35 @@ function generatePriceToFreeCashFlowRatioCommentary(
   type PriceToFreeCashFlowRatioCategory = "Negative" | "Normal";
 
   const getPriceToFreeCashFlowRatioCategory = (
-    priceToFreeCashFlowRatio: number,
-  ): PriceToFreeCashFlowRatioCategory => {
-    if (
-      priceToFreeCashFlowRatio <
-      PRICE_TO_FREE_CASH_FLOW_RATIO_THRESHOLD_NEGATIVE
-    )
-      return "Negative";
-    return "Normal";
-  };
+    ratio: number,
+  ): PriceToFreeCashFlowRatioCategory =>
+    ratio < PRICE_TO_FREE_CASH_FLOW_RATIO_THRESHOLD_NEGATIVE
+      ? "Negative"
+      : "Normal";
 
-  const stockOnePriceToFreeCashFlowRatioCategory =
-    getPriceToFreeCashFlowRatioCategory(stockOnePriceToFreeCashFlowRatio);
-  const stockTwoPriceToFreeCashFlowRatioCategory =
-    getPriceToFreeCashFlowRatioCategory(stockTwoPriceToFreeCashFlowRatio);
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const priceToFreeCashFlowRatioOne =
+    stockOnePriceToFreeCashFlowRatio.toFixed(2);
+  const priceToFreeCashFlowRatioTwo =
+    stockTwoPriceToFreeCashFlowRatio.toFixed(2);
+  const categoryOne = getPriceToFreeCashFlowRatioCategory(
+    stockOnePriceToFreeCashFlowRatio,
+  );
+  const categoryTwo = getPriceToFreeCashFlowRatioCategory(
+    stockTwoPriceToFreeCashFlowRatio,
+  );
 
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
-  ) {
-    return `${stockOneSymbol} 的市现率为 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}，${stockTwoSymbol} 为 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}，均为负值，表明过去一年自由现金流为负，现金消耗大于生成，可能需外部融资支持。`;
+  if (categoryOne === "Negative" && categoryTwo === "Negative") {
+    return `${symbolOne} 和 ${symbolTwo} 在过去一年消耗的自由现金流均超过其产生的数额 — 市价自由现金流比率 (P/FCF) 分别为 ${priceToFreeCashFlowRatioOne} 和 ${priceToFreeCashFlowRatioTwo} — 这突显了持续的流动性压力。`;
   }
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Negative" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Normal"
-  ) {
-    return `${stockOneSymbol} 的市现率为 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)}，负值显示过去一年现金流出超过流入，存在一定风险。而 ${stockTwoSymbol} 的 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)} 为正值，现金流状况较为健康。`;
+
+  if (categoryOne === "Negative" && categoryTwo === "Normal") {
+    return `${symbolOne} 的市价自由现金流比率 (P/FCF) 为负 (${priceToFreeCashFlowRatioOne})，表明其在过去一年消耗的现金多于产生的现金 — 这是一个重要的流动性警示。相比之下，${symbolTwo} (P/FCF ${priceToFreeCashFlowRatioTwo}) 则表明其产生了正的自由现金流。`;
   }
-  if (
-    stockOnePriceToFreeCashFlowRatioCategory === "Normal" &&
-    stockTwoPriceToFreeCashFlowRatioCategory === "Negative"
-  ) {
-    return `${stockTwoSymbol} 的市现率为 ${stockTwoPriceToFreeCashFlowRatio.toFixed(2)}，负值表明过去一年现金流为负，可能面临资金压力。而 ${stockOneSymbol} 的 ${stockOnePriceToFreeCashFlowRatio.toFixed(2)} 为正值，现金流表现稳健。`;
+
+  if (categoryOne === "Normal" && categoryTwo === "Negative") {
+    return `${symbolTwo} 报告其市价自由现金流比率 (P/FCF) 为负 (${priceToFreeCashFlowRatioTwo})，显示现金流短缺，可能威胁其运营的可持续性；而 ${symbolOne} (P/FCF ${priceToFreeCashFlowRatioOne}) 则维持着正的自由现金流。`;
   }
 
   return "";
@@ -381,7 +340,7 @@ export async function ValuationMetricsComparisonSection({
           </Table.Tbody.Tr>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
-              市现率 (P/FCF, TTM)
+              市价自由现金流比率 (P/FCF, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
               {stockOneRatiosData.priceToFreeCashFlowRatioTTM.toFixed(2)}

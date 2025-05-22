@@ -58,8 +58,8 @@ function Page() {
             我们的目标
           </h2>
           <p className={styles.p}>
-            Seek Returns
-            是我（Jilong）创办的一个个人项目。我有多年金融分析经验，专注于市场研究和投资策略。
+            Seek Returns 是我 (Jilong)
+            创办的一个个人项目。我有多年金融分析经验，专注于市场研究和投资策略。
           </p>
           <p className={styles.p}>
             在和一些交易社区的交流中，我发现很多人对金融市场的基本概念感到困惑，或者缺少好用的工具来帮助他们分析市场。

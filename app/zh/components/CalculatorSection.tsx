@@ -18,7 +18,8 @@ export function CalculatorSection({ className }: CalculatorSectionProps) {
           多种多样的投资交易计算器
         </h2>
         <p className={styles.p}>
-          我们丰富的金融计算器简化了复杂的投资计算。从投资回报率（ROI）到投资组合分析，这些工具能在几秒内提供清晰结果，助您高效评估投资机会。
+          我们丰富的金融计算器简化了复杂的投资计算。从投资回报率 (ROI)
+          到投资组合分析，这些工具能在几秒内提供清晰结果，助您高效评估投资机会。
         </p>
         <p className={styles.p}>
           访问“
