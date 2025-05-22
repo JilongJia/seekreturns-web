@@ -53,4 +53,4 @@ function Page() {
 }
 
 export default Page;
-export const revalidate = 43200;
+export const revalidate = 86400;
