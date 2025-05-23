@@ -30,6 +30,11 @@ function generateMarketCapComparisonCommentary(
   });
   const currencyOne = stockOneCurrency;
   const currencyTwo = stockTwoCurrency;
+
+  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
+    return "";
+  }
+
   const ratio = stockOneMarketCap / stockTwoMarketCap;
 
   if (ratio > 1.5) {
@@ -54,17 +59,42 @@ function generateBetaComparisonCommentary(
   const symbolTwo = stockTwoSymbol;
   const betaOne = stockOneBeta.toFixed(2);
   const betaTwo = stockTwoBeta.toFixed(2);
+
+  if (stockOneBeta === 0 || stockTwoBeta === 0) {
+    return "";
+  }
+
   const ratio = stockOneBeta / stockTwoBeta;
 
-  if (ratio > 1.5) {
-    return `${symbolOne} 的 Beta 值 (${betaOne}) 表明其预期市场波动远大于 ${symbolTwo} 更为平稳的 Beta 值 (${betaTwo})，这意味着其潜在的上涨和下跌空间都可能更大。`;
+  if (stockOneBeta > 0 && stockTwoBeta > 0) {
+    if (ratio > 1.5) {
+      return `${symbolOne} 的 Beta 值 (${betaOne}) 表明其预期市场波幅远大于 ${symbolTwo} 相对平稳的 Beta 值 (${betaTwo})，这意味着其潜在的上涨和下跌空间均可能更大。`;
+    }
+    if (ratio < 0.67) {
+      return `${symbolTwo} 的 Beta 值 (${betaTwo}) 较高，显示其对市场动态的反应更为敏感，而 ${symbolOne} (Beta ${betaOne}) 则相对较为稳健。`;
+    }
+    return `${symbolOne} (Beta ${betaOne}) 与 ${symbolTwo} (Beta ${betaTwo}) 的 Beta 值相近，表明它们相对于整体市场的波动特征颇为相似。`;
   }
 
-  if (ratio < 0.67) {
-    return `${symbolTwo} 的 Beta 值 (${betaTwo}) 更高，表明其对市场变动更为敏感，而 ${symbolOne} (Beta ${betaOne}) 则表现相对更稳定。`;
+  if (stockOneBeta > 0 && stockTwoBeta < 0) {
+    return `${symbolOne} 的 Beta 值 (${betaOne}) 为正，表明其股价倾向于与整体市场同向变动；而 ${symbolTwo} 的 Beta 值 (${betaTwo}) 为负，通常呈反向变动趋势，这可能为投资组合提供分散化或对冲的机会。`;
   }
 
-  return `${symbolOne} 的 Beta 值 (${betaOne}) 与 ${symbolTwo} 的 Beta 值 (${betaTwo}) 相近，表明两者相对于市场的波动性特征相似。`;
+  if (stockOneBeta < 0 && stockTwoBeta > 0) {
+    return `${symbolTwo} 的正 Beta 值 (${betaTwo}) 暗示其走势与市场一致，而 ${symbolOne} 的负 Beta 值 (${betaOne}) 则使其倾向于逆市场大势变动，可能被视为一种防御性投资选择。`;
+  }
+
+  if (stockOneBeta < 0 && stockTwoBeta < 0) {
+    if (ratio > 1.5) {
+      return `${symbolOne} 与 ${symbolTwo} 均为负 Beta (分别为 ${betaOne} 和 ${betaTwo})，但 ${symbolOne} 与市场的负相关性显著更强，在市场下行时可能提供更有效的对冲保护。`;
+    }
+    if (ratio < 0.67) {
+      return `尽管 ${symbolOne} (Beta ${betaOne}) 和 ${symbolTwo} (Beta ${betaTwo}) 的 Beta 值皆为负，但 ${symbolTwo} 表现出与市场之间更为显著的反向联动关系，暗示其可能拥有更突出的防御特性。`;
+    }
+    return `${symbolOne} (Beta ${betaOne}) 和 ${symbolTwo} (Beta ${betaTwo}) 的 Beta 值均为负且数值接近，预期两者均会在一定程度上反市场主流趋势而动，或可作为投资组合的对冲工具。`;
+  }
+
+  return "";
 }
 
 function generateAdrCommentary(
@@ -135,8 +165,8 @@ export async function CompanyOverviewSection({
   return (
     <Section ariaLabelledby="company-overview">
       <H2 id="company-overview">公司概况</H2>
-      <P>{marketCapComparisonCommentary}</P>
-      <P>{betaComparisonCommentary}</P>
+      {marketCapComparisonCommentary && <P>{marketCapComparisonCommentary}</P>}
+      {betaComparisonCommentary && <P>{betaComparisonCommentary}</P>}
       {adrCommentary && <P>{adrCommentary}</P>}
       <Table>
         <Table.Thead>

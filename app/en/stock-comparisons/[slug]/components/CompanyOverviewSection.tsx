@@ -30,6 +30,11 @@ function generateMarketCapComparisonCommentary(
   });
   const currencyOne = stockOneCurrency;
   const currencyTwo = stockTwoCurrency;
+
+  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
+    return "";
+  }
+
   const ratio = stockOneMarketCap / stockTwoMarketCap;
 
   if (ratio > 1.5) {
@@ -54,17 +59,42 @@ function generateBetaComparisonCommentary(
   const symbolTwo = stockTwoSymbol;
   const betaOne = stockOneBeta.toFixed(2);
   const betaTwo = stockTwoBeta.toFixed(2);
+
+  if (stockOneBeta === 0 || stockTwoBeta === 0) {
+    return "";
+  }
+
   const ratio = stockOneBeta / stockTwoBeta;
 
-  if (ratio > 1.5) {
-    return `${symbolOne}’s beta of ${betaOne} points to much larger expected swings compared to ${symbolTwo}’s calmer ${betaTwo}, suggesting both higher upside and downside potential.`;
+  if (stockOneBeta > 0 && stockTwoBeta > 0) {
+    if (ratio > 1.5) {
+      return `${symbolOne}’s beta of ${betaOne} points to much larger expected swings compared to ${symbolTwo}’s calmer ${betaTwo}, suggesting both higher upside and downside potential.`;
+    }
+    if (ratio < 0.67) {
+      return `${symbolTwo} carries a higher beta at ${betaTwo}, indicating it’s more sensitive to market moves, while ${symbolOne} remains steadier at ${betaOne}.`;
+    }
+    return `With betas of ${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}, both show similar volatility profiles relative to the overall market.`;
   }
 
-  if (ratio < 0.67) {
-    return `${symbolTwo} carries a higher beta at ${betaTwo}, indicating it’s more sensitive to market moves, while ${symbolOne} remains steadier at ${betaOne}.`;
+  if (stockOneBeta > 0 && stockTwoBeta < 0) {
+    return `${symbolOne} has a positive beta (${betaOne}), indicating it moves with the broader market, whereas ${symbolTwo} has a negative beta (${betaTwo}), often moving inversely, providing diversification or hedging opportunities.`;
   }
 
-  return `With betas of ${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}, both show similar volatility profiles relative to the overall market.`;
+  if (stockOneBeta < 0 && stockTwoBeta > 0) {
+    return `${symbolTwo}’s positive beta (${betaTwo}) suggests market-aligned movements, while ${symbolOne} with a negative beta (${betaOne}) tends to move counter to overall market trends, potentially acting as a defensive position.`;
+  }
+
+  if (stockOneBeta < 0 && stockTwoBeta < 0) {
+    if (ratio > 1.5) {
+      return `Both ${symbolOne} and ${symbolTwo} have negative betas (${betaOne} vs. ${betaTwo}), but ${symbolOne} is significantly more negatively correlated to the market, potentially providing stronger hedging during downturns.`;
+    }
+    if (ratio < 0.67) {
+      return `Although both stocks have negative betas (${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}), ${symbolTwo} shows a notably stronger inverse relationship with the market, suggesting enhanced defensive characteristics.`;
+    }
+    return `With negative betas of ${betaOne} and ${betaTwo}, ${symbolOne} and ${symbolTwo} both tend to move against broader market trends to a similar extent, potentially useful as portfolio hedges.`;
+  }
+
+  return "";
 }
 
 function generateAdrCommentary(
@@ -135,8 +165,8 @@ export async function CompanyOverviewSection({
   return (
     <Section ariaLabelledby="company-overview">
       <H2 id="company-overview">Company Overview</H2>
-      <P>{marketCapComparisonCommentary}</P>
-      <P>{betaComparisonCommentary}</P>
+      {marketCapComparisonCommentary && <P>{marketCapComparisonCommentary}</P>}
+      {betaComparisonCommentary && <P>{betaComparisonCommentary}</P>}
       {adrCommentary && <P>{adrCommentary}</P>}
       <Table>
         <Table.Thead>
