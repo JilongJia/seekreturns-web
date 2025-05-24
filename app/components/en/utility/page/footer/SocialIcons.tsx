@@ -17,7 +17,7 @@ export function SocialIcons({ className }: SocialIconsProps) {
             <span className={styles.screenReaderText}>
               Visit Seek Returns on YouTube
             </span>
-            <SiYoutube aria-hidden={true} className={styles.youtubeIcon} />
+            <SiYoutube aria-hidden={true} className={styles.icon} />
           </a>
         </li>
         <li>
@@ -25,7 +25,7 @@ export function SocialIcons({ className }: SocialIconsProps) {
             <span className={styles.screenReaderText}>
               Visit Seek Returns on X
             </span>
-            <SiX aria-hidden={true} className={styles.xIcon} />
+            <SiX aria-hidden={true} className={styles.icon} />
           </a>
         </li>
         <li>
@@ -33,7 +33,7 @@ export function SocialIcons({ className }: SocialIconsProps) {
             <span className={styles.screenReaderText}>
               Send an email to Seek Returns
             </span>
-            <LuMail aria-hidden={true} className={styles.envelopeIcon} />
+            <LuMail aria-hidden={true} className={styles.icon} />
           </a>
         </li>
       </menu>

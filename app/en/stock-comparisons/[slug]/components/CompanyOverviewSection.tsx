@@ -18,6 +18,10 @@ function generateMarketCapComparisonCommentary(
   stockTwoMarketCap: number,
   stockTwoCurrency: string,
 ): string {
+  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
+    return "";
+  }
+
   const symbolOne = stockOneSymbol;
   const symbolTwo = stockTwoSymbol;
   const marketCapOne = (stockOneMarketCap / 1e9).toLocaleString("en", {
@@ -30,11 +34,6 @@ function generateMarketCapComparisonCommentary(
   });
   const currencyOne = stockOneCurrency;
   const currencyTwo = stockTwoCurrency;
-
-  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
-    return "";
-  }
-
   const ratio = stockOneMarketCap / stockTwoMarketCap;
 
   if (ratio > 1.5) {
@@ -55,15 +54,14 @@ function generateBetaComparisonCommentary(
   stockTwoSymbol: string,
   stockTwoBeta: number,
 ): string {
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const betaOne = stockOneBeta.toFixed(2);
-  const betaTwo = stockTwoBeta.toFixed(2);
-
   if (stockOneBeta === 0 || stockTwoBeta === 0) {
     return "";
   }
 
+  const symbolOne = stockOneSymbol;
+  const symbolTwo = stockTwoSymbol;
+  const betaOne = stockOneBeta.toFixed(2);
+  const betaTwo = stockTwoBeta.toFixed(2);
   const ratio = stockOneBeta / stockTwoBeta;
 
   if (stockOneBeta > 0 && stockTwoBeta > 0) {
@@ -162,12 +160,30 @@ export async function CompanyOverviewSection({
     stockTwoProfileData.isAdr,
   );
 
+  const hasCommentary = [
+    marketCapComparisonCommentary,
+    betaComparisonCommentary,
+    adrCommentary,
+  ].some((commentary) => commentary !== "");
+
   return (
     <Section ariaLabelledby="company-overview">
       <H2 id="company-overview">Company Overview</H2>
-      {marketCapComparisonCommentary && <P>{marketCapComparisonCommentary}</P>}
-      {betaComparisonCommentary && <P>{betaComparisonCommentary}</P>}
-      {adrCommentary && <P>{adrCommentary}</P>}
+      {hasCommentary ? (
+        <>
+          {marketCapComparisonCommentary && (
+            <P>{marketCapComparisonCommentary}</P>
+          )}
+          {betaComparisonCommentary && <P>{betaComparisonCommentary}</P>}
+          {adrCommentary && <P>{adrCommentary}</P>}
+        </>
+      ) : (
+        <P>
+          For a detailed side-by-side comparison of company overview metrics for{" "}
+          {stockOneSymbol} and {stockTwoSymbol}, please refer to the table
+          below.
+        </P>
+      )}
       <Table>
         <Table.Thead>
           <Table.Thead.Tr>

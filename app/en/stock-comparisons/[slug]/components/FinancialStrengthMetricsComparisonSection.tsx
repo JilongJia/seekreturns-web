@@ -17,6 +17,10 @@ function generateCurrentRatioCommentary(
   stockTwoSymbol: string,
   stockTwoCurrentRatio: number,
 ): string {
+  if (stockOneCurrentRatio === 0 || stockTwoCurrentRatio === 0) {
+    return "";
+  }
+
   const CURRENT_RATIO_THRESHOLD_LOW = 1;
 
   type CurrentRatioCategory = "Low" | "Normal";
@@ -54,6 +58,10 @@ function generateQuickRatioCommentary(
   stockTwoSymbol: string,
   stockTwoQuickRatio: number,
 ): string {
+  if (stockOneQuickRatio === 0 || stockTwoQuickRatio === 0) {
+    return "";
+  }
+
   const QUICK_RATIO_THRESHOLD_LOW = 0.8;
 
   type QuickRatioCategory = "Low" | "Normal";
