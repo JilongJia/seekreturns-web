@@ -4,6 +4,7 @@ import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
+import styles from "./CompanyOverviewSection.module.css";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
@@ -184,7 +185,7 @@ export async function CompanyOverviewSection({
           below.
         </P>
       )}
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>

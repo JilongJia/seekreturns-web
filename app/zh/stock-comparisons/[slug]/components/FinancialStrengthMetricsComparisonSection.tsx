@@ -5,6 +5,7 @@ import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
+import styles from "./CompanyOverviewSection.module.css";
 
 type FinancialStrengthMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -358,7 +359,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           请查看下方表格，了解 {stockOneSymbol} 和 {stockTwoSymbol} 的财务状况。
         </P>
       )}
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>

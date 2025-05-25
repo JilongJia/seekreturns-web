@@ -4,6 +4,7 @@ import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import styles from "./CompanyOverviewSection.module.css";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
@@ -183,7 +184,7 @@ export async function CompanyOverviewSection({
           的详细公司概况对比，请参见下方表格。
         </P>
       )}
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>

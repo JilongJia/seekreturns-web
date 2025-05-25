@@ -6,6 +6,7 @@ import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
+import styles from "./CompanyOverviewSection.module.css";
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -287,7 +288,7 @@ export async function ValuationMetricsComparisonSection({
           想了解 {stockOneSymbol} 和 {stockTwoSymbol} 的估值对比，请看下表。
         </P>
       )}
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>

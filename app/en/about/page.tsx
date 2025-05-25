@@ -45,7 +45,7 @@ function Page() {
           <h1 className={styles.h1}>About</h1>
         </header>
         <p className={clsx(styles.p, styles.introduction)}>
-          Seerk Returns is dedicated to providing sophisticated tools and
+          Seek Returns is dedicated to providing sophisticated tools and
           authoritative insights to empower investors and traders in navigating
           financial markets.
         </p>
@@ -59,7 +59,7 @@ function Page() {
             Our Mission
           </h2>
           <p className={styles.p}>
-            Welcome to Seerk Returns, a personal project founded by me, Jilong.
+            Welcome to Seek Returns, a personal project founded by me, Jilong.
             With a background in quantitative finance, I’ve spent considerable
             time analyzing markets and financial strategies.
           </p>
@@ -76,7 +76,7 @@ function Page() {
             complexities of trading, led to the creation of this website.
           </p>
           <p className={styles.p}>
-            The core mission of Seerk Returns is to provide accessible tools and
+            The core mission of Seek Returns is to provide accessible tools and
             clear information designed to enhance your understanding of
             financial markets and support your decision-making process in
             trading and investing.
@@ -121,7 +121,7 @@ function Page() {
             affiliated with any financial institution.
           </p>
           <p className={styles.p}>
-            All information, tools, analysis, and content provided on Seerk
+            All information, tools, analysis, and content provided on Seek
             Returns are strictly for informational and educational purposes
             only. They should not be interpreted as financial advice, investment
             recommendations, or solicitation for any financial product.
@@ -135,7 +135,7 @@ function Page() {
             any investment decisions.
           </p>
           <p className={styles.p}>
-            We appreciate you visiting Seerk Returns and hope the resources
+            We appreciate you visiting Seek Returns and hope the resources
             available contribute positively to your understanding of finance.
           </p>
         </section>

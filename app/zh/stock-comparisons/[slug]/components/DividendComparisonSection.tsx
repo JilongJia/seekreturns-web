@@ -4,6 +4,7 @@ import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import styles from "./CompanyOverviewSection.module.css";
 
 type DividendComparisonSectionProps = {
   stockOneSymbol: string;
@@ -99,7 +100,7 @@ export async function DividendComparisonSection({
     <Section ariaLabelledby="dividend-comparison">
       <H2 id="dividend-comparison">股息比较</H2>
       <P>{dividendYieldCommentary}</P>
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>

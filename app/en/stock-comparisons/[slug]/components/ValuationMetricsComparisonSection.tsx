@@ -6,6 +6,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
+import styles from "./CompanyOverviewSection.module.css";
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -290,7 +291,7 @@ export async function ValuationMetricsComparisonSection({
           below.
         </P>
       )}
-      <Table>
+      <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
             <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
