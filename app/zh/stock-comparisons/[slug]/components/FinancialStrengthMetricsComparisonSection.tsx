@@ -18,10 +18,6 @@ function generateCurrentRatioCommentary(
   stockTwoSymbol: string,
   stockTwoCurrentRatio: number,
 ): string {
-  if (stockOneCurrentRatio === 0 || stockTwoCurrentRatio === 0) {
-    return "";
-  }
-
   const CURRENT_RATIO_THRESHOLD_LOW = 1;
 
   type CurrentRatioCategory = "Low" | "Normal";
@@ -59,10 +55,6 @@ function generateQuickRatioCommentary(
   stockTwoSymbol: string,
   stockTwoQuickRatio: number,
 ): string {
-  if (stockOneQuickRatio === 0 || stockTwoQuickRatio === 0) {
-    return "";
-  }
-
   const QUICK_RATIO_THRESHOLD_LOW = 0.8;
 
   type QuickRatioCategory = "Low" | "Normal";
@@ -196,13 +188,12 @@ function generateInterestCoverageRatioCommentary(
   const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1;
   const INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO = 0;
 
-  type InterestCoverageRatioCategory = "Negative" | "Zero" | "Low" | "Normal";
+  type InterestCoverageRatioCategory = "Negative" | "Low" | "Normal";
 
   const getInterestCoverageRatioCategory = (
     ratio: number,
   ): InterestCoverageRatioCategory => {
     if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Negative";
-    if (ratio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Zero";
     if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW) return "Low";
     return "Normal";
   };
@@ -221,18 +212,8 @@ function generateInterestCoverageRatioCommentary(
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} 和 ${symbolTwo} 的利息保障倍数均为负 (分别为 ${interestCoverageRatioOne} 和 ${interestCoverageRatioTwo})，意味着息税前利润 (EBIT) 为负 — 两者均无法覆盖利息支出，这是严重的偿付能力警告。`;
   }
-  if (categoryOne === "Zero" && categoryTwo === "Zero") {
-    return `${symbolOne} 和 ${symbolTwo} 的利息保障倍数均为“--”，表明几乎没有利息支出 — 通常是债务可忽略不计的信号。`;
-  }
   if (categoryOne === "Low" && categoryTwo === "Low") {
     return `${symbolOne} (${interestCoverageRatioOne}) 和 ${symbolTwo} (${interestCoverageRatioTwo}) 的利息保障倍数均较低，意味着其营业利润不足以完全覆盖利息支出。这表明存在财务压力。`;
-  }
-
-  if (categoryOne === "Negative" && categoryTwo === "Zero") {
-    return `${symbolOne} 的息税前利润 (EBIT) 为负 (利息保障倍数 ${interestCoverageRatioOne})，无法覆盖利息，而 ${symbolTwo} 显示为“--”(利息支出可忽略不计)。`;
-  }
-  if (categoryOne === "Zero" && categoryTwo === "Negative") {
-    return `${symbolOne} 的利息保障倍数显示为“--”(利息支出极少)，但 ${symbolTwo} 的利息保障倍数为负 (${interestCoverageRatioTwo})，预示着经营性亏损。`;
   }
 
   if (categoryOne === "Negative" && categoryTwo === "Low") {
@@ -243,17 +224,10 @@ function generateInterestCoverageRatioCommentary(
   }
 
   if (categoryOne === "Negative" && categoryTwo === "Normal") {
-    return `由于息税前利润 (EBIT) 为负 (${interestCoverageRatioOne})，${symbolOne} 无法支付其利息。而 ${symbolTwo} (利息保障倍数 ${interestCoverageRatioTwo}) 则能履行其付息义务。`;
+    return `由于息税前利润 (EBIT) 为负 (${interestCoverageRatioOne})，${symbolOne} 无法覆盖其利息。而 ${symbolTwo} (利息保障倍数 ${interestCoverageRatioTwo}) 则能履行其付息义务。`;
   }
   if (categoryOne === "Normal" && categoryTwo === "Negative") {
     return `${symbolOne} 能履行其付息义务 (利息保障倍数 ${interestCoverageRatioOne})。与此形成鲜明对比的是，${symbolTwo} 的负比率 (${interestCoverageRatioTwo}) 意味着其营业利润 (EBIT) 不足以覆盖基本运营成本，更不用说利息了，这预示着严重的财务困境。`;
-  }
-
-  if (categoryOne === "Zero" && categoryTwo === "Low") {
-    return `${symbolOne} 显示为“--”的利息保障倍数 (表明利息成本极低)。然而，${symbolTwo} (比率 ${interestCoverageRatioTwo}) 并未产生足够的营业利润来支付其当前的利息。`;
-  }
-  if (categoryOne === "Low" && categoryTwo === "Zero") {
-    return `${symbolOne} (低利息保障倍数 ${interestCoverageRatioOne}) 未能从营业利润中覆盖其利息支出，而 ${symbolTwo} 则显示为“--”(利息支出极少)。`;
   }
 
   if (categoryOne === "Low" && categoryTwo === "Normal") {
@@ -261,13 +235,6 @@ function generateInterestCoverageRatioCommentary(
   }
   if (categoryOne === "Normal" && categoryTwo === "Low") {
     return `${symbolTwo} 的低利息保障倍数 (${interestCoverageRatioTwo}) 意味着其无法从营业利润中覆盖利息。${symbolOne} (比率 ${interestCoverageRatioOne}) 则能履行其付息义务。`;
-  }
-
-  if (categoryOne === "Zero" && categoryTwo === "Normal") {
-    return `${symbolOne} 显示为“--”的利息保障倍数，暗示利息成本可忽略不计，而 ${symbolTwo} (比率 ${interestCoverageRatioTwo}) 能够覆盖其利息债务。`;
-  }
-  if (categoryOne === "Normal" && categoryTwo === "Zero") {
-    return `${symbolOne} (利息保障倍数 ${interestCoverageRatioOne}) 能够支付其利息，而 ${symbolTwo} 则显示为“--”(债务维护成本极低)。`;
   }
 
   return "";
@@ -291,37 +258,60 @@ export async function FinancialStrengthMetricsComparisonSection({
     );
   }
 
-  const currentRatioCommentary = generateCurrentRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.currentRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.currentRatioTTM,
-  );
-  const quickRatioCommentary = generateQuickRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.quickRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.quickRatioTTM,
-  );
-  const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.debtToEquityRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.debtToEquityRatioTTM,
-  );
-  const debtToAssetsRatioCommentary = generateDebtToAssetsRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.debtToAssetsRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.debtToAssetsRatioTTM,
-  );
+  const currentRatioCommentary =
+    stockOneRatiosData.currentRatioTTM === 0 ||
+    stockTwoRatiosData.currentRatioTTM === 0
+      ? ""
+      : generateCurrentRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.currentRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.currentRatioTTM,
+        );
+
+  const quickRatioCommentary =
+    stockOneRatiosData.quickRatioTTM === 0 ||
+    stockTwoRatiosData.quickRatioTTM === 0
+      ? ""
+      : generateQuickRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.quickRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.quickRatioTTM,
+        );
+
+  const debtToEquityRatioCommentary =
+    stockOneRatiosData.debtToEquityRatioTTM === 0 ||
+    stockTwoRatiosData.debtToEquityRatioTTM === 0
+      ? ""
+      : generateDebtToEquityRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.debtToEquityRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.debtToEquityRatioTTM,
+        );
+
+  const debtToAssetsRatioCommentary =
+    stockOneRatiosData.debtToAssetsRatioTTM === 0 ||
+    stockTwoRatiosData.debtToAssetsRatioTTM === 0
+      ? ""
+      : generateDebtToAssetsRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.debtToAssetsRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.debtToAssetsRatioTTM,
+        );
+
   const interestCoverageRatioCommentary =
-    generateInterestCoverageRatioCommentary(
-      stockOneSymbol,
-      stockOneRatiosData.interestCoverageRatioTTM,
-      stockTwoSymbol,
-      stockTwoRatiosData.interestCoverageRatioTTM,
-    );
+    stockOneRatiosData.interestCoverageRatioTTM === 0 ||
+    stockTwoRatiosData.interestCoverageRatioTTM === 0
+      ? ""
+      : generateInterestCoverageRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.interestCoverageRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.interestCoverageRatioTTM,
+        );
 
   const hasCommentary = [
     currentRatioCommentary,
@@ -331,9 +321,13 @@ export async function FinancialStrengthMetricsComparisonSection({
     interestCoverageRatioCommentary,
   ].some((commentary) => commentary !== "");
 
+  const formatNumber = (value: number): string =>
+    value === 0 ? "--" : value.toFixed(2);
+
   return (
     <Section ariaLabelledby="financial-strength-metrics-comparison">
       <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
+
       {hasCommentary ? (
         <>
           <P>
@@ -359,6 +353,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           请查看下方表格，了解 {stockOneSymbol} 和 {stockTwoSymbol} 的财务状况。
         </P>
       )}
+
       <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
@@ -367,60 +362,61 @@ export async function FinancialStrengthMetricsComparisonSection({
             <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
+
         <Table.Tbody>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.currentRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.currentRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.currentRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.currentRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.quickRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.quickRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.quickRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.quickRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               负债股东权益比 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.debtToEquityRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.debtToEquityRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               负债资产比率 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.debtToAssetsRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.debtToAssetsRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               利息保障倍数 (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.interestCoverageRatioTTM === 0
-                ? "--"
-                : stockOneRatiosData.interestCoverageRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.interestCoverageRatioTTM === 0
-                ? "--"
-                : stockTwoRatiosData.interestCoverageRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

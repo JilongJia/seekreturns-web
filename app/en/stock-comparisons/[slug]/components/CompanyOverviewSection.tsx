@@ -19,10 +19,6 @@ function generateMarketCapComparisonCommentary(
   stockTwoMarketCap: number,
   stockTwoCurrency: string,
 ): string {
-  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
-    return "";
-  }
-
   const symbolOne = stockOneSymbol;
   const symbolTwo = stockTwoSymbol;
   const marketCapOne = (stockOneMarketCap / 1e9).toLocaleString("en", {
@@ -55,10 +51,6 @@ function generateBetaComparisonCommentary(
   stockTwoSymbol: string,
   stockTwoBeta: number,
 ): string {
-  if (stockOneBeta === 0 || stockTwoBeta === 0) {
-    return "";
-  }
-
   const symbolOne = stockOneSymbol;
   const symbolTwo = stockTwoSymbol;
   const betaOne = stockOneBeta.toFixed(2);
@@ -138,21 +130,27 @@ export async function CompanyOverviewSection({
     );
   }
 
-  const marketCapComparisonCommentary = generateMarketCapComparisonCommentary(
-    stockOneSymbol,
-    stockOneProfileData.marketCap,
-    stockOneProfileData.currency,
-    stockTwoSymbol,
-    stockTwoProfileData.marketCap,
-    stockTwoProfileData.currency,
-  );
+  const marketCapComparisonCommentary =
+    stockOneProfileData.marketCap === 0 || stockTwoProfileData.marketCap === 0
+      ? ""
+      : generateMarketCapComparisonCommentary(
+          stockOneSymbol,
+          stockOneProfileData.marketCap,
+          stockOneProfileData.currency,
+          stockTwoSymbol,
+          stockTwoProfileData.marketCap,
+          stockTwoProfileData.currency,
+        );
 
-  const betaComparisonCommentary = generateBetaComparisonCommentary(
-    stockOneSymbol,
-    stockOneProfileData.beta,
-    stockTwoSymbol,
-    stockTwoProfileData.beta,
-  );
+  const betaComparisonCommentary =
+    stockOneProfileData.beta === 0 || stockTwoProfileData.beta === 0
+      ? ""
+      : generateBetaComparisonCommentary(
+          stockOneSymbol,
+          stockOneProfileData.beta,
+          stockTwoSymbol,
+          stockTwoProfileData.beta,
+        );
 
   const adrCommentary = generateAdrCommentary(
     stockOneSymbol,

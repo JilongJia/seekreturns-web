@@ -224,32 +224,49 @@ export async function ValuationMetricsComparisonSection({
     );
   }
 
-  const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.priceToEarningsRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.priceToEarningsRatioTTM,
-  );
+  const priceToEarningsRatioCommentary =
+    stockOneRatiosData.priceToEarningsRatioTTM === 0 ||
+    stockTwoRatiosData.priceToEarningsRatioTTM === 0
+      ? ""
+      : generatePriceToEarningsRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.priceToEarningsRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.priceToEarningsRatioTTM,
+        );
+
   const forwardPriceToEarningsGrowthRatioCommentary =
-    generateForwardPEGRatioCommentary(
-      stockOneSymbol,
-      stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-      stockTwoSymbol,
-      stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-    );
-  const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.priceToBookRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.priceToBookRatioTTM,
-  );
+    stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0 ||
+    stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0
+      ? ""
+      : generateForwardPEGRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+        );
+
+  const priceToBookRatioCommentary =
+    stockOneRatiosData.priceToBookRatioTTM === 0 ||
+    stockTwoRatiosData.priceToBookRatioTTM === 0
+      ? ""
+      : generatePriceToBookRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.priceToBookRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.priceToBookRatioTTM,
+        );
+
   const priceToFreeCashFlowRatioCommentary =
-    generatePriceToFreeCashFlowRatioCommentary(
-      stockOneSymbol,
-      stockOneRatiosData.priceToFreeCashFlowRatioTTM,
-      stockTwoSymbol,
-      stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
-    );
+    stockOneRatiosData.priceToFreeCashFlowRatioTTM === 0 ||
+    stockTwoRatiosData.priceToFreeCashFlowRatioTTM === 0
+      ? ""
+      : generatePriceToFreeCashFlowRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.priceToFreeCashFlowRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
+        );
 
   const hasCommentary = [
     priceToEarningsRatioCommentary,
@@ -258,9 +275,13 @@ export async function ValuationMetricsComparisonSection({
     priceToFreeCashFlowRatioCommentary,
   ].some((commentary) => commentary !== "");
 
+  const formatNumber = (value: number): string =>
+    value === 0 ? "--" : value.toFixed(2);
+
   return (
     <Section ariaLabelledby="valuation-metrics-comparison">
       <H2 id="valuation-metrics-comparison">Valuation Metrics Comparison</H2>
+
       {hasCommentary ? (
         <>
           <P>
@@ -291,6 +312,7 @@ export async function ValuationMetricsComparisonSection({
           below.
         </P>
       )}
+
       <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
@@ -299,95 +321,103 @@ export async function ValuationMetricsComparisonSection({
             <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
           </Table.Thead.Tr>
         </Table.Thead>
+
         <Table.Tbody>
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Price-to-Earnings Ratio (P/E, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.priceToEarningsRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.priceToEarningsRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Forward PEG Ratio (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
-                2,
+              {formatNumber(
+                stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
               )}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM.toFixed(
-                2,
+              {formatNumber(
+                stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
               )}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Price-to-Sales Ratio (P/S, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.priceToSalesRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.priceToSalesRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Price-to-Book Ratio (P/B, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.priceToBookRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.priceToBookRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Price-to-Free Cash Flow Ratio (P/FCF, TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.priceToFreeCashFlowRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.priceToFreeCashFlowRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               EV-to-EBITDA (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneKeyMetricsData.evToEBITDATTM.toFixed(2)}
+              {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoKeyMetricsData.evToEBITDATTM.toFixed(2)}
+              {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">EV-to-Sales (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneKeyMetricsData.evToSalesTTM.toFixed(2)}
+              {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoKeyMetricsData.evToSalesTTM.toFixed(2)}
+              {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               EV-to-Free Cash Flow (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneKeyMetricsData.evToFreeCashFlowTTM.toFixed(2)}
+              {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoKeyMetricsData.evToFreeCashFlowTTM.toFixed(2)}
+              {formatNumber(stockTwoKeyMetricsData.evToFreeCashFlowTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

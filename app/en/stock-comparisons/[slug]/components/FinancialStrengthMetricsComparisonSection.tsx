@@ -18,10 +18,6 @@ function generateCurrentRatioCommentary(
   stockTwoSymbol: string,
   stockTwoCurrentRatio: number,
 ): string {
-  if (stockOneCurrentRatio === 0 || stockTwoCurrentRatio === 0) {
-    return "";
-  }
-
   const CURRENT_RATIO_THRESHOLD_LOW = 1;
 
   type CurrentRatioCategory = "Low" | "Normal";
@@ -59,10 +55,6 @@ function generateQuickRatioCommentary(
   stockTwoSymbol: string,
   stockTwoQuickRatio: number,
 ): string {
-  if (stockOneQuickRatio === 0 || stockTwoQuickRatio === 0) {
-    return "";
-  }
-
   const QUICK_RATIO_THRESHOLD_LOW = 0.8;
 
   type QuickRatioCategory = "Low" | "Normal";
@@ -196,13 +188,12 @@ function generateInterestCoverageRatioCommentary(
   const INTEREST_COVERAGE_RATIO_THRESHOLD_LOW = 1;
   const INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO = 0;
 
-  type InterestCoverageRatioCategory = "Negative" | "Zero" | "Low" | "Normal";
+  type InterestCoverageRatioCategory = "Negative" | "Low" | "Normal";
 
   const getInterestCoverageRatioCategory = (
     ratio: number,
   ): InterestCoverageRatioCategory => {
     if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Negative";
-    if (ratio === INTEREST_COVERAGE_RATIO_THRESHOLD_ZERO) return "Zero";
     if (ratio < INTEREST_COVERAGE_RATIO_THRESHOLD_LOW) return "Low";
     return "Normal";
   };
@@ -221,18 +212,8 @@ function generateInterestCoverageRatioCommentary(
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Both ${symbolOne} and ${symbolTwo} report negative interest coverage ratios (${interestCoverageRatioOne}, ${interestCoverageRatioTwo}), meaning EBIT itself is negative—neither can cover interest, a critical solvency warning.`;
   }
-  if (categoryOne === "Zero" && categoryTwo === "Zero") {
-    return `Neither ${symbolOne} nor ${symbolTwo} records interest coverage (both “--”), indicating virtually no interest expense—usually a sign of negligible debt.`;
-  }
   if (categoryOne === "Low" && categoryTwo === "Low") {
     return `Both ${symbolOne} (at ${interestCoverageRatioOne}) and ${symbolTwo} (at ${interestCoverageRatioTwo}) have low interest coverage, meaning their operating earnings do not fully cover interest expenses. This indicates financial strain.`;
-  }
-
-  if (categoryOne === "Negative" && categoryTwo === "Zero") {
-    return `${symbolOne} has negative EBIT (interest coverage ${interestCoverageRatioOne}), unable to cover interest, while ${symbolTwo} shows “--” (negligible interest expense).`;
-  }
-  if (categoryOne === "Zero" && categoryTwo === "Negative") {
-    return `${symbolOne} shows “--” (minimal interest expense), but ${symbolTwo} is in the red with interest coverage ${interestCoverageRatioTwo}, signaling a net operating loss.`;
   }
 
   if (categoryOne === "Negative" && categoryTwo === "Low") {
@@ -249,25 +230,11 @@ function generateInterestCoverageRatioCommentary(
     return `${symbolOne} meets its interest obligations (ratio ${interestCoverageRatioOne}). In stark contrast, ${symbolTwo}’s negative ratio (${interestCoverageRatioTwo}) means its operating earnings (EBIT) don't cover basic operations, let alone interest, signaling serious financial trouble.`;
   }
 
-  if (categoryOne === "Zero" && categoryTwo === "Low") {
-    return `${symbolOne} shows “--” for interest coverage (indicating minimal interest cost). ${symbolTwo}, however, with a ratio of ${interestCoverageRatioTwo}, is not generating enough operating earnings to cover its current interest payments.`;
-  }
-  if (categoryOne === "Low" && categoryTwo === "Zero") {
-    return `${symbolOne} (at ${interestCoverageRatioOne}) fails to cover its interest expenses from operating earnings, whereas ${symbolTwo} shows “--” for minimal interest expense.`;
-  }
-
   if (categoryOne === "Low" && categoryTwo === "Normal") {
     return `${symbolOne}’s low ratio (${interestCoverageRatioOne}) indicates its earnings don't cover interest. ${symbolTwo} (at ${interestCoverageRatioTwo}) meets its interest obligations.`;
   }
   if (categoryOne === "Normal" && categoryTwo === "Low") {
     return `${symbolTwo}’s low interest coverage (${interestCoverageRatioTwo}) means it doesn't cover interest from operating earnings. ${symbolOne} (at ${interestCoverageRatioOne}) meets its interest obligations.`;
-  }
-
-  if (categoryOne === "Zero" && categoryTwo === "Normal") {
-    return `${symbolOne} shows “--” for interest coverage, hinting at negligible interest costs, whereas ${symbolTwo} (at ${interestCoverageRatioTwo}) covers its interest obligations.`;
-  }
-  if (categoryOne === "Normal" && categoryTwo === "Zero") {
-    return `${symbolOne} (at ${interestCoverageRatioOne}) covers its interest payments, while ${symbolTwo} shows “--” for minimal debt service.`;
   }
 
   return "";
@@ -293,37 +260,60 @@ export async function FinancialStrengthMetricsComparisonSection({
     );
   }
 
-  const currentRatioCommentary = generateCurrentRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.currentRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.currentRatioTTM,
-  );
-  const quickRatioCommentary = generateQuickRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.quickRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.quickRatioTTM,
-  );
-  const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.debtToEquityRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.debtToEquityRatioTTM,
-  );
-  const debtToAssetsRatioCommentary = generateDebtToAssetsRatioCommentary(
-    stockOneSymbol,
-    stockOneRatiosData.debtToAssetsRatioTTM,
-    stockTwoSymbol,
-    stockTwoRatiosData.debtToAssetsRatioTTM,
-  );
+  const currentRatioCommentary =
+    stockOneRatiosData.currentRatioTTM === 0 ||
+    stockTwoRatiosData.currentRatioTTM === 0
+      ? ""
+      : generateCurrentRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.currentRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.currentRatioTTM,
+        );
+
+  const quickRatioCommentary =
+    stockOneRatiosData.quickRatioTTM === 0 ||
+    stockTwoRatiosData.quickRatioTTM === 0
+      ? ""
+      : generateQuickRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.quickRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.quickRatioTTM,
+        );
+
+  const debtToEquityRatioCommentary =
+    stockOneRatiosData.debtToEquityRatioTTM === 0 ||
+    stockTwoRatiosData.debtToEquityRatioTTM === 0
+      ? ""
+      : generateDebtToEquityRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.debtToEquityRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.debtToEquityRatioTTM,
+        );
+
+  const debtToAssetsRatioCommentary =
+    stockOneRatiosData.debtToAssetsRatioTTM === 0 ||
+    stockTwoRatiosData.debtToAssetsRatioTTM === 0
+      ? ""
+      : generateDebtToAssetsRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.debtToAssetsRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.debtToAssetsRatioTTM,
+        );
+
   const interestCoverageRatioCommentary =
-    generateInterestCoverageRatioCommentary(
-      stockOneSymbol,
-      stockOneRatiosData.interestCoverageRatioTTM,
-      stockTwoSymbol,
-      stockTwoRatiosData.interestCoverageRatioTTM,
-    );
+    stockOneRatiosData.interestCoverageRatioTTM === 0 ||
+    stockTwoRatiosData.interestCoverageRatioTTM === 0
+      ? ""
+      : generateInterestCoverageRatioCommentary(
+          stockOneSymbol,
+          stockOneRatiosData.interestCoverageRatioTTM,
+          stockTwoSymbol,
+          stockTwoRatiosData.interestCoverageRatioTTM,
+        );
 
   const hasCommentary = [
     currentRatioCommentary,
@@ -333,11 +323,15 @@ export async function FinancialStrengthMetricsComparisonSection({
     interestCoverageRatioCommentary,
   ].some((commentary) => commentary !== "");
 
+  const formatNumber = (value: number): string =>
+    value === 0 ? "--" : value.toFixed(2);
+
   return (
     <Section ariaLabelledby="financial-strength-metrics-comparison">
       <H2 id="financial-strength-metrics-comparison">
         Financial Strength Metrics Comparison
       </H2>
+
       {hasCommentary ? (
         <>
           <P>
@@ -366,6 +360,7 @@ export async function FinancialStrengthMetricsComparisonSection({
           {stockTwoSymbol} in the table below.
         </P>
       )}
+
       <Table className={styles.table}>
         <Table.Thead>
           <Table.Thead.Tr>
@@ -380,56 +375,56 @@ export async function FinancialStrengthMetricsComparisonSection({
               Current Ratio (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.currentRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.currentRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.currentRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.currentRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">Quick Ratio (TTM)</Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.quickRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.quickRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.quickRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.quickRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Debt-to-Equity Ratio (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.debtToEquityRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.debtToEquityRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Debt-to-Assets Ratio (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.debtToAssetsRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.debtToAssetsRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
+
           <Table.Tbody.Tr>
             <Table.Tbody.Tr.Th scope="row">
               Interest Coverage Ratio (TTM)
             </Table.Tbody.Tr.Th>
             <Table.Tbody.Tr.Td>
-              {stockOneRatiosData.interestCoverageRatioTTM === 0
-                ? "--"
-                : stockOneRatiosData.interestCoverageRatioTTM.toFixed(2)}
+              {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
             </Table.Tbody.Tr.Td>
             <Table.Tbody.Tr.Td>
-              {stockTwoRatiosData.interestCoverageRatioTTM === 0
-                ? "--"
-                : stockTwoRatiosData.interestCoverageRatioTTM.toFixed(2)}
+              {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
             </Table.Tbody.Tr.Td>
           </Table.Tbody.Tr>
         </Table.Tbody>

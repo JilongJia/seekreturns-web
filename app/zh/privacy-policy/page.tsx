@@ -47,7 +47,7 @@ function Page() {
           <span className={styles.modifiedDate}>
             更新于{" "}
             <time dateTime={modifiedDate.toISOString()}>
-              {modifiedDate.toLocaleDateString("zh-CN", {
+              {modifiedDate.toLocaleDateString("zh", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
