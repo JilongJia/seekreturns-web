@@ -1,4 +1,3 @@
-.table {
-  display: block;
+.tableContainer {
   overflow-x: auto;
 }

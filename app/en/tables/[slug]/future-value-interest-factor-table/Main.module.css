@@ -6,7 +6,6 @@
   margin-bottom: 0.5rem;
 }
 
-.table {
-  display: block;
+.tableContainer {
   overflow-x: auto;
 }

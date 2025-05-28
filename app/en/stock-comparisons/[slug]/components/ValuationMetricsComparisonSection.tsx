@@ -6,7 +6,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./ValuationMetricsComparisonSection.module.css";
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -42,6 +42,33 @@ function generatePriceToEarningsRatioCommentary(
   const categoryTwo = getPriceToEarningsRatioCategory(
     stockTwoPriceToEarningsRatio,
   );
+
+  if (
+    stockOnePriceToEarningsRatio === 0 &&
+    stockTwoPriceToEarningsRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOnePriceToEarningsRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} has a negative P/E ratio of ${priceToEarningsRatioTwo}, indicating recent losses which typically deter investors seeking profitable companies.`;
+    } else if (categoryTwo === "High") {
+      return `${symbolTwo}’s P/E ratio of ${priceToEarningsRatioTwo} is exceptionally high, suggesting investors have very strong expectations for its future earnings growth to justify such a premium valuation.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToEarningsRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `With a negative P/E ratio of ${priceToEarningsRatioOne}, ${symbolOne} is currently unprofitable, a key factor that often raises concerns about its financial health and valuation.`;
+    } else if (categoryOne === "High") {
+      return `A P/E ratio of ${priceToEarningsRatioOne} for ${symbolOne} places it in the high valuation bracket, reflecting significant optimism about its growth prospects that must materialize to support the current price.`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Neither ${symbolOne} nor ${symbolTwo} turned a profit—both carry negative P/E ratios of ${priceToEarningsRatioOne} and ${priceToEarningsRatioTwo}, underscoring continued losses that pressure their valuations.`;
@@ -97,6 +124,26 @@ function generateForwardPEGRatioCommentary(
   const categoryOne = getForwardPEGRatioCategory(stockOneForwardPEGRatio);
   const categoryTwo = getForwardPEGRatioCategory(stockTwoForwardPEGRatio);
 
+  if (stockOneForwardPEGRatio === 0 && stockTwoForwardPEGRatio === 0) {
+    return "";
+  }
+
+  if (stockOneForwardPEGRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `With its forward PEG ratio in negative territory at ${forwardPEGRatioTwo}, ${symbolTwo} faces projections of diminishing earnings or continued losses, posing a risk to its growth narrative.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoForwardPEGRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `Analysts project a negative forward PEG ratio for ${symbolOne} (${forwardPEGRatioOne}), reflecting expectations of declining earnings or losses ahead, which could weigh on its valuation.`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Analysts assign negative forward PEG ratios to both ${symbolOne} (${forwardPEGRatioOne}) and ${symbolTwo} (${forwardPEGRatioTwo}), suggesting expectation of shrinking or negative earnings in the upcoming period—a worrying sign for their profit outlook.`;
   }
@@ -133,6 +180,26 @@ function generatePriceToBookRatioCommentary(
   const priceToBookRatioTwo = stockTwoPriceToBookRatio.toFixed(2);
   const categoryOne = getPriceToBookRatioCategory(stockOnePriceToBookRatio);
   const categoryTwo = getPriceToBookRatioCategory(stockTwoPriceToBookRatio);
+
+  if (stockOnePriceToBookRatio === 0 && stockTwoPriceToBookRatio === 0) {
+    return "";
+  }
+
+  if (stockOnePriceToBookRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `A key concern for ${symbolTwo} is its negative price-to-book ratio (${priceToBookRatioTwo}), reflecting a situation where total liabilities outweigh the company’s assets.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToBookRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `With shareholder equity below zero, ${symbolOne}’s price-to-book ratio is negative (${priceToBookRatioOne}), highlighting a critical risk to its financial structure.`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Book value is underwater for both ${symbolOne} (${priceToBookRatioOne}) and ${symbolTwo} (${priceToBookRatioTwo}), meaning liabilities exceed assets—signaling a critical solvency risk for both companies.`;
@@ -179,6 +246,29 @@ function generatePriceToFreeCashFlowRatioCommentary(
     stockTwoPriceToFreeCashFlowRatio,
   );
 
+  if (
+    stockOnePriceToFreeCashFlowRatio === 0 &&
+    stockTwoPriceToFreeCashFlowRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOnePriceToFreeCashFlowRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo}’s negative P/FCF ratio of ${priceToFreeCashFlowRatioTwo} is a notable red flag, as it means the company did not produce positive free cash flow, impacting its ability to self-fund activities.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToFreeCashFlowRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `When free cash flow turns negative, as indicated by ${symbolOne}’s P/FCF ratio of ${priceToFreeCashFlowRatioOne}, it suggests the company’s operational cash generation is falling short of its needs, potentially requiring external funding.`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} and ${symbolTwo} both consumed more free cash flow than they generated last year—P/FCF of ${priceToFreeCashFlowRatioOne} and ${priceToFreeCashFlowRatioTwo}, respectively—highlighting persistent liquidity pressure.`;
   }
@@ -224,49 +314,35 @@ export async function ValuationMetricsComparisonSection({
     );
   }
 
-  const priceToEarningsRatioCommentary =
-    stockOneRatiosData.priceToEarningsRatioTTM === 0 ||
-    stockTwoRatiosData.priceToEarningsRatioTTM === 0
-      ? ""
-      : generatePriceToEarningsRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToEarningsRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToEarningsRatioTTM,
-        );
+  const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.priceToEarningsRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.priceToEarningsRatioTTM,
+  );
 
   const forwardPriceToEarningsGrowthRatioCommentary =
-    stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0 ||
-    stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0
-      ? ""
-      : generateForwardPEGRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-        );
+    generateForwardPEGRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+    );
 
-  const priceToBookRatioCommentary =
-    stockOneRatiosData.priceToBookRatioTTM === 0 ||
-    stockTwoRatiosData.priceToBookRatioTTM === 0
-      ? ""
-      : generatePriceToBookRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToBookRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToBookRatioTTM,
-        );
+  const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.priceToBookRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.priceToBookRatioTTM,
+  );
 
   const priceToFreeCashFlowRatioCommentary =
-    stockOneRatiosData.priceToFreeCashFlowRatioTTM === 0 ||
-    stockTwoRatiosData.priceToFreeCashFlowRatioTTM === 0
-      ? ""
-      : generatePriceToFreeCashFlowRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToFreeCashFlowRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
-        );
+    generatePriceToFreeCashFlowRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.priceToFreeCashFlowRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
+    );
 
   const hasCommentary = [
     priceToEarningsRatioCommentary,
@@ -313,115 +389,123 @@ export async function ValuationMetricsComparisonSection({
         </P>
       )}
 
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
 
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Earnings Ratio (P/E, TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Price-to-Earnings Ratio (P/E, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Forward PEG Ratio (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(
-                stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-              )}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(
-                stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-              )}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Forward PEG Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(
+                  stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+                )}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(
+                  stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+                )}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Sales Ratio (P/S, TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Price-to-Sales Ratio (P/S, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Book Ratio (P/B, TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Price-to-Book Ratio (P/B, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Price-to-Free Cash Flow Ratio (P/FCF, TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Price-to-Free Cash Flow Ratio (P/FCF, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              EV-to-EBITDA (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                EV-to-EBITDA (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">EV-to-Sales (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                EV-to-Sales (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              EV-to-Free Cash Flow (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToFreeCashFlowTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                EV-to-Free Cash Flow (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToFreeCashFlowTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }

@@ -9,26 +9,28 @@ import styles from "./Form.module.css";
 type FormProps = { className?: string };
 
 export function Form({ className }: FormProps) {
-  const [tickerOne, setTickerOne] = useState("");
-  const [tickerTwo, setTickerTwo] = useState("");
+  const [symbolOne, setSymbolOne] = useState("");
+  const [symbolTwo, setSymbolTwo] = useState("");
   const router = useRouter();
 
-  const handleTickerOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTickerOne(e.target.value.toUpperCase());
+  const handleSymbolOneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSymbolOne(e.target.value.toUpperCase());
   };
 
-  const handleTickerTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTickerTwo(e.target.value.toUpperCase());
+  const handleSymbolTwoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSymbolTwo(e.target.value.toUpperCase());
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedTickerOne = tickerOne.trim();
-    const trimmedTickerTwo = tickerTwo.trim();
+    const processedSymbolOne = symbolOne.trim().toLowerCase();
+    const processedSymbolTwo = symbolTwo.trim().toLowerCase();
 
-    if (!trimmedTickerOne || !trimmedTickerTwo) return;
+    if (!processedSymbolOne || !processedSymbolTwo) return;
 
-    const destinationUrl = `/en/stock-comparisons/${trimmedTickerOne.toLowerCase()}-vs-${trimmedTickerTwo.toLowerCase()}`;
+    const sortedSymbols = [processedSymbolOne, processedSymbolTwo].sort();
+
+    const destinationUrl = `/en/stock-comparisons/${sortedSymbols[0]}-vs-${sortedSymbols[1]}`;
     router.push(destinationUrl);
   };
 
@@ -38,16 +40,16 @@ export function Form({ className }: FormProps) {
         <input
           type="text"
           placeholder="AAPL"
-          value={tickerOne}
-          onChange={handleTickerOneChange}
+          value={symbolOne}
+          onChange={handleSymbolOneChange}
           className={styles.input}
         />
         <span className={styles.vsText}> vs. </span>
         <input
           type="text"
           placeholder="NVDA"
-          value={tickerTwo}
-          onChange={handleTickerTwoChange}
+          value={symbolTwo}
+          onChange={handleSymbolTwoChange}
           className={styles.input}
         />
       </div>

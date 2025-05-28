@@ -4,7 +4,7 @@ import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./DividendComparisonSection.module.css";
 
 type DividendComparisonSectionProps = {
   stockOneSymbol: string;
@@ -99,27 +99,35 @@ export async function DividendComparisonSection({
   return (
     <Section ariaLabelledby="dividend-comparison">
       <H2 id="dividend-comparison">股息比较</H2>
+
       <P>{dividendYieldCommentary}</P>
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }

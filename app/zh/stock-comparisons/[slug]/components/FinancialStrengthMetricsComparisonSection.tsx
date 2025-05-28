@@ -5,7 +5,7 @@ import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./FinancialStrengthMetricsComparisonSection.module.css";
 
 type FinancialStrengthMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -33,6 +33,26 @@ function generateCurrentRatioCommentary(
   const currentRatioTwo = stockTwoCurrentRatio.toFixed(2);
   const categoryOne = getCurrentRatioCategory(stockOneCurrentRatio);
   const categoryTwo = getCurrentRatioCategory(stockTwoCurrentRatio);
+
+  if (stockOneCurrentRatio === 0 && stockTwoCurrentRatio === 0) {
+    return "";
+  }
+
+  if (stockOneCurrentRatio === 0) {
+    if (categoryTwo === "Low") {
+      return `${symbolTwo} 的流动比率为 ${currentRatioTwo}，处于较低水平，可能在应对短期债务方面存在一定压力。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoCurrentRatio === 0) {
+    if (categoryOne === "Low") {
+      return `${symbolOne} 的流动比率 (${currentRatioOne}) 偏低，其短期资产变现能力可能不足以覆盖即期负债，需关注其营运资金状况。`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Low" && categoryTwo === "Low") {
     return `鉴于 ${symbolOne} 的流动比率为 ${currentRatioOne}，${symbolTwo} 的流动比率为 ${currentRatioTwo}，两者的流动资产均低于短期负债。这可能导致其营运资金紧张，并迫使它们依赖额外融资。`;
@@ -69,8 +89,28 @@ function generateQuickRatioCommentary(
   const categoryOne = getQuickRatioCategory(stockOneQuickRatio);
   const categoryTwo = getQuickRatioCategory(stockTwoQuickRatio);
 
+  if (stockOneQuickRatio === 0 && stockTwoQuickRatio === 0) {
+    return "";
+  }
+
+  if (stockOneQuickRatio === 0) {
+    if (categoryTwo === "Low") {
+      return `${symbolTwo} 的速动比率为 ${quickRatioTwo}，这通常表示其在不动用存货的情况下，短期偿债能力可能偏弱，需留意其流动性风险。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoQuickRatio === 0) {
+    if (categoryOne === "Low") {
+      return `${symbolOne} 的速动比率 (${quickRatioOne}) 较低，其最易变现资产对即期债务的覆盖能力有限，这可能对其短期资金调度带来考验。`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Low" && categoryTwo === "Low") {
-    return `${symbolOne} (速动比率 ${quickRatioOne}) 和 ${symbolTwo} (速动比率 ${quickRatioTwo}) 的速动比率均低于 ${QUICK_RATIO_THRESHOLD_LOW}，这意味着他们最具流动性的资产 (不包括存货) 不足以应付短期债务。这可能迫使他们依赖应收账款、存货周转或外部融资。`;
+    return `${symbolOne} (速动比率 ${quickRatioOne}) 和 ${symbolTwo} (速动比率 ${quickRatioTwo}) 的速动比率均低于 ${QUICK_RATIO_THRESHOLD_LOW.toFixed(1)}，这意味着他们最具流动性的资产 (不包括存货) 不足以应付短期债务。这可能迫使他们依赖应收账款、存货周转或外部融资。`;
   }
 
   if (categoryOne === "Low" && categoryTwo === "Normal") {
@@ -110,70 +150,57 @@ function generateDebtToEquityRatioCommentary(
   const categoryOne = getDebtToEquityRatioCategory(stockOneDebtToEquityRatio);
   const categoryTwo = getDebtToEquityRatioCategory(stockTwoDebtToEquityRatio);
 
+  if (stockOneDebtToEquityRatio === 0 && stockTwoDebtToEquityRatio === 0) {
+    return "";
+  }
+
+  if (stockOneDebtToEquityRatio === 0) {
+    if (categoryTwo === "High") {
+      return `${symbolTwo} 的负债权益比率高达 ${debtToEquityRatioTwo}，显示其财务杠杆运用较为激进，这在市场景气时有望放大投资回报，但也显著增加了潜在的财务风险。`;
+    } else if (categoryTwo === "Negative") {
+      return `${symbolTwo} 的股东权益为负 (负债权益比率 ${debtToEquityRatioTwo})，通常表明其总负债已超过总资产，这是一个值得警惕的严重财务信号。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoDebtToEquityRatio === 0) {
+    if (categoryOne === "High") {
+      return `${symbolOne} 的资本结构显示其负债权益比率 (${debtToEquityRatioOne}) 较高，意味着债务融资占比较大，这可能带来较高的财务杠杆效应及相应风险。`;
+    } else if (categoryOne === "Negative") {
+      return `${symbolOne} 的财务报表显示其股东权益为负 (负债权益比率 ${debtToEquityRatioOne})，此状况揭示其净资产已无法抵补全部债务，公司面临较大的偿付压力。`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
-    return `${symbolOne} (D/E ${debtToEquityRatioOne}) 和 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 均呈现负股东权益 — 其资产低于负债 — 表明两者均存在严重的资产负债表压力。`;
+    return `${symbolOne} (负债权益比率 ${debtToEquityRatioOne}) 和 ${symbolTwo} (负债权益比率 ${debtToEquityRatioTwo}) 均呈现负股东权益 — 其资产低于负债 — 表明两者均存在严重的资产负债表压力。`;
   }
 
   if (categoryOne === "High" && categoryTwo === "High") {
-    return `${symbolOne} 和 ${symbolTwo} 的 D/E 比率均高于 ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH.toFixed(1)} (分别为 ${debtToEquityRatioOne} 和 ${debtToEquityRatioTwo})，反映了其积极利用债务杠杆。这既可能放大收益，但也增加了在利率上升时的脆弱性。`;
+    return `${symbolOne} 和 ${symbolTwo} 的负债权益比率均高于 ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH.toFixed(1)} (分别为 ${debtToEquityRatioOne} 和 ${debtToEquityRatioTwo})，反映了其积极利用债务杠杆。这既可能放大收益，但也增加了在利率上升时的脆弱性。`;
   }
 
   if (categoryOne === "Negative" && categoryTwo === "High") {
-    return `${symbolOne} 显示为负股东权益 (D/E ${debtToEquityRatioOne})，而 ${symbolTwo} 则杠杆率过高 (D/E ${debtToEquityRatioTwo})，两者揭示了不同类型的资产负债表风险。`;
+    return `${symbolOne} 显示为负股东权益 (负债权益比率 ${debtToEquityRatioOne})，而 ${symbolTwo} 则杠杆率过高 (负债权益比率 ${debtToEquityRatioTwo})，两者揭示了不同类型的资产负债表风险。`;
   }
   if (categoryOne === "High" && categoryTwo === "Negative") {
-    return `${symbolOne} 杠杆率较高 (D/E ${debtToEquityRatioOne})，而 ${symbolTwo} 则为负股东权益 (D/E ${debtToEquityRatioTwo})，两者均体现了显著的资本结构问题。`;
+    return `${symbolOne} 杠杆率较高 (负债权益比率 ${debtToEquityRatioOne})，而 ${symbolTwo} 则为负股东权益 (负债权益比率 ${debtToEquityRatioTwo})，两者均体现了显著的资本结构问题。`;
   }
 
   if (categoryOne === "Negative" && categoryTwo === "Normal") {
-    return `${symbolOne} 的股东权益为负 (D/E ${debtToEquityRatioOne})，这是一个异常的警示信号；而 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 则维持着常规的债务股本平衡。`;
+    return `${symbolOne} 的股东权益为负 (负债权益比率 ${debtToEquityRatioOne})，这是一个异常的警示信号；而 ${symbolTwo} (负债权益比率 ${debtToEquityRatioTwo}) 则维持着常规的债务股本平衡。`;
   }
   if (categoryOne === "Normal" && categoryTwo === "Negative") {
-    return `${symbolTwo} 的股东权益为负 (D/E ${debtToEquityRatioTwo})，可能意味着资产不足；相较而言，${symbolOne} (D/E ${debtToEquityRatioOne}) 保持着更健康的股东权益覆盖水平。`;
+    return `${symbolTwo} 的股东权益为负 (负债权益比率 ${debtToEquityRatioTwo})，可能意味着资产不足；相较而言，${symbolOne} (负债权益比率 ${debtToEquityRatioOne}) 保持着更健康的股东权益覆盖水平。`;
   }
 
   if (categoryOne === "High" && categoryTwo === "Normal") {
-    return `${symbolOne} 杠杆率较高 (D/E ${debtToEquityRatioOne})，这可能提高回报，但若借贷成本上升则会增加风险；而 ${symbolTwo} (D/E ${debtToEquityRatioTwo}) 的杠杆保持在更温和的水平。`;
+    return `${symbolOne} 杠杆率较高 (负债权益比率 ${debtToEquityRatioOne})，这可能提高回报，但若借贷成本上升则会增加风险；而 ${symbolTwo} (负债权益比率 ${debtToEquityRatioTwo}) 的杠杆保持在更温和的水平。`;
   }
   if (categoryOne === "Normal" && categoryTwo === "High") {
-    return `${symbolTwo} 的杠杆率很高 (D/E ${debtToEquityRatioTwo})，同时推高了潜在收益和风险；相比之下，${symbolOne} (D/E ${debtToEquityRatioOne}) 维持着更稳健的资本结构。`;
-  }
-
-  return "";
-}
-
-function generateDebtToAssetsRatioCommentary(
-  stockOneSymbol: string,
-  stockOneDebtToAssetsRatio: number,
-  stockTwoSymbol: string,
-  stockTwoDebtToAssetsRatio: number,
-): string {
-  const DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH = 0.8;
-
-  type DebtToAssetsRatioCategory = "High" | "Normal";
-
-  const getDebtToAssetsRatioCategory = (
-    ratio: number,
-  ): DebtToAssetsRatioCategory =>
-    ratio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
-
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const debtToAssetsRatioOne = stockOneDebtToAssetsRatio.toFixed(2);
-  const debtToAssetsRatioTwo = stockTwoDebtToAssetsRatio.toFixed(2);
-  const categoryOne = getDebtToAssetsRatioCategory(stockOneDebtToAssetsRatio);
-  const categoryTwo = getDebtToAssetsRatioCategory(stockTwoDebtToAssetsRatio);
-
-  if (categoryOne === "High" && categoryTwo === "High") {
-    return `由于债务资金占总资产比例均超过80% (${symbolOne} 为 ${debtToAssetsRatioOne}，${symbolTwo} 为 ${debtToAssetsRatioTwo})，两家公司都运用了高杠杆。这既可能提高回报，但也增加了在资产价值下跌或借贷成本攀升时的风险。`;
-  }
-
-  if (categoryOne === "High" && categoryTwo === "Normal") {
-    return `${symbolOne} 的负债占资产比率 ${debtToAssetsRatioOne} 表明其严重依赖债务来支持资产 — 这在经济下行时可能具有风险 — 而 ${symbolTwo} (比率 ${debtToAssetsRatioTwo}) 则将借贷保持在更温和的水平。`;
-  }
-
-  if (categoryOne === "Normal" && categoryTwo === "High") {
-    return `${symbolTwo} 的负债占资产比率 ${debtToAssetsRatioTwo} 显示其资产主要通过债务融资，而 ${symbolOne} (比率 ${debtToAssetsRatioOne}) 则选择了更为保守的融资结构。`;
+    return `${symbolTwo} 的杠杆率很高 (负债权益比率 ${debtToEquityRatioTwo})，同时推高了潜在收益和风险；相比之下，${symbolOne} (负债权益比率 ${debtToEquityRatioOne}) 维持着更稳健的资本结构。`;
   }
 
   return "";
@@ -208,6 +235,33 @@ function generateInterestCoverageRatioCommentary(
   const categoryTwo = getInterestCoverageRatioCategory(
     stockTwoInterestCoverageRatio,
   );
+
+  if (
+    stockOneInterestCoverageRatio === 0 &&
+    stockTwoInterestCoverageRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOneInterestCoverageRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} 的利息保障倍数为负 (${interestCoverageRatioTwo})，表明其经营活动未能产生足够的息税前利润来支付利息，财务状况堪忧。`;
+    } else if (categoryTwo === "Low") {
+      return `${symbolTwo} (利息保障倍数 ${interestCoverageRatioTwo}) 的情况显示其营业利润对利息的覆盖较为勉强，这可能带来较高的偿债风险。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoInterestCoverageRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `${symbolOne} 录得负的利息保障倍数 (${interestCoverageRatioOne})，这直接表明其核心盈利不足以支付利息费用，对公司的财务稳定性构成威胁。`;
+    } else if (categoryOne === "Low") {
+      return `${symbolOne} 的利息保障倍数 (${interestCoverageRatioOne}) 处于较低水平，显示其盈利对利息的保障能力有限，可能面临一定的财务压力。`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} 和 ${symbolTwo} 的利息保障倍数均为负 (分别为 ${interestCoverageRatioOne} 和 ${interestCoverageRatioTwo})，意味着息税前利润 (EBIT) 为负 — 两者均无法覆盖利息支出，这是严重的偿付能力警告。`;
@@ -258,66 +312,39 @@ export async function FinancialStrengthMetricsComparisonSection({
     );
   }
 
-  const currentRatioCommentary =
-    stockOneRatiosData.currentRatioTTM === 0 ||
-    stockTwoRatiosData.currentRatioTTM === 0
-      ? ""
-      : generateCurrentRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.currentRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.currentRatioTTM,
-        );
+  const currentRatioCommentary = generateCurrentRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.currentRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.currentRatioTTM,
+  );
 
-  const quickRatioCommentary =
-    stockOneRatiosData.quickRatioTTM === 0 ||
-    stockTwoRatiosData.quickRatioTTM === 0
-      ? ""
-      : generateQuickRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.quickRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.quickRatioTTM,
-        );
+  const quickRatioCommentary = generateQuickRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.quickRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.quickRatioTTM,
+  );
 
-  const debtToEquityRatioCommentary =
-    stockOneRatiosData.debtToEquityRatioTTM === 0 ||
-    stockTwoRatiosData.debtToEquityRatioTTM === 0
-      ? ""
-      : generateDebtToEquityRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.debtToEquityRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.debtToEquityRatioTTM,
-        );
-
-  const debtToAssetsRatioCommentary =
-    stockOneRatiosData.debtToAssetsRatioTTM === 0 ||
-    stockTwoRatiosData.debtToAssetsRatioTTM === 0
-      ? ""
-      : generateDebtToAssetsRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.debtToAssetsRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.debtToAssetsRatioTTM,
-        );
+  const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.debtToEquityRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.debtToEquityRatioTTM,
+  );
 
   const interestCoverageRatioCommentary =
-    stockOneRatiosData.interestCoverageRatioTTM === 0 ||
-    stockTwoRatiosData.interestCoverageRatioTTM === 0
-      ? ""
-      : generateInterestCoverageRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.interestCoverageRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.interestCoverageRatioTTM,
-        );
+    generateInterestCoverageRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.interestCoverageRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.interestCoverageRatioTTM,
+    );
 
   const hasCommentary = [
     currentRatioCommentary,
     quickRatioCommentary,
     debtToEquityRatioCommentary,
-    debtToAssetsRatioCommentary,
     interestCoverageRatioCommentary,
   ].some((commentary) => commentary !== "");
 
@@ -340,9 +367,6 @@ export async function FinancialStrengthMetricsComparisonSection({
             {debtToEquityRatioCommentary && (
               <Ul.Li>{debtToEquityRatioCommentary}</Ul.Li>
             )}
-            {debtToAssetsRatioCommentary && (
-              <Ul.Li>{debtToAssetsRatioCommentary}</Ul.Li>
-            )}
             {interestCoverageRatioCommentary && (
               <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
             )}
@@ -354,73 +378,67 @@ export async function FinancialStrengthMetricsComparisonSection({
         </P>
       )}
 
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
 
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.currentRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.currentRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.currentRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.currentRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.quickRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.quickRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.quickRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.quickRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              负债股东权益比 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                负债权益比率 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              负债资产比率 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              利息保障倍数 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                利息保障倍数 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }

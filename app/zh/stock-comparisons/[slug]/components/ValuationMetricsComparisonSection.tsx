@@ -6,7 +6,7 @@ import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./ValuationMetricsComparisonSection.module.css";
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -42,6 +42,33 @@ function generatePriceToEarningsRatioCommentary(
   const categoryTwo = getPriceToEarningsRatioCategory(
     stockTwoPriceToEarningsRatio,
   );
+
+  if (
+    stockOnePriceToEarningsRatio === 0 &&
+    stockTwoPriceToEarningsRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOnePriceToEarningsRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} 的市盈率为负 (${priceToEarningsRatioTwo})，通常表明该公司近期出现亏损，盈利能力面临挑战。`;
+    } else if (categoryTwo === "High") {
+      return `${symbolTwo} 的市盈率 (${priceToEarningsRatioTwo}) 远高于常规水平，这反映了市场对其未来高速增长的极高预期，但同时也可能意味着较高的估值风险。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToEarningsRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `${symbolOne} 的财务数据显示其市盈率为负 (${priceToEarningsRatioOne})，这通常与公司未能实现盈利相关，提示投资者关注其未来走向。`;
+    } else if (categoryOne === "High") {
+      return `${symbolOne} 拥有非常高的市盈率 (${priceToEarningsRatioOne})，市场似乎对其增长潜力寄予厚望，但高估值能否持续需未来业绩证明。`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} 和 ${symbolTwo} 均未实现盈利 — 两者均为负市盈率 (分别为 ${priceToEarningsRatioOne} 和 ${priceToEarningsRatioTwo})，突显了持续亏损对其估值造成的压力。`;
@@ -97,6 +124,26 @@ function generateForwardPEGRatioCommentary(
   const categoryOne = getForwardPEGRatioCategory(stockOneForwardPEGRatio);
   const categoryTwo = getForwardPEGRatioCategory(stockTwoForwardPEGRatio);
 
+  if (stockOneForwardPEGRatio === 0 && stockTwoForwardPEGRatio === 0) {
+    return "";
+  }
+
+  if (stockOneForwardPEGRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} 的前瞻 PEG 比率为负 (${forwardPEGRatioTwo})，通常意味着分析师预测其未来盈利增长可能为负，前景堪忧。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoForwardPEGRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `关于 ${symbolOne}，其前瞻 PEG 比率为负 (${forwardPEGRatioOne})，这通常预示着市场对其盈利前景持谨慎态度，可能出现萎缩。`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} (${forwardPEGRatioOne}) 和 ${symbolTwo} (${forwardPEGRatioTwo}) 的前瞻 PEG 比率均为负值，这表明分析师预期其在未来一期可能出现盈利萎缩或负增长 — 这是对其盈利前景的一个令人担忧的信号。`;
   }
@@ -133,6 +180,26 @@ function generatePriceToBookRatioCommentary(
   const priceToBookRatioTwo = stockTwoPriceToBookRatio.toFixed(2);
   const categoryOne = getPriceToBookRatioCategory(stockOnePriceToBookRatio);
   const categoryTwo = getPriceToBookRatioCategory(stockTwoPriceToBookRatio);
+
+  if (stockOnePriceToBookRatio === 0 && stockTwoPriceToBookRatio === 0) {
+    return "";
+  }
+
+  if (stockOnePriceToBookRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} 的市净率为负 (${priceToBookRatioTwo})，通常意味着其负债总额已超过资产总额，这对公司的财务健康构成了显著威胁。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToBookRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `针对 ${symbolOne}，其市净率 (${priceToBookRatioOne}) 为负数，反映了股东权益为负的状况，这是衡量其财务稳定性时一个不可忽视的风险点。`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} (${priceToBookRatioOne}) 和 ${symbolTwo} (${priceToBookRatioTwo}) 的账面价值均为负，意味着其负债超过资产 — 这对两家公司而言都是一个严重的偿付能力风险信号。`;
@@ -179,6 +246,29 @@ function generatePriceToFreeCashFlowRatioCommentary(
     stockTwoPriceToFreeCashFlowRatio,
   );
 
+  if (
+    stockOnePriceToFreeCashFlowRatio === 0 &&
+    stockTwoPriceToFreeCashFlowRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOnePriceToFreeCashFlowRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} 录得负的市价自由现金流比率 (${priceToFreeCashFlowRatioTwo})，这表明其经营活动未能有效产生自由现金，可能对其财务灵活性和未来投资构成制约。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoPriceToFreeCashFlowRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `${symbolOne} 的市价自由现金流比率呈现负值 (${priceToFreeCashFlowRatioOne})，表明其自由现金流为负，公司或需依赖外部融资来支持运营及发展，值得投资者留意。`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `${symbolOne} 和 ${symbolTwo} 在过去一年消耗的自由现金流均超过其产生的数额 — 市价自由现金流比率 (P/FCF) 分别为 ${priceToFreeCashFlowRatioOne} 和 ${priceToFreeCashFlowRatioTwo} — 这突显了持续的流动性压力。`;
   }
@@ -224,49 +314,35 @@ export async function ValuationMetricsComparisonSection({
     );
   }
 
-  const priceToEarningsRatioCommentary =
-    stockOneRatiosData.priceToEarningsRatioTTM === 0 ||
-    stockTwoRatiosData.priceToEarningsRatioTTM === 0
-      ? ""
-      : generatePriceToEarningsRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToEarningsRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToEarningsRatioTTM,
-        );
+  const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.priceToEarningsRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.priceToEarningsRatioTTM,
+  );
 
   const forwardPriceToEarningsGrowthRatioCommentary =
-    stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0 ||
-    stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM === 0
-      ? ""
-      : generateForwardPEGRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-        );
+    generateForwardPEGRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+    );
 
-  const priceToBookRatioCommentary =
-    stockOneRatiosData.priceToBookRatioTTM === 0 ||
-    stockTwoRatiosData.priceToBookRatioTTM === 0
-      ? ""
-      : generatePriceToBookRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToBookRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToBookRatioTTM,
-        );
+  const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.priceToBookRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.priceToBookRatioTTM,
+  );
 
   const priceToFreeCashFlowRatioCommentary =
-    stockOneRatiosData.priceToFreeCashFlowRatioTTM === 0 ||
-    stockTwoRatiosData.priceToFreeCashFlowRatioTTM === 0
-      ? ""
-      : generatePriceToFreeCashFlowRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.priceToFreeCashFlowRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
-        );
+    generatePriceToFreeCashFlowRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.priceToFreeCashFlowRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
+    );
 
   const hasCommentary = [
     priceToEarningsRatioCommentary,
@@ -310,109 +386,121 @@ export async function ValuationMetricsComparisonSection({
         </P>
       )}
 
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
 
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">市盈率 (P/E, TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                市盈率 (P/E, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              前瞻 PEG 比率 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(
-                stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-              )}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(
-                stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-              )}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                前瞻 PEG 比率 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(
+                  stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+                )}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(
+                  stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
+                )}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">市销率 (P/S, TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                市销率 (P/S, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">市净率 (P/B, TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                市净率 (P/B, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              市价自由现金流比率 (P/FCF, TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                市价自由现金流比率 (P/FCF, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">EV/EBITDA (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">EV/EBITDA (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              企业价值/销售额 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                企业价值/销售额 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              企业价值/自由现金流 (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoKeyMetricsData.evToFreeCashFlowTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                企业价值/自由现金流 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToFreeCashFlowTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }

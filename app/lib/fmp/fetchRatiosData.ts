@@ -8,7 +8,6 @@ type RatiosData = {
   currentRatioTTM: number;
   quickRatioTTM: number;
   debtToEquityRatioTTM: number;
-  debtToAssetsRatioTTM: number;
   interestCoverageRatioTTM: number;
 };
 
@@ -44,7 +43,6 @@ export async function fetchRatiosData(
       currentRatioTTM: item.currentRatioTTM,
       quickRatioTTM: item.quickRatioTTM,
       debtToEquityRatioTTM: item.debtToEquityRatioTTM,
-      debtToAssetsRatioTTM: item.debtToAssetsRatioTTM,
       interestCoverageRatioTTM: item.interestCoverageRatioTTM,
     };
 

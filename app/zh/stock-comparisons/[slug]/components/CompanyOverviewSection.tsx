@@ -31,6 +31,11 @@ function generateMarketCapComparisonCommentary(
   });
   const currencyOne = stockOneCurrency;
   const currencyTwo = stockTwoCurrency;
+
+  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
+    return "";
+  }
+
   const ratio = stockOneMarketCap / stockTwoMarketCap;
 
   if (ratio > 1.5) {
@@ -55,6 +60,27 @@ function generateBetaComparisonCommentary(
   const symbolTwo = stockTwoSymbol;
   const betaOne = stockOneBeta.toFixed(2);
   const betaTwo = stockTwoBeta.toFixed(2);
+
+  if (stockOneBeta === 0 && stockTwoBeta === 0) {
+    return "";
+  }
+
+  if (stockOneBeta === 0) {
+    if (stockTwoBeta < 0) {
+      return `${symbolTwo} 的Beta值为负 (${betaTwo})，这通常表明其股价走势与整体市场相反，在市场下行时可能具有一定的避险或对冲价值。`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoBeta === 0) {
+    if (stockOneBeta < 0) {
+      return `观察到 ${symbolOne} 的Beta值为负 (${betaOne})，这显示其股价通常与大盘走势相左，这种逆向特性对某些投资策略可能具备吸引力。`;
+    } else {
+      return "";
+    }
+  }
+
   const ratio = stockOneBeta / stockTwoBeta;
 
   if (stockOneBeta > 0 && stockTwoBeta > 0) {
@@ -130,27 +156,21 @@ export async function CompanyOverviewSection({
     );
   }
 
-  const marketCapComparisonCommentary =
-    stockOneProfileData.marketCap === 0 || stockTwoProfileData.marketCap === 0
-      ? ""
-      : generateMarketCapComparisonCommentary(
-          stockOneSymbol,
-          stockOneProfileData.marketCap,
-          stockOneProfileData.currency,
-          stockTwoSymbol,
-          stockTwoProfileData.marketCap,
-          stockTwoProfileData.currency,
-        );
+  const marketCapComparisonCommentary = generateMarketCapComparisonCommentary(
+    stockOneSymbol,
+    stockOneProfileData.marketCap,
+    stockOneProfileData.currency,
+    stockTwoSymbol,
+    stockTwoProfileData.marketCap,
+    stockTwoProfileData.currency,
+  );
 
-  const betaComparisonCommentary =
-    stockOneProfileData.beta === 0 || stockTwoProfileData.beta === 0
-      ? ""
-      : generateBetaComparisonCommentary(
-          stockOneSymbol,
-          stockOneProfileData.beta,
-          stockTwoSymbol,
-          stockTwoProfileData.beta,
-        );
+  const betaComparisonCommentary = generateBetaComparisonCommentary(
+    stockOneSymbol,
+    stockOneProfileData.beta,
+    stockTwoSymbol,
+    stockTwoProfileData.beta,
+  );
 
   const adrCommentary = generateAdrCommentary(
     stockOneSymbol,
@@ -168,6 +188,7 @@ export async function CompanyOverviewSection({
   return (
     <Section ariaLabelledby="company-overview">
       <H2 id="company-overview">公司概况</H2>
+
       {hasCommentary ? (
         <>
           {marketCapComparisonCommentary && (
@@ -182,122 +203,143 @@ export async function CompanyOverviewSection({
           的详细公司概况对比，请参见下方表格。
         </P>
       )}
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">公司名称</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.companyName}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.companyName}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">国家</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>{stockOneProfileData.country}</Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>{stockTwoProfileData.country}</Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">板块</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>{stockOneProfileData.sector}</Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>{stockTwoProfileData.sector}</Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">行业</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.industry}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.industry}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">首席执行官</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>{stockOneProfileData.ceo}</Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>{stockTwoProfileData.ceo}</Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">价格</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.price.toLocaleString("zh")}{" "}
-              {stockOneProfileData.currency}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.price.toLocaleString("zh")}{" "}
-              {stockTwoProfileData.currency}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">市值</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {(stockOneProfileData.marketCap / 1e8).toLocaleString("zh", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
-              亿 {stockOneProfileData.currency}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {(stockTwoProfileData.marketCap / 1e8).toLocaleString("zh", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}{" "}
-              亿 {stockTwoProfileData.currency}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">贝塔值 (波动性)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.beta.toFixed(2)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.beta.toFixed(2)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">交易所</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.exchange}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.exchange}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">IPO日期</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {new Date(stockOneProfileData.ipoDate).toLocaleDateString("zh", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {new Date(stockTwoProfileData.ipoDate).toLocaleDateString("zh", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">ADR</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {stockOneProfileData.isAdr ? "是" : "否"}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {stockTwoProfileData.isAdr ? "是" : "否"}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">公司名称</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.companyName}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.companyName}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">国家</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.country}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.country}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">板块</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.sector}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.sector}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">行业</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.industry}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.industry}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">首席执行官</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>{stockOneProfileData.ceo}</Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>{stockTwoProfileData.ceo}</Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">价格</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.price.toLocaleString("zh")}{" "}
+                {stockOneProfileData.currency}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.price.toLocaleString("zh")}{" "}
+                {stockTwoProfileData.currency}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">市值</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {(stockOneProfileData.marketCap / 1e8).toLocaleString("zh", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{" "}
+                亿 {stockOneProfileData.currency}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {(stockTwoProfileData.marketCap / 1e8).toLocaleString("zh", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{" "}
+                亿 {stockTwoProfileData.currency}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">贝塔值 (波动性)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.beta.toFixed(2)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.beta.toFixed(2)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">交易所</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.exchange}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.exchange}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">IPO日期</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {new Date(stockOneProfileData.ipoDate).toLocaleDateString(
+                  "zh",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  },
+                )}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {new Date(stockTwoProfileData.ipoDate).toLocaleDateString(
+                  "zh",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  },
+                )}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">ADR</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.isAdr ? "是" : "否"}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.isAdr ? "是" : "否"}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }

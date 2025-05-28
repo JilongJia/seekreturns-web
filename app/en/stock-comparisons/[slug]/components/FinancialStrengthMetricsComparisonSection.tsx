@@ -5,7 +5,7 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./FinancialStrengthMetricsComparisonSection.module.css";
 
 type FinancialStrengthMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -33,6 +33,26 @@ function generateCurrentRatioCommentary(
   const currentRatioTwo = stockTwoCurrentRatio.toFixed(2);
   const categoryOne = getCurrentRatioCategory(stockOneCurrentRatio);
   const categoryTwo = getCurrentRatioCategory(stockTwoCurrentRatio);
+
+  if (stockOneCurrentRatio === 0 && stockTwoCurrentRatio === 0) {
+    return "";
+  }
+
+  if (stockOneCurrentRatio === 0) {
+    if (categoryTwo === "Low") {
+      return `${symbolTwo} presents a low current ratio of ${currentRatioTwo}, signaling possible pressure on its ability to cover immediate liabilities.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoCurrentRatio === 0) {
+    if (categoryOne === "Low") {
+      return `${symbolOne}’s current ratio stands at a low ${currentRatioOne}, which could imply a tighter capacity to satisfy short-term debts.`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Low" && categoryTwo === "Low") {
     return `With current ratios of ${currentRatioOne} and ${currentRatioTwo}, both ${symbolOne} and ${symbolTwo} have less current assets than short-term liabilities, which could strain their working capital and force reliance on additional financing.`;
@@ -68,6 +88,26 @@ function generateQuickRatioCommentary(
   const quickRatioTwo = stockTwoQuickRatio.toFixed(2);
   const categoryOne = getQuickRatioCategory(stockOneQuickRatio);
   const categoryTwo = getQuickRatioCategory(stockTwoQuickRatio);
+
+  if (stockOneQuickRatio === 0 && stockTwoQuickRatio === 0) {
+    return "";
+  }
+
+  if (stockOneQuickRatio === 0) {
+    if (categoryTwo === "Low") {
+      return `${symbolTwo}’s quick ratio of ${quickRatioTwo} suggests a constrained ability to cover its immediate liabilities with highly liquid assets, potentially signaling near-term financial pressure.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoQuickRatio === 0) {
+    if (categoryOne === "Low") {
+      return `A quick ratio of ${quickRatioOne} for ${symbolOne} indicates that its readily convertible assets are low relative to short-term obligations, which might necessitate reliance on inventory sales or other funding sources.`;
+    } else {
+      return "";
+    }
+  }
 
   if (categoryOne === "Low" && categoryTwo === "Low") {
     return `Both ${symbolOne} (quick ratio ${quickRatioOne}) and ${symbolTwo} (quick ratio ${quickRatioTwo}) fall below 0.8, meaning their most liquid assets—excluding inventory—aren’t enough to meet short-term obligations. This could force them to rely on receivables, inventory turn, or external financing.`;
@@ -110,12 +150,36 @@ function generateDebtToEquityRatioCommentary(
   const categoryOne = getDebtToEquityRatioCategory(stockOneDebtToEquityRatio);
   const categoryTwo = getDebtToEquityRatioCategory(stockTwoDebtToEquityRatio);
 
+  if (stockOneDebtToEquityRatio === 0 && stockTwoDebtToEquityRatio === 0) {
+    return "";
+  }
+
+  if (stockOneDebtToEquityRatio === 0) {
+    if (categoryTwo === "High") {
+      return `${symbolTwo}’s debt-to-equity ratio of ${debtToEquityRatioTwo} is notably high, indicating substantial reliance on debt financing which can amplify both risks and potential returns.`;
+    } else if (categoryTwo === "Negative") {
+      return `${symbolTwo} reports a negative debt-to-equity ratio of ${debtToEquityRatioTwo}, typically a sign of negative shareholder equity and significant financial distress.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoDebtToEquityRatio === 0) {
+    if (categoryOne === "High") {
+      return `With a debt-to-equity ratio of ${debtToEquityRatioOne}, ${symbolOne} employs a considerable level of leverage, a strategy that could lead to higher volatility in its financial performance.`;
+    } else if (categoryOne === "Negative") {
+      return `${symbolOne}’s financial structure shows a negative debt-to-equity ratio of ${debtToEquityRatioOne}, pointing to an excess of liabilities over assets and raising concerns about its solvency.`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Both ${symbolOne} (debt-to-equity ratio ${debtToEquityRatioOne}) and ${symbolTwo} (${debtToEquityRatioTwo}) exhibit negative shareholder equity—assets fall short of liabilities—signaling serious balance-sheet stress.`;
   }
 
   if (categoryOne === "High" && categoryTwo === "High") {
-    return `${symbolOne} and ${symbolTwo} both have debt-to-equity ratios above ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH} (${debtToEquityRatioOne} and ${debtToEquityRatioTwo}), reflecting aggressive use of debt that can amplify gains but also increase vulnerability to rising rates.`;
+    return `${symbolOne} and ${symbolTwo} both have debt-to-equity ratios above ${DEBT_TO_EQUITY_RATIO_THRESHOLD_HIGH.toFixed(1)} (${debtToEquityRatioOne} and ${debtToEquityRatioTwo}), reflecting aggressive use of debt that can amplify gains but also increase vulnerability to rising rates.`;
   }
 
   if (categoryOne === "Negative" && categoryTwo === "High") {
@@ -137,43 +201,6 @@ function generateDebtToEquityRatioCommentary(
   }
   if (categoryOne === "Normal" && categoryTwo === "High") {
     return `${symbolTwo} is highly leveraged (debt-to-equity ratio ${debtToEquityRatioTwo}), elevating both potential gains and risks, compared to ${symbolOne} at ${debtToEquityRatioOne}, which maintains a steadier capital structure.`;
-  }
-
-  return "";
-}
-
-function generateDebtToAssetsRatioCommentary(
-  stockOneSymbol: string,
-  stockOneDebtToAssetsRatio: number,
-  stockTwoSymbol: string,
-  stockTwoDebtToAssetsRatio: number,
-): string {
-  const DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH = 0.8;
-
-  type DebtToAssetsRatioCategory = "High" | "Normal";
-
-  const getDebtToAssetsRatioCategory = (
-    ratio: number,
-  ): DebtToAssetsRatioCategory =>
-    ratio > DEBT_TO_ASSETS_RATIO_THRESHOLD_HIGH ? "High" : "Normal";
-
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const debtToAssetsRatioOne = stockOneDebtToAssetsRatio.toFixed(2);
-  const debtToAssetsRatioTwo = stockTwoDebtToAssetsRatio.toFixed(2);
-  const categoryOne = getDebtToAssetsRatioCategory(stockOneDebtToAssetsRatio);
-  const categoryTwo = getDebtToAssetsRatioCategory(stockTwoDebtToAssetsRatio);
-
-  if (categoryOne === "High" && categoryTwo === "High") {
-    return `With debt funding over 80% of their assets—${symbolOne} at ${debtToAssetsRatioOne} and ${symbolTwo} at ${debtToAssetsRatioTwo}—both firms use high leverage that can boost returns but also increases risk if asset values fall or borrowing costs climb.`;
-  }
-
-  if (categoryOne === "High" && categoryTwo === "Normal") {
-    return `${symbolOne}’s debt-to-assets ratio of ${debtToAssetsRatioOne} indicates it relies heavily on debt to back its assets—potentially risky in a downturn—whereas ${symbolTwo} at ${debtToAssetsRatioTwo} keeps borrowing to a more moderate level.`;
-  }
-
-  if (categoryOne === "Normal" && categoryTwo === "High") {
-    return `${symbolTwo} carries a debt-to-assets ratio of ${debtToAssetsRatioTwo}, suggesting substantial asset funding via debt, while ${symbolOne} at ${debtToAssetsRatioOne} opts for a more conservative financing structure.`;
   }
 
   return "";
@@ -209,6 +236,33 @@ function generateInterestCoverageRatioCommentary(
     stockTwoInterestCoverageRatio,
   );
 
+  if (
+    stockOneInterestCoverageRatio === 0 &&
+    stockTwoInterestCoverageRatio === 0
+  ) {
+    return "";
+  }
+
+  if (stockOneInterestCoverageRatio === 0) {
+    if (categoryTwo === "Negative") {
+      return `${symbolTwo} reports a negative interest coverage ratio of ${interestCoverageRatioTwo}, indicating its operating earnings are insufficient to cover even basic operations, let alone interest payments, a critical financial concern.`;
+    } else if (categoryTwo === "Low") {
+      return `${symbolTwo}’s interest coverage ratio of ${interestCoverageRatioTwo} is low, suggesting that its operating income barely covers (or does not cover) its interest expenses, signaling potential difficulty in servicing its debt.`;
+    } else {
+      return "";
+    }
+  }
+
+  if (stockTwoInterestCoverageRatio === 0) {
+    if (categoryOne === "Negative") {
+      return `With a negative interest coverage ratio of ${interestCoverageRatioOne}, ${symbolOne}’s operating income fails to meet its interest obligations, pointing to severe challenges in its core profitability and debt servicing capacity.`;
+    } else if (categoryOne === "Low") {
+      return `An interest coverage ratio of ${interestCoverageRatioOne} for ${symbolOne} indicates a constrained ability to meet interest payments from its operating earnings, highlighting a notable financial risk.`;
+    } else {
+      return "";
+    }
+  }
+
   if (categoryOne === "Negative" && categoryTwo === "Negative") {
     return `Both ${symbolOne} and ${symbolTwo} report negative interest coverage ratios (${interestCoverageRatioOne}, ${interestCoverageRatioTwo}), meaning EBIT itself is negative—neither can cover interest, a critical solvency warning.`;
   }
@@ -227,14 +281,14 @@ function generateInterestCoverageRatioCommentary(
     return `With negative EBIT (${interestCoverageRatioOne}), ${symbolOne} cannot cover its interest payments. ${symbolTwo}, with an interest coverage of ${interestCoverageRatioTwo}, meets its interest obligations.`;
   }
   if (categoryOne === "Normal" && categoryTwo === "Negative") {
-    return `${symbolOne} meets its interest obligations (ratio ${interestCoverageRatioOne}). In stark contrast, ${symbolTwo}’s negative ratio (${interestCoverageRatioTwo}) means its operating earnings (EBIT) don't cover basic operations, let alone interest, signaling serious financial trouble.`;
+    return `${symbolOne} meets its interest obligations (ratio ${interestCoverageRatioOne}). In stark contrast, ${symbolTwo}’s negative ratio (${interestCoverageRatioTwo}) means its operating earnings (EBIT) don’t cover basic operations, let alone interest, signaling serious financial trouble.`;
   }
 
   if (categoryOne === "Low" && categoryTwo === "Normal") {
-    return `${symbolOne}’s low ratio (${interestCoverageRatioOne}) indicates its earnings don't cover interest. ${symbolTwo} (at ${interestCoverageRatioTwo}) meets its interest obligations.`;
+    return `${symbolOne}’s low ratio (${interestCoverageRatioOne}) indicates its earnings don’t cover interest. ${symbolTwo} (at ${interestCoverageRatioTwo}) meets its interest obligations.`;
   }
   if (categoryOne === "Normal" && categoryTwo === "Low") {
-    return `${symbolTwo}’s low interest coverage (${interestCoverageRatioTwo}) means it doesn't cover interest from operating earnings. ${symbolOne} (at ${interestCoverageRatioOne}) meets its interest obligations.`;
+    return `${symbolTwo}’s low interest coverage (${interestCoverageRatioTwo}) means it doesn’t cover interest from operating earnings. ${symbolOne} (at ${interestCoverageRatioOne}) meets its interest obligations.`;
   }
 
   return "";
@@ -260,66 +314,39 @@ export async function FinancialStrengthMetricsComparisonSection({
     );
   }
 
-  const currentRatioCommentary =
-    stockOneRatiosData.currentRatioTTM === 0 ||
-    stockTwoRatiosData.currentRatioTTM === 0
-      ? ""
-      : generateCurrentRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.currentRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.currentRatioTTM,
-        );
+  const currentRatioCommentary = generateCurrentRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.currentRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.currentRatioTTM,
+  );
 
-  const quickRatioCommentary =
-    stockOneRatiosData.quickRatioTTM === 0 ||
-    stockTwoRatiosData.quickRatioTTM === 0
-      ? ""
-      : generateQuickRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.quickRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.quickRatioTTM,
-        );
+  const quickRatioCommentary = generateQuickRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.quickRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.quickRatioTTM,
+  );
 
-  const debtToEquityRatioCommentary =
-    stockOneRatiosData.debtToEquityRatioTTM === 0 ||
-    stockTwoRatiosData.debtToEquityRatioTTM === 0
-      ? ""
-      : generateDebtToEquityRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.debtToEquityRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.debtToEquityRatioTTM,
-        );
-
-  const debtToAssetsRatioCommentary =
-    stockOneRatiosData.debtToAssetsRatioTTM === 0 ||
-    stockTwoRatiosData.debtToAssetsRatioTTM === 0
-      ? ""
-      : generateDebtToAssetsRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.debtToAssetsRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.debtToAssetsRatioTTM,
-        );
+  const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
+    stockOneSymbol,
+    stockOneRatiosData.debtToEquityRatioTTM,
+    stockTwoSymbol,
+    stockTwoRatiosData.debtToEquityRatioTTM,
+  );
 
   const interestCoverageRatioCommentary =
-    stockOneRatiosData.interestCoverageRatioTTM === 0 ||
-    stockTwoRatiosData.interestCoverageRatioTTM === 0
-      ? ""
-      : generateInterestCoverageRatioCommentary(
-          stockOneSymbol,
-          stockOneRatiosData.interestCoverageRatioTTM,
-          stockTwoSymbol,
-          stockTwoRatiosData.interestCoverageRatioTTM,
-        );
+    generateInterestCoverageRatioCommentary(
+      stockOneSymbol,
+      stockOneRatiosData.interestCoverageRatioTTM,
+      stockTwoSymbol,
+      stockTwoRatiosData.interestCoverageRatioTTM,
+    );
 
   const hasCommentary = [
     currentRatioCommentary,
     quickRatioCommentary,
     debtToEquityRatioCommentary,
-    debtToAssetsRatioCommentary,
     interestCoverageRatioCommentary,
   ].some((commentary) => commentary !== "");
 
@@ -346,9 +373,6 @@ export async function FinancialStrengthMetricsComparisonSection({
             {debtToEquityRatioCommentary && (
               <Ul.Li>{debtToEquityRatioCommentary}</Ul.Li>
             )}
-            {debtToAssetsRatioCommentary && (
-              <Ul.Li>{debtToAssetsRatioCommentary}</Ul.Li>
-            )}
             {interestCoverageRatioCommentary && (
               <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
             )}
@@ -361,74 +385,70 @@ export async function FinancialStrengthMetricsComparisonSection({
         </P>
       )}
 
-      <Table className={styles.table}>
-        <Table.Thead>
-          <Table.Thead.Tr>
-            <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockOneSymbol}</Table.Thead.Tr.Th>
-            <Table.Thead.Tr.Th scope="col">{stockTwoSymbol}</Table.Thead.Tr.Th>
-          </Table.Thead.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Current Ratio (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.currentRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.currentRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+      <div className={styles.tableContainer}>
+        <Table>
+          <Table.Thead>
+            <Table.Thead.Tr>
+              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockOneSymbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoSymbol}
+              </Table.Thead.Tr.Th>
+            </Table.Thead.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Current Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.currentRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.currentRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">Quick Ratio (TTM)</Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.quickRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.quickRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Quick Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.quickRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.quickRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Debt-to-Equity Ratio (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Debt-to-Equity Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
 
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Debt-to-Assets Ratio (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-
-          <Table.Tbody.Tr>
-            <Table.Tbody.Tr.Th scope="row">
-              Interest Coverage Ratio (TTM)
-            </Table.Tbody.Tr.Th>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
-            </Table.Tbody.Tr.Td>
-            <Table.Tbody.Tr.Td>
-              {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
-            </Table.Tbody.Tr.Td>
-          </Table.Tbody.Tr>
-        </Table.Tbody>
-      </Table>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Interest Coverage Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+          </Table.Tbody>
+        </Table>
+      </div>
     </Section>
   );
 }
