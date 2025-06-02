@@ -1,4 +1,7 @@
 import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
+import { generateMarketCapCommentary } from "./lib/generateMarketCapCommentary";
+import { generateBetaCommentary } from "./lib/generateBetaCommentary";
+import { generateAdrCommentary } from "./lib/generateAdrCommentary";
 
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
@@ -11,141 +14,14 @@ type CompanyOverviewSectionProps = {
   stockTwoSymbol: string;
 };
 
-function generateMarketCapComparisonCommentary(
-  stockOneSymbol: string,
-  stockOneMarketCap: number,
-  stockOneCurrency: string,
-  stockTwoSymbol: string,
-  stockTwoMarketCap: number,
-  stockTwoCurrency: string,
-): string {
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const marketCapOne = (stockOneMarketCap / 1e9).toLocaleString("en", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const marketCapTwo = (stockTwoMarketCap / 1e9).toLocaleString("en", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const currencyOne = stockOneCurrency;
-  const currencyTwo = stockTwoCurrency;
-
-  if (stockOneMarketCap === 0 || stockTwoMarketCap === 0) {
-    return "";
-  }
-
-  const ratio = stockOneMarketCap / stockTwoMarketCap;
-
-  if (ratio > 1.5) {
-    return `${symbolOne} dominates in value with a market cap of ${marketCapOne} billion ${currencyOne}, eclipsing ${symbolTwo}’s ${marketCapTwo} billion ${currencyTwo} by roughly ${ratio.toFixed(2)}×.`;
-  }
-
-  if (ratio < 0.67) {
-    const inverseRatio = (1 / ratio).toFixed(2);
-    return `${symbolTwo} stands out with ${marketCapTwo} billion ${currencyTwo} in market value—about ${inverseRatio}× ${symbolOne}’s market cap of ${marketCapOne} billion ${currencyOne}.`;
-  }
-
-  return `With ${symbolOne} at ${marketCapOne} billion ${currencyOne} and ${symbolTwo} at ${marketCapTwo} billion ${currencyTwo}, their market capitalizations sit in the same ballpark.`;
-}
-
-function generateBetaComparisonCommentary(
-  stockOneSymbol: string,
-  stockOneBeta: number,
-  stockTwoSymbol: string,
-  stockTwoBeta: number,
-): string {
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const betaOne = stockOneBeta.toFixed(2);
-  const betaTwo = stockTwoBeta.toFixed(2);
-
-  if (stockOneBeta === 0 && stockTwoBeta === 0) {
-    return "";
-  }
-
-  if (stockOneBeta === 0) {
-    if (stockTwoBeta < 0) {
-      return `${symbolTwo}, with its beta of ${betaTwo}, shows a propensity to move contrary to broader market directions, a quality that can be valuable for portfolio risk balancing.`;
-    } else {
-      return "";
-    }
-  }
-
-  if (stockTwoBeta === 0) {
-    if (stockOneBeta < 0) {
-      return `${symbolOne}’s beta of ${betaOne} indicates its performance often opposes the general market flow, making it a consideration for defensive strategies in uncertain times.`;
-    } else {
-      return "";
-    }
-  }
-
-  const ratio = stockOneBeta / stockTwoBeta;
-
-  if (stockOneBeta > 0 && stockTwoBeta > 0) {
-    if (ratio > 1.5) {
-      return `${symbolOne}’s beta of ${betaOne} points to much larger expected swings compared to ${symbolTwo}’s calmer ${betaTwo}, suggesting both higher upside and downside potential.`;
-    }
-    if (ratio < 0.67) {
-      return `${symbolTwo} carries a higher beta at ${betaTwo}, indicating it’s more sensitive to market moves, while ${symbolOne} remains steadier at ${betaOne}.`;
-    }
-    return `With betas of ${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}, both show similar volatility profiles relative to the overall market.`;
-  }
-
-  if (stockOneBeta > 0 && stockTwoBeta < 0) {
-    return `${symbolOne} has a positive beta (${betaOne}), indicating it moves with the broader market, whereas ${symbolTwo} has a negative beta (${betaTwo}), often moving inversely, providing diversification or hedging opportunities.`;
-  }
-
-  if (stockOneBeta < 0 && stockTwoBeta > 0) {
-    return `${symbolTwo}’s positive beta (${betaTwo}) suggests market-aligned movements, while ${symbolOne} with a negative beta (${betaOne}) tends to move counter to overall market trends, potentially acting as a defensive position.`;
-  }
-
-  if (stockOneBeta < 0 && stockTwoBeta < 0) {
-    if (ratio > 1.5) {
-      return `Both ${symbolOne} and ${symbolTwo} have negative betas (${betaOne} vs. ${betaTwo}), but ${symbolOne} is significantly more negatively correlated to the market, potentially providing stronger hedging during downturns.`;
-    }
-    if (ratio < 0.67) {
-      return `Although both stocks have negative betas (${betaOne} for ${symbolOne} and ${betaTwo} for ${symbolTwo}), ${symbolTwo} shows a notably stronger inverse relationship with the market, suggesting enhanced defensive characteristics.`;
-    }
-    return `With negative betas of ${betaOne} and ${betaTwo}, ${symbolOne} and ${symbolTwo} both tend to move against broader market trends to a similar extent, potentially useful as portfolio hedges.`;
-  }
-
-  return "";
-}
-
-function generateAdrCommentary(
-  stockOneSymbol: string,
-  stockOneIsAdr: boolean,
-  stockTwoSymbol: string,
-  stockTwoIsAdr: boolean,
-): string {
-  const symbolOne = stockOneSymbol;
-  const symbolTwo = stockTwoSymbol;
-  const isAdrOne = stockOneIsAdr;
-  const isAdrTwo = stockTwoIsAdr;
-
-  if (isAdrOne && isAdrTwo) {
-    return `${symbolOne} and ${symbolTwo} are both ADRs—easy access for U.S. investors to foreign shares without dealing with overseas exchanges.`;
-  }
-
-  if (isAdrOne && !isAdrTwo) {
-    return `${symbolOne} trades as an ADR, giving U.S. investors a simple on-ramp to its foreign shares, while ${symbolTwo} remains a standard domestic listing.`;
-  }
-
-  if (!isAdrOne && isAdrTwo) {
-    return `${symbolTwo} is an ADR, letting U.S. buyers tap its non-U.S. business directly, unlike ${symbolOne}, which is purely domestic.`;
-  }
-
-  return "";
-}
-
 export async function CompanyOverviewSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: CompanyOverviewSectionProps) {
-  const stockOneProfileData = await fetchProfileData(stockOneSymbol);
-  const stockTwoProfileData = await fetchProfileData(stockTwoSymbol);
+  const [stockOneProfileData, stockTwoProfileData] = await Promise.all([
+    fetchProfileData(stockOneSymbol),
+    fetchProfileData(stockTwoSymbol),
+  ]);
 
   if (!stockOneProfileData || !stockTwoProfileData) {
     return (
@@ -156,32 +32,32 @@ export async function CompanyOverviewSection({
     );
   }
 
-  const marketCapComparisonCommentary = generateMarketCapComparisonCommentary(
-    stockOneSymbol,
-    stockOneProfileData.marketCap,
-    stockOneProfileData.currency,
-    stockTwoSymbol,
-    stockTwoProfileData.marketCap,
-    stockTwoProfileData.currency,
-  );
+  const marketCapCommentary = generateMarketCapCommentary({
+    stockOneSymbol: stockOneSymbol,
+    stockOneMarketCap: stockOneProfileData.marketCap,
+    stockOneCurrency: stockOneProfileData.currency,
+    stockTwoSymbol: stockTwoSymbol,
+    stockTwoMarketCap: stockTwoProfileData.marketCap,
+    stockTwoCurrency: stockTwoProfileData.currency,
+  });
 
-  const betaComparisonCommentary = generateBetaComparisonCommentary(
-    stockOneSymbol,
-    stockOneProfileData.beta,
-    stockTwoSymbol,
-    stockTwoProfileData.beta,
-  );
+  const betaCommentary = generateBetaCommentary({
+    stockOneSymbol: stockOneSymbol,
+    stockOneBeta: stockOneProfileData.beta,
+    stockTwoSymbol: stockTwoSymbol,
+    stockTwoBeta: stockTwoProfileData.beta,
+  });
 
-  const adrCommentary = generateAdrCommentary(
-    stockOneSymbol,
-    stockOneProfileData.isAdr,
-    stockTwoSymbol,
-    stockTwoProfileData.isAdr,
-  );
+  const adrCommentary = generateAdrCommentary({
+    stockOneSymbol: stockOneSymbol,
+    stockOneIsAdr: stockOneProfileData.isAdr,
+    stockTwoSymbol: stockTwoSymbol,
+    stockTwoIsAdr: stockTwoProfileData.isAdr,
+  });
 
   const hasCommentary = [
-    marketCapComparisonCommentary,
-    betaComparisonCommentary,
+    marketCapCommentary,
+    betaCommentary,
     adrCommentary,
   ].some((commentary) => commentary !== "");
 
@@ -191,10 +67,8 @@ export async function CompanyOverviewSection({
 
       {hasCommentary ? (
         <>
-          {marketCapComparisonCommentary && (
-            <P>{marketCapComparisonCommentary}</P>
-          )}
-          {betaComparisonCommentary && <P>{betaComparisonCommentary}</P>}
+          {marketCapCommentary && <P>{marketCapCommentary}</P>}
+          {betaCommentary && <P>{betaCommentary}</P>}
           {adrCommentary && <P>{adrCommentary}</P>}
         </>
       ) : (

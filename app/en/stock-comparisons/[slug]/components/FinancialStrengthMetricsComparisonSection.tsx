@@ -165,12 +165,10 @@ export async function FinancialStrengthMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            <P>
-              This section evaluates the financial strength of {stockOneSymbol}{" "}
-              and {stockTwoSymbol}. Noteworthy observations on their financial
-              resilience, considered from an industry perspective, are detailed
-              in the points that follow.
-            </P>
+            This section evaluates the financial strength of {stockOneSymbol}{" "}
+            and {stockTwoSymbol}. Noteworthy observations on their financial
+            resilience, considered from an industry perspective, are detailed in
+            the points that follow.
           </P>
           <Ul>
             {currentRatioCommentary && <Ul.Li>{currentRatioCommentary}</Ul.Li>}
