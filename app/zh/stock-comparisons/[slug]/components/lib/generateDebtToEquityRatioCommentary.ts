@@ -1,13 +1,11 @@
 import type { DebtToEquityRatioAnalysisResult } from "@/app/lib/stock-analysis/getDebtToEquityRatioAnalysis";
 
-export type GenerateDebtToEquityRatioCommentaryParams = {
+type GenerateDebtToEquityRatioCommentaryParams = {
   stockOneSymbol: string;
   stockOneDebtToEquityRatioValue: number;
-  stockOneIndustry: string;
   stockOneAnalysisResult: DebtToEquityRatioAnalysisResult;
   stockTwoSymbol: string;
   stockTwoDebtToEquityRatioValue: number;
-  stockTwoIndustry: string;
   stockTwoAnalysisResult: DebtToEquityRatioAnalysisResult;
 };
 
@@ -16,11 +14,9 @@ type DescriptiveDebtToEquityRatioCategory = "Negative" | "VeryHigh" | "Other";
 export function generateDebtToEquityRatioCommentary({
   stockOneSymbol,
   stockOneDebtToEquityRatioValue,
-  stockOneIndustry,
   stockOneAnalysisResult,
   stockTwoSymbol,
   stockTwoDebtToEquityRatioValue,
-  stockTwoIndustry,
   stockTwoAnalysisResult,
 }: GenerateDebtToEquityRatioCommentaryParams): string {
   const stockOneDebtToEquityRatioString =
@@ -36,9 +32,6 @@ export function generateDebtToEquityRatioCommentary({
   ) {
     return "";
   }
-
-  const stockOneAnalysisResultType = stockOneAnalysisResult.type;
-  const stockTwoAnalysisResultType = stockTwoAnalysisResult.type;
 
   let stockOneDescriptiveCategory: DescriptiveDebtToEquityRatioCategory;
   if (stockOneAnalysisResult.category === "Negative") {
@@ -58,89 +51,27 @@ export function generateDebtToEquityRatioCommentary({
     stockTwoDescriptiveCategory = "Other";
   }
 
-  const decisionKey = `${stockOneAnalysisResultType}_${stockOneDescriptiveCategory}_${stockTwoAnalysisResultType}_${stockTwoDescriptiveCategory}`;
+  const decisionKey = `${stockOneDescriptiveCategory}_${stockTwoDescriptiveCategory}`;
 
   switch (decisionKey) {
-    // --- 股票一：应用通用标准 ---
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `对 ${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}）和 ${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）而言，财务状况均显严峻。两家公司均报告股东权益为负，这指向了严重的偿付能力风险。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 表明其股东权益为负，这是一个严重的财务健康问题。${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 则非常高，同样显示出较高的财务风险。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的负债权益比率为 ${stockOneDebtToEquityRatioString}，反映其股东权益为负。这对该公司的财务稳定性和偿付能力而言是一个重要的危险信号。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 为负，引发了对其偿付能力的重大担忧。${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 同样为负，这种严峻状况表明两家公司均面临严重的财务不稳定性。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 意味着其股东权益为负，这是一个关键问题。对于 ${stockTwoIndustry} 行业而言，${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 被认为非常高。这些情况凸显了两家公司都存在显著的财务脆弱性。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 表明其股东权益为负，这对该公司的财务稳健性构成了相当大的威胁。`;
-
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol} 的债务负担非常沉重（负债权益比率: ${stockOneDebtToEquityRatioString}）。而 ${stockTwoSymbol} 的股东权益为负（负债权益比率: ${stockTwoDebtToEquityRatioString}），其处境更为不稳定。这表明两家公司都存在严重问题。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}）和 ${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）均表现出极高的杠杆水平。两者的负债权益比率都非常高，预示着巨大的财务风险。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 极高的负债权益比率（${stockOneDebtToEquityRatioString}）意味着该公司债务负担异常沉重，并面临相当大的财务风险。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 非常高，指向较高的财务风险。${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 则为负，使其股东权益处于负值状态，凸显了两家公司均面临的重大隐忧。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}）呈现高杠杆特征。${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）同样显示出非常高的杠杆水平，特别是对于 ${stockTwoIndustry} 行业而言。这表明两者均存在显著的财务风险。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的负债权益比率（${stockOneDebtToEquityRatioString}）非常高，反映出该公司对债务的严重依赖以及显著的财务风险。`;
-
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 表明其股东权益为负，这是财务状况显著不稳定的迹象。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的财务结构显示其负债权益比率（${stockTwoDebtToEquityRatioString}）非常高，预示着沉重的债务负担和相当大的财务风险。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Other":
+    case "Negative_Negative":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）与${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）均反映其股东权益为负值。对${stockOneSymbol}而言，此状况是其财务结构极端脆弱的信号，表明公司可能依赖债权人资金维持运营，偿债能力面临严峻考验。${stockTwoSymbol}的负股东权益同样揭示了其资产不足以抵偿负债的困境，持续经营能力令人担忧。`;
+    case "Negative_VeryHigh":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）显示其股东权益为负，这是对其财务健康状况的严重警示，可能意味着公司资不抵债。${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）则非常高，表明其财务杠杆过大，依赖外部融资的程度较高，面临较大的财务风险。`;
+    case "Negative_Other":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）为负，直接反映了其股东权益为负的事实。这一指标是衡量公司财务稳定性的重要警示，通常意味着公司总负债已超过总资产，偿付能力堪忧。`;
+    case "VeryHigh_Negative":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）处于极高水平，说明公司债务规模远超净资产，财务风险较高，对债权人的保障程度较低。而${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）为负，表明其股东权益已为负值，处境更为严峻，可能已陷入资不抵债的困境。`;
+    case "VeryHigh_VeryHigh":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）与${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）均处于非常高的水平。这表明${stockOneSymbol}的财务杠杆较高，更多地依赖借贷资金进行运营和扩张，这在市场环境不利时可能放大亏损风险。${stockTwoSymbol}的高负债权益比率也反映了其债务融资比例偏高，虽然可能带来较高的股本回报潜力，但也使其在经济下行或利率上升时更为脆弱。`;
+    case "VeryHigh_Other":
+      return `${stockOneSymbol}的负债权益比率（${stockOneDebtToEquityRatioString}）非常高。这通常意味着公司在融资结构上对债务的依赖程度较大，可能追求较高的财务杠杆效应，但也因此承担了较高的利息支出压力和信用风险。`;
+    case "Other_Negative":
+      return `${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）为负，揭示了其股东权益为负值的严重问题。这种情况通常是公司长期亏损或巨额债务的体现，财务稳定性和持续经营能力面临极大挑战。`;
+    case "Other_VeryHigh":
+      return `${stockTwoSymbol}的负债权益比率（${stockTwoDebtToEquityRatioString}）非常高。这表明其债务水平相对于股东投入而言处在较高位置，公司可能利用债务融资来加速发展，但同时也使其财务结构更为激进，对外部经济环境变化的敏感度增加。`;
+    case "Other_Other":
       return "";
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的股东权益为负（负债权益比率: ${stockTwoDebtToEquityRatioString}），这是一个关键问题，表明该公司正处于严重的财务困境。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `对于 ${stockTwoIndustry} 行业而言，${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 被认为非常高，这表明其债务结构较为激进，可能会影响公司的财务韧性。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
-    // --- 股票一：应用行业特定标准 ---
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}）报告股东权益为负，这是一个关键的财务警示。${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）同样股东权益为负，预示两家公司均面临严峻的财务困境。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 为负，凸显了其财务健康的严重问题。${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 也非常高，表明两家公司各自面临着不同但均显著的财务脆弱性。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 表明其股东权益为负，这是一个严重的财务问题。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `对 ${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}）和 ${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）来说，股东权益为负均是财务不稳定的一个关键指标。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 为负，这是一个令人警惕的信号。同时，在 ${stockTwoIndustry} 行业中，${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 也被认为非常高，显示两者均承担着巨大的财务风险。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 反映其股东权益为负，这对该公司的财务稳定性构成了重大威胁。`;
-
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的负债权益比率（${stockOneDebtToEquityRatioString}）非常高，表明其财务风险较大。${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}）则因股东权益为负而面临更为严峻的问题。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}，在 ${stockOneIndustry} 行业中属非常高水平）和 ${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}，同样非常高）均在以极高的杠杆运营，这是一个风险较高的财务状况。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `对于 ${stockOneIndustry} 行业的一家公司而言，${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 被认为非常高，表明该公司承担着异常沉重的债务负担。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的负债权益比率（${stockOneDebtToEquityRatioString}）在其所属的 ${stockOneIndustry} 行业中非常高，值得关注。${stockTwoSymbol} 的负债权益比率（${stockTwoDebtToEquityRatioString}）则显示其股东权益为负。两种情况都凸显了这两家公司面临的关键财务问题。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `在各自的行业背景下，${stockOneSymbol}（负债权益比率: ${stockOneDebtToEquityRatioString}，${stockOneIndustry}行业非常高）和 ${stockTwoSymbol}（负债权益比率: ${stockTwoDebtToEquityRatioString}，${stockTwoIndustry}行业非常高）的负债权益比率都非常高，表明两家公司均采用了激进的杠杆策略，财务风险巨大。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的负债权益比率 ${stockOneDebtToEquityRatioString} 非常高，这凸显了其沉重的债务负担及相关的财务风险。`;
-
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 显示其股东权益为负，这是对其财务稳定性的一个严重警告。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的负债权益比率 ${stockTwoDebtToEquityRatioString} 非常高，表明其债务负担异常沉重，并可能带来巨大的财务风险。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Other":
-      return "";
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `对 ${stockTwoSymbol} 而言，其负债权益比率 ${stockTwoDebtToEquityRatioString} 反映股东权益为负，这是财务困境的一个明确信号。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `在 ${stockTwoIndustry} 行业中，${stockTwoSymbol} 的负债权益比率（${stockTwoDebtToEquityRatioString}）被认为非常高，指向一种激进的债务结构和潜在的财务韧性问题。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
     default:
       return "";
   }

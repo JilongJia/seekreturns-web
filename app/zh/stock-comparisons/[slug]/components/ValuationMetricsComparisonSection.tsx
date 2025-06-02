@@ -74,12 +74,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToEarningsRatioValue:
       stockOneRatiosData.priceToEarningsRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToEarningsRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToEarningsRatioValue:
       stockTwoRatiosData.priceToEarningsRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToEarningsRatioAnalysisResult,
   };
   const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
@@ -100,12 +98,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOneForwardPEGRatioValue:
       stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneForwardPEGRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoForwardPEGRatioValue:
       stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoForwardPEGRatioAnalysisResult,
   };
   const forwardPriceToEarningsGrowthRatioCommentary =
@@ -124,11 +120,9 @@ export async function ValuationMetricsComparisonSection({
   const priceToBookRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToBookRatioValue: stockOneRatiosData.priceToBookRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToBookRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToBookRatioValue: stockTwoRatiosData.priceToBookRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToBookRatioAnalysisResult,
   };
   const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
@@ -151,12 +145,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToFreeCashFlowRatioValue:
       stockOneRatiosData.priceToFreeCashFlowRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToFreeCashFlowRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToFreeCashFlowRatioValue:
       stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToFreeCashFlowRatioAnalysisResult,
   };
   const priceToFreeCashFlowRatioCommentary =
@@ -181,8 +173,8 @@ export async function ValuationMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            这里通过盈利、现金流、销售和账面价值等关键指标，评估{" "}
-            {stockOneSymbol} 和 {stockTwoSymbol} 的估值。
+            接下来，我们关注 {stockOneSymbol} 与 {stockTwoSymbol}{" "}
+            的估值情况。从行业普遍的估值角度考量，双方在估值方面有以下几个值得留意的看点：
           </P>
           <Ul>
             {priceToEarningsRatioCommentary && (
@@ -234,7 +226,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                前瞻 PEG 比率 (TTM)
+                前瞻PEG比率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(

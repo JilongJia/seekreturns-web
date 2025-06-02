@@ -33,8 +33,8 @@ export const currentRatioConfig: CurrentRatioConfig = {
   _defaults: {
     type: "Default",
     zones: [
-      { upperBound: 1.0, category: "Low" }, // Generally, CR < 1.0 is a concern
-      { upperBound: 3.5, category: "Normal" }, // Broad normal range, CR > 3.5 might be inefficient
+      { upperBound: 1.0, category: "Low" },
+      { upperBound: 3.5, category: "Normal" },
       { upperBound: Infinity, category: "High" },
     ],
   },

@@ -74,12 +74,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToEarningsRatioValue:
       stockOneRatiosData.priceToEarningsRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToEarningsRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToEarningsRatioValue:
       stockTwoRatiosData.priceToEarningsRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToEarningsRatioAnalysisResult,
   };
   const priceToEarningsRatioCommentary = generatePriceToEarningsRatioCommentary(
@@ -100,12 +98,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOneForwardPEGRatioValue:
       stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneForwardPEGRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoForwardPEGRatioValue:
       stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoForwardPEGRatioAnalysisResult,
   };
   const forwardPriceToEarningsGrowthRatioCommentary =
@@ -124,11 +120,9 @@ export async function ValuationMetricsComparisonSection({
   const priceToBookRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToBookRatioValue: stockOneRatiosData.priceToBookRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToBookRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToBookRatioValue: stockTwoRatiosData.priceToBookRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToBookRatioAnalysisResult,
   };
   const priceToBookRatioCommentary = generatePriceToBookRatioCommentary(
@@ -151,12 +145,10 @@ export async function ValuationMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOnePriceToFreeCashFlowRatioValue:
       stockOneRatiosData.priceToFreeCashFlowRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOnePriceToFreeCashFlowRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoPriceToFreeCashFlowRatioValue:
       stockTwoRatiosData.priceToFreeCashFlowRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoPriceToFreeCashFlowRatioAnalysisResult,
   };
   const priceToFreeCashFlowRatioCommentary =
@@ -181,9 +173,10 @@ export async function ValuationMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            The section examines key financial ratios to assess the valuation of{" "}
-            {stockOneSymbol} and {stockTwoSymbol} based on earnings, cash flow,
-            sales, and book value.
+            This section compares the market valuation of {stockOneSymbol} and{" "}
+            {stockTwoSymbol}. Key takeaways regarding their valuation, when
+            viewed within their industry context, are presented in the
+            commentary that follows.
           </P>
           <Ul>
             {priceToEarningsRatioCommentary && (

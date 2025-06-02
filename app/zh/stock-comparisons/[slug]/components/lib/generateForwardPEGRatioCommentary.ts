@@ -1,13 +1,11 @@
 import type { ForwardPEGRatioAnalysisResult } from "@/app/lib/stock-analysis/getForwardPEGRatioAnalysis";
 
-export type GenerateForwardPEGRatioCommentaryParams = {
+type GenerateForwardPEGRatioCommentaryParams = {
   stockOneSymbol: string;
   stockOneForwardPEGRatioValue: number;
-  stockOneIndustry: string;
   stockOneAnalysisResult: ForwardPEGRatioAnalysisResult;
   stockTwoSymbol: string;
   stockTwoForwardPEGRatioValue: number;
-  stockTwoIndustry: string;
   stockTwoAnalysisResult: ForwardPEGRatioAnalysisResult;
 };
 
@@ -16,11 +14,9 @@ type DescriptiveCategory = "Negative" | "VeryHigh" | "Other";
 export function generateForwardPEGRatioCommentary({
   stockOneSymbol,
   stockOneForwardPEGRatioValue,
-  stockOneIndustry,
   stockOneAnalysisResult,
   stockTwoSymbol,
   stockTwoForwardPEGRatioValue,
-  stockTwoIndustry,
   stockTwoAnalysisResult,
 }: GenerateForwardPEGRatioCommentaryParams): string {
   const stockOneForwardPEGRatioString = stockOneForwardPEGRatioValue.toFixed(2);
@@ -34,9 +30,6 @@ export function generateForwardPEGRatioCommentary({
   ) {
     return "";
   }
-
-  const stockOneAnalysisResultType = stockOneAnalysisResult.type;
-  const stockTwoAnalysisResultType = stockTwoAnalysisResult.type;
 
   let stockOneDescriptiveCategory: DescriptiveCategory;
   if (stockOneAnalysisResult.category === "Negative") {
@@ -56,89 +49,27 @@ export function generateForwardPEGRatioCommentary({
     stockTwoDescriptiveCategory = "Other";
   }
 
-  const decisionKey = `${stockOneAnalysisResultType}_${stockOneDescriptiveCategory}_${stockTwoAnalysisResultType}_${stockTwoDescriptiveCategory}`;
+  const decisionKey = `${stockOneDescriptiveCategory}_${stockTwoDescriptiveCategory}`;
 
   switch (decisionKey) {
-    // --- 股票一：应用通用标准 ---
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）和 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率均存在问题。这类比率通常表明公司盈利为负、增长预测不佳，或存在其他使其估值与增长前景受到质疑的因素。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 表现不佳，可能暗示其盈利或增长前景存在问题。与此同时，${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 非常高，这表明其估值可能已大幅领先于其预期的增长速度。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 状况不佳，这可能源于其盈利为负或增长前景黯淡。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 令人担忧。${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 也显示存在问题。这些情况表明两家公司在估值相对于增长前景方面均存在显著的隐忧。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的预期PEG比率（${stockOneForwardPEGRatioString}）不理想。${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 在 ${stockTwoIndustry} 行业中被认为非常高，这预示着两家公司各自在估值或增长方面存在不同的隐患。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 状况不佳，这可能暗示其基本盈利能力或增长预期方面存在潜在问题。`;
-
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 非常高，表明其当前股价相对于其增长预测可能过于乐观。${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率则不理想，这通常是由于盈利为负或增长存在问题。两者均体现出估值方面的担忧。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）和 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）均呈现非常高的预期PEG比率。这可能表明它们的股价已大幅领先于预期的盈利增长，或暗示存在估值过高的风险。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率非常高，为 ${stockOneForwardPEGRatioString}，这意味着其股价可能已过度反映了未来的增长预期，甚至可能偏高。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 非常高，暗示其相对于增长的估值偏高。${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）则面临预期PEG比率不佳的困境。这些不同情况都引发了对两家公司估值的疑问。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）和 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}，此比率在 ${stockTwoIndustry} 行业中属于非常高水平）均显示出非常高的预期PEG比率。这表明它们的估值可能已显著超出预期的盈利增长。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 非常高，这表明其估值已充分（甚至过度）计入了未来的增长预期，可能处于估值偏高的位置。`;
-
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 不理想，通常反映了公司盈利为负或增长前景面临挑战。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 非常高，表明其估值与其预期的盈利增长相比可能过于激进。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Other":
+    case "Negative_Negative":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）与${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）均为负值。对${stockOneSymbol}而言，这通常意味着公司目前盈利为负或预期盈利将出现下滑，其基于增长的估值逻辑难以成立。${stockTwoSymbol}的负预期PEG比率同样反映了其盈利能力或增长前景存在根本性问题，投资者需警惕其估值风险。`;
+    case "Negative_VeryHigh":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）为负值，通常表明其当前盈利状况不佳或未来增长预期悲观。而${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）则非常高，可能意味着市场对其未来增长寄予过高期望，其股价相对于预期盈利增长而言可能偏贵。`;
+    case "Negative_Other":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）为负。这多半源于公司当前的亏损状态或其盈利增长前景不被看好，使得其股票估值相对于预期增长显得缺乏吸引力。`;
+    case "VeryHigh_Negative":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）非常高，这可能暗示其股价已包含了非常乐观的增长预期，估值水平相对较高。${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）则为负值，通常反映了公司盈利能力疲弱或增长预期不佳的基本面问题。`;
+    case "VeryHigh_VeryHigh":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）与${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）均处在极高水平。这可能表明${stockOneSymbol}的股价已充分甚至超前反映了其未来的盈利增长潜力，投资者可能为其增长支付了较高溢价。${stockTwoSymbol}的预期PEG比率同样很高，意味着市场对其未来盈利增长的预期非常乐观，但也可能使其面临估值回调的风险，如果未来增长未能达到预期。`;
+    case "VeryHigh_Other":
+      return `${stockOneSymbol}的预期PEG比率（${stockOneForwardPEGRatioString}）非常高。这通常说明市场对其未来盈利增长给予了很高的期望值，其当前股价可能已较大程度地消化了这些预期，因此估值显得较为昂贵。`;
+    case "Other_Negative":
+      return `${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）为负。这种情况一般与公司当前未能实现盈利或其未来盈利增长不被看好有关，对其估值造成负面影响。`;
+    case "Other_VeryHigh":
+      return `${stockTwoSymbol}的预期PEG比率（${stockTwoForwardPEGRatioString}）非常高。这可能意味着其当前股价相较于预期的盈利增长速度而言显得偏高，市场可能对其未来的成长性抱有超出一般的乐观预期。`;
+    case "Other_Other":
       return "";
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的预期PEG比率（${stockTwoForwardPEGRatioString}）状况不佳，就其估值相对于增长前景而言，这是一个值得重点关注的问题。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `对于 ${stockTwoIndustry} 行业而言，${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 被认为非常高，这可能意味着其股价已超前反映了其增长预期。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
-    // --- 股票一：应用行业特定标准 ---
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）的预期PEG比率不理想。${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率同样存在问题，给两家公司的估值都敲响了警钟。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 不理想，是一个值得关注的问题。${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 也处于非常高的水平，凸显了两者各自面临的不同类型的估值挑战。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 不理想，就其估值相对于预期增长而言，这是一个令人担忧的信号。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）和 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率均不理想，这预示着它们的盈利或增长前景可能存在问题，从而对其估值产生负面影响。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `尽管 ${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}）的预期PEG比率不佳，${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 在 ${stockTwoIndustry} 行业中却被认为非常高。这些因素给两家公司都带来了显著的估值风险。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 不理想，引发了对其估值相对于增长前景的担忧。`;
-
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 非常高。相比之下，${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率不理想，表明其增长或盈利前景存在问题。两种情况均引人关注其估值。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（预期PEG比率: ${stockOneForwardPEGRatioString}，在 ${stockOneIndustry} 行业中属非常高水平）和 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}，同样非常高）均表明它们的股价可能已大幅超越预期的盈利增长。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `对于 ${stockOneIndustry} 行业的一家公司而言，${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 被认为非常高，这意味着其估值在很大程度上依赖于未来的增长。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的预期PEG比率（${stockOneForwardPEGRatioString}）显著偏高。而 ${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率不佳，同样值得关注。两者代表了不同类型的估值考量。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `相对于各自所在的行业（${stockOneSymbol} 预期PEG比率: ${stockOneForwardPEGRatioString}，${stockOneIndustry}行业；${stockTwoSymbol} 预期PEG比率: ${stockTwoForwardPEGRatioString}，${stockTwoIndustry}行业），两家公司的预期PEG比率都非常高。这表明在各自的行业背景下，它们的估值相对于增长预期可能都偏高。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `在 ${stockOneIndustry} 行业内，${stockOneSymbol} 的预期PEG比率 ${stockOneForwardPEGRatioString} 被认为非常高，这可能意味着其增长潜力已经完全或过度地反映在当前价格中。`;
-
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol}（预期PEG比率: ${stockTwoForwardPEGRatioString}）的预期PEG比率不理想，暗示其盈利或增长前景可能存在问题。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的预期PEG比率（${stockTwoForwardPEGRatioString}）非常高，表明其股价可能已显著领先于预期的盈利增长。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Other":
-      return "";
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 表现不佳，就其估值相对于预期增长而言，这是一个重要的警示信号。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的预期PEG比率 ${stockTwoForwardPEGRatioString} 在 ${stockTwoIndustry} 行业中处于非常高的水平，表明其估值可能过于乐观。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
     default:
       return "";
   }

@@ -64,11 +64,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const currentRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneCurrentRatioValue: stockOneRatiosData.currentRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneCurrentRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoCurrentRatioValue: stockTwoRatiosData.currentRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoCurrentRatioAnalysisResult,
   };
   const currentRatioCommentary = generateCurrentRatioCommentary(
@@ -88,11 +86,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const quickRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneQuickRatioValue: stockOneRatiosData.quickRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneQuickRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoQuickRatioValue: stockTwoRatiosData.quickRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoQuickRatioAnalysisResult,
   };
   const quickRatioCommentary = generateQuickRatioCommentary(
@@ -112,11 +108,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const debtToEquityRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneDebtToEquityRatioValue: stockOneRatiosData.debtToEquityRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneDebtToEquityRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoDebtToEquityRatioValue: stockTwoRatiosData.debtToEquityRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoDebtToEquityRatioAnalysisResult,
   };
   const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
@@ -139,12 +133,10 @@ export async function FinancialStrengthMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOneInterestCoverageRatioValue:
       stockOneRatiosData.interestCoverageRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneInterestCoverageRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoInterestCoverageRatioValue:
       stockTwoRatiosData.interestCoverageRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoInterestCoverageRatioAnalysisResult,
   };
   const interestCoverageRatioCommentary =
@@ -169,8 +161,8 @@ export async function FinancialStrengthMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            这里对比了 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
-            的财务状况，重点看流动性、杠杆和债务情况。
+            这里我们来对比一下 {stockOneSymbol} 与 {stockTwoSymbol}{" "}
+            的财务状况。结合行业背景来看，两者在财务稳健性方面有以下几点值得注意：
           </P>
           <Ul>
             {currentRatioCommentary && <Ul.Li>{currentRatioCommentary}</Ul.Li>}

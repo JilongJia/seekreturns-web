@@ -44,10 +44,6 @@ export async function PerformanceComparisonSection({
         {stockTwoSymbol} over the past year by tracking the growth of an initial
         $10,000 investment in each (starting one year ago).
       </P>
-      <P>
-        Hover over the lines to see the investment’s value and total return (%)
-        at specific dates.
-      </P>
       <P>Data is adjusted for dividends and splits.</P>
       <Chart
         data={{

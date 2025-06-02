@@ -1,13 +1,11 @@
 import type { PriceToBookRatioAnalysisResult } from "@/app/lib/stock-analysis/getPriceToBookRatioAnalysis";
 
-export type GeneratePriceToBookRatioCommentaryParams = {
+type GeneratePriceToBookRatioCommentaryParams = {
   stockOneSymbol: string;
   stockOnePriceToBookRatioValue: number;
-  stockOneIndustry: string;
   stockOneAnalysisResult: PriceToBookRatioAnalysisResult;
   stockTwoSymbol: string;
   stockTwoPriceToBookRatioValue: number;
-  stockTwoIndustry: string;
   stockTwoAnalysisResult: PriceToBookRatioAnalysisResult;
 };
 
@@ -16,11 +14,9 @@ type DescriptiveCategory = "Negative" | "VeryHigh" | "Other";
 export function generatePriceToBookRatioCommentary({
   stockOneSymbol,
   stockOnePriceToBookRatioValue,
-  stockOneIndustry,
   stockOneAnalysisResult,
   stockTwoSymbol,
   stockTwoPriceToBookRatioValue,
-  stockTwoIndustry,
   stockTwoAnalysisResult,
 }: GeneratePriceToBookRatioCommentaryParams): string {
   const stockOnePriceToBookRatioString =
@@ -36,9 +32,6 @@ export function generatePriceToBookRatioCommentary({
   ) {
     return "";
   }
-
-  const stockOneAnalysisResultType = stockOneAnalysisResult.type;
-  const stockTwoAnalysisResultType = stockTwoAnalysisResult.type;
 
   let stockOneDescriptiveCategory: DescriptiveCategory;
   if (stockOneAnalysisResult.category === "Negative") {
@@ -58,89 +51,27 @@ export function generatePriceToBookRatioCommentary({
     stockTwoDescriptiveCategory = "Other";
   }
 
-  const decisionKey = `${stockOneAnalysisResultType}_${stockOneDescriptiveCategory}_${stockTwoAnalysisResultType}_${stockTwoDescriptiveCategory}`;
+  const decisionKey = `${stockOneDescriptiveCategory}_${stockTwoDescriptiveCategory}`;
 
   switch (decisionKey) {
-    // --- 股票一：应用通用标准 ---
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）和 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）均报告其账面价值为负。这预示着两家公司的财务稳定性和偿付能力均面临严重问题。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 表明其账面价值为负，这是一个关键的财务隐患。与此不同，${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 非常高，这表明市场对其净资产给予了较高的溢价。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 表明其股东权益为负，这对该公司的财务健康状况而言是一个重要的危险信号。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 反映其账面价值为负，这是一个主要的财务隐患。${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）同样显示账面价值为负，这对两家公司而言都是一个关键问题。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的账面价值为负（市净率: ${stockOnePriceToBookRatioString}），这引发了对其偿付能力的疑问。对于 ${stockTwoIndustry} 行业而言，${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 被认为非常高，表明市场对其净资产给予了高额溢价。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 显示其账面价值为负，这是财务困境的严重标志。`;
-
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 非常高，意味着投资者为其账面价值支付了显著的溢价。${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）则账面价值为负，存在严重的偿付能力问题。两者均呈现出不同的风险点。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）和 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）的显著特点是其非常高的市净率。这通常表明市场对这两家公司的估值远高于其会计账面净值，可能归因于其强大的无形资产或较高的增长预期。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率高达 ${stockOnePriceToBookRatioString}，表明市场对其净资产给予了大幅溢价，这通常反映了其较高的净资产收益率或良好的增长前景。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 非常高的市净率（${stockOnePriceToBookRatioString}）显示市场给予了其较高的估值。而 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）则因账面价值为负而面临严峻的财务问题。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）与 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}，在 ${stockTwoIndustry} 行业中属非常高水平）的股价均远高于其账面价值。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 非常高，标志着市场对其会计净值给予了很强的估值溢价。`;
-
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）报告其账面价值为负，这是财务状况不稳定的严重信号。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 非常高，表明投资者对其资产和未来前景的估值远超其会计账面价值。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Other":
+    case "Negative_Negative":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）与${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）均反映其股东权益为负值。对${stockOneSymbol}而言，这意味着其总负债超过总资产，是财务状况极端不稳定的表现，可能面临严重的偿付危机。${stockTwoSymbol}的负股东权益同样揭示了其资不抵债的窘境，投资者应高度警惕其持续经营风险。`;
+    case "Negative_VeryHigh":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）表明其股东权益为负，这是一个严重的财务问题，可能影响公司的持续经营能力。相比之下，${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）非常高，显示市场对其净资产（可能因为其独特的品牌价值、技术优势或强劲的增长预期）给予了显著的估值溢价。`;
+    case "Negative_Other":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）反映其股东权益为负值。这通常是公司财务健康状况的严重警示信号，暗示其可能已陷入资不抵债的困境，偿付风险极高。`;
+    case "VeryHigh_Negative":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）处于非常高的水平，意味着投资者愿意为其每单位净资产支付远超其账面记录的金额，这可能基于对其未来盈利能力或无形资产价值的高度认可。而${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）则因股东权益为负而失去常规比较意义，突显了其面临的严重偿付能力挑战。`;
+    case "VeryHigh_VeryHigh":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）与${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）均处在非常高的水平。这通常表明市场对${stockOneSymbol}的资产质量、盈利能力或未来增长前景抱有很高期望，因此给予了远超其账面净资产的估值。${stockTwoSymbol}的高市净率也反映了投资者对其未来价值的乐观判断，可能包含了对其品牌、技术、市场地位等无形资产的较高评价，但也可能意味着股价相对较高，安全边际较小。`;
+    case "VeryHigh_Other":
+      return `${stockOneSymbol}的市净率（${stockOnePriceToBookRatioString}）非常高。这往往说明市场认为该公司拥有显著的账面价值之外的价值来源，例如卓越的管理团队、强大的品牌效应、领先的技术或良好的成长性预期。`;
+    case "Other_Negative":
+      return `${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）因股东权益为负而不具备传统的正面解读价值。这种情况是公司财务状况面临严峻挑战的直接体现，通常意味着其负债已超过资产，投资者需特别关注其偿债风险。`;
+    case "Other_VeryHigh":
+      return `${stockTwoSymbol}的市净率（${stockTwoPriceToBookRatioString}）非常高。这表示其股价远高于每股净资产，市场可能预期该公司未来有较高的盈利增长，或者其拥有的无形资产（如商誉、专利等）价值未在账面充分体现，从而给予较高估值。`;
+    case "Other_Other":
       return "";
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的市净率（${stockTwoPriceToBookRatioString}）显示其账面价值为负，这是一个关键的财务隐患。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `对于 ${stockTwoIndustry} 行业而言，${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 被认为非常高，表明市场对其净资产给予了很高的溢价。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
-    // --- 股票一：应用行业特定标准 ---
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）显示账面价值为负，这是一个严重的财务警示。${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）的账面价值同样为负，凸显了两家公司均面临偿付能力风险。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的账面价值为负（市净率: ${stockOnePriceToBookRatioString}）是一个关键问题。${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 也非常高，表明两家公司各自面临着不同的财务考量。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 表明其账面价值为负，是财务稳定性的一个重要隐患。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）和 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）均报告其账面价值为负，这是财务健康方面的一个严重危险信号。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `尽管 ${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}）存在账面价值为负的问题，${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 在 ${stockTwoIndustry} 行业中却被认为非常高。两者分别代表了不同形式的财务极端状况。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 为负，这是一个关键问题，预示着潜在的偿付危机。`;
-
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 非常高。相比之下，${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）的账面价值为负，这是一个严重的财务问题。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市净率: ${stockOnePriceToBookRatioString}，在 ${stockOneIndustry} 行业中属非常高水平）和 ${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}，同样非常高）均表明市场对它们的估值远高于其净资产价值。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `对于 ${stockOneIndustry} 行业的一家公司而言，${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 被认为非常高，这表明市场对其账面价值给予了很高的溢价。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的市净率（${stockOnePriceToBookRatioString}）显著偏高。${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）则报告其账面价值为负，这是一个关键的财务问题。这些情况都突显了对两家公司不同方面的财务担忧。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `相对于各自所在的行业（${stockOneSymbol} 市净率: ${stockOnePriceToBookRatioString}，${stockOneIndustry}行业；${stockTwoSymbol} 市净率: ${stockTwoPriceToBookRatioString}，${stockTwoIndustry}行业），两家公司的市净率都非常高，反映了显著的市场溢价。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `在 ${stockOneIndustry} 行业内，${stockOneSymbol} 的市净率 ${stockOnePriceToBookRatioString} 被认为非常高，这可能源于其较高的净资产收益率、无形资产价值或强劲的增长预期。`;
-
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol}（市净率: ${stockTwoPriceToBookRatioString}）的账面价值为负，表明其财务状况严重不稳定。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `市场对 ${stockTwoSymbol} 给予了较高溢价，其非常高的市净率 ${stockTwoPriceToBookRatioString} 便证明了这一点。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Other":
-      return "";
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 为负，就其财务偿付能力而言，这是一个关键的风险点。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的市净率 ${stockTwoPriceToBookRatioString} 在 ${stockTwoIndustry} 行业中处于非常高的水平，表明市场对其净资产价值给予了大幅溢价。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
     default:
       return "";
   }

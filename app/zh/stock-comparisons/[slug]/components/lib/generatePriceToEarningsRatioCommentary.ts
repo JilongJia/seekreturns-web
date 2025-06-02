@@ -1,13 +1,11 @@
 import type { PriceToEarningsRatioAnalysisResult } from "@/app/lib/stock-analysis/getPriceToEarningsRatioAnalysis";
 
-export type GeneratePriceToEarningsRatioCommentaryParams = {
+type GeneratePriceToEarningsRatioCommentaryParams = {
   stockOneSymbol: string;
   stockOnePriceToEarningsRatioValue: number;
-  stockOneIndustry: string;
   stockOneAnalysisResult: PriceToEarningsRatioAnalysisResult;
   stockTwoSymbol: string;
   stockTwoPriceToEarningsRatioValue: number;
-  stockTwoIndustry: string;
   stockTwoAnalysisResult: PriceToEarningsRatioAnalysisResult;
 };
 
@@ -16,11 +14,9 @@ type DescriptiveCategory = "Negative" | "VeryHigh" | "Other";
 export function generatePriceToEarningsRatioCommentary({
   stockOneSymbol,
   stockOnePriceToEarningsRatioValue,
-  stockOneIndustry,
   stockOneAnalysisResult,
   stockTwoSymbol,
   stockTwoPriceToEarningsRatioValue,
-  stockTwoIndustry,
   stockTwoAnalysisResult,
 }: GeneratePriceToEarningsRatioCommentaryParams): string {
   const stockOnePriceToEarningsRatioString =
@@ -36,9 +32,6 @@ export function generatePriceToEarningsRatioCommentary({
   ) {
     return "";
   }
-
-  const stockOneAnalysisResultType = stockOneAnalysisResult.type;
-  const stockTwoAnalysisResultType = stockTwoAnalysisResult.type;
 
   let stockOneDescriptiveCategory: DescriptiveCategory;
   if (stockOneAnalysisResult.category === "Negative") {
@@ -58,89 +51,27 @@ export function generatePriceToEarningsRatioCommentary({
     stockTwoDescriptiveCategory = "Other";
   }
 
-  const decisionKey = `${stockOneAnalysisResultType}_${stockOneDescriptiveCategory}_${stockTwoAnalysisResultType}_${stockTwoDescriptiveCategory}`;
+  const decisionKey = `${stockOneDescriptiveCategory}_${stockTwoDescriptiveCategory}`;
 
   switch (decisionKey) {
-    // --- 股票一：应用通用标准 ---
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `目前，${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）和 ${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）均未实现盈利，其市盈率均为负值即是证明。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）报告盈利为负，表明其尚未盈利。相比之下，${stockTwoSymbol} 的市盈率高达 ${stockTwoPriceToEarningsRatioString}，暗示其估值可能被显著拉伸。`;
-    case "DefaultStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `由于市盈率为 ${stockOnePriceToEarningsRatioString}，${stockOneSymbol} 显示为负盈利，这一点关乎其当前的财务表现，值得关注。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）显示盈利为负。同样，${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）也报告盈利为负。这两种情况都突显了对其当前盈利能力的担忧。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 显示其未盈利。而 ${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 在 ${stockTwoIndustry} 行业中被认为非常高，这表明两家公司各自面临着不同的财务隐忧。`;
-    case "DefaultStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 为负，标志着该公司盈利为负，并引发对其当前盈利能力的疑问。`;
-
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 非常高，指向一个可能过高的估值。另一方面，${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）则处于未盈利状态。两种情况均需投资者审慎对待。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）和 ${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）均呈现非常高的市盈率。这可能表明市场已充分计价其未来的大幅增长，或者也可能暗示两者均存在估值过高的风险。`;
-    case "DefaultStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的市盈率高达 ${stockOnePriceToEarningsRatioString}，这表明其市场估值已计入了相当可观的未来增长预期，或者可能已有些偏高。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 相当高。与此同时，${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）正努力摆脱未盈利的困境。这些不同情况指出了两者各自独特的估值或业绩问题。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）和 ${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}，此比率在 ${stockTwoIndustry} 行业中属于非常高水平）均以非常高的市盈率进行交易，这表明市场对两者的预期都相当乐观。`;
-    case "DefaultStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 非常高，表明其估值较为昂贵，可能反映了市场对其高增长的期待或一定程度的估值偏高。`;
-
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）报告盈利为负，这引发了对其当前盈利能力的担忧。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 异常之高，表明其估值可能在很大程度上依赖于未来的增长，或者可能已被高估。`;
-    case "DefaultStandardApplied_Other_DefaultStandardApplied_Other":
+    case "Negative_Negative":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）与${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）均为负值，表明两家公司当前均未实现盈利。对${stockOneSymbol}而言，这意味着公司可能正经历经营困难或处于投资期，其短期盈利能力面临考验。${stockTwoSymbol}的负市盈率同样反映了其现阶段的亏损状况，投资者需要关注其扭亏为盈的前景和时间表。`;
+    case "Negative_VeryHigh":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）为负，显示公司目前处于亏损状态，其盈利能力有待改善。而${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）则非常高，可能意味着市场对其增长前景极为乐观，但也使其股价显得相对昂贵，并可能包含了较高的增长预期。`;
+    case "Negative_Other":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）为负值，表明该公司当前未能产生正向盈利。这通常是投资者评估其财务健康度和未来潜力时的一个重要负面信号。`;
+    case "VeryHigh_Negative":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）处于非常高的水平，这可能反映了市场对公司未来高增长的强烈预期，或者是其当前盈利水平相对较低所致，估值可能偏高。${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）则为负，说明其目前未能盈利，其基本面存在不确定性。`;
+    case "VeryHigh_VeryHigh":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）与${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）均显著偏高。这可能表明市场对${stockOneSymbol}的未来增长抱有极高期望，其当前股价已将这些乐观预期纳入考量，但也可能存在估值过高的风险。${stockTwoSymbol}的高市盈率同样暗示其股价相对于当前盈利而言较为昂贵，投资者可能预期其盈利将有大幅提升，否则高估值难以持续。`;
+    case "VeryHigh_Other":
+      return `${stockOneSymbol}的市盈率（${stockOnePriceToEarningsRatioString}）非常高。这通常意味着其股价相对于当前的盈利水平而言显得较为昂贵，市场可能已经消化了对公司未来强劲增长的预期，投资者需警惕估值回调的可能。`;
+    case "Other_Negative":
+      return `${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）为负，直接反映出该公司目前未能实现盈利。这是评估其当前经营效益和财务状况时的一个关键考量点，可能对其股价表现构成压力。`;
+    case "Other_VeryHigh":
+      return `${stockTwoSymbol}的市盈率（${stockTwoPriceToEarningsRatioString}）非常高。这可能表明市场对其未来的盈利增长潜力给予了较高的估值，或者其当前盈利基数较小。投资者应关注其增长是否能支撑如此高的估值水平。`;
+    case "Other_Other":
       return "";
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）盈利为负，就其当前盈利能力而言，这是一个值得严重关注的问题。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `对于 ${stockTwoIndustry} 行业，${stockTwoSymbol} 的市盈率（${stockTwoPriceToEarningsRatioString}）被认为非常高，这可能意味着与同业相比，其估值偏高。`;
-    case "DefaultStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
-    // --- 股票一：应用行业特定标准 ---
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Negative":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）报告盈利为负。${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）也未能盈利，表明两家公司均面临财务挑战。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）的未盈利状况值得关注。${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 也非常高，这突显了两家公司不同类型的财务警示信号。`;
-    case "IndustrySpecificStandardApplied_Negative_DefaultStandardApplied_Other":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 表明其盈利为负，就其当前盈利能力而言，这是一个显著的隐忧。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Negative":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）和 ${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）均明显处于未盈利状态，其负市盈率便是证明。这不禁让人对其财务表现产生严重疑问。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_VeryHigh":
-      return `尽管 ${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}）面临未盈利的困境，${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 在 ${stockTwoIndustry} 行业中却被认为非常高。这些情况代表了两者不同的财务风险。`;
-    case "IndustrySpecificStandardApplied_Negative_IndustrySpecificStandardApplied_Other":
-      return `${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 为负，这是一个值得关注的问题，表明其目前未能实现盈利。`;
-
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 非常高，暗示其估值较为昂贵。${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）目前则未能盈利。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_VeryHigh":
-      return `${stockOneSymbol}（市盈率: ${stockOnePriceToEarningsRatioString}，在 ${stockOneIndustry} 行业中属非常高水平）和 ${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}，同样非常高）的市盈率倍数均处于高位，暗示市场预期乐观。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_DefaultStandardApplied_Other":
-      return `对于 ${stockOneIndustry} 行业的一家公司而言，${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 被认为非常高，这可能表明其估值有些过于乐观。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Negative":
-      return `在 ${stockOneIndustry} 行业中，${stockOneSymbol} 的市盈率（${stockOnePriceToEarningsRatioString}）显著偏高。${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）则报告盈利为负。这些不同情况分别揭示了两家公司各自的财务担忧。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_VeryHigh":
-      return `相对于各自所在的行业（${stockOneSymbol} 市盈率: ${stockOnePriceToEarningsRatioString}，${stockOneIndustry}行业；${stockTwoSymbol} 市盈率: ${stockTwoPriceToEarningsRatioString}，${stockTwoIndustry}行业），两家公司的市盈率都非常高，预示着市场对两者均抱有乐观情绪。`;
-    case "IndustrySpecificStandardApplied_VeryHigh_IndustrySpecificStandardApplied_Other":
-      return `在 ${stockOneIndustry} 行业内，${stockOneSymbol} 的市盈率 ${stockOnePriceToEarningsRatioString} 被认为非常高，这可能意味着其增长前景已在股价中得到了充分甚至过度的反映。`;
-
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Negative":
-      return `${stockTwoSymbol}（市盈率: ${stockTwoPriceToEarningsRatioString}）目前未能盈利，其负市盈率反映了这一点。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的估值似乎偏高，其市盈率高达 ${stockTwoPriceToEarningsRatioString}。`;
-    case "IndustrySpecificStandardApplied_Other_DefaultStandardApplied_Other":
-      return "";
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Negative":
-      return `${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 为负，表明其未能实现盈利，这是一个显著的财务隐忧。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_VeryHigh":
-      return `${stockTwoSymbol} 的市盈率 ${stockTwoPriceToEarningsRatioString} 在 ${stockTwoIndustry} 行业中处于非常高的水平，可能暗示其估值较为昂贵。`;
-    case "IndustrySpecificStandardApplied_Other_IndustrySpecificStandardApplied_Other":
-      return "";
-
     default:
       return "";
   }

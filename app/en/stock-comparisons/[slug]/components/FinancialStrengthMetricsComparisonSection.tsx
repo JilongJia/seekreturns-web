@@ -66,11 +66,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const currentRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneCurrentRatioValue: stockOneRatiosData.currentRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneCurrentRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoCurrentRatioValue: stockTwoRatiosData.currentRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoCurrentRatioAnalysisResult,
   };
   const currentRatioCommentary = generateCurrentRatioCommentary(
@@ -90,11 +88,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const quickRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneQuickRatioValue: stockOneRatiosData.quickRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneQuickRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoQuickRatioValue: stockTwoRatiosData.quickRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoQuickRatioAnalysisResult,
   };
   const quickRatioCommentary = generateQuickRatioCommentary(
@@ -114,11 +110,9 @@ export async function FinancialStrengthMetricsComparisonSection({
   const debtToEquityRatioCommentaryParams = {
     stockOneSymbol: stockOneSymbol,
     stockOneDebtToEquityRatioValue: stockOneRatiosData.debtToEquityRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneDebtToEquityRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoDebtToEquityRatioValue: stockTwoRatiosData.debtToEquityRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoDebtToEquityRatioAnalysisResult,
   };
   const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
@@ -141,12 +135,10 @@ export async function FinancialStrengthMetricsComparisonSection({
     stockOneSymbol: stockOneSymbol,
     stockOneInterestCoverageRatioValue:
       stockOneRatiosData.interestCoverageRatioTTM,
-    stockOneIndustry: stockOneProfileData.industry,
     stockOneAnalysisResult: stockOneInterestCoverageRatioAnalysisResult,
     stockTwoSymbol: stockTwoSymbol,
     stockTwoInterestCoverageRatioValue:
       stockTwoRatiosData.interestCoverageRatioTTM,
-    stockTwoIndustry: stockTwoProfileData.industry,
     stockTwoAnalysisResult: stockTwoInterestCoverageRatioAnalysisResult,
   };
   const interestCoverageRatioCommentary =
@@ -173,9 +165,12 @@ export async function FinancialStrengthMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            This section dives into the financial resilience of {stockOneSymbol}{" "}
-            and {stockTwoSymbol}, spotlighting key metrics like liquidity,
-            leverage, and debt coverage.
+            <P>
+              This section evaluates the financial strength of {stockOneSymbol}{" "}
+              and {stockTwoSymbol}. Noteworthy observations on their financial
+              resilience, considered from an industry perspective, are detailed
+              in the points that follow.
+            </P>
           </P>
           <Ul>
             {currentRatioCommentary && <Ul.Li>{currentRatioCommentary}</Ul.Li>}
