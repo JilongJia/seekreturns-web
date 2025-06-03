@@ -1,7 +1,9 @@
 type KeyMetricsData = {
   evToEBITDATTM: number;
   evToSalesTTM: number;
-  evToFreeCashFlowTTM: number;
+  returnOnEquityTTM: number;
+  returnOnAssetsTTM: number;
+  netDebtToEBITDATTM: number;
 };
 
 export async function fetchKeyMetricsData(
@@ -29,7 +31,9 @@ export async function fetchKeyMetricsData(
     const data: KeyMetricsData = {
       evToEBITDATTM: item.evToEBITDATTM,
       evToSalesTTM: item.evToSalesTTM,
-      evToFreeCashFlowTTM: item.evToFreeCashFlowTTM,
+      returnOnEquityTTM: item.returnOnEquityTTM,
+      returnOnAssetsTTM: item.returnOnAssetsTTM,
+      netDebtToEBITDATTM: item.netDebtToEBITDATTM,
     };
 
     return data;

@@ -1,4 +1,5 @@
 import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
+import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
 import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
 import { getCurrentRatioAnalysis } from "@/app/lib/stock-analysis/getCurrentRatioAnalysis";
 import { getQuickRatioAnalysis } from "@/app/lib/stock-analysis/getQuickRatioAnalysis";
@@ -27,20 +28,26 @@ export async function FinancialStrengthMetricsComparisonSection({
 }: FinancialStrengthMetricsComparisonSectionProps) {
   const [
     stockOneProfileData,
+    stockOneKeyMetricsData,
     stockOneRatiosData,
     stockTwoProfileData,
+    stockTwoKeyMetricsData,
     stockTwoRatiosData,
   ] = await Promise.all([
     fetchProfileData(stockOneSymbol),
+    fetchKeyMetricsData(stockOneSymbol),
     fetchRatiosData(stockOneSymbol),
     fetchProfileData(stockTwoSymbol),
+    fetchKeyMetricsData(stockTwoSymbol),
     fetchRatiosData(stockTwoSymbol),
   ]);
 
   if (
     !stockOneProfileData ||
+    !stockOneKeyMetricsData ||
     !stockOneRatiosData ||
     !stockTwoProfileData ||
+    !stockTwoKeyMetricsData ||
     !stockTwoRatiosData
   ) {
     return (
@@ -201,6 +208,7 @@ export async function FinancialStrengthMetricsComparisonSection({
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
+
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
@@ -235,6 +243,30 @@ export async function FinancialStrengthMetricsComparisonSection({
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Debt-to-Asset Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                Net Debt-to-EBITDA Ratio (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.netDebtToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.netDebtToEBITDATTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
 

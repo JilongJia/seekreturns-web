@@ -3,12 +3,16 @@ type RatiosData = {
   forwardPriceToEarningsGrowthRatioTTM: number;
   priceToSalesRatioTTM: number;
   priceToBookRatioTTM: number;
-  priceToFreeCashFlowRatioTTM: number;
-  dividendYieldTTM: number;
+  netProfitMarginTTM: number;
+  grossProfitMarginTTM: number;
+  operatingProfitMarginTTM: number;
   currentRatioTTM: number;
   quickRatioTTM: number;
   debtToEquityRatioTTM: number;
+  debtToAssetsRatioTTM: number;
   interestCoverageRatioTTM: number;
+  dividendYieldTTM: number;
+  dividendPayoutRatioTTM: number;
 };
 
 export async function fetchRatiosData(
@@ -38,12 +42,16 @@ export async function fetchRatiosData(
         item.forwardPriceToEarningsGrowthRatioTTM,
       priceToSalesRatioTTM: item.priceToSalesRatioTTM,
       priceToBookRatioTTM: item.priceToBookRatioTTM,
-      priceToFreeCashFlowRatioTTM: item.priceToFreeCashFlowRatioTTM,
-      dividendYieldTTM: item.dividendYieldTTM,
+      netProfitMarginTTM: item.netProfitMarginTTM,
+      grossProfitMarginTTM: item.grossProfitMarginTTM,
+      operatingProfitMarginTTM: item.operatingProfitMarginTTM,
       currentRatioTTM: item.currentRatioTTM,
       quickRatioTTM: item.quickRatioTTM,
       debtToEquityRatioTTM: item.debtToEquityRatioTTM,
+      debtToAssetsRatioTTM: item.debtToAssetsRatioTTM,
       interestCoverageRatioTTM: item.interestCoverageRatioTTM,
+      dividendYieldTTM: item.dividendYieldTTM,
+      dividendPayoutRatioTTM: item.dividendPayoutRatioTTM,
     };
 
     return data;

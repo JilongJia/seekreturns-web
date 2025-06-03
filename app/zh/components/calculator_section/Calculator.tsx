@@ -88,11 +88,11 @@ export function Calculator({ className }: CalculatorProps) {
               id="roi-output"
               htmlFor="initial-investment-number-input final-value-number-input"
             >
-              {roi}%
+              {roi}％
             </OutputCard.Output>
             <OutputCard.P>
               投资{initialInvestmentValue}元，最终价值{finalValueValue}
-              元，回报率为{roi}%。
+              元，回报率为{roi}％。
             </OutputCard.P>
           </OutputCard>
         )}

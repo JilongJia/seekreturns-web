@@ -63,7 +63,7 @@ export function NumberInput({
         <span className={clsx(styles.unitLabel, styles.right)}>日</span>
       )}
       {unit === "percent" && (
-        <span className={clsx(styles.unitLabel, styles.right)}>%</span>
+        <span className={clsx(styles.unitLabel, styles.right)}>％</span>
       )}
     </div>
   );

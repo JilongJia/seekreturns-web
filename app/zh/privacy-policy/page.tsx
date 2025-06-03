@@ -214,7 +214,7 @@ function Page() {
           </ul>
           <h3 className={styles.h3}>信息安全</h3>
           <p className={styles.p}>
-            我们非常重视您的信息安全，但请注意，互联网传输和电子存储并非100%安全，我们无法保证绝对安全。
+            我们非常重视您的信息安全，但请注意，互联网传输和电子存储并非100％安全，我们无法保证绝对安全。
           </p>
         </section>
         <section aria-labelledby="childrens-privacy">

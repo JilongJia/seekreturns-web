@@ -114,7 +114,7 @@ export function Main({ pathname, className }: MainProps) {
           </Ul>
           <P>操作步骤：</P>
           <Ul>
-            <Ul.Li>输入折现率和期数，例如5%和5期。</Ul.Li>
+            <Ul.Li>输入折现率和期数，例如5％和5期。</Ul.Li>
             <Ul.Li>计算器根据PVIFA公式（或r=0时的特殊逻辑）计算结果。</Ul.Li>
             <Ul.Li>输出PVIFA值，通常保留4位小数，例如4.3295。</Ul.Li>
           </Ul>

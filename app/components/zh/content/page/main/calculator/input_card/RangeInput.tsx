@@ -91,8 +91,8 @@ export function RangeInput({
       )}
       {unit === "percent" && (
         <>
-          <span className={clsx(styles.unitLabel, styles.left)}>{min}%</span>
-          <span className={clsx(styles.unitLabel, styles.right)}>{max}%</span>
+          <span className={clsx(styles.unitLabel, styles.left)}>{min}％</span>
+          <span className={clsx(styles.unitLabel, styles.right)}>{max}％</span>
         </>
       )}
     </div>

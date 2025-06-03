@@ -126,7 +126,7 @@ export function Calculator({ className }: CalculatorProps) {
               {pvifa}
             </OutputCard.Output>
             <OutputCard.P>
-              在{interestRatePercentValue}%的利率下，经过{numberOfPeriodsValue}
+              在{interestRatePercentValue}％的利率下，经过{numberOfPeriodsValue}
               年，每年支付1美元的年金现值系数为{pvifa}。
             </OutputCard.P>
           </OutputCard>
