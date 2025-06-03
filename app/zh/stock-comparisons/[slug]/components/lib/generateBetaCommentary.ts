@@ -11,28 +11,12 @@ export function generateBetaCommentary({
   stockTwoSymbol,
   stockTwoBeta,
 }: GenerateBetaCommentaryParams): string {
-  const stockOneBetaString = stockOneBeta.toFixed(2);
-  const stockTwoBetaString = stockTwoBeta.toFixed(2);
-
-  if (stockOneBeta === 0 && stockTwoBeta === 0) {
+  if (stockOneBeta === 0 || stockTwoBeta === 0) {
     return "";
   }
 
-  if (stockOneBeta === 0) {
-    if (stockTwoBeta < 0) {
-      return `${stockTwoSymbol}的Beta值（${stockTwoBetaString}）为负，通常表明其股价与市场走势相反，具有潜在的风险对冲价值；而${stockOneSymbol}（Beta ${stockOneBetaString}）则与市场波动基本不相关。`;
-    } else {
-      return `${stockOneSymbol}的Beta值（${stockOneBetaString}）显示其股价波动与整体市场关联性不大，而${stockTwoSymbol}的Beta值（${stockTwoBetaString}）为正，意味着其倾向于跟随市场趋势。`;
-    }
-  }
-
-  if (stockTwoBeta === 0) {
-    if (stockOneBeta < 0) {
-      return `${stockOneSymbol}的Beta值（${stockOneBetaString}）为负，显示其股价常与大盘反向而行，可作为防御性考量；而${stockTwoSymbol}（Beta ${stockTwoBetaString}）则表现出与市场波动关联不大的特性。`;
-    } else {
-      return `${stockTwoSymbol}的Beta值（${stockTwoBetaString}）表明其股价变动与市场整体走向的关联度较低，而${stockOneSymbol}的Beta值（${stockOneBetaString}）为正，则通常随市场同向波动。`;
-    }
-  }
+  const stockOneBetaString = stockOneBeta.toFixed(2);
+  const stockTwoBetaString = stockTwoBeta.toFixed(2);
 
   const ratio = stockOneBeta / stockTwoBeta;
 

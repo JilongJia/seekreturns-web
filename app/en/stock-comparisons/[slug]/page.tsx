@@ -124,8 +124,7 @@ async function Page({ params }: PageProps) {
             <P>
               Here’s a clear look at {stockOneSymbol} and {stockTwoSymbol},
               comparing key factors like performance, valuation metrics,
-              dividends, and financial strength. It’s built for investors or
-              anyone curious to see how these two stocks match up.
+              dividends, and financial strength.
             </P>
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}

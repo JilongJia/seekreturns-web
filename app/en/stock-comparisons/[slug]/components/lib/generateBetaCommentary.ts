@@ -11,28 +11,12 @@ export function generateBetaCommentary({
   stockTwoSymbol,
   stockTwoBeta,
 }: GenerateBetaCommentaryParams): string {
-  const stockOneBetaString = stockOneBeta.toFixed(2);
-  const stockTwoBetaString = stockTwoBeta.toFixed(2);
-
-  if (stockOneBeta === 0 && stockTwoBeta === 0) {
+  if (stockOneBeta === 0 || stockTwoBeta === 0) {
     return "";
   }
 
-  if (stockOneBeta === 0) {
-    if (stockTwoBeta < 0) {
-      return `${stockTwoSymbol}, with its beta of ${stockTwoBetaString}, shows a propensity to move contrary to broader market directions, a quality that can be valuable for portfolio risk balancing, while ${stockOneSymbol} (beta: ${stockOneBetaString}) shows no correlation.`;
-    } else {
-      return `${stockOneSymbol} (beta: ${stockOneBetaString}) typically moves independently of the overall market, while ${stockTwoSymbol}’s beta of ${stockTwoBetaString} suggests it tends to follow broader market trends.`;
-    }
-  }
-
-  if (stockTwoBeta === 0) {
-    if (stockOneBeta < 0) {
-      return `${stockOneSymbol}’s beta of ${stockOneBetaString} indicates its performance often opposes the general market flow, making it a consideration for defensive strategies, while ${stockTwoSymbol} (beta: ${stockTwoBetaString}) is uncorrelated with the market.`;
-    } else {
-      return `${stockTwoSymbol} (beta: ${stockTwoBetaString}) generally shows no correlation with market movements, whereas ${stockOneSymbol}’s beta of ${stockOneBetaString} indicates a tendency to move in line with the market.`;
-    }
-  }
+  const stockOneBetaString = stockOneBeta.toFixed(2);
+  const stockTwoBetaString = stockTwoBeta.toFixed(2);
 
   const ratio = stockOneBeta / stockTwoBeta;
 

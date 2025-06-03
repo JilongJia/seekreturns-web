@@ -23,7 +23,7 @@ export function HeroSection({ className }: HeroSectionProps) {
       </div>
       <Image
         src={seekReturnsStrategically}
-        alt="策略性追求回报"
+        alt="策略性地追求收益"
         className={styles.image}
       />
     </section>

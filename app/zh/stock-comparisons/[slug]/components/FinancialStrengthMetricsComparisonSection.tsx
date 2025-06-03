@@ -161,7 +161,7 @@ export async function FinancialStrengthMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            这里我们来对比一下 {stockOneSymbol} 与 {stockTwoSymbol}{" "}
+            这里我们来对比一下{stockOneSymbol}与{stockTwoSymbol}
             的财务状况。结合行业背景来看，两者在财务稳健性方面有以下几点值得注意：
           </P>
           <Ul>
@@ -177,7 +177,7 @@ export async function FinancialStrengthMetricsComparisonSection({
         </>
       ) : (
         <P>
-          请查看下方表格，了解 {stockOneSymbol} 和 {stockTwoSymbol} 的财务状况。
+          请查看下方表格，了解{stockOneSymbol}和{stockTwoSymbol}的财务状况。
         </P>
       )}
 
@@ -197,7 +197,7 @@ export async function FinancialStrengthMetricsComparisonSection({
 
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">流动比率（TTM）</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.currentRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -207,7 +207,7 @@ export async function FinancialStrengthMetricsComparisonSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">速动比率（TTM）</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.quickRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -218,7 +218,7 @@ export async function FinancialStrengthMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                负债权益比率 (TTM)
+                负债权益比率（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
@@ -230,7 +230,7 @@ export async function FinancialStrengthMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                利息保障倍数 (TTM)
+                利息保障倍数（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}

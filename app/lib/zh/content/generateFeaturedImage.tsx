@@ -276,7 +276,7 @@ export async function generateFeaturedImage({
                   fontSize: "1rem",
                 }}
               >
-                {`更新于 ${modifiedDate.toLocaleDateString("zh", {
+                {`更新于${modifiedDate.toLocaleDateString("zh", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

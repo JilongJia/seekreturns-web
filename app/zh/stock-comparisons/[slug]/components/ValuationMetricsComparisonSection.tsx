@@ -173,7 +173,7 @@ export async function ValuationMetricsComparisonSection({
       {hasCommentary ? (
         <>
           <P>
-            接下来，我们关注 {stockOneSymbol} 与 {stockTwoSymbol}{" "}
+            接下来，我们关注{stockOneSymbol}与{stockTwoSymbol}
             的估值情况。从行业普遍的估值角度考量，双方在估值方面有以下几个值得留意的看点：
           </P>
           <Ul>
@@ -193,7 +193,7 @@ export async function ValuationMetricsComparisonSection({
         </>
       ) : (
         <P>
-          想了解 {stockOneSymbol} 和 {stockTwoSymbol} 的估值对比，请看下表。
+          想了解{stockOneSymbol}和{stockTwoSymbol}的估值对比，请看下表。
         </P>
       )}
 
@@ -214,7 +214,7 @@ export async function ValuationMetricsComparisonSection({
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                市盈率 (P/E, TTM)
+                市盈率（P/E，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
@@ -226,7 +226,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                前瞻PEG比率 (TTM)
+                前瞻PEG比率（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(
@@ -242,7 +242,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                市销率 (P/S, TTM)
+                市销率（P/S，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
@@ -254,7 +254,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                市净率 (P/B, TTM)
+                市净率（P/B，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
@@ -266,7 +266,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                市价自由现金流比率 (P/FCF, TTM)
+                市价自由现金流比率（P/FCF，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
@@ -277,7 +277,9 @@ export async function ValuationMetricsComparisonSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">EV/EBITDA (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">
+                EV/EBITDA（TTM）
+              </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
               </Table.Tbody.Tr.Td>
@@ -288,7 +290,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                企业价值/销售额 (TTM)
+                企业价值/销售额（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
@@ -300,7 +302,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                企业价值/自由现金流 (TTM)
+                企业价值/自由现金流（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.evToFreeCashFlowTTM)}

@@ -10,7 +10,7 @@ import pagesRaw from "@/app/data/stock-comparisons/pages.json";
 
 export function Tabs() {
   const pages = pagesRaw.map(({ symbolOne, symbolTwo, slug }) => ({
-    title: `${symbolOne} 与 ${symbolTwo}`,
+    title: `${symbolOne}与${symbolTwo}`,
     pathname: `/zh/stock-comparisons/${slug}`,
   }));
 

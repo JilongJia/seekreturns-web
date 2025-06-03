@@ -45,7 +45,7 @@ function Page() {
         <header className={styles.mainHeader}>
           <h1 className={styles.h1}>隐私政策</h1>
           <span className={styles.modifiedDate}>
-            更新于{" "}
+            更新于
             <time dateTime={modifiedDate.toISOString()}>
               {modifiedDate.toLocaleDateString("zh", {
                 year: "numeric",
@@ -77,8 +77,8 @@ function Page() {
             </li>
             <li className={styles.li}>
               <p className={styles.p}>
-                <strong>公司</strong>：指Seek Returns
-                (在本文中也可能称为“我们”或“我们的”)。
+                <strong>公司</strong>：指 Seek
+                Returns（在本文中也可能称为“我们”或“我们的”）。
               </p>
             </li>
             <li className={styles.li}>
@@ -105,9 +105,9 @@ function Page() {
             </li>
             <li className={styles.li}>
               <p className={styles.p}>
-                <strong>网站</strong>：指Seek Returns，访问地址为{" "}
+                <strong>网站</strong>：指 Seek Returns，访问地址为{" "}
                 <Link href="/zh" className={styles.link}>
-                  https://seekreturns.com
+                  https://seekreturns.com/zh
                 </Link>
                 。
               </p>

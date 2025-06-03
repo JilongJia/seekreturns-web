@@ -44,7 +44,7 @@ export function Form({ className }: FormProps) {
           onChange={handleSymbolOneChange}
           className={styles.input}
         />
-        <span className={styles.vsText}> 对比 </span>
+        <span className={styles.vsText}>对比</span>
         <input
           type="text"
           placeholder="NVDA"

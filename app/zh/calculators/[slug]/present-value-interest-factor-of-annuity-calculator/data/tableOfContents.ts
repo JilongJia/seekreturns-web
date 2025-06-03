@@ -1,7 +1,7 @@
 export const tableOfContents = [
   {
     id: "what-is-present-value-interest-factor-of-annuity",
-    label: "什么是年金现值系数 (PVIFA)？",
+    label: "什么是年金现值系数（PVIFA）？",
   },
   {
     id: "how-to-calculate-pvifa",

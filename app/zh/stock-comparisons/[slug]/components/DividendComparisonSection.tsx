@@ -58,12 +58,12 @@ export async function DividendComparisonSection({
           </Table.Thead>
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">股息率（TTM）</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}％
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}％
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

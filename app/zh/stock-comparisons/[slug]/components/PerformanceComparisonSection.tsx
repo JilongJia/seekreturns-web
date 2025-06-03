@@ -40,8 +40,8 @@ export async function PerformanceComparisonSection({
     <Section ariaLabelledby="performance-comparison">
       <H2 id="performance-comparison">历史表现比较</H2>
       <P>
-        下图展示了 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
-        过去一年的历史表现，假设初始投资均为 1 万美元，以比较其投资回报表现。
+        下图展示了{stockOneSymbol}和{stockTwoSymbol}
+        过去一年的历史表现，假设初始投资均为1万美元，以比较其投资回报表现。
       </P>
       <P>数据已根据股息和股票拆分进行调整。</P>
       <Chart

@@ -105,7 +105,7 @@ export function Chart({ data }: ChartProps): JSX.Element {
     // Initialize chart
     container.style.position = "relative";
     const formatPercentage = (price: number): string => {
-      return `${price.toFixed(2)}%`;
+      return `${price.toFixed(2)}％`;
     };
     const chart = createChart(container, {
       layout: {
@@ -142,7 +142,7 @@ export function Chart({ data }: ChartProps): JSX.Element {
       const listItem = document.createElement("li");
       listItem.className = `${styles.legendItem} ${bulletClass}`;
       const scaledValueEquivalent = (1 + latestPercentageValue / 100) * 10000;
-      listItem.innerHTML = `${symbol}：$${scaledValueEquivalent.toFixed(2)} (${latestPercentageValue.toFixed(2)}%)`;
+      listItem.innerHTML = `${symbol}：$${scaledValueEquivalent.toFixed(2)}（${latestPercentageValue.toFixed(2)}％）`;
       return listItem;
     };
 
@@ -184,8 +184,8 @@ export function Chart({ data }: ChartProps): JSX.Element {
       const stockOneScaledEquiv = (1 + currentStockOnePerc / 100) * 10000;
       const stockTwoScaledEquiv = (1 + currentStockTwoPerc / 100) * 10000;
 
-      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneScaledEquiv.toFixed(2)} (${currentStockOnePerc.toFixed(2)}%)`;
-      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoScaledEquiv.toFixed(2)} (${currentStockTwoPerc.toFixed(2)}%)`;
+      stockOneLegendItem.innerHTML = `${data.stockOne.symbol}：$${stockOneScaledEquiv.toFixed(2)}（${currentStockOnePerc.toFixed(2)}％）`;
+      stockTwoLegendItem.innerHTML = `${data.stockTwo.symbol}：$${stockTwoScaledEquiv.toFixed(2)}（${currentStockTwoPerc.toFixed(2)}％）`;
     };
     chart.subscribeCrosshairMove(handleCrosshairMove);
 

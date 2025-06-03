@@ -9,10 +9,10 @@ export function generatePageInfo({
   symbolTwo,
   slug,
 }: GeneratePageInfoParams) {
-  const title = `${symbolOne} 与 ${symbolTwo}：股票综合比较`;
+  const title = `${symbolOne}与${symbolTwo}：股票综合比较`;
   const pathname = `/zh/stock-comparisons/${slug}`;
 
-  const description = `${symbolOne} 与 ${symbolTwo} 深度对比分析。从公司概况、历史表现、估值、股息和财务实力等多维度比较，辅助您的判断。`;
+  const description = `${symbolOne}与${symbolTwo}深度对比分析。从公司概况、历史表现、估值、股息和财务实力等多维度比较，辅助您的判断。`;
 
   const publishedDate = new Date("2025-05-05");
   const modifiedDate = new Date();

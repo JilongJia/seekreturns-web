@@ -45,7 +45,7 @@ function Page() {
         <header className={styles.mainHeader}>
           <h1 className={styles.h1}>服务条款</h1>
           <span className={styles.modifiedDate}>
-            更新于{" "}
+            更新于
             <time dateTime={modifiedDate.toISOString()}>
               {modifiedDate.toLocaleDateString("zh", {
                 year: "numeric",
@@ -66,8 +66,8 @@ function Page() {
           <ul className={styles.ul}>
             <li className={styles.li}>
               <p className={styles.p}>
-                <strong>公司</strong>：指Seek Returns
-                (在本文中也可能称为“我们”或“我们的”)。
+                <strong>公司</strong>：指 Seek
+                Returns（在本文中也可能称为“我们”或“我们的”）。
               </p>
             </li>
             <li className={styles.li}>
@@ -77,9 +77,9 @@ function Page() {
             </li>
             <li className={styles.li}>
               <p className={styles.p}>
-                <strong>网站</strong>：指Seek Returns，访问地址为{" "}
+                <strong>网站</strong>：指 Seek Returns，访问地址为{" "}
                 <Link href="/zh" className={styles.link}>
-                  https://seekreturns.com
+                  https://seekreturns.com/zh
                 </Link>
                 。
               </p>
@@ -134,10 +134,7 @@ function Page() {
             责任限制
           </h2>
           <p className={styles.p}>
-            在法律允许的范围内，我们对您因使用服务可能遭受的任何损失
-            (包括但不限于利润损失、数据丢失或业务中断)
-            的责任，最高不超过您通过服务支付的金额，或100美元
-            (如果您未通过服务购买任何内容)。
+            在法律允许的范围内，我们对您因使用服务可能遭受的任何损失（包括但不限于利润损失、数据丢失或业务中断）的责任，最高不超过您通过服务支付的金额，或100美元（如果您未通过服务购买任何内容）。
           </p>
           <p className={styles.p}>
             我们不对因服务使用或无法使用服务、第三方软件或硬件等引起的任何间接或附带损害承担责任。
@@ -159,8 +156,7 @@ function Page() {
             适用法律
           </h2>
           <p className={styles.p}>
-            本服务条款及您对服务的使用受日本法律管辖
-            (不包括其冲突法规则)。您使用服务还可能受其他地区法律的约束。
+            本服务条款及您对服务的使用受日本法律管辖（不包括其冲突法规则）。您使用服务还可能受其他地区法律的约束。
           </p>
         </section>
         <section aria-labelledby="disputes-resolution">

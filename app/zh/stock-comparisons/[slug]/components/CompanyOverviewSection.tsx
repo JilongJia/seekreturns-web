@@ -73,8 +73,7 @@ export async function CompanyOverviewSection({
         </>
       ) : (
         <P>
-          {stockOneSymbol} 与 {stockTwoSymbol}{" "}
-          的详细公司概况对比，请参见下方表格。
+          {stockOneSymbol}与{stockTwoSymbol}的详细公司概况对比，请参见下方表格。
         </P>
       )}
 
@@ -162,7 +161,9 @@ export async function CompanyOverviewSection({
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">贝塔值 (波动性)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">
+                贝塔值（波动性）
+              </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {stockOneProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>

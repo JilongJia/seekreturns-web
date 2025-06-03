@@ -116,13 +116,13 @@ async function Page({ params }: PageProps) {
           <article>
             <ArticleHeader className={styles.articleHeader}>
               <H1>
-                {stockOneSymbol} 与 {stockTwoSymbol}：股票综合比较
+                {stockOneSymbol}与{stockTwoSymbol}：股票综合比较
               </H1>
               <ModifiedDate />
             </ArticleHeader>
             <P>
-              本文对 {stockOneSymbol} 和 {stockTwoSymbol}{" "}
-              进行了全面对比，涵盖历史表现、估值、股息以及财务实力等方面。无论您是寻求投资洞察，还是希望了解这两只股票的相对优势，这里都能为您提供清晰的参考。
+              本文对{stockOneSymbol}和{stockTwoSymbol}
+              进行了全面对比，涵盖历史表现、估值、股息以及财务实力等方面。
             </P>
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
