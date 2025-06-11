@@ -1,0 +1,25 @@
+export const metricCodes = [
+  "evToEBITDATTM",
+  "evToSalesTTM",
+  "returnOnEquityTTM",
+  "returnOnAssetsTTM",
+  "returnOnInvestedCapitalTTM",
+  "netDebtToEBITDATTM",
+  "priceToEarningsRatioTTM",
+  "forwardPriceToEarningsGrowthRatioTTM",
+  "priceToSalesRatioTTM",
+  "priceToBookRatioTTM",
+  "priceToFreeCashFlowRatioTTM",
+  "netProfitMarginTTM",
+  "grossProfitMarginTTM",
+  "operatingProfitMarginTTM",
+  "currentRatioTTM",
+  "quickRatioTTM",
+  "debtToEquityRatioTTM",
+  "debtToAssetsRatioTTM",
+  "interestCoverageRatioTTM",
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
+] as const;
+
+export type MetricCode = (typeof metricCodes)[number];

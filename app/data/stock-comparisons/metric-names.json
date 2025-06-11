@@ -1,0 +1,149 @@
+[
+  {
+    "metric": "evToEBITDATTM",
+    "shortNameEN": "EV/EBITDA",
+    "longNameEN": "EV to EBITDA Ratio",
+    "shortNameZH": "企业价值倍数",
+    "longNameZH": "企业价值与息税折旧摊销前利润比率"
+  },
+  {
+    "metric": "evToSalesTTM",
+    "shortNameEN": "EV/Sales",
+    "longNameEN": "EV to Sales Ratio",
+    "shortNameZH": "市销率（企业价值）",
+    "longNameZH": "企业价值与销售额比率"
+  },
+  {
+    "metric": "returnOnEquityTTM",
+    "shortNameEN": "ROE",
+    "longNameEN": "Return on Equity",
+    "shortNameZH": "净资产收益率",
+    "longNameZH": "净资产收益率"
+  },
+  {
+    "metric": "returnOnAssetsTTM",
+    "shortNameEN": "ROA",
+    "longNameEN": "Return on Assets",
+    "shortNameZH": "总资产回报率",
+    "longNameZH": "总资产回报率"
+  },
+  {
+    "metric": "returnOnInvestedCapitalTTM",
+    "shortNameEN": "ROIC",
+    "longNameEN": "Return on Invested Capital",
+    "shortNameZH": "投入资本回报率",
+    "longNameZH": "投入资本回报率"
+  },
+  {
+    "metric": "netDebtToEBITDATTM",
+    "shortNameEN": "Net Debt/EBITDA",
+    "longNameEN": "Net Debt to EBITDA Ratio",
+    "shortNameZH": "净负债/EBITDA",
+    "longNameZH": "净负债与息税折旧摊销前利润比率"
+  },
+  {
+    "metric": "priceToEarningsRatioTTM",
+    "shortNameEN": "P/E Ratio",
+    "longNameEN": "Price-to-Earnings Ratio",
+    "shortNameZH": "市盈率",
+    "longNameZH": "市盈率"
+  },
+  {
+    "metric": "forwardPriceToEarningsGrowthRatioTTM",
+    "shortNameEN": "PEG Ratio",
+    "longNameEN": "Price/Earnings to Growth Ratio (Forward)",
+    "shortNameZH": "市盈率相对盈利增长比率",
+    "longNameZH": "市盈率相对盈利增长比率"
+  },
+  {
+    "metric": "priceToSalesRatioTTM",
+    "shortNameEN": "P/S Ratio",
+    "longNameEN": "Price-to-Sales Ratio",
+    "shortNameZH": "市销率",
+    "longNameZH": "市销率"
+  },
+  {
+    "metric": "priceToBookRatioTTM",
+    "shortNameEN": "P/B Ratio",
+    "longNameEN": "Price-to-Book Ratio",
+    "shortNameZH": "市净率",
+    "longNameZH": "市净率"
+  },
+  {
+    "metric": "priceToFreeCashFlowRatioTTM",
+    "shortNameEN": "P/FCF Ratio",
+    "longNameEN": "Price to Free Cash Flow Ratio",
+    "shortNameZH": "市现率",
+    "longNameZH": "价格与自由现金流比率"
+  },
+  {
+    "metric": "netProfitMarginTTM",
+    "shortNameEN": "Net Profit Margin",
+    "longNameEN": "Net Profit Margin",
+    "shortNameZH": "净利率",
+    "longNameZH": "净利润率"
+  },
+  {
+    "metric": "grossProfitMarginTTM",
+    "shortNameEN": "Gross Profit Margin",
+    "longNameEN": "Gross Profit Margin",
+    "shortNameZH": "毛利率",
+    "longNameZH": "毛利率"
+  },
+  {
+    "metric": "operatingProfitMarginTTM",
+    "shortNameEN": "Operating Margin",
+    "longNameEN": "Operating Profit Margin",
+    "shortNameZH": "营业利润率",
+    "longNameZH": "营业利润率"
+  },
+  {
+    "metric": "currentRatioTTM",
+    "shortNameEN": "Current Ratio",
+    "longNameEN": "Current Ratio",
+    "shortNameZH": "流动比率",
+    "longNameZH": "流动比率"
+  },
+  {
+    "metric": "quickRatioTTM",
+    "shortNameEN": "Quick Ratio",
+    "longNameEN": "Quick Ratio",
+    "shortNameZH": "速动比率",
+    "longNameZH": "速动比率"
+  },
+  {
+    "metric": "debtToEquityRatioTTM",
+    "shortNameEN": "Debt/Equity",
+    "longNameEN": "Debt-to-Equity Ratio",
+    "shortNameZH": "产权比率",
+    "longNameZH": "产权比率"
+  },
+  {
+    "metric": "debtToAssetsRatioTTM",
+    "shortNameEN": "Debt/Assets",
+    "longNameEN": "Debt-to-Assets Ratio",
+    "shortNameZH": "资产负债比率",
+    "longNameZH": "资产负债比率"
+  },
+  {
+    "metric": "interestCoverageRatioTTM",
+    "shortNameEN": "Interest Coverage",
+    "longNameEN": "Interest Coverage Ratio",
+    "shortNameZH": "利息保障倍数",
+    "longNameZH": "利息保障倍数"
+  },
+  {
+    "metric": "dividendYieldTTM",
+    "shortNameEN": "Dividend Yield",
+    "longNameEN": "Dividend Yield",
+    "shortNameZH": "股息率",
+    "longNameZH": "股息率"
+  },
+  {
+    "metric": "dividendPayoutRatioTTM",
+    "shortNameEN": "Payout Ratio",
+    "longNameEN": "Dividend Payout Ratio",
+    "shortNameZH": "股息支付率",
+    "longNameZH": "股息支付率"
+  }
+]

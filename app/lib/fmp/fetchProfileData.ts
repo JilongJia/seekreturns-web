@@ -1,8 +1,10 @@
+import type { IndustryCode } from "@/app/data/fmp/industryCodes";
+
 type ProfileData = {
   companyName: string;
   country: string;
   sector: string;
-  industry: string;
+  industry: IndustryCode;
   ceo: string;
   price: number;
   marketCap: number;
