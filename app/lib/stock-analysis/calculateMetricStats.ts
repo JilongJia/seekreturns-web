@@ -1,5 +1,36 @@
 import { quantile } from "d3-array";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const POSITIVE_METRICS = new Set([
+  "evToEBITDATTM",
+  "evToSalesTTM",
+  "netDebtToEBITDATTM",
+  "priceToEarningsRatioTTM",
+  "forwardPriceToEarningsGrowthRatioTTM",
+  "priceToSalesRatioTTM",
+  "priceToBookRatioTTM",
+  "priceToFreeCashFlowRatioTTM",
+  "currentRatioTTM",
+  "quickRatioTTM",
+  "debtToEquityRatioTTM",
+  "debtToAssetsRatioTTM",
+]);
+
+const NON_NEGATIVE_METRICS = new Set([
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
+]);
+
+const NON_ZERO_METRICS = new Set([
+  "returnOnEquityTTM",
+  "returnOnAssetsTTM",
+  "returnOnInvestedCapitalTTM",
+  "netProfitMarginTTM",
+  "grossProfitMarginTTM",
+  "operatingProfitMarginTTM",
+  "interestCoverageRatioTTM",
+]);
+
 type MetricStats = {
   min: number;
   q1: number;
@@ -9,23 +40,33 @@ type MetricStats = {
 };
 
 type CalculateMetricStatsParams = {
+  metricCode: string;
   metricValues: number[] | null;
 };
 
 export function calculateMetricStats({
+  metricCode,
   metricValues,
 }: CalculateMetricStatsParams): MetricStats | null {
   if (metricValues == null) {
     return null;
   }
 
-  const positiveValues = metricValues.filter((v) => v > 0);
+  let filteredValues: number[];
 
-  if (positiveValues.length < 4) {
+  if (NON_NEGATIVE_METRICS.has(metricCode)) {
+    filteredValues = metricValues.filter((v) => v >= 0);
+  } else if (NON_ZERO_METRICS.has(metricCode)) {
+    filteredValues = metricValues.filter((v) => v !== 0);
+  } else {
+    filteredValues = metricValues.filter((v) => v > 0);
+  }
+
+  if (filteredValues.length === 0) {
     return null;
   }
 
-  const sortedValues = [...positiveValues].sort((a, b) => a - b);
+  const sortedValues = [...filteredValues].sort((a, b) => a - b);
 
   const q1 = quantile(sortedValues, 0.25)!;
   const median = quantile(sortedValues, 0.5)!;
@@ -39,11 +80,14 @@ export function calculateMetricStats({
   const whiskerMin = sortedValues.find((d) => d >= lowerFence)!;
   const whiskerMax = [...sortedValues].reverse().find((d) => d <= upperFence)!;
 
+  const finalMax = whiskerMax < q3 ? upperFence : whiskerMax;
+  const finalMin = whiskerMin > q1 ? lowerFence : whiskerMin;
+
   return {
-    min: Math.max(whiskerMin, 0),
+    min: finalMin,
     q1,
     median,
     q3,
-    max: whiskerMax,
+    max: finalMax,
   };
 }

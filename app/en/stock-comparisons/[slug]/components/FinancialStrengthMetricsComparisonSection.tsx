@@ -15,7 +15,6 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
-import { MetricComparisonBoxPlot } from "@/app/components/en/content/page/main/stock-comparison/BoxPlot";
 import styles from "./FinancialStrengthMetricsComparisonSection.module.css";
 
 type FinancialStrengthMetricsComparisonSectionProps = {
@@ -169,16 +168,6 @@ export async function FinancialStrengthMetricsComparisonSection({
       <H2 id="financial-strength-metrics-comparison">
         Financial Strength Metrics Comparison
       </H2>
-
-      <MetricComparisonBoxPlot
-        metricCode="priceToEarningsRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustry={stockOneProfileData.industry}
-        stockOneValue={-35}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustry={stockTwoProfileData.industry}
-        stockTwoValue={80}
-      />
 
       {hasCommentary ? (
         <>

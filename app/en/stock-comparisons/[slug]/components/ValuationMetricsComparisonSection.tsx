@@ -14,6 +14,7 @@ import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
 import styles from "./ValuationMetricsComparisonSection.module.css";
+import { MetricComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/MetricComparisonContainer";
 
 type ValuationMetricsComparisonSectionProps = {
   stockOneSymbol: string;
@@ -167,6 +168,16 @@ export async function ValuationMetricsComparisonSection({
           below.
         </P>
       )}
+
+      <MetricComparisonContainer
+        metricCode="priceToEarningsRatioTTM"
+        stockOneSymbol={stockOneSymbol}
+        stockOneIndustryCode={stockOneProfileData.industry}
+        stockOneMetricValue={stockOneRatiosData.priceToEarningsRatioTTM}
+        stockTwoSymbol={stockTwoSymbol}
+        stockTwoIndustryCode={stockTwoProfileData.industry}
+        stockTwoMetricValue={stockTwoRatiosData.priceToEarningsRatioTTM}
+      />
 
       <div className={styles.tableContainer}>
         <Table>
