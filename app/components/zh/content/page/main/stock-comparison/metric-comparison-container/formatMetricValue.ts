@@ -23,14 +23,14 @@ export function formatMetricValue({
   if (metricValue === null || metricValue === undefined) return "--";
 
   if (percentageMetrics.has(metricCode)) {
-    return metricValue.toLocaleString("en-US", {
+    return metricValue.toLocaleString("zh-CN", {
       style: "percent",
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
   }
 
-  return metricValue.toLocaleString("en-US", {
+  return metricValue.toLocaleString("zh-CN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });

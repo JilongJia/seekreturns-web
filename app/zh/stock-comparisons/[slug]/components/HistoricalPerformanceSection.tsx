@@ -29,16 +29,16 @@ export async function HistoricalPerformanceSection({
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (
-      <Section ariaLabelledby="performance-comparison">
-        <H2 id="performance-comparison">历史表现比较</H2>
+      <Section ariaLabelledby="historical-performance">
+        <H2 id="historical-performance">历史表现</H2>
         <P>暂时无法加载历史表现数据。</P>
       </Section>
     );
   }
 
   return (
-    <Section ariaLabelledby="performance-comparison">
-      <H2 id="performance-comparison">历史表现比较</H2>
+    <Section ariaLabelledby="historical-performance">
+      <H2 id="historical-performance">历史表现</H2>
       <P>
         下图展示了{stockOneSymbol}和{stockTwoSymbol}
         过去一年的历史表现，假设初始投资均为1万美元，以比较其投资回报表现。

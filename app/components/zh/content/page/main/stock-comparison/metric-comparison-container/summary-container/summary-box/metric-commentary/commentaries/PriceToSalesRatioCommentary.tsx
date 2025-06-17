@@ -27,82 +27,69 @@ export function PriceToSalesRatioCommentary({
   industryMetricStats,
   metricCode,
 }: MetricCommentaryProps) {
-  // 1. Check if the metric is applicable
+  // 1. 检查指标是否适用
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/S Ratio isn’t typically a primary valuation metric for companies
-        in the {industryName} industry.
+        在 {industryName} 行业，市销率（P/S Ratio）通常不是一个主要的估值指标。
       </P>
     );
   }
 
-  // 2. Check if data is available
+  // 2. 检查数据是否可用
   if (metricValue === null) {
-    return <P>P/S Ratio data for {stockSymbol} is currently unavailable.</P>;
+    return <P>抱歉，我们暂时无法提供 {stockSymbol} 的市销率（P/S）数据。</P>;
   }
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. Check if industry benchmark data is available
+  // 3. 检查行业基准数据是否可用
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a P/S Ratio of {formattedMetricValue}, but industry
-        benchmarks for the {industryName} industry are currently unavailable for
-        comparison.
+        {stockSymbol} 的市销率为 {formattedMetricValue}，但因缺少 {industryName}{" "}
+        行业的基准，我们无法提供其在行业内的估值背景。
       </P>
     );
   }
 
   const { min, q1, q3, max } = industryMetricStats;
 
-  // 4. Handle cases based on industry benchmarks
+  // 4. 基于行业基准进行分析
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is exceptionally
-        high, placing it well beyond the typical range for the {industryName}{" "}
-        industry. This reflects a significant premium on its sales, likely
-        driven by strong investor expectations for future growth and market
-        share gains.
+        {stockSymbol} 的市销率 {formattedMetricValue} 远超 {industryName}{" "}
+        行业的普遍范围。这反映出市场对其销售额给予了显著的溢价，这很可能是由投资者对公司未来增长和市场份额提升的强烈预期所驱动的。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is below the typical
-        range for the {industryName} industry. This could imply the stock is
-        undervalued relative to its revenue stream, or it may reflect market
-        concerns about future sales growth or profitability challenges.
+        {stockSymbol} 的市销率 {formattedMetricValue} 低于 {industryName}{" "}
+        行业的正常范围。这可能暗示其股价相对于公司的营收规模来说被低估了，但也可能反映了市场对公司未来销售增长乏力或盈利困难的担忧。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is in the upper
-        quartile for the {industryName} industry. This suggests investors are
-        paying a premium for each dollar of the company’s sales compared to its
-        peers, indicating optimism about its growth prospects.
+        {stockSymbol} 的市销率 {formattedMetricValue}{" "}
+        位于行业的前四分之一。这表明与同行相比，投资者愿意为公司每一元的销售额支付更高的价格，显示出对公司增长前景的乐观态度。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This indicates a more
-        conservative valuation on its revenues, which may signal an opportunity
-        if sales growth accelerates or market skepticism about its future
-        performance.
+        {stockSymbol} 的市销率 {formattedMetricValue}{" "}
+        处于行业的后四分之一。这反映了市场对其收入的估值较为保守。如果未来销售能够加速增长，这可能构成一个投资机会；反之，这也可能体现了市场对其业绩的疑虑。
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3)
+    // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is valued in line
-        with its peers in the {industryName} industry, suggesting the market’s
-        valuation of its sales is typical for the sector.
+        {stockSymbol} 的市销率 {formattedMetricValue} 与 {industryName}{" "}
+        的同行水平相当，表明市场对其销售额的估值符合行业常规水平。
       </P>
     );
   }

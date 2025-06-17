@@ -27,93 +27,81 @@ export function NetProfitMarginCommentary({
   industryMetricStats,
   metricCode,
 }: MetricCommentaryProps) {
-  // 1. Check if the metric is applicable to the industry
+  // 1. 检查指标是否适用于该行业
   if (!isMetricApplicable) {
     return (
       <P>
-        Net Profit Margin is not a primary profitability metric for companies in
-        the {industryName} industry.
+        对于 {industryName} 行业，净利润率可能不是衡量其盈利能力的最关键指标。
       </P>
     );
   }
 
-  // 2. Check if the stock's Net Profit Margin data is available
+  // 2. 检查公司的净利润率数据是否可用
   if (metricValue === null) {
-    return (
-      <P>Net Profit Margin data for {stockSymbol} is currently unavailable.</P>
-    );
+    return <P>{stockSymbol} 的净利润率数据目前无法获得。</P>;
   }
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. Handle the special case: Negative Net Profit Margin
+  // 3. 处理特殊情况：负净利润率
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} has a negative Net Profit Margin of {formattedMetricValue}
-        , indicating the company is operating at a net loss as its expenses
-        exceed revenues.
+        {stockSymbol} 的净利润率为负（{formattedMetricValue}
+        ），表明公司目前处于净亏损状态，其总成本费用超过了营业收入。
       </P>
     );
   }
 
-  // 4. Check if industry benchmark data is available
+  // 4. 检查行业基准数据是否可用
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a Net Profit Margin of {formattedMetricValue}, but
-        industry benchmarks for the {industryName} sector are currently
-        unavailable for comparison.
+        {stockSymbol} 的净利润率为 {formattedMetricValue}，但因缺少{" "}
+        {industryName}{" "}
+        行业的比较基准，我们无法评估其盈利能力在行业中的具体位置。
       </P>
     );
   }
 
   const { min, q1, q3, max } = industryMetricStats;
 
-  // 5. Handle cases based on industry benchmarks
+  // 5. 基于行业基准进行分析
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is
-        exceptionally high, placing it well beyond the typical range for the{" "}
-        {industryName} industry. This demonstrates outstanding operational
-        efficiency and a potential strong competitive advantage in converting
-        revenue into profit.
+        {stockSymbol} 的净利润率 {formattedMetricValue} 达到了非常高的水平，远超{" "}
+        {industryName}{" "}
+        行业的同行。这展示了公司卓越的运营效率和成本控制能力，可能意味着其拥有强大的竞争优势或“护城河”。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is below the
-        typical range for the {industryName} industry. This suggests the company
-        may be facing challenges with cost control or is operating in a highly
-        competitive environment that limits its pricing power.
+        {stockSymbol} 的净利润率 {formattedMetricValue} 低于 {industryName}{" "}
+        行业的普遍水平。这可能表明公司在成本控制方面面临挑战，或者身处一个竞争激烈的市场环境，导致其定价能力受到限制。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry, signifying strong
-        profitability and more effective cost management than most of its peers.
+        {stockSymbol} 的净利润率 {formattedMetricValue} 处于 {industryName}{" "}
+        行业的前25%，标志着其盈利能力强劲，并且比大多数同行更有效地控制了成本。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is in the
-        lower quartile for the {industryName} industry. This indicates weaker
-        profitability, as the company retains a smaller portion of each dollar
-        in sales as profit compared to its competitors.
+        {stockSymbol} 的净利润率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的后25%。这说明其盈利能力相对较弱，与竞争者相比，公司从单位销售额中保留下来的利润更少。
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3).
+    // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is within
-        the central 50% of the {industryName} industry, indicating its ability
-        to convert sales into profit is typical for the sector.
+        {stockSymbol} 的净利润率 {formattedMetricValue} 处于 {industryName}{" "}
+        行业的核心区间（即中间50%的公司）。这表明其将销售收入转化为利润的能力与该行业的典型水平保持一致。
       </P>
     );
   }

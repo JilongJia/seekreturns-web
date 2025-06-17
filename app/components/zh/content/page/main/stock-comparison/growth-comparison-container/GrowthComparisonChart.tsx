@@ -59,7 +59,6 @@ export function FinancialGrowthChart({
     const container = chartContainerRef.current;
     if (!container || !stockOne.growthSeries || !stockTwo.growthSeries) return;
 
-    // Process the raw data for the selected metric
     const stockOneProcessedSeries = processDataForChart(
       stockOne.growthSeries,
       metricCode,
@@ -79,7 +78,8 @@ export function FinancialGrowthChart({
       },
       width: container.clientWidth,
       height: 300,
-      localization: { locale: "en-US", priceFormatter: formatPercentage },
+      // *** THIS IS THE KEY CHANGE FOR LOCALIZATION ***
+      localization: { locale: "zh-CN", priceFormatter: formatPercentage },
       rightPriceScale: {
         scaleMargins: { top: 0.2, bottom: 0.1 },
       },
@@ -92,24 +92,20 @@ export function FinancialGrowthChart({
       },
     });
 
-    // Add series lines
     const stockOneLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
       color: "#2563eb",
       lineWidth: 2,
-      // Add a title for the series which can be shown in a tooltip
       title: stockOne.symbol,
     });
     const stockTwoLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
       color: "#ef4444",
       lineWidth: 2,
-      // Add a title for the series which can be shown in a tooltip
       title: stockTwo.symbol,
     });
     stockOneLineSeries.setData(stockOneProcessedSeries);
     stockTwoLineSeries.setData(stockTwoProcessedSeries);
     chart.timeScale().fitContent();
 
-    // Resize handler
     const handleWindowResize = (): void => {
       if (container) {
         chart.applyOptions({ width: container.clientWidth });
@@ -117,7 +113,6 @@ export function FinancialGrowthChart({
     };
     window.addEventListener("resize", handleWindowResize);
 
-    // Cleanup on component unmount
     return () => {
       window.removeEventListener("resize", handleWindowResize);
       chart.remove();

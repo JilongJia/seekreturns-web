@@ -33,11 +33,11 @@ export function MetricComparisonContainer({
 }: MetricComparisonContainerProps) {
   const metricLongName = getMetricName({
     metricCode: metricCode,
-    nameType: "longNameEN",
+    nameType: "longNameZH",
   });
   const metricShortName = getMetricName({
     metricCode: metricCode,
-    nameType: "shortNameEN",
+    nameType: "shortNameZH",
   });
 
   const stockOneIndustryMetricStats = calculateMetricStats({

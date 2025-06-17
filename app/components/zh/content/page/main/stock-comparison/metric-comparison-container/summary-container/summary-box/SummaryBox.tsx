@@ -49,7 +49,7 @@ export function SummaryBox({
         {formatMetricValue({ metricCode, metricValue })}
       </p>
 
-      <h4 className={styles.industryHeading}>{industryName} Industry</h4>
+      <h4 className={styles.industryHeading}>{industryName} 行业</h4>
 
       <dl
         className={clsx(
@@ -57,7 +57,7 @@ export function SummaryBox({
           !isMetricApplicable && styles.notApplicable,
         )}
       >
-        <dt>Max</dt>
+        <dt>最大值</dt>
         <dd>
           {formatMetricValue({
             metricCode,
@@ -65,7 +65,7 @@ export function SummaryBox({
           })}
         </dd>
 
-        <dt>Q3</dt>
+        <dt>上四分位数</dt>
         <dd>
           {formatMetricValue({
             metricCode,
@@ -73,7 +73,7 @@ export function SummaryBox({
           })}
         </dd>
 
-        <dt>Median</dt>
+        <dt>中位数</dt>
         <dd>
           {formatMetricValue({
             metricCode,
@@ -81,7 +81,7 @@ export function SummaryBox({
           })}
         </dd>
 
-        <dt>Q1</dt>
+        <dt>下四分位数</dt>
         <dd>
           {formatMetricValue({
             metricCode,
@@ -89,7 +89,7 @@ export function SummaryBox({
           })}
         </dd>
 
-        <dt>Min</dt>
+        <dt>最小值</dt>
         <dd>
           {formatMetricValue({
             metricCode,

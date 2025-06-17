@@ -18,17 +18,17 @@ export function MetricComparisonBoxPlotFigcaption({
   if (stockOneIndustryName === stockTwoIndustryName) {
     return (
       <figcaption className={styles.figcaption}>
-        {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their{" "}
-        {metricName} against the {stockOneIndustryName} industry benchmark.
+        {stockOneSymbol} 与 {stockTwoSymbol}：{metricName}
+        指标与 {stockOneIndustryName} 行业基准的对比。
       </figcaption>
     );
   }
 
   return (
     <figcaption className={styles.figcaption}>
-      {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their {metricName}{" "}
-      against their respective {stockOneIndustryName} and {stockTwoIndustryName}{" "}
-      industry benchmarks.
+      {stockOneSymbol} 与 {stockTwoSymbol}：{metricName}
+      指标分别与其所属的 {stockOneIndustryName} 及 {stockTwoIndustryName}{" "}
+      行业基准的对比。
     </figcaption>
   );
 }

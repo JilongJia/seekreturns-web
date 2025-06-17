@@ -1,11 +1,10 @@
-import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData"; // Assumed path
+import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
 
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { FinancialGrowthChart } from "@/app/components/en/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonChart";
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-// Assuming you have a CSS module for custom styles like the figcaption
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { H3 } from "@/app/components/zh/content/page/main/article/H3";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { FinancialGrowthChart } from "@/app/components/zh/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonChart";
 import styles from "./GrowthSection.module.css";
 
 type GrowthSectionProps = {
@@ -17,32 +16,29 @@ export async function GrowthSection({
   stockOneSymbol,
   stockTwoSymbol,
 }: GrowthSectionProps) {
-  // Fetch financial growth data for both stocks in parallel
   const [stockOneGrowthData, stockTwoGrowthData] = await Promise.all([
     fetchFinancialGrowthData(stockOneSymbol),
     fetchFinancialGrowthData(stockTwoSymbol),
   ]);
 
-  // Handle cases where data might be unavailable for either stock
   if (!stockOneGrowthData || !stockTwoGrowthData) {
     return (
       <Section ariaLabelledby="growth">
-        <h2 id="growth">Growth</h2>
-        <P>Financial growth data is currently unavailable for comparison.</P>
+        <H2 id="growth">成长性</H2>
+        <P>成长性数据当前不可用，无法进行比较。</P>
       </Section>
     );
   }
 
   return (
     <Section ariaLabelledby="growth">
-      <H2 id="growth">Growth</H2>
+      <H2 id="growth">成长性</H2>
       <P>
-        The following charts compare key year-over-year (YoY) growth metrics for{" "}
-        {stockOneSymbol} and {stockTwoSymbol}. These metrics are based on the
-        companies’ annual financial reports.
+        以下图表比较了 {stockOneSymbol} 和 {stockTwoSymbol} 的关键同比增长 (YoY)
+        指标。这些指标基于公司的年度财务报告。
       </P>
 
-      <H3>Revenue Growth (YoY)</H3>
+      <H3>营收同比增长率 (YoY)</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -56,12 +52,12 @@ export async function GrowthSection({
           metricCode="revenueGrowth"
         />
         <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year Revenue Growth.
+          {stockOneSymbol} 与 {stockTwoSymbol}
+          ：年度营收同比增长率对比。
         </figcaption>
       </figure>
 
-      <H3>EPS Growth (YoY)</H3>
+      <H3>每股收益同比增长率 (YoY)</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -75,12 +71,12 @@ export async function GrowthSection({
           metricCode="epsgrowth"
         />
         <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year EPS (Earnings Per Share) Growth.
+          {stockOneSymbol} 与 {stockTwoSymbol}
+          ：年度每股收益 (EPS) 同比增长率对比。
         </figcaption>
       </figure>
 
-      <H3>Free Cash Flow Growth (YoY)</H3>
+      <H3>自由现金流同比增长率 (YoY)</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -94,8 +90,8 @@ export async function GrowthSection({
           metricCode="freeCashFlowGrowth"
         />
         <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year Free Cash Flow Growth.
+          {stockOneSymbol} 与 {stockTwoSymbol}
+          ：年度自由现金流同比增长率对比。
         </figcaption>
       </figure>
     </Section>

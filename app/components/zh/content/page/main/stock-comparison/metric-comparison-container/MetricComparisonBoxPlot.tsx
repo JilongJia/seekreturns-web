@@ -13,7 +13,7 @@ const plotConfig = {
   plot: {
     height: 450,
     minWidth: 250,
-    margin: { top: 20, right: 20, bottom: 40, left: 40 },
+    margin: { top: 20, right: 20, bottom: 40, left: 50 },
   },
   axis: {
     ticks: 5,
@@ -80,13 +80,13 @@ function createTickFormatter(
 ): (d: number | { valueOf(): number }) => string {
   if (percentageMetrics.has(metricCode)) {
     return (d) =>
-      new Intl.NumberFormat("en-US", {
+      new Intl.NumberFormat("zh-CN", {
         style: "percent",
         maximumFractionDigits: 1,
       }).format(d as number);
   }
   return (d) =>
-    new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+    new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 2 }).format(
       d as number,
     );
 }

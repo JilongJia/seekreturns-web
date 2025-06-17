@@ -51,6 +51,13 @@ export async function ProfitabilitySection({
     );
   }
 
+  const formatPercentage = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return `${(value * 100).toFixed(2)}%`;
+  };
+
   return (
     <Section ariaLabelledby="profitability">
       <H2 id="profitability">Profitability</H2>
@@ -115,10 +122,10 @@ export async function ProfitabilitySection({
                 Return on Equity (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneKeyMetricsData.returnOnEquityTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoKeyMetricsData.returnOnEquityTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -126,10 +133,10 @@ export async function ProfitabilitySection({
                 Return on Assets (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneKeyMetricsData.returnOnAssetsTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoKeyMetricsData.returnOnAssetsTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -137,16 +144,14 @@ export async function ProfitabilitySection({
                 Return on Invested Capital (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(
-                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM * 100
-                ).toFixed(2)}
-                %
+                {formatPercentage(
+                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(
-                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM * 100
-                ).toFixed(2)}
-                %
+                {formatPercentage(
+                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -154,10 +159,10 @@ export async function ProfitabilitySection({
                 Net Profit Margin (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.netProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneRatiosData.netProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.netProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.netProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -165,12 +170,10 @@ export async function ProfitabilitySection({
                 Operating Profit Margin (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.operatingProfitMarginTTM * 100).toFixed(2)}
-                %
+                {formatPercentage(stockOneRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.operatingProfitMarginTTM * 100).toFixed(2)}
-                %
+                {formatPercentage(stockTwoRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -178,10 +181,10 @@ export async function ProfitabilitySection({
                 Gross Profit Margin (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.grossProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.grossProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

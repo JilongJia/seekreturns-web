@@ -27,95 +27,81 @@ export function ReturnOnEquityCommentary({
   industryMetricStats,
   metricCode,
 }: MetricCommentaryProps) {
-  // 1. Check if the metric is applicable to the industry
+  // 1. 检查指标是否适用于该行业
   if (!isMetricApplicable) {
     return (
       <P>
-        Return on Equity is not a primary performance indicator for companies in
-        the {industryName} industry.
+        在 {industryName}{" "}
+        行业，净资产收益率（ROE）并非衡量企业经营表现的首要指标。
       </P>
     );
   }
 
-  // 2. Check if the stock's ROE data is available
+  // 2. 检查公司的ROE数据是否可用
   if (metricValue === null) {
-    return (
-      <P>Return on Equity data for {stockSymbol} is currently unavailable.</P>
-    );
+    return <P>{stockSymbol} 的净资产收益率（ROE）数据目前缺失。</P>;
   }
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. Handle the special case: Negative ROE
+  // 3. 处理特殊情况：负ROE
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} has a negative Return on Equity of {formattedMetricValue}.
-        This indicates the company is generating a loss for its shareholders,
-        which can be a result of unprofitability or negative shareholder equity
-        and is often a sign of financial distress.
+        {stockSymbol} 的净资产收益率（ROE）为负（{formattedMetricValue}
+        ）。这说明公司正在为股东创造亏损。其原因可能是公司经营不善导致亏损，也可能是公司净资产为负（即资不抵债），这通常是财务困境的一个信号。
       </P>
     );
   }
 
-  // 4. Check if industry benchmark data is available
+  // 4. 检查行业基准数据是否可用
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a Return on Equity of {formattedMetricValue}, but
-        industry benchmarks for the {industryName} industry are currently
-        unavailable for comparison.
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}，但因缺少{" "}
+        {industryName}{" "}
+        行业的参考基准，我们无法评估其为股东创造回报的效率在行业内的水平。
       </P>
     );
   }
 
   const { min, q1, q3, max } = industryMetricStats;
 
-  // 5. Handle cases based on industry benchmarks
+  // 5. 基于行业基准进行分析
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is
-        exceptionally high, placing it well beyond the typical range for the{" "}
-        {industryName} industry. This demonstrates a superior ability to
-        generate profit from shareholder investments, though it could also be
-        inflated by high financial leverage.
+        {stockSymbol} 的净资产收益率 {formattedMetricValue} 在 {industryName}{" "}
+        行业中异常之高。这体现了公司利用股东资本创造利润的卓越能力，但投资者也需注意，极高的ROE有时也可能是由过高的财务杠杆（即高负债）所驱动的，这会增加风险。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is below the
-        typical range for the {industryName} industry. This suggests challenges
-        in efficiently using shareholder capital to generate profit, which could
-        point to operational issues or a conservative capital structure.
+        {stockSymbol} 的净资产收益率 {formattedMetricValue} 低于 {industryName}{" "}
+        行业的平均水平。这可能暗示公司在利用股东资本创造利润方面效率不高，或反映了公司采用了较为保守的资本结构（即债务水平较低）。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry, signaling a highly
-        effective use of shareholder capital to drive profitability compared to
-        most of its peers.
+        {stockSymbol} 的净资产收益率 {formattedMetricValue}{" "}
+        位于行业前列（高于75%的同行）。这标志着与大多数同行相比，公司能更高效地利用股东的资金来创造利润。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is in the
-        lower quartile for the {industryName} industry. This indicates a less
-        efficient generation of profit from its equity base when compared to its
-        competitors.
+        {stockSymbol} 的净资产收益率 {formattedMetricValue}{" "}
+        在行业内处于后进水平（低于75%的同行）。这表明，与竞争对手相比，其利用自有资本创造利润的效率有待提高。
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3).
+    // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is on par
-        with the norm for the {industryName} industry, indicating its
-        profitability relative to shareholder equity is typical for the sector.
+        {stockSymbol} 的净资产收益率 {formattedMetricValue} 与 {industryName}{" "}
+        行业的标准水平持平，表明其相对于股东权益的盈利能力是该行业的典型表现。
       </P>
     );
   }

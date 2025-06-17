@@ -1,16 +1,21 @@
 type KeyMetricsData = {
-  evToEBITDATTM: number;
-  evToSalesTTM: number;
-  returnOnEquityTTM: number;
-  returnOnAssetsTTM: number;
-  returnOnInvestedCapitalTTM: number;
-  netDebtToEBITDATTM: number;
+  evToEBITDATTM: number | null;
+  evToSalesTTM: number | null;
+  returnOnEquityTTM: number | null;
+  returnOnAssetsTTM: number | null;
+  returnOnInvestedCapitalTTM: number | null;
+  netDebtToEBITDATTM: number | null;
 };
 
 export async function fetchKeyMetricsData(
   symbol: string,
 ): Promise<KeyMetricsData | null> {
   const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
+  if (!apiKey) {
+    console.error("FINANCIAL_MODELING_PREP_API_KEY is not set.");
+    return null;
+  }
+
   const baseEndpoint =
     "https://financialmodelingprep.com/stable/key-metrics-ttm";
   const url = `${baseEndpoint}?symbol=${symbol}&apikey=${apiKey}`;
@@ -25,17 +30,25 @@ export async function fetchKeyMetricsData(
 
     const rawData = await response.json();
     if (!Array.isArray(rawData) || rawData.length === 0) {
-      throw new Error("No key metrics data returned");
+      console.warn(`No key metrics data returned for symbol: ${symbol}`);
+      return null;
     }
 
     const item = rawData[0];
+
     const data: KeyMetricsData = {
-      evToEBITDATTM: item.evToEBITDATTM,
-      evToSalesTTM: item.evToSalesTTM,
-      returnOnEquityTTM: item.returnOnEquityTTM,
-      returnOnAssetsTTM: item.returnOnAssetsTTM,
-      returnOnInvestedCapitalTTM: item.returnOnInvestedCapitalTTM,
-      netDebtToEBITDATTM: item.netDebtToEBITDATTM,
+      evToEBITDATTM: item.evToEBITDATTM === 0 ? null : item.evToEBITDATTM,
+      evToSalesTTM: item.evToSalesTTM === 0 ? null : item.evToSalesTTM,
+      returnOnEquityTTM:
+        item.returnOnEquityTTM === 0 ? null : item.returnOnEquityTTM,
+      returnOnAssetsTTM:
+        item.returnOnAssetsTTM === 0 ? null : item.returnOnAssetsTTM,
+      returnOnInvestedCapitalTTM:
+        item.returnOnInvestedCapitalTTM === 0
+          ? null
+          : item.returnOnInvestedCapitalTTM,
+      netDebtToEBITDATTM:
+        item.netDebtToEBITDATTM === 0 ? null : item.netDebtToEBITDATTM,
     };
 
     return data;

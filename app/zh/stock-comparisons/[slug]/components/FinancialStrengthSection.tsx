@@ -1,20 +1,13 @@
 import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
 import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
 import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
-import { getCurrentRatioAnalysis } from "@/app/lib/stock-analysis/getCurrentRatioAnalysis";
-import { getQuickRatioAnalysis } from "@/app/lib/stock-analysis/getQuickRatioAnalysis";
-import { getDebtToEquityRatioAnalysis } from "@/app/lib/stock-analysis/getDebtToEquityRatioAnalysis";
-import { getInterestCoverageRatioAnalysis } from "@/app/lib/stock-analysis/getInterestCoverageRatioAnalysis";
-import { generateCurrentRatioCommentary } from "./lib/generateCurrentRatioCommentary";
-import { generateQuickRatioCommentary } from "./lib/generateQuickRatioCommentary";
-import { generateDebtToEquityRatioCommentary } from "./lib/generateDebtToEquityRatioCommentary";
-import { generateInterestCoverageRatioCommentary } from "./lib/generateInterestCoverageRatioCommentary";
 
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { H3 } from "@/app/components/zh/content/page/main/article/H3";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
-import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
+import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
 import styles from "./FinancialStrengthSection.module.css";
 
 type FinancialStrengthSectionProps = {
@@ -51,148 +44,60 @@ export async function FinancialStrengthSection({
     !stockTwoRatiosData
   ) {
     return (
-      <Section ariaLabelledby="financial-strength-metrics-comparison">
-        <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
-        <P>暂时无法加载财务状况数据。</P>
+      <Section ariaLabelledby="financial-strength">
+        <H2 id="financial-strength">财务状况</H2>
+        <P>财务状况数据当前不可用。</P>
       </Section>
     );
   }
 
-  // Current Ratio
-  const stockOneCurrentRatioAnalysisResult = getCurrentRatioAnalysis({
-    industry: stockOneProfileData.industry,
-    currentRatio: stockOneRatiosData.currentRatioTTM,
-  });
-  const stockTwoCurrentRatioAnalysisResult = getCurrentRatioAnalysis({
-    industry: stockTwoProfileData.industry,
-    currentRatio: stockTwoRatiosData.currentRatioTTM,
-  });
-
-  const currentRatioCommentaryParams = {
-    stockOneSymbol: stockOneSymbol,
-    stockOneCurrentRatioValue: stockOneRatiosData.currentRatioTTM,
-    stockOneAnalysisResult: stockOneCurrentRatioAnalysisResult,
-    stockTwoSymbol: stockTwoSymbol,
-    stockTwoCurrentRatioValue: stockTwoRatiosData.currentRatioTTM,
-    stockTwoAnalysisResult: stockTwoCurrentRatioAnalysisResult,
+  const formatNumber = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return value.toFixed(2);
   };
-  const currentRatioCommentary = generateCurrentRatioCommentary(
-    currentRatioCommentaryParams,
-  );
-
-  // Quick Ratio
-  const stockOneQuickRatioAnalysisResult = getQuickRatioAnalysis({
-    industry: stockOneProfileData.industry,
-    quickRatio: stockOneRatiosData.quickRatioTTM,
-  });
-  const stockTwoQuickRatioAnalysisResult = getQuickRatioAnalysis({
-    industry: stockTwoProfileData.industry,
-    quickRatio: stockTwoRatiosData.quickRatioTTM,
-  });
-
-  const quickRatioCommentaryParams = {
-    stockOneSymbol: stockOneSymbol,
-    stockOneQuickRatioValue: stockOneRatiosData.quickRatioTTM,
-    stockOneAnalysisResult: stockOneQuickRatioAnalysisResult,
-    stockTwoSymbol: stockTwoSymbol,
-    stockTwoQuickRatioValue: stockTwoRatiosData.quickRatioTTM,
-    stockTwoAnalysisResult: stockTwoQuickRatioAnalysisResult,
-  };
-  const quickRatioCommentary = generateQuickRatioCommentary(
-    quickRatioCommentaryParams,
-  );
-
-  // Debt to Equity Ratio
-  const stockOneDebtToEquityRatioAnalysisResult = getDebtToEquityRatioAnalysis({
-    industry: stockOneProfileData.industry,
-    debtToEquityRatio: stockOneRatiosData.debtToEquityRatioTTM,
-  });
-  const stockTwoDebtToEquityRatioAnalysisResult = getDebtToEquityRatioAnalysis({
-    industry: stockTwoProfileData.industry,
-    debtToEquityRatio: stockTwoRatiosData.debtToEquityRatioTTM,
-  });
-
-  const debtToEquityRatioCommentaryParams = {
-    stockOneSymbol: stockOneSymbol,
-    stockOneDebtToEquityRatioValue: stockOneRatiosData.debtToEquityRatioTTM,
-    stockOneAnalysisResult: stockOneDebtToEquityRatioAnalysisResult,
-    stockTwoSymbol: stockTwoSymbol,
-    stockTwoDebtToEquityRatioValue: stockTwoRatiosData.debtToEquityRatioTTM,
-    stockTwoAnalysisResult: stockTwoDebtToEquityRatioAnalysisResult,
-  };
-  const debtToEquityRatioCommentary = generateDebtToEquityRatioCommentary(
-    debtToEquityRatioCommentaryParams,
-  );
-
-  // Interest Coverage Ratio
-  const stockOneInterestCoverageRatioAnalysisResult =
-    getInterestCoverageRatioAnalysis({
-      industry: stockOneProfileData.industry,
-      interestCoverageRatio: stockOneRatiosData.interestCoverageRatioTTM,
-    });
-  const stockTwoInterestCoverageRatioAnalysisResult =
-    getInterestCoverageRatioAnalysis({
-      industry: stockTwoProfileData.industry,
-      interestCoverageRatio: stockTwoRatiosData.interestCoverageRatioTTM,
-    });
-
-  const interestCoverageRatioCommentaryParams = {
-    stockOneSymbol: stockOneSymbol,
-    stockOneInterestCoverageRatioValue:
-      stockOneRatiosData.interestCoverageRatioTTM,
-    stockOneAnalysisResult: stockOneInterestCoverageRatioAnalysisResult,
-    stockTwoSymbol: stockTwoSymbol,
-    stockTwoInterestCoverageRatioValue:
-      stockTwoRatiosData.interestCoverageRatioTTM,
-    stockTwoAnalysisResult: stockTwoInterestCoverageRatioAnalysisResult,
-  };
-  const interestCoverageRatioCommentary =
-    generateInterestCoverageRatioCommentary(
-      interestCoverageRatioCommentaryParams,
-    );
-
-  const hasCommentary = [
-    currentRatioCommentary,
-    quickRatioCommentary,
-    debtToEquityRatioCommentary,
-    interestCoverageRatioCommentary,
-  ].some((commentary) => commentary !== "");
-
-  const formatNumber = (value: number): string =>
-    value === 0 ? "--" : value.toFixed(2);
 
   return (
-    <Section ariaLabelledby="financial-strength-metrics-comparison">
-      <H2 id="financial-strength-metrics-comparison">财务状况指标比较</H2>
+    <Section ariaLabelledby="financial-strength">
+      <H2 id="financial-strength">财务状况</H2>
 
-      {hasCommentary ? (
-        <>
-          <P>
-            这里我们来对比一下{stockOneSymbol}与{stockTwoSymbol}
-            的财务状况。结合行业背景来看，两者在财务稳健性方面有以下几点值得注意：
-          </P>
-          <Ul>
-            {currentRatioCommentary && <Ul.Li>{currentRatioCommentary}</Ul.Li>}
-            {quickRatioCommentary && <Ul.Li>{quickRatioCommentary}</Ul.Li>}
-            {debtToEquityRatioCommentary && (
-              <Ul.Li>{debtToEquityRatioCommentary}</Ul.Li>
-            )}
-            {interestCoverageRatioCommentary && (
-              <Ul.Li>{interestCoverageRatioCommentary}</Ul.Li>
-            )}
-          </Ul>
-        </>
-      ) : (
-        <P>
-          请查看下方表格，了解{stockOneSymbol}和{stockTwoSymbol}的财务状况。
-        </P>
-      )}
+      <MetricComparisonContainer
+        metricCode="currentRatioTTM"
+        stockOneSymbol={stockOneSymbol}
+        stockOneIndustryCode={stockOneProfileData.industry}
+        stockOneMetricValue={stockOneRatiosData.currentRatioTTM}
+        stockTwoSymbol={stockTwoSymbol}
+        stockTwoIndustryCode={stockTwoProfileData.industry}
+        stockTwoMetricValue={stockTwoRatiosData.currentRatioTTM}
+      />
 
+      <MetricComparisonContainer
+        metricCode="debtToEquityRatioTTM"
+        stockOneSymbol={stockOneSymbol}
+        stockOneIndustryCode={stockOneProfileData.industry}
+        stockOneMetricValue={stockOneRatiosData.debtToEquityRatioTTM}
+        stockTwoSymbol={stockTwoSymbol}
+        stockTwoIndustryCode={stockTwoProfileData.industry}
+        stockTwoMetricValue={stockTwoRatiosData.debtToEquityRatioTTM}
+      />
+
+      <MetricComparisonContainer
+        metricCode="interestCoverageRatioTTM"
+        stockOneSymbol={stockOneSymbol}
+        stockOneIndustryCode={stockOneProfileData.industry}
+        stockOneMetricValue={stockOneRatiosData.interestCoverageRatioTTM}
+        stockTwoSymbol={stockTwoSymbol}
+        stockTwoIndustryCode={stockTwoProfileData.industry}
+        stockTwoMetricValue={stockTwoRatiosData.interestCoverageRatioTTM}
+      />
+
+      <H3>财务状况概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -204,7 +109,7 @@ export async function FinancialStrengthSection({
 
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">流动比率（TTM）</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.currentRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -214,7 +119,7 @@ export async function FinancialStrengthSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">速动比率（TTM）</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.quickRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -224,7 +129,7 @@ export async function FinancialStrengthSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">产权比率（TTM）</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">产权比率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -235,7 +140,7 @@ export async function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                资产负债率（TTM）
+                资产负债率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
@@ -247,7 +152,7 @@ export async function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                净负债与EBITDA比率（TTM）
+                净负债与EBITDA比率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.netDebtToEBITDATTM)}
@@ -259,7 +164,7 @@ export async function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                利息保障倍数（TTM）
+                利息保障倍数 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}

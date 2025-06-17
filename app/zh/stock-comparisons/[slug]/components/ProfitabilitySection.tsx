@@ -2,12 +2,12 @@ import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
 import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
 import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
 
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
-import { MetricComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/MetricComparisonContainer";
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { H3 } from "@/app/components/zh/content/page/main/article/H3";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
 import styles from "./ProfitabilitySection.module.css";
 
 type ProfitabilitySectionProps = {
@@ -45,15 +45,22 @@ export async function ProfitabilitySection({
   ) {
     return (
       <Section ariaLabelledby="profitability">
-        <H2 id="profitability">Profitability</H2>
-        <P>Profitability data is currently unavailable.</P>
+        <H2 id="profitability">盈利能力</H2>
+        <P>盈利能力数据当前不可用。</P>
       </Section>
     );
   }
 
+  const formatPercentage = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return `${(value * 100).toFixed(2)}%`;
+  };
+
   return (
     <Section ariaLabelledby="profitability">
-      <H2 id="profitability">Profitability</H2>
+      <H2 id="profitability">盈利能力</H2>
 
       <MetricComparisonContainer
         metricCode="returnOnEquityTTM"
@@ -95,12 +102,12 @@ export async function ProfitabilitySection({
         stockTwoMetricValue={stockTwoRatiosData.operatingProfitMarginTTM}
       />
 
-      <H3>Profitability at a Glance</H3>
+      <H3>盈利能力概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -112,76 +119,68 @@ export async function ProfitabilitySection({
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Return on Equity (TTM)
+                净资产收益率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneKeyMetricsData.returnOnEquityTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoKeyMetricsData.returnOnEquityTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Return on Assets (TTM)
+                资产回报率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneKeyMetricsData.returnOnAssetsTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoKeyMetricsData.returnOnAssetsTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Return on Invested Capital (TTM)
+                投入资本回报率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(
-                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM * 100
-                ).toFixed(2)}
-                %
+                {formatPercentage(
+                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(
-                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM * 100
-                ).toFixed(2)}
-                %
+                {formatPercentage(
+                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">净利率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatPercentage(stockOneRatiosData.netProfitMarginTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatPercentage(stockTwoRatiosData.netProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Net Profit Margin (TTM)
+                营业利润率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.netProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.netProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Operating Profit Margin (TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">毛利率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.operatingProfitMarginTTM * 100).toFixed(2)}
-                %
+                {formatPercentage(stockOneRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.operatingProfitMarginTTM * 100).toFixed(2)}
-                %
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Gross Profit Margin (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.grossProfitMarginTTM * 100).toFixed(2)}%
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.grossProfitMarginTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

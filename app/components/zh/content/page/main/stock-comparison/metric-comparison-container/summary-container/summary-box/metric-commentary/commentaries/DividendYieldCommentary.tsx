@@ -27,96 +27,80 @@ export function DividendYieldCommentary({
   industryMetricStats,
   metricCode,
 }: MetricCommentaryProps) {
-  // 1. Check if the metric is applicable
+  // 1. 检查指标是否适用
   if (!isMetricApplicable) {
     return (
       <P>
-        Dividend Yield is not a primary investment consideration for companies
-        in the {industryName} industry.
+        对于 {industryName} 行业的公司，股息率通常不是投资者首要的考量因素。
       </P>
     );
   }
 
-  // 2. Check if data is available
+  // 2. 检查数据是否可用
   if (metricValue === null) {
-    return (
-      <P>Dividend Yield data for {stockSymbol} is currently unavailable.</P>
-    );
+    return <P>目前无法获得 {stockSymbol} 的股息率数据。</P>;
   }
 
-  // 3. Handle specific case: Zero Yield
+  // 3. 处理特殊情况：零股息率
   if (metricValue === 0) {
     return (
       <P>
-        {stockSymbol} currently does not pay a dividend, resulting in a yield of
-        0%. This is a common strategy for growth-focused companies that
-        prioritize reinvesting all earnings back into the business, though it
-        may be less typical in mature, income-oriented sectors.
+        {stockSymbol} 目前不派发股息，因此其股息率为
+        0%。对于注重成长的公司而言，这是一种常见的策略，因为它们倾向于将全部利润再投资于业务发展。然而，在以获取稳定收入为目标的成熟行业中，这种情况可能较不典型。
       </P>
     );
   }
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 4. Check if industry benchmark data is available
+  // 4. 检查行业基准数据是否可用
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a Dividend Yield of {formattedMetricValue}, but
-        industry benchmarks for the {industryName} sector are currently
-        unavailable for comparison.
+        {stockSymbol} 的股息率为 {formattedMetricValue}，但因缺少 {industryName}{" "}
+        行业的对比基准，无法判断其行业定位。
       </P>
     );
   }
 
   const { min, q1, q3, max } = industryMetricStats;
 
-  // 5. Handle cases based on industry benchmarks
+  // 5. 基于行业基准进行分析
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s Dividend Yield of {formattedMetricValue} is
-        exceptionally high, placing it well above the typical range for the{" "}
-        {industryName} industry. While this may seem attractive to income
-        investors, an unusually high yield can sometimes be a warning sign,
-        reflecting a falling stock price or market concerns about the dividend’s
-        future sustainability.
+        {stockSymbol} 的股息率 {formattedMetricValue} 处于极高水平，远超{" "}
+        {industryName}{" "}
+        行业的正常范围。虽然这对于追求稳定现金流的投资者极具吸引力，但异常高的股息率有时也是一个警示信号，可能反映了股价的下跌，或是市场对该股息未来可持续性的担忧。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Dividend Yield of {formattedMetricValue} is below the
-        typical range for the {industryName} industry, indicating that
-        shareholder returns are likely driven more by capital appreciation than
-        by dividend income.
+        {stockSymbol} 的股息率 {formattedMetricValue} 低于 {industryName}{" "}
+        行业的普遍范围。这通常意味着投资者的回报更多地来源于股价上涨带来的资本增值，而非股息收入。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Dividend Yield of {formattedMetricValue} is in the upper
-        quartile for the {industryName} industry, offering a more attractive
-        income stream than most of its peers and signaling a strong commitment
-        to shareholder returns.
+        {stockSymbol} 的股息率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的前25%，意味着它能提供比大多数同行更具吸引力的现金回报，显示了公司对股东回报的重视。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Dividend Yield of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This suggests that the
-        company’s strategy likely favors retaining earnings for growth and
-        reinvestment over providing a high dividend income.
+        {stockSymbol} 的股息率 {formattedMetricValue} 在 {industryName}{" "}
+        行业中处于较低水平（后25%）。这暗示公司的策略可能更倾向于将利润留存用于再投资和业务增长，而不是提供高额的股息收入。
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3)
+    // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol}’s Dividend Yield of {formattedMetricValue} is consistent
-        with its sector peers in the {industryName} industry, providing a
-        dividend return that is standard for the category.
+        {stockSymbol} 的股息率 {formattedMetricValue} 与 {industryName}{" "}
+        的行业同行水平基本一致，为投资者提供了该领域标准的股息回报。
       </P>
     );
   }

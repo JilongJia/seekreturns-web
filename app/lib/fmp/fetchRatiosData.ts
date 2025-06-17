@@ -1,17 +1,17 @@
 type RatiosData = {
-  priceToEarningsRatioTTM: number;
-  forwardPriceToEarningsGrowthRatioTTM: number;
-  priceToSalesRatioTTM: number;
-  priceToBookRatioTTM: number;
-  priceToFreeCashFlowRatioTTM: number;
-  netProfitMarginTTM: number;
-  grossProfitMarginTTM: number;
-  operatingProfitMarginTTM: number;
-  currentRatioTTM: number;
-  quickRatioTTM: number;
-  debtToEquityRatioTTM: number;
-  debtToAssetsRatioTTM: number;
-  interestCoverageRatioTTM: number;
+  priceToEarningsRatioTTM: number | null;
+  forwardPriceToEarningsGrowthRatioTTM: number | null;
+  priceToSalesRatioTTM: number | null;
+  priceToBookRatioTTM: number | null;
+  priceToFreeCashFlowRatioTTM: number | null;
+  netProfitMarginTTM: number | null;
+  grossProfitMarginTTM: number | null;
+  operatingProfitMarginTTM: number | null;
+  currentRatioTTM: number | null;
+  quickRatioTTM: number | null;
+  debtToEquityRatioTTM: number | null;
+  debtToAssetsRatioTTM: number | null;
+  interestCoverageRatioTTM: number | null;
   dividendYieldTTM: number;
   dividendPayoutRatioTTM: number;
 };
@@ -20,6 +20,11 @@ export async function fetchRatiosData(
   symbol: string,
 ): Promise<RatiosData | null> {
   const apiKey = process.env.FINANCIAL_MODELING_PREP_API_KEY;
+  if (!apiKey) {
+    console.error("FINANCIAL_MODELING_PREP_API_KEY is not set.");
+    return null;
+  }
+
   const baseEndpoint = "https://financialmodelingprep.com/stable/ratios-ttm";
   const url = `${baseEndpoint}?symbol=${symbol}&apikey=${apiKey}`;
 
@@ -33,25 +38,47 @@ export async function fetchRatiosData(
 
     const rawData = await response.json();
     if (!Array.isArray(rawData) || rawData.length === 0) {
-      throw new Error("No ratios data returned");
+      console.warn(`No ratios data returned for symbol: ${symbol}`);
+      return null;
     }
 
     const item = rawData[0];
     const data: RatiosData = {
-      priceToEarningsRatioTTM: item.priceToEarningsRatioTTM,
+      priceToEarningsRatioTTM:
+        item.priceToEarningsRatioTTM === 0
+          ? null
+          : item.priceToEarningsRatioTTM,
       forwardPriceToEarningsGrowthRatioTTM:
-        item.forwardPriceToEarningsGrowthRatioTTM,
-      priceToSalesRatioTTM: item.priceToSalesRatioTTM,
-      priceToBookRatioTTM: item.priceToBookRatioTTM,
-      priceToFreeCashFlowRatioTTM: item.priceToFreeCashFlowRatioTTM,
-      netProfitMarginTTM: item.netProfitMarginTTM,
-      grossProfitMarginTTM: item.grossProfitMarginTTM,
-      operatingProfitMarginTTM: item.operatingProfitMarginTTM,
-      currentRatioTTM: item.currentRatioTTM,
-      quickRatioTTM: item.quickRatioTTM,
-      debtToEquityRatioTTM: item.debtToEquityRatioTTM,
-      debtToAssetsRatioTTM: item.debtToAssetsRatioTTM,
-      interestCoverageRatioTTM: item.interestCoverageRatioTTM,
+        item.forwardPriceToEarningsGrowthRatioTTM === 0
+          ? null
+          : item.forwardPriceToEarningsGrowthRatioTTM,
+      priceToSalesRatioTTM:
+        item.priceToSalesRatioTTM === 0 ? null : item.priceToSalesRatioTTM,
+      priceToBookRatioTTM:
+        item.priceToBookRatioTTM === 0 ? null : item.priceToBookRatioTTM,
+      priceToFreeCashFlowRatioTTM:
+        item.priceToFreeCashFlowRatioTTM === 0
+          ? null
+          : item.priceToFreeCashFlowRatioTTM,
+      netProfitMarginTTM:
+        item.netProfitMarginTTM === 0 ? null : item.netProfitMarginTTM,
+      grossProfitMarginTTM:
+        item.grossProfitMarginTTM === 0 ? null : item.grossProfitMarginTTM,
+      operatingProfitMarginTTM:
+        item.operatingProfitMarginTTM === 0
+          ? null
+          : item.operatingProfitMarginTTM,
+      currentRatioTTM: item.currentRatioTTM === 0 ? null : item.currentRatioTTM,
+      quickRatioTTM: item.quickRatioTTM === 0 ? null : item.quickRatioTTM,
+      debtToEquityRatioTTM:
+        item.debtToEquityRatioTTM === 0 ? null : item.debtToEquityRatioTTM,
+      debtToAssetsRatioTTM:
+        item.debtToAssetsRatioTTM === 0 ? null : item.debtToAssetsRatioTTM,
+      interestCoverageRatioTTM:
+        item.interestCoverageRatioTTM === 0
+          ? null
+          : item.interestCoverageRatioTTM,
+
       dividendYieldTTM: item.dividendYieldTTM,
       dividendPayoutRatioTTM: item.dividendPayoutRatioTTM,
     };

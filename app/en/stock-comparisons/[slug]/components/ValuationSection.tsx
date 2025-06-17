@@ -51,8 +51,12 @@ export async function ValuationSection({
     );
   }
 
-  const formatNumber = (value: number): string =>
-    value === 0 ? "--" : value.toFixed(2);
+  const formatNumber = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return value.toFixed(2);
+  };
 
   return (
     <Section ariaLabelledby="valuation">

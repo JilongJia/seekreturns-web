@@ -2,15 +2,15 @@
   {
     "metric": "evToEBITDATTM",
     "shortNameEN": "EV/EBITDA",
-    "longNameEN": "EV to EBITDA Ratio",
+    "longNameEN": "Enterprise Value to EBITDA Ratio",
     "shortNameZH": "企业价值倍数",
-    "longNameZH": "企业价值与息税折旧摊销前利润比率"
+    "longNameZH": "企业价值倍数"
   },
   {
     "metric": "evToSalesTTM",
     "shortNameEN": "EV/Sales",
-    "longNameEN": "EV to Sales Ratio",
-    "shortNameZH": "市销率（企业价值）",
+    "longNameEN": "Enterprise Value to Sales Ratio",
+    "shortNameZH": "企业价值与销售额比率",
     "longNameZH": "企业价值与销售额比率"
   },
   {
@@ -24,8 +24,8 @@
     "metric": "returnOnAssetsTTM",
     "shortNameEN": "ROA",
     "longNameEN": "Return on Assets",
-    "shortNameZH": "总资产回报率",
-    "longNameZH": "总资产回报率"
+    "shortNameZH": "资产回报率",
+    "longNameZH": "资产回报率"
   },
   {
     "metric": "returnOnInvestedCapitalTTM",
@@ -39,7 +39,7 @@
     "shortNameEN": "Net Debt/EBITDA",
     "longNameEN": "Net Debt to EBITDA Ratio",
     "shortNameZH": "净负债/EBITDA",
-    "longNameZH": "净负债与息税折旧摊销前利润比率"
+    "longNameZH": "净负债对息税折旧摊销前利润比率"
   },
   {
     "metric": "priceToEarningsRatioTTM",
@@ -50,10 +50,10 @@
   },
   {
     "metric": "forwardPriceToEarningsGrowthRatioTTM",
-    "shortNameEN": "PEG Ratio",
-    "longNameEN": "Price/Earnings to Growth Ratio (Forward)",
-    "shortNameZH": "市盈率相对盈利增长比率",
-    "longNameZH": "市盈率相对盈利增长比率"
+    "shortNameEN": "Forward PEG Ratio",
+    "longNameEN": "Forward P/E to Growth Ratio",
+    "shortNameZH": "预期市盈增长率",
+    "longNameZH": "预期市盈增长率"
   },
   {
     "metric": "priceToSalesRatioTTM",
@@ -73,7 +73,7 @@
     "metric": "priceToFreeCashFlowRatioTTM",
     "shortNameEN": "P/FCF Ratio",
     "longNameEN": "Price to Free Cash Flow Ratio",
-    "shortNameZH": "市现率",
+    "shortNameZH": "价格与自由现金流比率",
     "longNameZH": "价格与自由现金流比率"
   },
   {
@@ -85,7 +85,7 @@
   },
   {
     "metric": "grossProfitMarginTTM",
-    "shortNameEN": "Gross Profit Margin",
+    "shortNameEN": "Gross Margin",
     "longNameEN": "Gross Profit Margin",
     "shortNameZH": "毛利率",
     "longNameZH": "毛利率"
@@ -113,17 +113,17 @@
   },
   {
     "metric": "debtToEquityRatioTTM",
-    "shortNameEN": "Debt/Equity",
+    "shortNameEN": "D/E Ratio",
     "longNameEN": "Debt-to-Equity Ratio",
     "shortNameZH": "产权比率",
     "longNameZH": "产权比率"
   },
   {
     "metric": "debtToAssetsRatioTTM",
-    "shortNameEN": "Debt/Assets",
+    "shortNameEN": "D/A Ratio",
     "longNameEN": "Debt-to-Assets Ratio",
-    "shortNameZH": "资产负债比率",
-    "longNameZH": "资产负债比率"
+    "shortNameZH": "资产负债率",
+    "longNameZH": "资产负债率"
   },
   {
     "metric": "interestCoverageRatioTTM",

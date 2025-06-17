@@ -13,7 +13,7 @@ const plotConfig = {
   plot: {
     height: 450,
     minWidth: 250,
-    margin: { top: 20, right: 20, bottom: 40, left: 40 },
+    margin: { top: 20, right: 20, bottom: 40, left: 50 },
   },
   axis: {
     ticks: 5,

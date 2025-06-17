@@ -16,7 +16,9 @@ import { ModifiedDate } from "@/app/components/zh/content/page/main/article/Modi
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
+import { ProfitabilitySection } from "./components/ProfitabilitySection";
 import { FinancialStrengthSection } from "./components/FinancialStrengthSection";
+import { GrowthSection } from "./components/GrowthSection";
 import { DividendSection } from "./components/DividendSection";
 import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
@@ -122,7 +124,7 @@ async function Page({ params }: PageProps) {
             </ArticleHeader>
             <P>
               本文对{stockOneSymbol}和{stockTwoSymbol}
-              进行了全面对比，涵盖历史表现、估值、股息以及财务实力等方面。
+              进行了全面对比，涵盖历史表现、盈利能力、财务状况、成长性、股息以及估值等方面。
             </P>
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
@@ -132,7 +134,15 @@ async function Page({ params }: PageProps) {
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <ValuationSection
+            <ProfitabilitySection
+              stockOneSymbol={stockOneSymbol}
+              stockTwoSymbol={stockTwoSymbol}
+            />
+            <FinancialStrengthSection
+              stockOneSymbol={stockOneSymbol}
+              stockTwoSymbol={stockTwoSymbol}
+            />
+            <GrowthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
@@ -140,7 +150,7 @@ async function Page({ params }: PageProps) {
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <FinancialStrengthSection
+            <ValuationSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

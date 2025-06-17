@@ -72,10 +72,22 @@ export function calculateMetricStats({
   const median = quantile(sortedValues, 0.5)!;
   const q3 = quantile(sortedValues, 0.75)!;
 
-  const iqr = q3 - q1;
+  let iqr = q3 - q1;
+  let lowerBound = q1;
+  let upperBound = q3;
 
-  const lowerFence = q1 - 1.5 * iqr;
-  const upperFence = q3 + 1.5 * iqr;
+  if (iqr === 0) {
+    const p05 = quantile(sortedValues, 0.05)!;
+    const p95 = quantile(sortedValues, 0.95)!;
+
+    iqr = p95 - p05;
+
+    lowerBound = p05;
+    upperBound = p95;
+  }
+
+  const lowerFence = lowerBound - 1.5 * iqr;
+  const upperFence = upperBound + 1.5 * iqr;
 
   const whiskerMin = sortedValues.find((d) => d >= lowerFence)!;
   const whiskerMax = [...sortedValues].reverse().find((d) => d <= upperFence)!;
