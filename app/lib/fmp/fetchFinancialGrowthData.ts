@@ -1,7 +1,17 @@
-type FinancialGrowthData = {
+type FinancialGrowthDataPoint = {
+  symbol: string;
+  date: string;
   revenueGrowth: number;
-  epsGrowth: number;
+  epsgrowth: number;
+  freeCashFlowGrowth: number;
 };
+
+type FinancialGrowthData = {
+  date: string;
+  revenueGrowth: number;
+  epsgrowth: number;
+  freeCashFlowGrowth: number;
+}[];
 
 export async function fetchFinancialGrowthData(
   symbol: string,
@@ -13,22 +23,29 @@ export async function fetchFinancialGrowthData(
 
   try {
     const response = await fetch(url, { next: { revalidate: 86400 } });
+
     if (!response.ok) {
       throw new Error(
         `FMP API error: ${response.status} ${response.statusText}`,
       );
     }
 
-    const rawData = await response.json();
+    const rawData: FinancialGrowthDataPoint[] = await response.json();
+
     if (!Array.isArray(rawData) || rawData.length === 0) {
       throw new Error("No financial growth data returned");
     }
 
-    const item = rawData[0];
-    const data: FinancialGrowthData = {
-      revenueGrowth: item.revenueGrowth,
-      epsGrowth: item.epsgrowth,
-    };
+    const dataInAscendingDate = [...rawData].reverse();
+
+    const data: FinancialGrowthData = dataInAscendingDate.map(
+      (item: FinancialGrowthDataPoint) => ({
+        date: item.date,
+        revenueGrowth: item.revenueGrowth,
+        epsgrowth: item.epsgrowth,
+        freeCashFlowGrowth: item.freeCashFlowGrowth,
+      }),
+    );
 
     return data;
   } catch (error) {
@@ -36,6 +53,7 @@ export async function fetchFinancialGrowthData(
       `Error fetching financial growth for ${symbol}:`,
       (error as Error).message,
     );
-    return null;
   }
+
+  return null;
 }

@@ -6,6 +6,7 @@ export const tableOfContents = [
     id: "financial-strength",
     label: "Financial Strength",
   },
+  { id: "growth", label: "Growth" },
   { id: "dividend", label: "Dividend" },
   { id: "valuation", label: "Valuation" },
 ];

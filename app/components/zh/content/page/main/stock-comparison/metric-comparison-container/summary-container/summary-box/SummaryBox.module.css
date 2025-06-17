@@ -1,0 +1,83 @@
+.symbolHeading {
+  margin-bottom: 1rem;
+  color: oklch(21.6% 0.006 56.043);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.metricValue {
+  margin-bottom: 2rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.metricValue.lime {
+  background-color: oklch(96.7% 0.067 122.328);
+  color: oklch(53.2% 0.157 131.589);
+}
+.metricValue.amber {
+  background-color: oklch(96.2% 0.059 95.617);
+  color: oklch(55.5% 0.163 48.998);
+}
+.metricValue.rose {
+  background-color: oklch(94.1% 0.03 12.58);
+  color: oklch(51.4% 0.222 16.935);
+}
+.metricValue.stone {
+  background-color: oklch(97% 0.001 106.424);
+  color: oklch(37.4% 0.01 67.558);
+}
+.metricValue.notApplicable {
+  background-color: oklch(97% 0.001 106.424);
+  color: oklch(37.4% 0.01 67.558);
+}
+
+.industryHeading {
+  margin-bottom: 1rem;
+  color: oklch(21.6% 0.006 56.043);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.statsList {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.statsList dt {
+  grid-column: 1;
+  color: oklch(26.8% 0.007 34.298);
+  font-weight: 500;
+}
+
+.statsList dd {
+  grid-column: 2;
+  margin: 0;
+  border-radius: 0.25rem;
+  background-color: oklch(95.1% 0.026 236.824);
+  padding: 0.25rem 1.75rem;
+  color: oklch(50% 0.134 242.749);
+  font-weight: 600;
+  text-align: center;
+}
+
+.statsList.notApplicable dd {
+  background-color: oklch(97% 0.001 106.424);
+  color: oklch(37.4% 0.01 67.558);
+}
+
+.disclaimerText {
+  color: oklch(26.8% 0.007 34.298);
+  font-size: 0.75rem;
+  line-height: 1.75;
+}

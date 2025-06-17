@@ -30,7 +30,7 @@ export async function HistoricalPerformanceSection({
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (
       <Section ariaLabelledby="historical-performance">
-        <H2 id="historical-performance">Performance Comparison</H2>
+        <H2 id="historical-performance">Historical Performance</H2>
         <P>Performance data is currently unavailable.</P>
       </Section>
     );
@@ -38,7 +38,7 @@ export async function HistoricalPerformanceSection({
 
   return (
     <Section ariaLabelledby="historical-performance">
-      <H2 id="historical-performance">Performance Comparison</H2>
+      <H2 id="historical-performance">Historical Performance</H2>
       <P>
         This chart compares the performance of {stockOneSymbol} and{" "}
         {stockTwoSymbol} over the past year by tracking the growth of an initial

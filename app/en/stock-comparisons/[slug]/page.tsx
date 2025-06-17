@@ -18,6 +18,7 @@ import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
 import { ProfitabilitySection } from "./components/ProfitabilitySection";
 import { FinancialStrengthSection } from "./components/FinancialStrengthSection";
+import { GrowthSection } from "./components/GrowthSection";
 import { DividendSection } from "./components/DividendSection";
 import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
@@ -140,6 +141,10 @@ async function Page({ params }: PageProps) {
               stockTwoSymbol={stockTwoSymbol}
             />
             <FinancialStrengthSection
+              stockOneSymbol={stockOneSymbol}
+              stockTwoSymbol={stockTwoSymbol}
+            />
+            <GrowthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

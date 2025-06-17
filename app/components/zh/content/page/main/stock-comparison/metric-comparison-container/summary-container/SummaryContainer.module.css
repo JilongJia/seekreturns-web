@@ -1,0 +1,30 @@
+.container {
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.summaryBox {
+  margin-bottom: 2rem;
+}
+
+.summaryBox:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: flex;
+    gap: 2rem;
+    max-width: 50rem;
+  }
+
+  .summaryBox {
+    flex: 1;
+  }
+
+  .divider {
+    flex-shrink: 0;
+    background-color: oklch(70.9% 0.01 56.259);
+    width: 1px;
+  }
+}
