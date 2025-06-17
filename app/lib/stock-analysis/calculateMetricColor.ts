@@ -28,12 +28,14 @@ const METRIC_COLOR_RULES: Partial<Record<MetricCode, MetricColorRule>> = {
 
     return "amber";
   },
+
   priceToSalesRatioTTM: (value, stats) => {
     if (value < stats.q1) return "lime";
     if (value > stats.q3) return "rose";
 
     return "amber";
   },
+
   priceToBookRatioTTM: (value, stats) => {
     if (value < 0) return "rose";
     if (value < stats.q1) return "lime";

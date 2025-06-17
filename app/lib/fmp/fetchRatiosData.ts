@@ -3,6 +3,7 @@ type RatiosData = {
   forwardPriceToEarningsGrowthRatioTTM: number;
   priceToSalesRatioTTM: number;
   priceToBookRatioTTM: number;
+  priceToFreeCashFlowRatioTTM: number;
   netProfitMarginTTM: number;
   grossProfitMarginTTM: number;
   operatingProfitMarginTTM: number;
@@ -42,6 +43,7 @@ export async function fetchRatiosData(
         item.forwardPriceToEarningsGrowthRatioTTM,
       priceToSalesRatioTTM: item.priceToSalesRatioTTM,
       priceToBookRatioTTM: item.priceToBookRatioTTM,
+      priceToFreeCashFlowRatioTTM: item.priceToFreeCashFlowRatioTTM,
       netProfitMarginTTM: item.netProfitMarginTTM,
       grossProfitMarginTTM: item.grossProfitMarginTTM,
       operatingProfitMarginTTM: item.operatingProfitMarginTTM,

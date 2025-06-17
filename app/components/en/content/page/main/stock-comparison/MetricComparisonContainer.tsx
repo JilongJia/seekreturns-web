@@ -2,13 +2,14 @@ import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
 import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplicability";
 import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
+import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 import type { IndustryCode } from "@/app/data/fmp/industryCodes";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 import { H3 } from "../article/H3";
-import { MetricComparisonInterpretation } from "./metric-comparison-container/MetricComparisonInterpretation";
 import { MetricComparisonBoxPlot } from "./metric-comparison-container/MetricComparisonBoxPlot";
 import { MetricComparisonBoxPlotFigcaption } from "./metric-comparison-container/MetricComparisonBoxPlotFigcaption";
+import { SummaryContainer } from "./metric-comparison-container/summary-container/SummaryContainer";
 import styles from "./MetricComparisonContainer.module.css";
 
 type MetricComparisonContainerProps = {
@@ -54,6 +55,18 @@ export function MetricComparisonContainer({
     }),
   });
 
+  const stockOneMetricColor = calculateMetricColor({
+    metricCode,
+    metricValue: stockOneMetricValue,
+    metricStats: stockOneIndustryMetricStats,
+  });
+
+  const stockTwoMetricColor = calculateMetricColor({
+    metricCode,
+    metricValue: stockTwoMetricValue,
+    metricStats: stockTwoIndustryMetricStats,
+  });
+
   const isStockOneMetricApplicable = getMetricApplicability({
     industryCode: stockOneIndustryCode,
     metricCode: metricCode,
@@ -67,16 +80,19 @@ export function MetricComparisonContainer({
     <>
       <H3>{metricLongName}</H3>
 
-      <MetricComparisonInterpretation
+      <SummaryContainer
         metricCode={metricCode}
+        metricName={metricShortName}
         stockOneSymbol={stockOneSymbol}
         stockOneIndustryName={stockOneIndustryCode}
         stockOneMetricValue={stockOneMetricValue}
+        stockOneMetricColor={stockOneMetricColor}
         stockOneIndustryMetricStats={stockOneIndustryMetricStats}
         isStockOneMetricApplicable={isStockOneMetricApplicable}
         stockTwoSymbol={stockTwoSymbol}
         stockTwoIndustryName={stockTwoIndustryCode}
         stockTwoMetricValue={stockTwoMetricValue}
+        stockTwoMetricColor={stockTwoMetricColor}
         stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
         isStockTwoMetricApplicable={isStockTwoMetricApplicable}
       />
@@ -88,11 +104,13 @@ export function MetricComparisonContainer({
           stockOneSymbol={stockOneSymbol}
           stockOneIndustryName={stockOneIndustryCode}
           stockOneMetricValue={stockOneMetricValue}
+          stockOneMetricColor={stockOneMetricColor}
           stockOneIndustryMetricStats={stockOneIndustryMetricStats}
           isStockOneMetricApplicable={isStockOneMetricApplicable}
           stockTwoSymbol={stockTwoSymbol}
           stockTwoIndustryName={stockTwoIndustryCode}
           stockTwoMetricValue={stockTwoMetricValue}
+          stockTwoMetricColor={stockTwoMetricColor}
           stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
           isStockTwoMetricApplicable={isStockTwoMetricApplicable}
         />

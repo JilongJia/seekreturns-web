@@ -1,10 +1,11 @@
 export const tableOfContents = [
   { id: "company-overview", label: "Company Overview" },
-  { id: "performance-comparison", label: "Performance Comparison" },
-  { id: "valuation-metrics-comparison", label: "Valuation Metrics Comparison" },
-  { id: "dividend-comparison", label: "Dividend Comparison" },
+  { id: "historical-performance", label: "Historical Performance" },
+  { id: "profitability", label: "Profitability" },
   {
-    id: "financial-strength-metrics-comparison",
-    label: "Financial Strength Metrics Comparison",
+    id: "financial-strength",
+    label: "Financial Strength",
   },
+  { id: "dividend", label: "Dividend" },
+  { id: "valuation", label: "Valuation" },
 ];

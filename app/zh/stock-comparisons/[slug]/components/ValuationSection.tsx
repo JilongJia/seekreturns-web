@@ -8,23 +8,22 @@ import { generatePriceToEarningsRatioCommentary } from "./lib/generatePriceToEar
 import { generateForwardPEGRatioCommentary } from "./lib/generateForwardPEGRatioCommentary";
 import { generatePriceToBookRatioCommentary } from "./lib/generatePriceToBookRatioCommentary";
 
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
-import { Ul } from "@/app/components/en/content/page/main/article/Ul";
-import styles from "./ValuationMetricsComparisonSection.module.css";
-import { MetricComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/MetricComparisonContainer";
+import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { P } from "@/app/components/zh/content/page/main/article/P";
+import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
+import styles from "./ValuationSection.module.css";
 
-type ValuationMetricsComparisonSectionProps = {
+type ValuationSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
 
-export async function ValuationMetricsComparisonSection({
+export async function ValuationSection({
   stockOneSymbol,
   stockTwoSymbol,
-}: ValuationMetricsComparisonSectionProps) {
+}: ValuationSectionProps) {
   const [
     stockOneProfileData,
     stockOneKeyMetricsData,
@@ -51,8 +50,8 @@ export async function ValuationMetricsComparisonSection({
   ) {
     return (
       <Section ariaLabelledby="valuation-metrics-comparison">
-        <H2 id="valuation-metrics-comparison">Valuation Metrics Comparison</H2>
-        <P>Valuation metrics data is currently unavailable.</P>
+        <H2 id="valuation-metrics-comparison">估值指标比较</H2>
+        <P>暂时无法加载估值指标数据。</P>
       </Section>
     );
   }
@@ -139,15 +138,13 @@ export async function ValuationMetricsComparisonSection({
 
   return (
     <Section ariaLabelledby="valuation-metrics-comparison">
-      <H2 id="valuation-metrics-comparison">Valuation Metrics Comparison</H2>
+      <H2 id="valuation-metrics-comparison">估值指标比较</H2>
 
       {hasCommentary ? (
         <>
           <P>
-            This section compares the market valuation of {stockOneSymbol} and{" "}
-            {stockTwoSymbol}. Key takeaways regarding their valuation, when
-            viewed within their industry context, are presented in the
-            commentary that follows.
+            接下来，我们关注{stockOneSymbol}与{stockTwoSymbol}
+            的估值情况。从行业普遍的估值角度考量，双方在估值方面有以下几个值得留意的看点：
           </P>
           <Ul>
             {priceToEarningsRatioCommentary && (
@@ -163,27 +160,15 @@ export async function ValuationMetricsComparisonSection({
         </>
       ) : (
         <P>
-          For a detailed comparison of valuation metrics between{" "}
-          {stockOneSymbol} and {stockTwoSymbol}, please refer to the table
-          below.
+          想了解{stockOneSymbol}和{stockTwoSymbol}的估值对比，请看下表。
         </P>
       )}
-
-      <MetricComparisonContainer
-        metricCode="priceToEarningsRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.priceToEarningsRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.priceToEarningsRatioTTM}
-      />
 
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -196,7 +181,7 @@ export async function ValuationMetricsComparisonSection({
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Price-to-Earnings Ratio (P/E, TTM)
+                市盈率（P/E，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
@@ -208,7 +193,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Forward PEG Ratio (TTM)
+                预期市盈增长比率（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(
@@ -224,7 +209,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Price-to-Sales Ratio (P/S, TTM)
+                市销率（P/S，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
@@ -236,7 +221,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Price-to-Book Ratio (P/B, TTM)
+                市净率（P/B，TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
@@ -248,7 +233,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                EV-to-EBITDA (TTM)
+                企业价值倍数（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
@@ -260,7 +245,7 @@ export async function ValuationMetricsComparisonSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                EV-to-Sales (TTM)
+                企业价值与销售额比率（TTM）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}

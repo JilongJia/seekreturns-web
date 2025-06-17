@@ -15,17 +15,17 @@ import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
-import styles from "./FinancialStrengthMetricsComparisonSection.module.css";
+import styles from "./FinancialStrengthSection.module.css";
 
-type FinancialStrengthMetricsComparisonSectionProps = {
+type FinancialStrengthSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
 
-export async function FinancialStrengthMetricsComparisonSection({
+export async function FinancialStrengthSection({
   stockOneSymbol,
   stockTwoSymbol,
-}: FinancialStrengthMetricsComparisonSectionProps) {
+}: FinancialStrengthSectionProps) {
   const [
     stockOneProfileData,
     stockOneKeyMetricsData,

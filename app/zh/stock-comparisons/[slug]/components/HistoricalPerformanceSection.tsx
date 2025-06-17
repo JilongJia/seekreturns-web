@@ -3,17 +3,17 @@ import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
-import { Chart } from "./performance_comparison_section/Chart";
+import { Chart } from "./historical-performance-section/Chart";
 
-type PerformanceComparisonSectionProps = {
+type HistoricalPerformanceSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
 
-export async function PerformanceComparisonSection({
+export async function HistoricalPerformanceSection({
   stockOneSymbol,
   stockTwoSymbol,
-}: PerformanceComparisonSectionProps) {
+}: HistoricalPerformanceSectionProps) {
   const [seriesOne, seriesTwo] = await Promise.all([
     fetchPriceSeriesData(stockOneSymbol),
     fetchPriceSeriesData(stockTwoSymbol),

@@ -3,17 +3,17 @@ import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Chart } from "./performance_comparison_section/Chart";
+import { Chart } from "./historical-performance-section/Chart";
 
-type PerformanceComparisonSectionProps = {
+type HistoricalPerformanceSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
 
-export async function PerformanceComparisonSection({
+export async function HistoricalPerformanceSection({
   stockOneSymbol,
   stockTwoSymbol,
-}: PerformanceComparisonSectionProps) {
+}: HistoricalPerformanceSectionProps) {
   const [seriesOne, seriesTwo] = await Promise.all([
     fetchPriceSeriesData(stockOneSymbol),
     fetchPriceSeriesData(stockTwoSymbol),
@@ -29,16 +29,16 @@ export async function PerformanceComparisonSection({
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (
-      <Section ariaLabelledby="performance-comparison">
-        <H2 id="performance-comparison">Performance Comparison</H2>
+      <Section ariaLabelledby="historical-performance">
+        <H2 id="historical-performance">Performance Comparison</H2>
         <P>Performance data is currently unavailable.</P>
       </Section>
     );
   }
 
   return (
-    <Section ariaLabelledby="performance-comparison">
-      <H2 id="performance-comparison">Performance Comparison</H2>
+    <Section ariaLabelledby="historical-performance">
+      <H2 id="historical-performance">Performance Comparison</H2>
       <P>
         This chart compares the performance of {stockOneSymbol} and{" "}
         {stockTwoSymbol} over the past year by tracking the growth of an initial

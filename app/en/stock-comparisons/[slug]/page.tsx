@@ -15,10 +15,11 @@ import { Header as ArticleHeader } from "@/app/components/en/content/page/main/a
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
-import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
-import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
-import { DividendComparisonSection } from "./components/DividendComparisonSection";
-import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
+import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
+import { ProfitabilitySection } from "./components/ProfitabilitySection";
+import { FinancialStrengthSection } from "./components/FinancialStrengthSection";
+import { DividendSection } from "./components/DividendSection";
+import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
 
 import pagesRaw from "@/app/data/stock-comparisons/pages.json";
@@ -123,26 +124,30 @@ async function Page({ params }: PageProps) {
             </ArticleHeader>
             <P>
               Here’s a clear look at {stockOneSymbol} and {stockTwoSymbol},
-              comparing key factors like performance, valuation metrics,
-              dividends, and financial strength.
+              comparing key factors like historical performance, profitability,
+              financial strength, growth, dividend, and valuation.
             </P>
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <PerformanceComparisonSection
+            <HistoricalPerformanceSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <ValuationMetricsComparisonSection
+            <ProfitabilitySection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <DividendComparisonSection
+            <FinancialStrengthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <FinancialStrengthMetricsComparisonSection
+            <DividendSection
+              stockOneSymbol={stockOneSymbol}
+              stockTwoSymbol={stockTwoSymbol}
+            />
+            <ValuationSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

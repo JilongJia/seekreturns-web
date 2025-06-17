@@ -15,10 +15,10 @@ import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/a
 import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
-import { PerformanceComparisonSection } from "./components/PerformanceComparisonSection";
-import { ValuationMetricsComparisonSection } from "./components/ValuationMetricsComparisonSection";
-import { DividendComparisonSection } from "./components/DividendComparisonSection";
-import { FinancialStrengthMetricsComparisonSection } from "./components/FinancialStrengthMetricsComparisonSection";
+import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
+import { FinancialStrengthSection } from "./components/FinancialStrengthSection";
+import { DividendSection } from "./components/DividendSection";
+import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
 
 import pagesRaw from "@/app/data/stock-comparisons/pages.json";
@@ -128,19 +128,19 @@ async function Page({ params }: PageProps) {
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <PerformanceComparisonSection
+            <HistoricalPerformanceSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <ValuationMetricsComparisonSection
+            <ValuationSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <DividendComparisonSection
+            <DividendSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />
-            <FinancialStrengthMetricsComparisonSection
+            <FinancialStrengthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
             />

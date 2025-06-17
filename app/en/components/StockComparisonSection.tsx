@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 
-import { Chart } from "@/app/en/stock-comparisons/[slug]/components/performance_comparison_section/Chart";
+import { Chart } from "@/app/en/stock-comparisons/[slug]/components/historical-performance-section/Chart";
 import { Form } from "./stock_comparison_section/Form";
 import styles from "./StockComparisonSection.module.css";
 

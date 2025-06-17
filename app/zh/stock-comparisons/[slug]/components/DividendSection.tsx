@@ -5,17 +5,17 @@ import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
-import styles from "./DividendComparisonSection.module.css";
+import styles from "./DividendSection.module.css";
 
-type DividendComparisonSectionProps = {
+type DividendSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
 };
 
-export async function DividendComparisonSection({
+export async function DividendSection({
   stockOneSymbol,
   stockTwoSymbol,
-}: DividendComparisonSectionProps) {
+}: DividendSectionProps) {
   const [stockOneRatiosData, stockTwoRatiosData] = await Promise.all([
     fetchRatiosData(stockOneSymbol),
     fetchRatiosData(stockTwoSymbol),

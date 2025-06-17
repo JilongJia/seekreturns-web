@@ -6,20 +6,20 @@ import { symbol, symbolTriangle } from "d3-shape";
 import { select, type Selection } from "d3-selection";
 import { scaleLinear, type ScaleLinear } from "d3-scale";
 
-import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
+import styles from "./MetricComparisonBoxPlot.module.css";
+import { MetricCode } from "@/app/data/fmp/metricCodes";
 
 const plotConfig = {
   plot: {
     height: 450,
     minWidth: 250,
-    margin: { top: 20, right: 20, bottom: 60, left: 32 },
+    margin: { top: 20, right: 20, bottom: 40, left: 40 },
   },
   axis: {
     ticks: 5,
     tickTextFontWeight: 600,
     tickTextFontSize: "12px",
-    textColor: "oklch(55.3% 0.013 58.071)",
+    textColor: "oklch(37.4% 0.01 67.558)",
     gridColor: "oklch(86.9% 0.005 56.366)",
     gridStrokeWidth: 1,
   },
@@ -29,11 +29,11 @@ const plotConfig = {
     whiskerCapWidthRatio: 0.5,
     fillColor: {
       applicable: "oklch(95.1% 0.026 236.824)",
-      inapplicable: "oklch(92.3% 0.003 48.717)",
+      inapplicable: "oklch(97% 0.001 106.424)",
     },
     strokeColor: {
       applicable: "oklch(58.8% 0.158 241.966)",
-      inapplicable: "oklch(55.3% 0.013 58.071)",
+      inapplicable: "oklch(44.4% 0.011 73.639)",
     },
   },
   marker: {
@@ -47,7 +47,7 @@ const plotConfig = {
     },
   },
   label: {
-    yOffset: 0,
+    yOffset: -10,
     symbolFontSize: "14px",
     symbolFontWeight: 600,
     symbolFontColor: "oklch(26.8% 0.007 34.298)",
@@ -61,6 +61,35 @@ type IndustryMetricStats = {
   q3: number;
   max: number;
 };
+
+type MetricColor = "lime" | "amber" | "rose" | "stone";
+
+const percentageMetrics: Set<MetricCode> = new Set([
+  "returnOnEquityTTM",
+  "returnOnAssetsTTM",
+  "returnOnInvestedCapitalTTM",
+  "netProfitMarginTTM",
+  "grossProfitMarginTTM",
+  "operatingProfitMarginTTM",
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
+]);
+
+function createTickFormatter(
+  metricCode: MetricCode,
+): (d: number | { valueOf(): number }) => string {
+  if (percentageMetrics.has(metricCode)) {
+    return (d) =>
+      new Intl.NumberFormat("en-US", {
+        style: "percent",
+        maximumFractionDigits: 1,
+      }).format(d as number);
+  }
+  return (d) =>
+    new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
+      d as number,
+    );
+}
 
 function createPlotGroup({
   svg,
@@ -83,15 +112,18 @@ function drawYAxis({
   plotGroup,
   yScale,
   innerWidth,
+  tickFormatter,
 }: {
   plotGroup: Selection<SVGGElement, unknown, null, undefined>;
   yScale: ScaleLinear<number, number>;
   innerWidth: number;
+  tickFormatter: (d: number | { valueOf(): number }) => string;
 }) {
   const { axis } = plotConfig;
   const yAxisGenerator = axisLeft(yScale)
     .ticks(axis.ticks)
-    .tickSize(-innerWidth);
+    .tickSize(-innerWidth)
+    .tickFormat(tickFormatter);
 
   plotGroup
     .append("g")
@@ -125,7 +157,7 @@ function drawLabel({
   stockSymbol: string;
 }) {
   const { label, plot } = plotConfig;
-  const yPosition = innerHeight + plot.margin.bottom / 2 + label.yOffset;
+  const yPosition = innerHeight + plot.margin.bottom + label.yOffset;
   plotGroup
     .append("text")
     .attr("text-anchor", "middle")
@@ -239,7 +271,7 @@ function drawMarker({
   yScale: ScaleLinear<number, number>;
   metricValue: number | null;
   metricType: "normal" | "inapplicable";
-  metricColor: "lime" | "amber" | "rose" | "stone";
+  metricColor: MetricColor;
 }) {
   if (metricValue === null) return;
 
@@ -290,22 +322,24 @@ type MetricComparisonBoxPlotProps = {
   stockOneSymbol: string;
   stockOneIndustryName: string;
   stockOneMetricValue: number | null;
+  stockOneMetricColor: MetricColor;
   stockOneIndustryMetricStats: IndustryMetricStats | null;
   isStockOneMetricApplicable: boolean;
   stockTwoSymbol: string;
   stockTwoIndustryName: string;
   stockTwoMetricValue: number | null;
+  stockTwoMetricColor: MetricColor;
   stockTwoIndustryMetricStats: IndustryMetricStats | null;
   isStockTwoMetricApplicable: boolean;
 };
 
 type PlotConfiguration = {
   stockSymbol: string;
-  metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
   centerX: number;
+  industryMetricStats: IndustryMetricStats | null;
   metricType: "normal" | "inapplicable";
-  metricColor: "lime" | "amber" | "rose" | "stone";
+  metricValue: number | null;
+  metricColor: MetricColor;
 };
 
 export function MetricComparisonBoxPlot({
@@ -314,11 +348,13 @@ export function MetricComparisonBoxPlot({
   stockOneSymbol,
   stockOneIndustryName,
   stockOneMetricValue,
+  stockOneMetricColor,
   stockOneIndustryMetricStats,
   isStockOneMetricApplicable,
   stockTwoSymbol,
   stockTwoIndustryName,
   stockTwoMetricValue,
+  stockTwoMetricColor,
   stockTwoIndustryMetricStats,
   isStockTwoMetricApplicable,
 }: MetricComparisonBoxPlotProps) {
@@ -349,26 +385,19 @@ export function MetricComparisonBoxPlot({
     const { width, height } = dimensions;
     const { margin } = plotConfig.plot;
 
-    const svg = select(svgRef.current!);
+    if (!svgRef.current) {
+      return;
+    }
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
 
     const stockOneMetricType = isStockOneMetricApplicable
       ? "normal"
       : "inapplicable";
-    const stockOneMetricColor = calculateMetricColor({
-      metricCode,
-      metricValue: stockOneMetricValue,
-      metricStats: stockOneIndustryMetricStats,
-    });
 
     const stockTwoMetricType = isStockTwoMetricApplicable
       ? "normal"
       : "inapplicable";
-    const stockTwoMetricColor = calculateMetricColor({
-      metricCode,
-      metricValue: stockTwoMetricValue,
-      metricStats: stockTwoIndustryMetricStats,
-    });
 
     const validIndustryMetricStats = [
       stockOneIndustryMetricStats,
@@ -397,7 +426,8 @@ export function MetricComparisonBoxPlot({
       .range([innerHeight, 0])
       .nice();
 
-    drawYAxis({ plotGroup, yScale, innerWidth });
+    const tickFormatter = createTickFormatter(metricCode);
+    drawYAxis({ plotGroup, yScale, innerWidth, tickFormatter });
 
     const boxAndWhiskersWidth = Math.min(
       plotConfig.boxAndWhiskers.minWidth,
@@ -409,16 +439,16 @@ export function MetricComparisonBoxPlot({
     const plotConfigurations: PlotConfiguration[] = [
       {
         stockSymbol: stockOneSymbol,
-        metricValue: stockOneMetricValue,
         metricType: stockOneMetricType,
+        metricValue: stockOneMetricValue,
         metricColor: stockOneMetricColor,
         industryMetricStats: stockOneIndustryMetricStats,
         centerX: stockOneCenterX,
       },
       {
         stockSymbol: stockTwoSymbol,
-        metricValue: stockTwoMetricValue,
         metricType: stockTwoMetricType,
+        metricValue: stockTwoMetricValue,
         metricColor: stockTwoMetricColor,
         industryMetricStats: stockTwoIndustryMetricStats,
         centerX: stockTwoCenterX,
@@ -458,17 +488,19 @@ export function MetricComparisonBoxPlot({
     stockOneSymbol,
     stockOneIndustryName,
     stockOneMetricValue,
+    stockOneMetricColor,
     stockOneIndustryMetricStats,
     isStockOneMetricApplicable,
     stockTwoSymbol,
     stockTwoIndustryName,
     stockTwoMetricValue,
+    stockTwoMetricColor,
     stockTwoIndustryMetricStats,
     isStockTwoMetricApplicable,
   ]);
 
   return (
-    <div ref={containerRef} style={{ overflowX: "auto" }}>
+    <div ref={containerRef} className={styles.container}>
       <svg ref={svgRef} width={dimensions.width} height={dimensions.height} />
     </div>
   );
