@@ -17,13 +17,13 @@ type SummaryContainerProps = {
   stockOneSymbol: string;
   stockOneIndustryName: string;
   stockOneMetricValue: number | null;
-  stockOneMetricColor: "lime" | "amber" | "rose" | "stone";
+  stockOneMetricColor: "green" | "yellow" | "red" | "neutral";
   stockOneIndustryMetricStats: IndustryMetricStats | null;
   isStockOneMetricApplicable: boolean;
   stockTwoSymbol: string;
   stockTwoIndustryName: string;
   stockTwoMetricValue: number | null;
-  stockTwoMetricColor: "lime" | "amber" | "rose" | "stone";
+  stockTwoMetricColor: "green" | "yellow" | "red" | "neutral";
   stockTwoIndustryMetricStats: IndustryMetricStats | null;
   isStockTwoMetricApplicable: boolean;
 };

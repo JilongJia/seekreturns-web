@@ -48,8 +48,8 @@ export function DividendPayoutRatioCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的股息支付率为负数（{formattedMetricValue}
-        ）。这通常意味着公司在录得净亏损的情况下依然派发了股息。此时，该比率可能更多地反映了公司的财务压力，而非其真实的股息政策健康度。
+        {stockSymbol} 的股息支付率为负（{formattedMetricValue}
+        ）。这通常意味着公司在录得净亏损的情况下依然派发股息，可能预示着财务压力。
       </P>
     );
   }
@@ -67,7 +67,7 @@ export function DividendPayoutRatioCommentary({
     return (
       <P>
         {stockSymbol} 的股息支付率（{formattedMetricValue}）超过了
-        100%。这意味着公司派发的股息金额超过了其盈利所得，这种状况通常难以持续，并可能对未来股息的稳定性构成风险。
+        100%。这意味着公司派发的股息金额超过了其盈利，这种状况通常难以持续，并可能对未来股息的稳定性构成风险。
       </P>
     );
   }
@@ -103,23 +103,23 @@ export function DividendPayoutRatioCommentary({
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的股息支付率 {formattedMetricValue}{" "}
-        位于行业前列（高于75%的同行）。这体现了公司相对慷慨的股息政策，与同行相比，更倾向于将利润以股息形式回馈给股东。
+        {stockSymbol} 的股息支付率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的前四分之一。虽然这表明公司对股东回报的承诺较高，但也意味着用于业务再投资的留存收益相对较少，可能会影响未来的增长潜力。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的股息支付率 {formattedMetricValue}{" "}
-        处于行业后段（低于75%的同行）。这表明公司的经营策略更侧重于将利润用于再投资，以促进业务扩张，而非大规模派发股息。
+        {stockSymbol} 的股息支付率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的后四分之一。这通常表明公司采取了更为保守的股息政策，优先将大部分利润留存下来用于未来的增长和扩张。
       </P>
     );
   } else {
-    // 覆盖了四分位距（Q1到Q3）
+    // 覆盖了四分位距（Q1到Q3） (for GREEN status)
     return (
       <P>
         {stockSymbol} 的股息支付率 {formattedMetricValue} 处于 {industryName}{" "}
-        行业的中等水平。这表明公司在“向股东派发股息”与“为未来发展保留资金”之间采取了较为均衡的策略，符合该行业的普遍做法。
+        行业的中等水平。这表明公司在股东派息与业务再投资之间采取了均衡策略，符合该行业的普遍做法。
       </P>
     );
   }

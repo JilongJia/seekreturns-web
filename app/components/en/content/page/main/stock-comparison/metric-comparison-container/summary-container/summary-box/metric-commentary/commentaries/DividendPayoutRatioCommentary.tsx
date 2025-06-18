@@ -31,8 +31,8 @@ export function DividendPayoutRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The Dividend Payout Ratio isn’t typically a primary metric for capital
-        allocation in the {industryName} industry.
+        The Dividend Payout Ratio is not a primary performance metric for most
+        companies in the {industryName} industry.
       </P>
     );
   }
@@ -53,10 +53,9 @@ export function DividendPayoutRatioCommentary({
     return (
       <P>
         {stockSymbol} has a negative Dividend Payout Ratio of{" "}
-        {formattedMetricValue}. This indicates the company paid a dividend
-        despite having a net loss, making the ratio a potential sign of
-        financial stress rather than a meaningful measure of its dividend
-        policy.
+        {formattedMetricValue}. This typically indicates the company paid a
+        dividend despite reporting a net loss, which may be a sign of financial
+        stress.
       </P>
     );
   }
@@ -65,8 +64,8 @@ export function DividendPayoutRatioCommentary({
     return (
       <P>
         {stockSymbol} has a Dividend Payout Ratio of 0%, indicating it does not
-        currently pay a dividend. This typically means all profits are being
-        reinvested for growth.
+        currently pay a dividend. This strategy is common for growth-oriented
+        companies that reinvest all profits back into the business.
       </P>
     );
   }
@@ -74,10 +73,10 @@ export function DividendPayoutRatioCommentary({
   if (metricValue > 1) {
     return (
       <P>
-        {stockSymbol}’s Dividend Payout Ratio of {formattedMetricValue} exceeds
+        {stockSymbol}’s Dividend Payout Ratio of {formattedMetricValue} is above
         100%. This means the company is paying out more in dividends than it
-        earned, which is often unsustainable and poses a risk to the dividend’s
-        stability.
+        earned, a practice that is often unsustainable and could pose a risk to
+        future dividend stability.
       </P>
     );
   }
@@ -86,9 +85,9 @@ export function DividendPayoutRatioCommentary({
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a Dividend Payout Ratio of {formattedMetricValue}, but
-        industry benchmarks for the {industryName} industry are currently
-        unavailable for comparison.
+        {stockSymbol} has a Dividend Payout Ratio of {formattedMetricValue}.
+        Industry benchmark data for the {industryName} industry is not available
+        for a direct comparison.
       </P>
     );
   }
@@ -99,46 +98,48 @@ export function DividendPayoutRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s payout ratio of {formattedMetricValue} is notably high,
-        positioning it beyond the typical range for the {industryName} industry.
-        This signals a strong focus on shareholder returns, but may limit funds
-        available for reinvestment and future growth.
+        At {formattedMetricValue}, {stockSymbol}’s payout ratio is exceptionally
+        high, exceeding the typical maximum for the {industryName} industry.
+        While this provides a significant return to shareholders, it may limit
+        funds for reinvestment and could be difficult to sustain.
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s payout ratio of {formattedMetricValue} is quite low,
-        falling below the common range for the {industryName} industry. This
-        highlights a conservative dividend policy, prioritizing the retention of
-        earnings for internal growth initiatives.
+        At {formattedMetricValue}, {stockSymbol}’s payout ratio is below the
+        typical range for the {industryName} industry. This conservative
+        approach prioritizes retaining earnings, likely to fund internal growth
+        and strengthen the company‘s financial position.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
         {stockSymbol}’s payout ratio of {formattedMetricValue} is in the upper
-        quartile for the {industryName} industry. This reflects a generous
-        dividend policy compared to its peers, favoring shareholder payouts over
-        retaining capital.
+        quartile for the {industryName} industry. This indicates a strong
+        commitment to shareholder returns, but also suggests that a smaller
+        portion of earnings is being retained for reinvestment compared to its
+        peers.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
         {stockSymbol}’s payout ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This suggests a corporate
-        strategy that emphasizes reinvesting profits for expansion rather than
-        distributing them as dividends.
+        quartile for the {industryName} industry. This suggests a conservative
+        dividend policy, with a strategic focus on reinvesting profits for
+        future growth and expansion.
       </P>
     );
   } else {
     // This covers the interquartile range (Q1 to Q3)
     return (
       <P>
-        {stockSymbol}’s payout ratio of {formattedMetricValue} falls within the
-        middle range for the {industryName} industry, suggesting a balanced
-        approach to capital allocation that is common for the sector.
+        {stockSymbol}’s payout ratio of {formattedMetricValue} is within the
+        interquartile range for the {industryName} industry, suggesting a
+        balanced and sustainable approach to dividing profits between
+        shareholder payouts and company reinvestment.
       </P>
     );
   }

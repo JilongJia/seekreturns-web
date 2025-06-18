@@ -19,8 +19,8 @@ const plotConfig = {
     ticks: 5,
     tickTextFontWeight: 600,
     tickTextFontSize: "12px",
-    textColor: "oklch(37.4% 0.01 67.558)",
-    gridColor: "oklch(86.9% 0.005 56.366)",
+    textColor: "oklch(37.1% 0 0)",
+    gridColor: "oklch(87% 0 0)",
     gridStrokeWidth: 1,
   },
   boxAndWhiskers: {
@@ -28,29 +28,29 @@ const plotConfig = {
     strokeWidth: 2,
     whiskerCapWidthRatio: 0.5,
     fillColor: {
-      applicable: "oklch(95.1% 0.026 236.824)",
-      inapplicable: "oklch(97% 0.001 106.424)",
+      applicable: "oklch(93.2% 0.032 255.585)",
+      inapplicable: "oklch(97% 0 0)",
     },
     strokeColor: {
-      applicable: "oklch(58.8% 0.158 241.966)",
-      inapplicable: "oklch(44.4% 0.011 73.639)",
+      applicable: "oklch(54.6% 0.245 262.881)",
+      inapplicable: "oklch(43.9% 0 0)",
     },
   },
   marker: {
     radius: 6,
     fillColor: {
-      lime: "oklch(76.8% 0.233 130.85)",
-      amber: "oklch(76.9% 0.188 70.08)",
-      rose: "oklch(64.5% 0.246 16.439)",
-      inapplicable: "oklch(55.3% 0.013 58.071)",
-      stone: "oklch(55.3% 0.013 58.071)",
+      green: "oklch(72.3% 0.219 149.579)",
+      yellow: "oklch(79.5% 0.184 86.047)",
+      red: "oklch(63.7% 0.237 25.331)",
+      neutral: "oklch(55.6% 0 0)",
+      inapplicable: "oklch(55.6% 0 0)",
     },
   },
   label: {
     yOffset: -10,
     symbolFontSize: "14px",
     symbolFontWeight: 600,
-    symbolFontColor: "oklch(26.8% 0.007 34.298)",
+    symbolFontColor: "oklch(26.9% 0 0)",
   },
 };
 
@@ -62,7 +62,7 @@ type IndustryMetricStats = {
   max: number;
 };
 
-type MetricColor = "lime" | "amber" | "rose" | "stone";
+type MetricColor = "green" | "yellow" | "red" | "neutral";
 
 const percentageMetrics: Set<MetricCode> = new Set([
   "returnOnEquityTTM",

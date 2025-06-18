@@ -87,16 +87,6 @@ export async function ValuationSection({
       />
 
       <MetricComparisonContainer
-        metricCode="priceToBookRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.priceToBookRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.priceToBookRatioTTM}
-      />
-
-      <MetricComparisonContainer
         metricCode="priceToSalesRatioTTM"
         stockOneSymbol={stockOneSymbol}
         stockOneIndustryCode={stockOneProfileData.industry}
@@ -104,6 +94,16 @@ export async function ValuationSection({
         stockTwoSymbol={stockTwoSymbol}
         stockTwoIndustryCode={stockTwoProfileData.industry}
         stockTwoMetricValue={stockTwoRatiosData.priceToSalesRatioTTM}
+      />
+
+      <MetricComparisonContainer
+        metricCode="priceToBookRatioTTM"
+        stockOneSymbol={stockOneSymbol}
+        stockOneIndustryCode={stockOneProfileData.industry}
+        stockOneMetricValue={stockOneRatiosData.priceToBookRatioTTM}
+        stockTwoSymbol={stockTwoSymbol}
+        stockTwoIndustryCode={stockTwoProfileData.industry}
+        stockTwoMetricValue={stockTwoRatiosData.priceToBookRatioTTM}
       />
 
       <H3>Valuation at a Glance</H3>

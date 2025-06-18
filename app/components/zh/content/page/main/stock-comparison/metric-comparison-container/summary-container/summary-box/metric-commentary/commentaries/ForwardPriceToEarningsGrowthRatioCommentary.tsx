@@ -50,7 +50,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率（Forward PEG）为负数（
         {formattedMetricValue}
-        ）。这通常是由于公司当前处于亏损状态，或市场预期其未来盈利将出现下滑。在这种情况下，该指标失去了作为估值参考的意义。
+        ）。这通常是由于公司当前处于亏损状态，或市场预期其未来盈利将下滑，导致该指标失去了估值参考意义。
       </P>
     );
   }
@@ -73,7 +73,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率 {formattedMetricValue} 远高于{" "}
         {industryName}{" "}
-        行业的普遍水平。这可能意味着其股价相对于未来的盈利增长预期而言偏高，暗示存在估值过高的风险，或者反映了市场对其未来发展寄予了极高的期望。
+        行业的普遍水平，这暗示其股价相对于盈利增长预期而言可能被严重高估，构成了显著的估值风险。
       </P>
     );
   } else if (metricValue < min) {
@@ -81,7 +81,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率 {formattedMetricValue} 低于{" "}
         {industryName}{" "}
-        行业的正常范围。这可能暗示该公司的股价并未充分反映其未来的增长潜力，与其他同行相比，其增长前景可能被市场低估。
+        行业的正常范围。这强烈表明其股价可能未充分反映未来的增长潜力，与其他同行相比，其增长前景被市场低估。
       </P>
     );
   } else if (metricValue > q3) {
@@ -89,7 +89,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率 {formattedMetricValue} 处于{" "}
         {industryName}{" "}
-        行业的前25%。这表明，相较于多数竞争对手，投资者愿意为该公司预期的盈利增长支付更高的溢价。
+        行业的前25%。这表明其股价相对于盈利增长预期显得较为昂贵，可能预示着估值偏高的风险，并需要公司未来的业绩增长来验证其合理性。
       </P>
     );
   } else if (metricValue < q1) {
@@ -97,7 +97,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率 {formattedMetricValue} 位于{" "}
         {industryName}{" "}
-        行业的后25%。这可能意味着市场对其未来增长的定价相对保守，其股价与增长前景的比值低于许多同行。
+        行业的后25%，这是一个积极的信号。它表明相对于未来的盈利增长预期，其当前股价较为合理，可能为投资者提供了以较低成本买入增长潜力的机会。
       </P>
     );
   } else {
@@ -106,7 +106,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
       <P>
         {stockSymbol} 的预期市盈增长率 {formattedMetricValue} 处于{" "}
         {industryName}{" "}
-        行业的中位水平。这表明其估值与其增长预期基本匹配，符合行业的一般标准。
+        行业的中位区间。这表明其估值与其增长预期基本匹配，符合该行业的一般标准。
       </P>
     );
   }

@@ -60,28 +60,28 @@ export function PriceToSalesRatioCommentary({
     return (
       <P>
         {stockSymbol} 的市销率 {formattedMetricValue} 远超 {industryName}{" "}
-        行业的普遍范围。这反映出市场对其销售额给予了显著的溢价，这很可能是由投资者对公司未来增长和市场份额提升的强烈预期所驱动的。
+        行业的普遍范围。这反映出市场对其销售额给予了极高的溢价，其估值已计入了非常乐观的增长预期，因此伴随着较高的风险。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
         {stockSymbol} 的市销率 {formattedMetricValue} 低于 {industryName}{" "}
-        行业的正常范围。这可能暗示其股价相对于公司的营收规模来说被低估了，但也可能反映了市场对公司未来销售增长乏力或盈利困难的担忧。
+        行业的正常范围。这可能暗示其股价相对于公司的营收规模来说被低估了，但也可能反映了市场对公司未来销售增长乏力或盈利能力的深度担忧。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的市销率 {formattedMetricValue}{" "}
-        位于行业的前四分之一。这表明与同行相比，投资者愿意为公司每一元的销售额支付更高的价格，显示出对公司增长前景的乐观态度。
+        {stockSymbol} 的市销率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的前四分之一。这表明其股价相对于销售收入而言较为昂贵，市场可能已经提前计入了未来的高增长。若公司业绩无法支撑这一高估值，股价则面临回调风险。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的市销率 {formattedMetricValue}{" "}
-        处于行业的后四分之一。这反映了市场对其收入的估值较为保守。如果未来销售能够加速增长，这可能构成一个投资机会；反之，这也可能体现了市场对其业绩的疑虑。
+        {stockSymbol} 的市销率 {formattedMetricValue} 处于 {industryName}{" "}
+        行业的后四分之一。这是一个积极的估值信号，表明其股价相对于它所产生的销售收入可能被低估，为投资者提供了潜在的价值发现机会。
       </P>
     );
   } else {
@@ -89,7 +89,7 @@ export function PriceToSalesRatioCommentary({
     return (
       <P>
         {stockSymbol} 的市销率 {formattedMetricValue} 与 {industryName}{" "}
-        的同行水平相当，表明市场对其销售额的估值符合行业常规水平。
+        的同行水平相当，表明市场对其销售额的估值符合行业常规，处于一个公允的估值区间。
       </P>
     );
   }

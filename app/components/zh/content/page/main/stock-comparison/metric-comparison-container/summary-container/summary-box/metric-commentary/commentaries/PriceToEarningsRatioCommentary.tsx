@@ -71,35 +71,35 @@ export function PriceToEarningsRatioCommentary({
     return (
       <P>
         {stockSymbol} 的市盈率 {formattedMetricValue} 在 {industryName}{" "}
-        行业中处于极高水平。这既可能反映了市场对其抱有强烈的信心和高增长预期，也可能暗示着股价存在被高估的风险。
+        行业中处于极高水平。这既可能反映了市场对其抱有强烈的信心和高增长预期，也可能暗示着股价存在被严重高估的风险。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
         {stockSymbol} 的市盈率 {formattedMetricValue} 低于 {industryName}{" "}
-        行业的通常水平。这可能意味着公司价值被低估，但也可能折射出市场对公司未来盈利增长的担忧，或对其面临的特定经营挑战的顾虑。
+        行业的通常水平。这可能意味着公司价值被低估，但也可能折射出市场对公司未来盈利增长或其特定经营挑战的深度顾虑。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue}{" "}
-        位列行业前25%。这表明投资者相对于同行给予了它更高的估值溢价，这通常源于对其增长路径或竞争优势的强烈信心。
+        {stockSymbol} 的市盈率 {formattedMetricValue} 位列 {industryName}{" "}
+        行业前25%。这种高估值意味着市场对其未来增长寄予厚望，但同时也带来了风险：如果未来的盈利无法达到预期，股价可能面临较大的回调压力。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue}{" "}
-        位于行业后25%的区间，反映出市场对其估值比许多同行更为保守。这可能为投资者提供了一个潜在的切入点，但也可能表明公司的增长前景存在不确定性。
+        {stockSymbol} 的市盈率 {formattedMetricValue} 位于 {industryName}{" "}
+        行业的后25%。这是一个值得关注的积极迹象，因为它可能表明公司的价值相对于其盈利能力被市场低估，或为投资者提供了一个具吸引力的潜在买入点。
       </P>
     );
   } else {
     return (
       <P>
         {stockSymbol} 的市盈率 {formattedMetricValue} 与 {industryName}{" "}
-        行业的通常水平相当，这表明其估值与同行相比，既没有明显的溢价，也没有显著的折价。
+        行业的通常水平相当。这表明其估值与同行相比，既没有明显的溢价，也没有显著的折价，处于一个公允的区间。
       </P>
     );
   }

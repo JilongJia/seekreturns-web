@@ -19,7 +19,7 @@ type SummaryBoxProps = {
   stockSymbol: string;
   metricName: string;
   metricValue: number | null;
-  metricColor: "lime" | "amber" | "rose" | "stone";
+  metricColor: "green" | "yellow" | "red" | "neutral";
   industryName: string;
   industryMetricStats: IndustryMetricStats | null;
   isMetricApplicable: boolean;

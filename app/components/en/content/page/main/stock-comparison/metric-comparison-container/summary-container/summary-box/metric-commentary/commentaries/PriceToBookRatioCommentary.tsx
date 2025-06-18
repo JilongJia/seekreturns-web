@@ -31,8 +31,9 @@ export function PriceToBookRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/B Ratio isn’t typically a primary valuation metric for companies
-        in the {industryName} industry.
+        The P/B Ratio is not a primary valuation metric for companies in the{" "}
+        {industryName} industry, which may rely more on intangible assets or
+        cash flow.
       </P>
     );
   }
@@ -49,8 +50,9 @@ export function PriceToBookRatioCommentary({
     return (
       <P>
         {stockSymbol} has a negative P/B Ratio of {formattedMetricValue},
-        indicating negative shareholder equity where liabilities exceed assets.
-        This is a critical red flag for financial instability.
+        indicating its liabilities exceed its assets, resulting in negative
+        shareholder equity. This is a critical warning sign of financial
+        distress.
       </P>
     );
   }
@@ -72,47 +74,48 @@ export function PriceToBookRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is exceptionally
-        high, placing it well beyond the typical valuation range for the{" "}
-        {industryName} industry. This suggests that investors are willing to pay
-        a significant premium over its book value, likely due to high
-        expectations for future growth and profitability.
+        At {formattedMetricValue}, {stockSymbol}’s P/B Ratio is at an extreme
+        premium to the {industryName} industry. This signifies that the market‘s
+        valuation is heavily reliant on future potential, rather than its
+        current net asset value, which can be a high-risk proposition.
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is below the typical
-        range for the {industryName} industry. This could indicate that the
-        stock is potentially undervalued relative to its assets, or it may
-        reflect market concerns about the company’s future profitability or the
-        quality of its asset base.
+        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is below the
+        established floor for the {industryName} industry. This may signal that
+        the market is deeply pessimistic or has overlooked the company,
+        potentially offering its asset base at a significant discount.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is in the upper
-        quartile for the {industryName} industry, indicating investors assign a
-        premium valuation to its asset base compared to most of its peers.
+        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is in the upper tier
+        for the {industryName} industry. This indicates that investors are
+        paying a high price relative to the company‘s net assets, which hinges
+        on its ability to generate superior profits to justify the high
+        valuation.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
         {stockSymbol}’s P/B Ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This suggests the market has a
-        more cautious valuation of its asset base, which could be an opportunity
-        for value investors or a sign of underlying issues.
+        quartile for the {industryName} industry. From a value investing
+        perspective, this is favorable, as it suggests the stock is trading at a
+        discount to its net asset value, potentially offering a greater margin
+        of safety.
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3)
     return (
       <P>
-        {stockSymbol}’s P/B Ratio of {formattedMetricValue} reflects the
-        benchmark for the {industryName} industry, indicating that its market
-        valuation relative to its book value is standard for the sector.
+        {stockSymbol}’s P/B Ratio of {formattedMetricValue} is within the
+        conventional range for the {industryName} industry. This shows a
+        balanced market view, where the stock‘s price is neither at a
+        significant premium nor a discount to the book value of its peers.
       </P>
     );
   }

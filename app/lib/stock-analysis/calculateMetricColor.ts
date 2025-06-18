@@ -1,6 +1,6 @@
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type MetricColor = "lime" | "rose" | "amber" | "stone";
+type MetricColor = "green" | "red" | "yellow" | "neutral";
 
 type MetricStats = {
   min: number;
@@ -13,106 +13,108 @@ type MetricStats = {
 type MetricColorRule = (value: number, stats: MetricStats) => MetricColor;
 
 const METRIC_COLOR_RULES: Partial<Record<MetricCode, MetricColorRule>> = {
-  priceToEarningsRatioTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value < stats.q1) return "lime";
-    if (value > stats.q3) return "rose";
-
-    return "amber";
-  },
-
-  forwardPriceToEarningsGrowthRatioTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value < stats.q1) return "lime";
-    if (value > stats.q3) return "rose";
-
-    return "amber";
-  },
-
-  priceToSalesRatioTTM: (value, stats) => {
-    if (value < stats.q1) return "lime";
-    if (value > stats.q3) return "rose";
-
-    return "amber";
-  },
-
-  priceToBookRatioTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value < stats.q1) return "lime";
-    if (value > stats.q3) return "rose";
-
-    return "amber";
-  },
-
-  debtToEquityRatioTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value < stats.q1) return "lime";
-    if (value > stats.q3) return "rose";
-
-    return "amber";
-  },
-
-  currentRatioTTM: (value, stats) => {
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
-
-    return "amber";
-  },
-
   returnOnEquityTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+    if (value < 0) return "red";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
   returnOnInvestedCapitalTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+    if (value < 0) return "red";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
   netProfitMarginTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+    if (value < 0) return "red";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
   operatingProfitMarginTTM: (value, stats) => {
-    if (value < 0) return "rose";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+    if (value < 0) return "red";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
-  dividendYieldTTM: (value, stats) => {
-    if (value > stats.max) return "amber";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+  currentRatioTTM: (value, stats) => {
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
-  dividendPayoutRatioTTM: (value, stats) => {
-    if (value < 0 || value > 1) return "rose";
-    if (value > stats.q3) return "amber";
-    if (value >= stats.q1 && value <= stats.q3) return "lime";
+  debtToEquityRatioTTM: (value, stats) => {
+    if (value < 0) return "red";
+    if (value < stats.q1) return "green";
+    if (value > stats.q3) return "red";
 
-    return "amber";
+    return "yellow";
   },
 
   interestCoverageRatioTTM: (value, stats) => {
-    if (value < 1) return "rose";
-    if (value > stats.q3) return "lime";
-    if (value < stats.q1) return "rose";
+    if (value < 1) return "red";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
 
-    return "amber";
+    return "yellow";
+  },
+
+  dividendYieldTTM: (value, stats) => {
+    if (value > stats.max) return "yellow";
+    if (value === 0) return "yellow";
+    if (value > stats.q3) return "green";
+    if (value < stats.q1) return "red";
+
+    return "yellow";
+  },
+
+  dividendPayoutRatioTTM: (value, stats) => {
+    if (value < 0 || value > 1) return "red";
+    if (value === 0) return "yellow";
+    if (value >= stats.q1 && value <= stats.q3) return "green";
+    if (value > stats.q3) return "yellow";
+
+    return "yellow";
+  },
+
+  priceToEarningsRatioTTM: (value, stats) => {
+    if (value < 0) return "red";
+    if (value < stats.q1) return "green";
+    if (value > stats.q3) return "red";
+
+    return "yellow";
+  },
+
+  forwardPriceToEarningsGrowthRatioTTM: (value, stats) => {
+    if (value < 0) return "red";
+    if (value < stats.q1) return "green";
+    if (value > stats.q3) return "red";
+
+    return "yellow";
+  },
+
+  priceToSalesRatioTTM: (value, stats) => {
+    if (value < stats.q1) return "green";
+    if (value > stats.q3) return "red";
+
+    return "yellow";
+  },
+
+  priceToBookRatioTTM: (value, stats) => {
+    if (value < 0) return "red";
+    if (value < stats.q1) return "green";
+    if (value > stats.q3) return "red";
+
+    return "yellow";
   },
 };
 
@@ -128,7 +130,7 @@ export function calculateMetricColor({
   metricStats,
 }: CalculateMetricColorParams): MetricColor {
   if (metricValue == null || metricStats == null) {
-    return "stone";
+    return "neutral";
   }
 
   const rule = METRIC_COLOR_RULES[metricCode];
@@ -137,5 +139,5 @@ export function calculateMetricColor({
     return rule(metricValue, metricStats);
   }
 
-  return "amber";
+  return "yellow";
 }

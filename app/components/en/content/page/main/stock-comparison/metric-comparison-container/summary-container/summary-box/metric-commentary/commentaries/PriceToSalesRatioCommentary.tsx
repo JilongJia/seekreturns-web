@@ -31,8 +31,8 @@ export function PriceToSalesRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/S Ratio isn’t typically a primary valuation metric for companies
-        in the {industryName} industry.
+        The P/S Ratio is not a primary valuation tool for most companies in the{" "}
+        {industryName} industry.
       </P>
     );
   }
@@ -48,9 +48,9 @@ export function PriceToSalesRatioCommentary({
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a P/S Ratio of {formattedMetricValue}, but industry
-        benchmarks for the {industryName} industry are currently unavailable for
-        comparison.
+        {stockSymbol} has a P/S Ratio of {formattedMetricValue}, but a direct
+        comparison is not possible as benchmarks for the {industryName} industry
+        are unavailable.
       </P>
     );
   }
@@ -61,48 +61,47 @@ export function PriceToSalesRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is exceptionally
-        high, placing it well beyond the typical range for the {industryName}{" "}
-        industry. This reflects a significant premium on its sales, likely
-        driven by strong investor expectations for future growth and market
-        share gains.
+        With a P/S Ratio of {formattedMetricValue}, {stockSymbol} trades at a
+        valuation that eclipses even the highest in the {industryName} industry.
+        This implies the market has priced in exceptionally optimistic scenarios
+        for future revenue growth, posing a considerable valuation risk.
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is below the typical
-        range for the {industryName} industry. This could imply the stock is
-        undervalued relative to its revenue stream, or it may reflect market
-        concerns about future sales growth or profitability challenges.
+        {stockSymbol}’s P/S Ratio of {formattedMetricValue} falls below the
+        typical floor for the {industryName} industry. This could suggest the
+        stock is overlooked or deeply undervalued relative to its sales, but may
+        also reflect significant market concerns over its future.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
         {stockSymbol}’s P/S Ratio of {formattedMetricValue} is in the upper
-        quartile for the {industryName} industry. This suggests investors are
-        paying a premium for each dollar of the company’s sales compared to its
-        peers, indicating optimism about its growth prospects.
+        echelon for the {industryName} industry. This means the company is
+        valued richly on its revenue stream compared to its peers, suggesting
+        the stock is priced for a high level of future performance.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
         {stockSymbol}’s P/S Ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This indicates a more
-        conservative valuation on its revenues, which may signal an opportunity
-        if sales growth accelerates or market skepticism about its future
-        performance.
+        quartile for the {industryName} industry. This indicates its revenue is
+        valued more conservatively than most of its peers, which could present a
+        compelling opportunity if the market has overlooked its sales-generating
+        capabilities.
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3)
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is valued in line
-        with its peers in the {industryName} industry, suggesting the market’s
-        valuation of its sales is typical for the sector.
+        {stockSymbol}’s P/S Ratio of {formattedMetricValue} aligns with the
+        market consensus for the {industryName} industry. This suggests its
+        valuation, based on sales, is seen as standard and is on par with its
+        competitors.
       </P>
     );
   }
