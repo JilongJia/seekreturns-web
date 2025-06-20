@@ -5,7 +5,7 @@ import { generateWebsiteMetadata } from "@/app/lib/zh/section/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { fetchSectionPages } from "@/app/lib/db/fetchSectionPages";
-import { Header as PageHeader } from "@/app/components/zh/section/page/Header";
+import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { Footer } from "@/app/components/zh/section/page/Footer";
 import styles from "./page.module.css";
 

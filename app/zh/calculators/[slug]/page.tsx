@@ -8,7 +8,7 @@ import { generateArticleMetadata } from "@/app/lib/zh/content/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { type MainProps } from "@/app/components/zh/content/page/main";
-import { Header } from "@/app/components/zh/content/page/Header";
+import { Header } from "@/components/zh/layout/Header";
 import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
 import { Footer } from "@/app/components/zh/content/page/Footer";
 import styles from "./page.module.css";

@@ -8,7 +8,7 @@ import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { type MainProps } from "@/app/components/en/content/page/main";
-import { Header } from "@/app/components/en/content/page/Header";
+import { Header } from "@/components/en/layout/Header";
 import { TableOfContentsSidebar } from "@/app/components/en/content/page/TableOfContentsSidebar";
 import { AdvertisementSidebar } from "@/app/components/en/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/en/content/page/Footer";

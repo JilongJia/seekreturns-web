@@ -4,7 +4,7 @@ import Image from "next/image";
 import { generateWebsiteMetadata } from "@/app/lib/zh/utility/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { Header as PageHeader } from "@/app/components/zh/utility/page/Header";
+import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { Footer } from "@/app/components/zh/utility/page/Footer";
 import styles from "./page.module.css";
 

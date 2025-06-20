@@ -8,7 +8,7 @@ import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { AdvertisementSidebar } from "@/app/components/zh/content/page/AdvertisementSidebar";
 import { Footer } from "@/app/components/zh/content/page/Footer";
-import { Header as PageHeader } from "@/app/components/zh/content/page/Header";
+import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
 import { H1 } from "@/app/components/zh/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/article/Header";

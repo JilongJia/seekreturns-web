@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { generateWebsiteMetadata } from "@/app/lib/en/utility/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { Header as PageHeader } from "@/app/components/en/utility/page/Header";
+import { Header as PageHeader } from "@/components/en/layout/Header";
 import { Footer } from "@/app/components/en/utility/page/Footer";
 import styles from "./page.module.css";
 

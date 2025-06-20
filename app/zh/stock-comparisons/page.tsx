@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { generateWebsiteMetadata } from "@/app/lib/zh/section/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { Header as PageHeader } from "@/app/components/zh/section/page/Header";
+import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { Footer } from "@/app/components/zh/section/page/Footer";
 import { Tabs } from "./components/Tabs";
 import styles from "./page.module.css";

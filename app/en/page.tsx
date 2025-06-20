@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { generateWebsiteMetadata } from "@/app/lib/en/root/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { Header } from "@/app/components/en/root/page/Header";
+import { Header } from "@/components/en/layout/Header";
 import { Footer } from "@/app/components/en/root/page/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { StockComparisonSection } from "./components/StockComparisonSection";
@@ -37,7 +37,10 @@ function Page() {
 
   return (
     <>
-      <Header className={clsx(styles.header, "layoutContainer")} />
+      <Header
+        pathname="/en"
+        className={clsx(styles.header, "layoutContainer")}
+      />
       <main>
         <HeroSection className={styles.heroSection} />
         <StockComparisonSection className={styles.stockComparisonSection} />
