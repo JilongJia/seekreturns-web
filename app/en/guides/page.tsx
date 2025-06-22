@@ -6,7 +6,7 @@ import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { fetchSectionPages } from "@/app/lib/db/fetchSectionPages";
 import { Header as PageHeader } from "@/components/en/layout/Header";
-import { Footer } from "@/app/components/en/section/page/Footer";
+import { Footer } from "@/components/en/layout/Footer";
 import styles from "./page.module.css";
 
 import { pageInfo } from "./data/info";

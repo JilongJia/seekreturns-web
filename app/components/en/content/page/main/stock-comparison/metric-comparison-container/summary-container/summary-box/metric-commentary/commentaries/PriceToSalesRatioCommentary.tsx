@@ -31,7 +31,7 @@ export function PriceToSalesRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/S Ratio is not a primary valuation tool for most companies in the{" "}
+        The P/S Ratio is often not a primary valuation tool in the{" "}
         {industryName} industry.
       </P>
     );
@@ -49,7 +49,7 @@ export function PriceToSalesRatioCommentary({
     return (
       <P>
         {stockSymbol} has a P/S Ratio of {formattedMetricValue}, but a direct
-        comparison is not possible as benchmarks for the {industryName} industry
+        comparison is not possible as benchmarks for the {industryName} sector
         are unavailable.
       </P>
     );
@@ -64,7 +64,7 @@ export function PriceToSalesRatioCommentary({
         With a P/S Ratio of {formattedMetricValue}, {stockSymbol} trades at a
         valuation that eclipses even the highest in the {industryName} industry.
         This implies the market has priced in exceptionally optimistic scenarios
-        for future revenue growth, posing a considerable valuation risk.
+        for future revenue growth, posing considerable valuation risk.
       </P>
     );
   } else if (metricValue < min) {
@@ -73,7 +73,7 @@ export function PriceToSalesRatioCommentary({
         {stockSymbol}’s P/S Ratio of {formattedMetricValue} falls below the
         typical floor for the {industryName} industry. This could suggest the
         stock is overlooked or deeply undervalued relative to its sales, but may
-        also reflect significant market concerns over its future.
+        also reflect significant market concerns about its future.
       </P>
     );
   } else if (metricValue > q3) {
@@ -88,10 +88,10 @@ export function PriceToSalesRatioCommentary({
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s P/S Ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This indicates its revenue is
-        valued more conservatively than most of its peers, which could present a
-        compelling opportunity if the market has overlooked its sales-generating
+        In the lower quartile for the {industryName} industry, {stockSymbol}’s
+        P/S Ratio of {formattedMetricValue} indicates its revenue is valued more
+        conservatively than most of its peers. This could present a compelling
+        opportunity if the market has overlooked its sales-generating
         capabilities.
       </P>
     );

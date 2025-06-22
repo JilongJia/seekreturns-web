@@ -31,8 +31,8 @@ export function CurrentRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The Current Ratio is not a primary measure of short-term liquidity for
-        companies in the {industryName} industry.
+        For the {industryName} industry, the Current Ratio is often not the most
+        suitable measure of short-term liquidity.
       </P>
     );
   }
@@ -65,9 +65,9 @@ export function CurrentRatioCommentary({
       <P>
         {stockSymbol}’s Current Ratio of {formattedMetricValue} is exceptionally
         high, placing it well outside the typical range for the {industryName}{" "}
-        industry. While this points to a very strong liquidity position, it may
-        also suggest that the company is not using its assets efficiently to
-        generate profits.
+        industry. This indicates a very strong liquidity position, though such a
+        high ratio may also suggest that the company is not using its assets
+        efficiently to generate profits.
       </P>
     );
   } else if (metricValue < min) {

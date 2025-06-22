@@ -31,8 +31,8 @@ export function PriceToEarningsRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/E Ratio is not typically the primary metric used for valuation in
-        the {industryName} industry.
+        The P/E Ratio is often not the primary metric for valuation in the{" "}
+        {industryName} industry.
       </P>
     );
   }
@@ -49,7 +49,7 @@ export function PriceToEarningsRatioCommentary({
     return (
       <P>
         {stockSymbol} has a negative P/E Ratio of {formattedMetricValue}. This
-        occurs when a company has negative earnings (a net loss) and makes the
+        occurs when a company has negative earnings (a net loss), making the
         ratio unsuitable for valuation analysis.
       </P>
     );
@@ -59,9 +59,9 @@ export function PriceToEarningsRatioCommentary({
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} has a P/E Ratio of {formattedMetricValue}. A direct
-        industry comparison is not possible, as benchmark data for the{" "}
-        {industryName} industry is unavailable.
+        {stockSymbol} has a P/E Ratio of {formattedMetricValue}, but a direct
+        industry comparison is not possible as benchmark data for the{" "}
+        {industryName} sector is unavailable.
       </P>
     );
   }
@@ -82,26 +82,26 @@ export function PriceToEarningsRatioCommentary({
   } else if (metricValue < min) {
     return (
       <P>
-        At {formattedMetricValue}, {stockSymbol}’s P/E Ratio is below the
-        typical range for the {industryName} industry. This may indicate that
-        the stock is potentially undervalued, or it could reflect specific
-        market concerns about the company‘s future prospects.
+        {stockSymbol}’s P/E Ratio of {formattedMetricValue} is below the typical
+        range for the {industryName} industry. This may indicate that the stock
+        is potentially undervalued, or it could reflect market concerns about
+        the company’s future prospects.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s P/E Ratio of {formattedMetricValue} is in the upper
+        A P/E Ratio of {formattedMetricValue} places {stockSymbol} in the upper
         quartile for the {industryName} industry. This high valuation relative
-        to peers suggests potential overvaluation risk and places significant
-        pressure on the company to deliver exceptional future growth.
+        to peers suggests the market holds elevated expectations for the
+        company’s future growth.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s P/E Ratio of {formattedMetricValue} is in the lower
-        quartile for the {industryName} industry. This suggests the stock may be
+        In the lower quartile for the {industryName} industry, {stockSymbol}’s
+        P/E Ratio of {formattedMetricValue} suggests the stock may be
         undervalued compared to its peers, potentially presenting an attractive
         entry point for investors.
       </P>

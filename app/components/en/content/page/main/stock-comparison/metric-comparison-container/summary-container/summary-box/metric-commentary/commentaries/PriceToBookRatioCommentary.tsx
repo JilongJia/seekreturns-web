@@ -31,9 +31,8 @@ export function PriceToBookRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The P/B Ratio is not a primary valuation metric for companies in the{" "}
-        {industryName} industry, which may rely more on intangible assets or
-        cash flow.
+        The P/B Ratio is often not a primary valuation metric for the{" "}
+        {industryName} industry.
       </P>
     );
   }
@@ -50,7 +49,7 @@ export function PriceToBookRatioCommentary({
     return (
       <P>
         {stockSymbol} has a negative P/B Ratio of {formattedMetricValue},
-        indicating its liabilities exceed its assets, resulting in negative
+        indicating its liabilities exceed its assets and result in negative
         shareholder equity. This is a critical warning sign of financial
         distress.
       </P>
@@ -75,9 +74,9 @@ export function PriceToBookRatioCommentary({
     return (
       <P>
         At {formattedMetricValue}, {stockSymbol}’s P/B Ratio is at an extreme
-        premium to the {industryName} industry. This signifies that the market‘s
-        valuation is heavily reliant on future potential, rather than its
-        current net asset value, which can be a high-risk proposition.
+        premium to the {industryName} industry. This signifies that the market’s
+        valuation is heavily reliant on future potential rather than its current
+        net asset value, which can be a high-risk proposition.
       </P>
     );
   } else if (metricValue < min) {
@@ -94,9 +93,8 @@ export function PriceToBookRatioCommentary({
       <P>
         {stockSymbol}’s P/B Ratio of {formattedMetricValue} is in the upper tier
         for the {industryName} industry. This indicates that investors are
-        paying a high price relative to the company‘s net assets, which hinges
-        on its ability to generate superior profits to justify the high
-        valuation.
+        paying a premium relative to the company’s net assets, a valuation that
+        hinges on its ability to generate superior profits.
       </P>
     );
   } else if (metricValue < q1) {
@@ -105,8 +103,8 @@ export function PriceToBookRatioCommentary({
         {stockSymbol}’s P/B Ratio of {formattedMetricValue} is in the lower
         quartile for the {industryName} industry. From a value investing
         perspective, this is favorable, as it suggests the stock is trading at a
-        discount to its net asset value, potentially offering a greater margin
-        of safety.
+        discount to its net asset value and may offer a greater margin of
+        safety.
       </P>
     );
   } else {
@@ -114,7 +112,7 @@ export function PriceToBookRatioCommentary({
       <P>
         {stockSymbol}’s P/B Ratio of {formattedMetricValue} is within the
         conventional range for the {industryName} industry. This shows a
-        balanced market view, where the stock‘s price is neither at a
+        balanced market view, where the stock’s price is neither at a
         significant premium nor a discount to the book value of its peers.
       </P>
     );

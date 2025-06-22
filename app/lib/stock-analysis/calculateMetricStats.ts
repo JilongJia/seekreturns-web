@@ -21,6 +21,11 @@ const NON_NEGATIVE_METRICS = new Set([
   "dividendPayoutRatioTTM",
 ]);
 
+const DIVIDEND_METRICS = new Set([
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
+]);
+
 const NON_ZERO_METRICS = new Set([
   "returnOnEquityTTM",
   "returnOnAssetsTTM",
@@ -72,18 +77,21 @@ export function calculateMetricStats({
   const median = quantile(sortedValues, 0.5)!;
   const q3 = quantile(sortedValues, 0.75)!;
 
-  let iqr = q3 - q1;
-  let lowerBound = q1;
-  let upperBound = q3;
+  let iqr: number;
+  let lowerBound: number;
+  let upperBound: number;
 
-  if (iqr === 0) {
+  if (DIVIDEND_METRICS.has(metricCode)) {
     const p05 = quantile(sortedValues, 0.05)!;
     const p95 = quantile(sortedValues, 0.95)!;
 
     iqr = p95 - p05;
-
     lowerBound = p05;
     upperBound = p95;
+  } else {
+    iqr = q3 - q1;
+    lowerBound = q1;
+    upperBound = q3;
   }
 
   const lowerFence = lowerBound - 1.5 * iqr;

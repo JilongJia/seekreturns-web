@@ -31,8 +31,8 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The Forward PEG Ratio is not a primary valuation metric for companies in
-        the {industryName} industry.
+        The Forward PEG Ratio is often not a primary valuation metric in the{" "}
+        {industryName} industry.
       </P>
     );
   }
@@ -76,7 +76,7 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
     return (
       <P>
         {stockSymbol}’s Forward PEG Ratio of {formattedMetricValue} is
-        exceptionally high for the {industryName} industry. This indicates its
+        exceptionally high for the {industryName} industry. This suggests its
         stock price is very high relative to its expected earnings growth,
         signaling significant overvaluation risk.
       </P>
@@ -85,36 +85,36 @@ export function ForwardPriceToEarningsGrowthRatioCommentary({
     return (
       <P>
         {stockSymbol}’s Forward PEG Ratio of {formattedMetricValue} is below the
-        typical range for the {industryName} industry. This strongly suggests
-        that the stock may be undervalued, as its price appears low given its
-        future growth prospects.
+        typical range for the {industryName} industry. This is a strong
+        indicator that the stock may be undervalued, as its price appears low
+        given its future growth prospects.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Forward PEG Ratio of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry. This suggests the stock
-        is expensive relative to its growth forecast compared to its peers,
-        which may indicate overvaluation and warrant caution.
+        A Forward PEG Ratio of {formattedMetricValue} places {stockSymbol} in
+        the upper quartile for the {industryName} industry. This suggests the
+        stock is potentially expensive compared to its peers relative to its
+        growth forecast, which may warrant caution.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Forward PEG Ratio of {formattedMetricValue} is in the
-        lower quartile for the {industryName} industry. This is a positive
-        indicator, suggesting that the stock may be undervalued as its price is
-        attractive relative to its expected earnings growth.
+        In the lower quartile for the {industryName} industry, {stockSymbol}’s
+        Forward PEG Ratio of {formattedMetricValue} is a positive indicator. It
+        suggests that the stock may be attractively valued relative to its
+        expected earnings growth.
       </P>
     );
   } else {
     return (
       <P>
         {stockSymbol}’s Forward PEG Ratio of {formattedMetricValue} is within
-        the middle range for the {industryName} industry. This suggests a
-        reasonable balance between the stock‘s price and its expected growth,
-        aligning with the valuation norms of its peers.
+        the middle range of its peers in the {industryName} industry. This
+        suggests a reasonable balance between the stock’s price and its expected
+        growth, aligning with sector valuation norms.
       </P>
     );
   }

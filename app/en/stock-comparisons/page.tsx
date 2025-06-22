@@ -4,7 +4,7 @@ import { generateWebsiteMetadata } from "@/app/lib/en/section/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { Header as PageHeader } from "@/components/en/layout/Header";
-import { Footer } from "@/app/components/en/section/page/Footer";
+import { Footer } from "@/components/en/layout/Footer";
 import { Tabs } from "./components/Tabs";
 import styles from "./page.module.css";
 

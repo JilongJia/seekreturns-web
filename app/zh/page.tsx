@@ -4,7 +4,7 @@ import { generateWebsiteMetadata } from "@/app/lib/zh/root/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { Header } from "@/components/zh/layout/Header";
-import { Footer } from "@/app/components/zh/root/page/Footer";
+import { Footer } from "@/components/zh/layout/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { StockComparisonSection } from "./components/StockComparisonSection";
 import { CalculatorSection } from "./components/CalculatorSection";

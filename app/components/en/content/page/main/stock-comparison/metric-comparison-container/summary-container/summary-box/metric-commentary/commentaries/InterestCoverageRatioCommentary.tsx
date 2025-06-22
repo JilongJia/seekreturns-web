@@ -31,8 +31,8 @@ export function InterestCoverageRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The Interest Coverage Ratio is not a primary indicator of debt servicing
-        capacity for companies in the {industryName} industry.
+        The Interest Coverage Ratio is often not a primary indicator of debt
+        servicing capacity in the {industryName} industry.
       </P>
     );
   }
@@ -53,20 +53,20 @@ export function InterestCoverageRatioCommentary({
     return (
       <P>
         {stockSymbol} has a negative Interest Coverage Ratio of{" "}
-        {formattedMetricValue}. This indicates that its operating earnings were
+        {formattedMetricValue}. This indicates that its earnings were
         insufficient to cover even its operational costs, let alone its interest
         payments, signaling significant financial distress.
       </P>
     );
   }
 
-  if (metricValue > 0 && metricValue < 1) {
+  if (metricValue < 1) {
     return (
       <P>
-        {stockSymbol}’s Interest Coverage Ratio is {formattedMetricValue}. A
-        value below 1.0 means operating earnings are insufficient to cover
-        interest expenses, indicating severe financial strain and high default
-        risk.
+        {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is a
+        critical concern. A value below 1.0 means operating earnings are
+        insufficient to cover interest expenses, indicating severe financial
+        strain and high default risk.
       </P>
     );
   }
@@ -88,11 +88,10 @@ export function InterestCoverageRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is
-        exceptionally high, placing it well above the typical range for the{" "}
-        {industryName} industry. This indicates a superior capacity to service
-        its debt, stemming from either robust earnings or a very conservative
-        debt load.
+        With an Interest Coverage Ratio of {formattedMetricValue}, {stockSymbol}{" "}
+        demonstrates a superior capacity to service its debt, placing it well
+        above the typical range for the {industryName} industry. This stems from
+        either robust earnings or a conservative debt load.
       </P>
     );
   } else if (metricValue < min) {
@@ -100,8 +99,8 @@ export function InterestCoverageRatioCommentary({
       <P>
         {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is
         below the typical range for the {industryName} industry. This suggests a
-        weaker ability to meet its debt obligations compared to its peers,
-        indicating a higher level of financial risk.
+        weaker ability to meet debt obligations compared to its peers and may
+        indicate a higher level of financial risk.
       </P>
     );
   } else if (metricValue > q3) {
@@ -109,17 +108,17 @@ export function InterestCoverageRatioCommentary({
       <P>
         {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is in
         the upper quartile for the {industryName} industry, signifying a strong
-        and healthy capacity to meet its interest payments out of operating
+        and healthy capacity to meet its interest payments from operating
         profits.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is in
-        the lower quartile for the {industryName} industry. This indicates a
-        tighter cushion for servicing debt, suggesting less financial
-        flexibility than many of its competitors.
+        In the lower quartile for the {industryName} industry, {stockSymbol}’s
+        Interest Coverage Ratio of {formattedMetricValue} indicates a tighter
+        cushion for servicing debt, suggesting less financial flexibility than
+        many of its competitors.
       </P>
     );
   } else {
@@ -127,7 +126,7 @@ export function InterestCoverageRatioCommentary({
     return (
       <P>
         {stockSymbol}’s Interest Coverage Ratio of {formattedMetricValue} is
-        positioned near the center of the pack in the {industryName} industry,
+        positioned comfortably within the norm for the {industryName} industry,
         indicating a standard and healthy capacity to cover its interest
         payments.
       </P>

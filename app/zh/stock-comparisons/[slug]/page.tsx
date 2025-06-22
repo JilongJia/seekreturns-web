@@ -7,7 +7,7 @@ import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { AdvertisementSidebar } from "@/app/components/zh/content/page/AdvertisementSidebar";
-import { Footer } from "@/app/components/zh/content/page/Footer";
+import { Footer } from "@/components/zh/layout/Footer";
 import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
 import { H1 } from "@/app/components/zh/content/page/main/article/H1";

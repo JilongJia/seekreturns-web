@@ -31,8 +31,8 @@ export function DebtToEquityRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        The Debt-to-Equity Ratio is not a primary measure of financial leverage
-        for companies in the {industryName} industry.
+        The Debt-to-Equity Ratio is often not the primary focus for assessing
+        leverage in the {industryName} industry.
       </P>
     );
   }
@@ -48,7 +48,7 @@ export function DebtToEquityRatioCommentary({
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. Handle specific numerical cases first
+  // 3. Handle specific numerical cases first (Excellent check!)
   if (metricValue < 0) {
     return (
       <P>
@@ -76,45 +76,43 @@ export function DebtToEquityRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} is
-        exceptionally high, falling well outside the typical range for the{" "}
-        {industryName} industry. This suggests an aggressive reliance on debt
-        financing, which can magnify returns but also significantly elevates the
-        company’s financial risk.
+        With a Debt-to-Equity Ratio of {formattedMetricValue}, {stockSymbol}{" "}
+        operates with exceptionally high leverage compared to the {industryName}{" "}
+        industry norm. This suggests an aggressive reliance on debt financing,
+        which can magnify returns but also significantly elevates financial
+        risk.
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} is
-        unusually low, falling beneath the typical leverage range for the{" "}
-        {industryName} industry. This highlights a highly conservative capital
-        structure, suggesting the company prioritizes financial stability over
-        aggressive growth funded by debt.
+        At {formattedMetricValue}, {stockSymbol}’s Debt-to-Equity Ratio is
+        unusually low for the {industryName} industry. This highlights a
+        conservative capital structure, suggesting the company prioritizes
+        financial stability over aggressive growth funded by debt.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry, indicating that its
-        leverage is higher than the majority of its peers. While this can boost
-        shareholder equity growth, it also exposes the company to greater
-        financial vulnerability.
+        {stockSymbol}’s leverage is in the upper quartile of the {industryName}{" "}
+        industry, with a Debt-to-Equity Ratio of {formattedMetricValue}. While
+        this approach can boost equity growth, it also exposes the company to
+        greater financial vulnerability.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} is in the
-        lower quartile for the {industryName} industry. This points to a
-        conservative financing strategy with low reliance on debt, resulting in
-        lower financial risk but potentially limiting the scale of its strategic
-        investments compared to more leveraged competitors.
+        Falling into the lower quartile for the {industryName} industry,{" "}
+        {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} points to
+        a conservative financing strategy. This results in lower financial risk
+        but potentially limits strategic investments compared to more leveraged
+        competitors.
       </P>
     );
   } else {
-    // This covers the interquartile range (Q1 to Q3)
+    // This covers the interquartile range (Q1 to Q3).
     return (
       <P>
         {stockSymbol}’s Debt-to-Equity Ratio of {formattedMetricValue} is

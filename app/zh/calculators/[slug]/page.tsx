@@ -10,7 +10,7 @@ import { generateJsonLd } from "./lib/generateJsonLd";
 import { type MainProps } from "@/app/components/zh/content/page/main";
 import { Header } from "@/components/zh/layout/Header";
 import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
-import { Footer } from "@/app/components/zh/content/page/Footer";
+import { Footer } from "@/components/zh/layout/Footer";
 import styles from "./page.module.css";
 
 type GenerateMetadataParams = { params: Promise<{ slug: string }> };

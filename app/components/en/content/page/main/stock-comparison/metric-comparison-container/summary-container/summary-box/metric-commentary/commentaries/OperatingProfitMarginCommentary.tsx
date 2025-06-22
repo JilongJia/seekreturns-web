@@ -31,8 +31,8 @@ export function OperatingProfitMarginCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        Operating Profit Margin isn’t typically a primary measure of operational
-        efficiency for companies in the {industryName} industry.
+        In the {industryName} industry, Operating Profit Margin is often not the
+        primary measure of operational efficiency.
       </P>
     );
   }
@@ -88,17 +88,18 @@ export function OperatingProfitMarginCommentary({
       <P>
         {stockSymbol}’s Operating Profit Margin of {formattedMetricValue} is
         below the typical range for the {industryName} industry, suggesting
-        significant challenges in generating profit from its core business
-        activities relative to its peers.
+        challenges in generating profit from its core business activities
+        relative to its peers.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Operating Profit Margin of {formattedMetricValue} is in
-        the upper quartile for the {industryName} industry. This signals a
-        strong ability to translate revenue into operating profit, outperforming
-        most of its competitors in core business efficiency.
+        An Operating Profit Margin of {formattedMetricValue} places{" "}
+        {stockSymbol} in the upper quartile for the {industryName} industry.
+        This signals a strong ability to translate revenue into operating
+        profit, outperforming most of its competitors in core business
+        efficiency.
       </P>
     );
   } else if (metricValue < q1) {
@@ -106,17 +107,17 @@ export function OperatingProfitMarginCommentary({
       <P>
         {stockSymbol}’s Operating Profit Margin of {formattedMetricValue} is in
         the lower quartile for the {industryName} industry. This indicates
-        weaker profitability from core business activities, which may stem from
-        operational inefficiencies or competitive pressures on pricing.
+        weaker profitability from core operations, which may stem from
+        inefficiencies or competitive pressures on pricing.
       </P>
     );
   } else {
     // This covers the interquartile range (Q1 to Q3)
     return (
       <P>
-        {stockSymbol}’s Operating Profit Margin of {formattedMetricValue} hovers
+        {stockSymbol}’s Operating Profit Margin of {formattedMetricValue} is
         around the midpoint for the {industryName} industry, indicating that its
-        efficiency in managing core business operations is characteristic of the
+        efficiency in managing core business operations is typical for the
         sector.
       </P>
     );

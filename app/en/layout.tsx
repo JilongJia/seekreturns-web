@@ -18,10 +18,13 @@ export const metadata = {
 };
 
 function RootLayout({ children }: RootLayoutProps) {
+  const isProduction = process.env.NODE_ENV === "production";
+
   return (
     <html lang="en" className={`${inter.variable} ${noto_sans_sc.variable}`}>
       <body className={styles.body}>{children}</body>
-      <GoogleAnalytics gaId="G-1WHQNHHT0M" />
+
+      {isProduction && <GoogleAnalytics gaId="G-1WHQNHHT0M" />}
     </html>
   );
 }

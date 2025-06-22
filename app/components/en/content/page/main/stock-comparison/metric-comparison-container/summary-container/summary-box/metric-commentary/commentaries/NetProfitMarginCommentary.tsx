@@ -31,8 +31,8 @@ export function NetProfitMarginCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        Net Profit Margin is not a primary profitability metric for companies in
-        the {industryName} industry.
+        In the {industryName} industry, Net Profit Margin is often not the
+        primary profitability metric.
       </P>
     );
   }
@@ -52,7 +52,7 @@ export function NetProfitMarginCommentary({
       <P>
         {stockSymbol} has a negative Net Profit Margin of {formattedMetricValue}
         , indicating the company is operating at a net loss as its expenses
-        exceed revenues.
+        exceeded its revenues.
       </P>
     );
   }
@@ -77,8 +77,8 @@ export function NetProfitMarginCommentary({
         {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is
         exceptionally high, placing it well beyond the typical range for the{" "}
         {industryName} industry. This demonstrates outstanding operational
-        efficiency and a potential strong competitive advantage in converting
-        revenue into profit.
+        efficiency and a strong competitive advantage in converting revenue into
+        profit.
       </P>
     );
   } else if (metricValue < min) {
@@ -86,34 +86,35 @@ export function NetProfitMarginCommentary({
       <P>
         {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is below the
         typical range for the {industryName} industry. This suggests the company
-        may be facing challenges with cost control or is operating in a highly
+        may be facing challenges with cost control or operating in a highly
         competitive environment that limits its pricing power.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry, signifying strong
+        A Net Profit Margin of {formattedMetricValue} places {stockSymbol} in
+        the upper quartile for the {industryName} industry, signifying strong
         profitability and more effective cost management than most of its peers.
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is in the
-        lower quartile for the {industryName} industry. This indicates weaker
-        profitability, as the company retains a smaller portion of each dollar
-        in sales as profit compared to its competitors.
+        Falling into the lower quartile for the {industryName} industry,{" "}
+        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} indicates
+        weaker profitability. This means the company retains a smaller portion
+        of each dollar in sales as profit compared to its competitors.
       </P>
     );
   } else {
     // This covers the interquartile range (Q1 to Q3).
     return (
       <P>
-        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is within
-        the central 50% of the {industryName} industry, indicating its ability
-        to convert sales into profit is typical for the sector.
+        {stockSymbol}’s Net Profit Margin of {formattedMetricValue} is aligned
+        with the median group of its peers in the {industryName} industry. This
+        indicates its ability to convert revenue into profit is typical for the
+        sector.
       </P>
     );
   }

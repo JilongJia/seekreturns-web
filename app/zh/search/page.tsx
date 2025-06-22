@@ -4,7 +4,7 @@ import { generateWebsiteMetadata } from "@/app/lib/zh/utility/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { Header } from "@/components/zh/layout/Header";
-import { Footer } from "@/app/components/zh/utility/page/Footer";
+import { Footer } from "@/components/zh/layout/Footer";
 import { Search } from "./components/Search";
 import styles from "./page.module.css";
 

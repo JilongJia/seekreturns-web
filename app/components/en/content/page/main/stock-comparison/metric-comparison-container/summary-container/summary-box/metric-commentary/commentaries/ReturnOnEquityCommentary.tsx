@@ -31,8 +31,8 @@ export function ReturnOnEquityCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        Return on Equity is not a primary performance indicator for companies in
-        the {industryName} industry.
+        Return on Equity is often not a primary performance indicator in the{" "}
+        {industryName} industry.
       </P>
     );
   }
@@ -85,19 +85,20 @@ export function ReturnOnEquityCommentary({
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is below the
-        typical range for the {industryName} industry. This suggests challenges
-        in efficiently using shareholder capital to generate profit, which could
-        point to operational issues or a conservative capital structure.
+        A Return on Equity of {formattedMetricValue} places {stockSymbol} below
+        the typical range for the {industryName} industry. This suggests
+        challenges in efficiently using shareholder capital to generate profit,
+        which could point to operational issues or a conservative capital
+        structure.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Return on Equity of {formattedMetricValue} is in the
-        upper quartile for the {industryName} industry, signaling a highly
-        effective use of shareholder capital to drive profitability compared to
-        most of its peers.
+        In the upper quartile for the {industryName} industry, {stockSymbol}’s
+        Return on Equity of {formattedMetricValue} signals a highly effective
+        use of shareholder capital to drive profitability compared to most of
+        its peers.
       </P>
     );
   } else if (metricValue < q1) {

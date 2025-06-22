@@ -31,8 +31,8 @@ export function ReturnOnInvestedCapitalCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        Return on Invested Capital is not a primary measure of capital
-        efficiency for companies in the {industryName} industry.
+        Return on Invested Capital is often not a primary measure of capital
+        efficiency in the {industryName} industry.
       </P>
     );
   }
@@ -87,20 +87,20 @@ export function ReturnOnInvestedCapitalCommentary({
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol}’s Return on Invested Capital of {formattedMetricValue} is
-        below the typical range for the {industryName} industry. This suggests
-        challenges in generating adequate returns from the company’s total
-        capital base, pointing to potential operational or strategic
-        inefficiencies.
+        A Return on Invested Capital of {formattedMetricValue} places{" "}
+        {stockSymbol} below the typical range for the {industryName} industry.
+        This suggests challenges in generating adequate returns from the
+        company’s total capital base, pointing to potential operational or
+        strategic inefficiencies.
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol}’s Return on Invested Capital of {formattedMetricValue} is
-        in the upper quartile for the {industryName} industry, signifying a
-        highly effective use of its capital to generate profits when compared to
-        its peers.
+        In the upper quartile for the {industryName} industry, {stockSymbol}’s
+        Return on Invested Capital of {formattedMetricValue} signifies a highly
+        effective use of its capital to generate profits when compared to its
+        peers.
       </P>
     );
   } else if (metricValue < q1) {
@@ -117,7 +117,7 @@ export function ReturnOnInvestedCapitalCommentary({
     return (
       <P>
         {stockSymbol}’s Return on Invested Capital of {formattedMetricValue} is
-        in line with the benchmark for the {industryName} industry, reflecting a
+        in line with the norm for the {industryName} industry, reflecting a
         standard level of efficiency in generating profits from its capital
         base.
       </P>
