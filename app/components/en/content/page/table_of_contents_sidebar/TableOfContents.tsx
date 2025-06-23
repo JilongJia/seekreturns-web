@@ -95,7 +95,7 @@ export function TableOfContents({ data, className }: TableOfContentsProps) {
       <h2 id="table-of-contents-heading" className={styles.h2}>
         On this page
       </h2>
-      <menu className={styles.primaryMenu}>
+      <ul className={styles.primaryMenu}>
         {data.map((h2) => (
           <li key={h2.id}>
             <Link
@@ -108,7 +108,7 @@ export function TableOfContents({ data, className }: TableOfContentsProps) {
               {h2.label}
             </Link>
             {h2.subHeadingsData && (
-              <menu className={styles.secondaryMenu}>
+              <ul className={styles.secondaryMenu}>
                 {h2.subHeadingsData.map((h3) => (
                   <li key={h3.id}>
                     <Link
@@ -124,11 +124,11 @@ export function TableOfContents({ data, className }: TableOfContentsProps) {
                     </Link>
                   </li>
                 ))}
-              </menu>
+              </ul>
             )}
           </li>
         ))}
-      </menu>
+      </ul>
     </nav>
   );
 }

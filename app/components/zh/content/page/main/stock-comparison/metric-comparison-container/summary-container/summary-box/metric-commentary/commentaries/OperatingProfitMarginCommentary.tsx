@@ -48,8 +48,8 @@ export function OperatingProfitMarginCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的营业利润率为负（{formattedMetricValue}
-        ）。这标志着公司在核心经营层面已经亏损，其主营业务的成本和费用超过了收入。
+        {stockSymbol} 的营业利润率为负数 {formattedMetricValue}
+        。这标志着公司在核心经营层面已经亏损，其主营业务的成本和费用超过了收入。
       </P>
     );
   }
@@ -71,29 +71,29 @@ export function OperatingProfitMarginCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的营业利润率 {formattedMetricValue} 极其出色，远高于{" "}
-        {industryName}{" "}
+        {stockSymbol} 的营业利润率为 {formattedMetricValue}
+        ，表现极其出色，远高于 {industryName}{" "}
         行业的普遍范围。这体现了公司在核心业务管理上拥有卓越的效率，可能得益于其强大的市场定价能力或出色的成本控制体系。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的营业利润率 {formattedMetricValue} 低于 {industryName}{" "}
-        行业的正常水平，这表明与同行相比，公司通过其核心业务活动创造利润的能力面临较大挑战。
+        {stockSymbol} 的营业利润率为 {formattedMetricValue}，低于 {industryName}{" "}
+        行业的正常水平。这表明与同行相比，公司通过其核心业务活动创造利润的能力面临较大挑战。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的营业利润率 {formattedMetricValue} 位于 {industryName}{" "}
+        {stockSymbol} 的营业利润率为 {formattedMetricValue}，位于 {industryName}{" "}
         行业的前25%。这表明公司将收入转化为营业利润的能力很强，在核心业务效率方面跑赢了多数竞争对手。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的营业利润率 {formattedMetricValue} 处于 {industryName}{" "}
+        {stockSymbol} 的营业利润率为 {formattedMetricValue}，处于 {industryName}{" "}
         行业的后25%。这反映出其核心业务的盈利能力较弱，原因可能在于运营效率不高，或是在定价方面承受着较大的竞争压力。
       </P>
     );
@@ -101,8 +101,8 @@ export function OperatingProfitMarginCommentary({
     // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol} 的营业利润率 {formattedMetricValue} 在 {industryName}{" "}
-        行业中处于中等位置，表明公司管理核心业务的效率是该行业的典型代表。
+        {stockSymbol} 的营业利润率为 {formattedMetricValue}，在 {industryName}{" "}
+        行业中处于中等位置，表明公司管理核心业务的效率达到了该行业的典型水平。
       </P>
     );
   }

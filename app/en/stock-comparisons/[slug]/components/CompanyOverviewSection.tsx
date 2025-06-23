@@ -165,10 +165,14 @@ export async function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">Beta</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.beta.toFixed(2)}
+                {stockOneProfileData.beta === 0
+                  ? "--"
+                  : stockOneProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.beta.toFixed(2)}
+                {stockTwoProfileData.beta === 0
+                  ? "--"
+                  : stockTwoProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>

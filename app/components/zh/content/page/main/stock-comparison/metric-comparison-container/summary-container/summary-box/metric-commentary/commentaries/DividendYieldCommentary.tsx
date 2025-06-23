@@ -38,14 +38,14 @@ export function DividendYieldCommentary({
 
   // 2. 检查数据是否可用
   if (metricValue === null) {
-    return <P>目前无法获得 {stockSymbol} 的股息率数据。</P>;
+    return <P>目前无法获取 {stockSymbol} 的股息率数据。</P>;
   }
 
-  // 3. 处理特殊情况：零股息率
+  // 3. 处理特殊情况：零股息率 (此处的分析非常出色)
   if (metricValue === 0) {
     return (
       <P>
-        {stockSymbol} 目前不派发股息，因此其股息率为
+        {stockSymbol} 当前不派发股息，因此其股息率为
         0%。对于注重成长的公司而言，这是一种常见的策略，因为它们倾向于将全部利润再投资于业务发展。然而，在以获取稳定收入为目标的成熟行业中，这种情况可能较不典型。
       </P>
     );
@@ -58,7 +58,7 @@ export function DividendYieldCommentary({
     return (
       <P>
         {stockSymbol} 的股息率为 {formattedMetricValue}，但因缺少 {industryName}{" "}
-        行业的对比基准，无法判断其行业定位。
+        行业的对比基准，我们无法判断其在行业中的具体水平。
       </P>
     );
   }
@@ -69,38 +69,38 @@ export function DividendYieldCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的股息率 {formattedMetricValue} 处于极高水平，远超{" "}
+        {stockSymbol} 的股息率为 {formattedMetricValue}，处于极高水平，远超{" "}
         {industryName}{" "}
-        行业的正常范围。虽然这对于追求稳定现金流的投资者极具吸引力，但异常高的股息率有时也是一个警示信号，可能反映了股价的下跌，或是市场对该股息未来可持续性的担忧。
+        行业的正常范围。虽然这对于追求稳定现金流的投资者而言极具吸引力，但异常高的股息率有时也是一个警示信号，可能反映了股价的下跌，或是市场对该股息未来可持续性的担忧。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的股息率 {formattedMetricValue} 低于 {industryName}{" "}
-        行业的普遍范围。这通常意味着投资者的回报更多地来源于股价上涨带来的资本增值，而非股息收入。
+        {stockSymbol} 的股息率为 {formattedMetricValue}，低于 {industryName}{" "}
+        行业的普遍范围。这通常意味着股东的回报更多地来源于股价上涨带来的资本增值，而非股息收入。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的股息率 {formattedMetricValue} 位于 {industryName}{" "}
-        行业的前25%，意味着它能提供比大多数同行更具吸引力的现金回报，显示了公司对股东回报的重视。
+        {stockSymbol} 的股息率为 {formattedMetricValue}，处于 {industryName}{" "}
+        行业的前四分之一水平。这意味着它能提供比大多数同行更具吸引力的现金回报，显示了公司对股东回报的坚定承诺。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的股息率 {formattedMetricValue} 在 {industryName}{" "}
-        行业中处于较低水平（后25%）。这暗示公司的策略可能更倾向于将利润留存用于再投资和业务增长，而不是提供高额的股息收入。
+        {stockSymbol} 的股息率为 {formattedMetricValue}，处于 {industryName}{" "}
+        行业的后四分之一水平。这暗示公司的策略可能更倾向于将利润留存用于再投资和业务增长，而不是提供高额的股息收入。
       </P>
     );
   } else {
     // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol} 的股息率 {formattedMetricValue} 与 {industryName}{" "}
-        的行业同行水平基本一致，为投资者提供了该领域标准的股息回报。
+        {stockSymbol} 的股息率为 {formattedMetricValue}，与 {industryName}{" "}
+        行业中同行的水平基本一致，为投资者提供了该领域标准的股息回报。
       </P>
     );
   }

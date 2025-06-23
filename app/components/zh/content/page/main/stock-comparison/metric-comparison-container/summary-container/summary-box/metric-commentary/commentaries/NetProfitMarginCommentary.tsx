@@ -47,8 +47,8 @@ export function NetProfitMarginCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的净利润率为负（{formattedMetricValue}
-        ），表明公司目前处于净亏损状态，其总成本费用超过了营业收入。
+        {stockSymbol} 的净利润率为负数 {formattedMetricValue}
+        ，表明公司目前处于净亏损状态，其总成本费用超过了营业收入。
       </P>
     );
   }
@@ -70,37 +70,37 @@ export function NetProfitMarginCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的净利润率 {formattedMetricValue} 达到了非常高的水平，远超{" "}
-        {industryName}{" "}
+        {stockSymbol} 的净利润率为 {formattedMetricValue}
+        ，达到了非常高的水平，远超 {industryName}{" "}
         行业的同行。这展示了公司卓越的运营效率和成本控制能力，可能意味着其拥有强大的竞争优势或“护城河”。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的净利润率 {formattedMetricValue} 低于 {industryName}{" "}
+        {stockSymbol} 的净利润率为 {formattedMetricValue}，低于 {industryName}{" "}
         行业的普遍水平。这可能表明公司在成本控制方面面临挑战，或者身处一个竞争激烈的市场环境，导致其定价能力受到限制。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的净利润率 {formattedMetricValue} 处于 {industryName}{" "}
+        {stockSymbol} 的净利润率为 {formattedMetricValue}，处于 {industryName}{" "}
         行业的前25%，标志着其盈利能力强劲，并且比大多数同行更有效地控制了成本。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的净利润率 {formattedMetricValue} 位于 {industryName}{" "}
+        {stockSymbol} 的净利润率为 {formattedMetricValue}，位于 {industryName}{" "}
         行业的后25%。这说明其盈利能力相对较弱，与竞争者相比，公司从单位销售额中保留下来的利润更少。
       </P>
     );
   } else {
-    // 覆盖了四分位距（Q1到Q3）
+    // 覆盖了四分位距（Q1到Q3） (此处的解释非常清晰)
     return (
       <P>
-        {stockSymbol} 的净利润率 {formattedMetricValue} 处于 {industryName}{" "}
+        {stockSymbol} 的净利润率为 {formattedMetricValue}，处于 {industryName}{" "}
         行业的核心区间（即中间50%的公司）。这表明其将销售收入转化为利润的能力与该行业的典型水平保持一致。
       </P>
     );

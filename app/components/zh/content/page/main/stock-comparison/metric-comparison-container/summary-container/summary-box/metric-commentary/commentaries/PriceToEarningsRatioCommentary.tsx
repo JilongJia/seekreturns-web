@@ -48,8 +48,8 @@ export function PriceToEarningsRatioCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的市盈率（P/E）为负（{formattedMetricValue}
-        ），这表明该公司处于净亏损状态。负市盈率在估值比较中不具备可靠的参考价值。
+        {stockSymbol} 的市盈率（P/E）为负数 {formattedMetricValue}
+        ，这表明该公司处于净亏损状态。负市盈率在估值比较中不具备可靠的参考价值。
       </P>
     );
   }
@@ -70,35 +70,35 @@ export function PriceToEarningsRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue} 在 {industryName}{" "}
+        {stockSymbol} 的市盈率为 {formattedMetricValue}，在 {industryName}{" "}
         行业中处于极高水平。这既可能反映了市场对其抱有强烈的信心和高增长预期，也可能暗示着股价存在被严重高估的风险。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue} 低于 {industryName}{" "}
+        {stockSymbol} 的市盈率为 {formattedMetricValue}，低于 {industryName}{" "}
         行业的通常水平。这可能意味着公司价值被低估，但也可能折射出市场对公司未来盈利增长或其特定经营挑战的深度顾虑。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue} 位列 {industryName}{" "}
+        {stockSymbol} 的市盈率为 {formattedMetricValue}，位列 {industryName}{" "}
         行业前25%。这种高估值意味着市场对其未来增长寄予厚望，但同时也带来了风险：如果未来的盈利无法达到预期，股价可能面临较大的回调压力。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue} 位于 {industryName}{" "}
+        {stockSymbol} 的市盈率为 {formattedMetricValue}，位于 {industryName}{" "}
         行业的后25%。这是一个值得关注的积极迹象，因为它可能表明公司的价值相对于其盈利能力被市场低估，或为投资者提供了一个具吸引力的潜在买入点。
       </P>
     );
   } else {
     return (
       <P>
-        {stockSymbol} 的市盈率 {formattedMetricValue} 与 {industryName}{" "}
+        {stockSymbol} 的市盈率为 {formattedMetricValue}，与 {industryName}{" "}
         行业的通常水平相当。这表明其估值与同行相比，既没有明显的溢价，也没有显著的折价，处于一个公允的区间。
       </P>
     );

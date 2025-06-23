@@ -48,8 +48,8 @@ export function ReturnOnInvestedCapitalCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的投入资本回报率（ROIC）为负（{formattedMetricValue}
-        ）。这表明其经营活动未能从所有投入的资本（包括股权和债务）中创造利润，是效率低下甚至价值毁灭的信号。
+        {stockSymbol} 的投入资本回报率（ROIC）为负数 {formattedMetricValue}
+        。这表明其经营活动未能从所有投入的资本（包括股权和债务）中创造利润，是效率低下甚至价值毁灭的信号。
       </P>
     );
   }
@@ -70,15 +70,15 @@ export function ReturnOnInvestedCapitalCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的投入资本回报率 {formattedMetricValue} 表现极为出色，远超{" "}
-        {industryName}{" "}
+        {stockSymbol} 的投入资本回报率为 {formattedMetricValue}
+        ，表现极为出色，远超 {industryName}{" "}
         行业。这证明了公司在有效配置资本和创造价值方面拥有杰出的能力。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的投入资本回报率 {formattedMetricValue} 低于{" "}
+        {stockSymbol} 的投入资本回报率为 {formattedMetricValue}，低于{" "}
         {industryName}{" "}
         行业的普遍水平。这表明公司在利用其总资本基础来产生足够回报方面存在困难，可能指向其在运营或战略层面存在效率问题。
       </P>
@@ -86,22 +86,23 @@ export function ReturnOnInvestedCapitalCommentary({
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的投入资本回报率 {formattedMetricValue}{" "}
-        位于行业前25%。这标志着与同行相比，公司运用资本创造利润的效率非常高。
+        {stockSymbol} 的投入资本回报率为 {formattedMetricValue}
+        ，位于行业前25%。这标志着与同行相比，公司能更高效地运用其全部资本（含债务）来创造利润。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的投入资本回报率 {formattedMetricValue}{" "}
-        处于行业后25%的水平。这说明与大多数竞争对手相比，公司将投入的资本转化为利润的效率偏低。
+        {stockSymbol} 的投入资本回报率为 {formattedMetricValue}
+        ，处于行业后25%的水平。这说明与大多数竞争对手相比，公司将投入的资本转化为利润的效率偏低。
       </P>
     );
   } else {
     // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol} 的投入资本回报率 {formattedMetricValue} 与 {industryName}{" "}
+        {stockSymbol} 的投入资本回报率为 {formattedMetricValue}，与{" "}
+        {industryName}{" "}
         行业的基准水平一致，反映出公司从其资本基础中获取利润的效率处于行业标准水平。
       </P>
     );

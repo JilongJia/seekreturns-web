@@ -31,14 +31,15 @@ export function InterestCoverageRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        在 {industryName} 行业，利息保障倍数并非评估公司偿付利息能力的首选指标。
+        在 {industryName}{" "}
+        行业，利息保障倍数通常不被视为评估公司偿债能力的核心指标。
       </P>
     );
   }
 
   // 2. 检查数据是否可用
   if (metricValue === null) {
-    return <P>关于 {stockSymbol} 的利息保障倍数数据，目前暂缺。</P>;
+    return <P>{stockSymbol} 的利息保障倍数数据目前不可用。</P>;
   }
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
@@ -47,8 +48,8 @@ export function InterestCoverageRatioCommentary({
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数为负（{formattedMetricValue}
-        ）。这表明公司产生了经营性亏损，其盈利甚至不足以覆盖自身的运营成本，更不用说支付利息，是公司陷入严重财务困境的信号。
+        {stockSymbol} 的利息保障倍数为负数 {formattedMetricValue}
+        。这表明公司产生了经营性亏损，其盈利甚至不足以覆盖自身的运营成本，更不用说支付利息，是公司陷入严重财务困境的信号。
       </P>
     );
   }
@@ -57,7 +58,8 @@ export function InterestCoverageRatioCommentary({
     return (
       <P>
         {stockSymbol} 的利息保障倍数为 {formattedMetricValue}
-        。该数值低于1.0，意味着公司的营业利润不足以完全覆盖其利息支出，表明公司财务状况紧张，存在较高的债务违约风险。
+        。该数值低于
+        1.0，意味着公司的营业利润不足以完全覆盖其利息支出，这表明公司财务状况紧张，存在较高的债务违约风险。
       </P>
     );
   }
@@ -66,8 +68,8 @@ export function InterestCoverageRatioCommentary({
   if (!industryMetricStats) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，但由于缺乏{" "}
-        {industryName} 行业的基准数据，我们无法为其在同业中的表现提供背景信息。
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，但因缺乏{" "}
+        {industryName} 行业的基准数据，我们无法为其在同业中的表现提供定位参考。
       </P>
     );
   }
@@ -78,29 +80,32 @@ export function InterestCoverageRatioCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数 {formattedMetricValue} 表现优异，远超{" "}
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，表现优异，远超{" "}
         {industryName}{" "}
-        行业的通常范围。这反映了公司拥有卓越的债务偿付能力，这可能源于其强劲的盈利表现，或是非常审慎的债务管理策略。
+        行业的通常范围。这反映了公司拥有卓越的债务偿付能力，可能源于其强劲的盈利表现，或是审慎的债务管理策略。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数 {formattedMetricValue} 低于 {industryName}{" "}
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，低于{" "}
+        {industryName}{" "}
         行业的普遍水平。这暗示与同行相比，公司应对债务的能力偏弱，其财务风险也相应更高。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数 {formattedMetricValue} 位于 {industryName}{" "}
-        行业的前四分之一，标志着公司利用经营利润来支付利息的能力十分强健和健康。
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，位于{" "}
+        {industryName}{" "}
+        行业的前四分之一，标志着公司利用经营利润来支付利息的能力十分强健。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的利息保障倍数 {formattedMetricValue} 处在 {industryName}{" "}
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，处于{" "}
+        {industryName}{" "}
         行业的后四分之一。这表明公司偿付利息的缓冲空间相对紧张，其财务弹性可能不及多数竞争对手。
       </P>
     );
@@ -108,7 +113,8 @@ export function InterestCoverageRatioCommentary({
     // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol} 的利息保障倍数 {formattedMetricValue} 处于 {industryName}{" "}
+        {stockSymbol} 的利息保障倍数为 {formattedMetricValue}，处于{" "}
+        {industryName}{" "}
         行业的中游位置，表明其覆盖利息支出的能力符合行业标准，财务状况稳健。
       </P>
     );

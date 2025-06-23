@@ -44,12 +44,12 @@ export function ReturnOnEquityCommentary({
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. 处理特殊情况：负ROE
+  // 3. 处理特殊情况：负ROE (此处的双重原因分析非常专业)
   if (metricValue < 0) {
     return (
       <P>
-        {stockSymbol} 的净资产收益率（ROE）为负（{formattedMetricValue}
-        ）。这说明公司正在为股东创造亏损。其原因可能是公司经营不善导致亏损，也可能是公司净资产为负（即资不抵债），这通常是财务困境的一个信号。
+        {stockSymbol} 的净资产收益率（ROE）为负数 {formattedMetricValue}
+        。这说明公司正在为股东创造亏损。其原因可能是公司经营不善导致亏损，也可能是公司净资产为负（即资不抵债），这通常是财务困境的一个信号。
       </P>
     );
   }
@@ -71,36 +71,38 @@ export function ReturnOnEquityCommentary({
   if (metricValue > max) {
     return (
       <P>
-        {stockSymbol} 的净资产收益率 {formattedMetricValue} 在 {industryName}{" "}
-        行业中异常之高。这体现了公司利用股东资本创造利润的卓越能力，但投资者也需注意，极高的ROE有时也可能是由过高的财务杠杆（即高负债）所驱动的，这会增加风险。
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}，在 {industryName}{" "}
+        行业中异常之高。这体现了公司利用股东资本创造利润的卓越能力，但投资者也需注意，极高的
+        ROE 有时也可能是由过高的财务杠杆（即高负债）所驱动的，这会增加风险。
       </P>
     );
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的净资产收益率 {formattedMetricValue} 低于 {industryName}{" "}
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}，低于{" "}
+        {industryName}{" "}
         行业的平均水平。这可能暗示公司在利用股东资本创造利润方面效率不高，或反映了公司采用了较为保守的资本结构（即债务水平较低）。
       </P>
     );
   } else if (metricValue > q3) {
     return (
       <P>
-        {stockSymbol} 的净资产收益率 {formattedMetricValue}{" "}
-        位于行业前列（高于75%的同行）。这标志着与大多数同行相比，公司能更高效地利用股东的资金来创造利润。
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}
+        ，处于行业前四分之一（高于75%的同行）。这标志着与大多数同行相比，公司能更高效地利用股东的资金来创造利润。
       </P>
     );
   } else if (metricValue < q1) {
     return (
       <P>
-        {stockSymbol} 的净资产收益率 {formattedMetricValue}{" "}
-        在行业内处于后进水平（低于75%的同行）。这表明，与竞争对手相比，其利用自有资本创造利润的效率有待提高。
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}
+        ，处于行业后四分之一水平（低于75%的同行）。这表明，与竞争对手相比，其利用自有资本创造利润的效率有待提高。
       </P>
     );
   } else {
     // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
-        {stockSymbol} 的净资产收益率 {formattedMetricValue} 与 {industryName}{" "}
+        {stockSymbol} 的净资产收益率为 {formattedMetricValue}，与 {industryName}{" "}
         行业的标准水平持平，表明其相对于股东权益的盈利能力是该行业的典型表现。
       </P>
     );

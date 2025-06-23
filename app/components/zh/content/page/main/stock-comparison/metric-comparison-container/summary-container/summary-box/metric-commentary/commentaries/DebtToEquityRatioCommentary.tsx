@@ -31,7 +31,8 @@ export function DebtToEquityRatioCommentary({
   if (!isMetricApplicable) {
     return (
       <P>
-        在 {industryName} 行业中，产权比率并非衡量公司财务杠杆水平的首要指标。
+        在 {industryName}{" "}
+        行业中，产权比率通常不被视为衡量公司财务杠杆水平的核心指标。
       </P>
     );
   }
@@ -43,7 +44,7 @@ export function DebtToEquityRatioCommentary({
 
   const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
-  // 3. 优先处理特殊数值情况
+  // 3. 优先处理特殊数值情况（此处的解释非常专业）
   if (metricValue < 0) {
     return (
       <P>
@@ -76,8 +77,8 @@ export function DebtToEquityRatioCommentary({
   } else if (metricValue < min) {
     return (
       <P>
-        {stockSymbol} 的产权比率 {formattedMetricValue} 显著低于 {industryName}{" "}
-        行业。这体现了公司极为保守的资本结构，表明管理层可能更看重财务的稳定性，而非通过债务杠杆追求高速增长。
+        {stockSymbol} 的产权比率 {formattedMetricValue} 低于 {industryName}{" "}
+        行业的普遍范围。这体现了公司较为保守的资本结构，表明管理层可能更看重财务的稳定性，而非通过债务杠杆追求高速增长。
       </P>
     );
   } else if (metricValue > q3) {
