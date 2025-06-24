@@ -22,10 +22,21 @@ export async function HistoricalPerformanceSection({
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
+  const filteredSeriesOne = seriesOne?.filter(
+    (pt) => new Date(pt.date) >= oneYearAgo,
+  );
+  const filteredSeriesTwo = seriesTwo?.filter(
+    (pt) => new Date(pt.date) >= oneYearAgo,
+  );
+
   const stockOnePriceSeries =
-    seriesOne?.filter((pt) => new Date(pt.date) >= oneYearAgo) ?? null;
+    filteredSeriesOne && filteredSeriesOne.length > 0
+      ? filteredSeriesOne
+      : null;
   const stockTwoPriceSeries =
-    seriesTwo?.filter((pt) => new Date(pt.date) >= oneYearAgo) ?? null;
+    filteredSeriesTwo && filteredSeriesTwo.length > 0
+      ? filteredSeriesTwo
+      : null;
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (

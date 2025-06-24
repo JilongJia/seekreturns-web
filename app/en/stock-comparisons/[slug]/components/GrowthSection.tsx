@@ -27,7 +27,7 @@ export async function GrowthSection({
   if (!stockOneGrowthData || !stockTwoGrowthData) {
     return (
       <Section ariaLabelledby="growth">
-        <h2 id="growth">Growth</h2>
+        <H2 id="growth">Growth</H2>
         <P>Financial growth data is currently unavailable for comparison.</P>
       </Section>
     );
