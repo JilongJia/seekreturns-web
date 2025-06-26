@@ -13,7 +13,7 @@ export async function ModifiedDate({ pathname, className }: ModifiedDateProps) {
 
   return (
     <span className={clsx(styles.modifiedDate, className)}>
-      Updated{" "}
+      Updated on{" "}
       <time dateTime={modifiedDate.toISOString()}>
         {modifiedDate.toLocaleDateString("en", {
           year: "numeric",

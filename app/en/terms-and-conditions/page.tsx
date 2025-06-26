@@ -45,7 +45,7 @@ function Page() {
         <header className={styles.mainHeader}>
           <h1 className={styles.h1}>Terms and Conditions</h1>
           <span className={styles.modifiedDate}>
-            Updated{" "}
+            Updated on{" "}
             <time dateTime={modifiedDate.toISOString()}>
               {modifiedDate.toLocaleDateString("en", {
                 year: "numeric",

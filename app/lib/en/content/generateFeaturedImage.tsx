@@ -276,7 +276,7 @@ export async function generateFeaturedImage({
                   fontSize: "1rem",
                 }}
               >
-                {`Updated ${modifiedDate.toLocaleDateString("en", {
+                {`Updated on ${modifiedDate.toLocaleDateString("en", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
