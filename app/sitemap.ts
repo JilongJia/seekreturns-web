@@ -28,11 +28,7 @@ export async function generateSitemaps(): Promise<{ id: number }[]> {
   return routes;
 }
 
-export default async function sitemap({
-  id,
-}: {
-  id: string;
-}): Promise<MetadataRoute.Sitemap> {
+async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
   const chunkId = parseInt(id, 10);
 
   if (chunkId === 0) {
@@ -61,3 +57,5 @@ export default async function sitemap({
     }),
   );
 }
+
+export default sitemap;
