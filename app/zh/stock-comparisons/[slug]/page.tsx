@@ -124,7 +124,7 @@ async function Page({ params }: PageProps) {
             </ArticleHeader>
             <P>
               本文对{stockOneSymbol}和{stockTwoSymbol}
-              进行了全面对比，涵盖历史表现、盈利能力、财务状况、成长性、股息以及估值等方面。
+              进行了全面对比，涵盖历史表现、盈利能力、财务实力、成长性、股息以及估值等方面。
             </P>
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}

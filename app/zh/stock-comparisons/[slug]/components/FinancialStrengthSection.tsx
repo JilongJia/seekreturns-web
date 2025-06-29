@@ -45,8 +45,8 @@ export async function FinancialStrengthSection({
   ) {
     return (
       <Section ariaLabelledby="financial-strength">
-        <H2 id="financial-strength">财务状况</H2>
-        <P>财务状况数据当前不可用。</P>
+        <H2 id="financial-strength">财务实力</H2>
+        <P>财务实力数据当前不可用。</P>
       </Section>
     );
   }
@@ -60,7 +60,7 @@ export async function FinancialStrengthSection({
 
   return (
     <Section ariaLabelledby="financial-strength">
-      <H2 id="financial-strength">财务状况</H2>
+      <H2 id="financial-strength">财务实力</H2>
 
       <MetricComparisonContainer
         metricCode="currentRatioTTM"
@@ -92,7 +92,7 @@ export async function FinancialStrengthSection({
         stockTwoMetricValue={stockTwoRatiosData.interestCoverageRatioTTM}
       />
 
-      <H3>财务状况概览</H3>
+      <H3>财务实力概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>

@@ -4,7 +4,7 @@ export const tableOfContents = [
   { id: "profitability", label: "盈利能力" },
   {
     id: "financial-strength",
-    label: "财务状况",
+    label: "财务实力",
   },
   { id: "growth", label: "成长性" },
   { id: "dividend", label: "股息" },
