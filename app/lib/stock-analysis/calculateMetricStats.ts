@@ -67,7 +67,7 @@ export function calculateMetricStats({
     filteredValues = metricValues.filter((v) => v > 0);
   }
 
-  if (filteredValues.length === 0) {
+  if (filteredValues.length <= 1) {
     return null;
   }
 

@@ -10,11 +10,11 @@ function robots(): MetadataRoute.Robots {
       disallow: ["/go/", "/en/search/", "/ja/search/", "/zh/search/"],
     },
     sitemap: [
-      `${baseUrl}/sitemap/0.xml`,
-      `${baseUrl}/sitemap/1.xml`,
-      `${baseUrl}/sitemap/2.xml`,
-      `${baseUrl}/sitemap/3.xml`,
-      `${baseUrl}/sitemap/4.xml`,
+      `${baseUrl}/sitemaps/sitemap/0.xml`,
+      `${baseUrl}/sitemaps/sitemap/1.xml`,
+      `${baseUrl}/sitemaps/sitemap/2.xml`,
+      `${baseUrl}/sitemaps/sitemap/3.xml`,
+      `${baseUrl}/sitemaps/sitemap/4.xml`,
     ],
   };
 }

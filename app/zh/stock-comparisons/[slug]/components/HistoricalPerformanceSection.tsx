@@ -19,24 +19,10 @@ export async function HistoricalPerformanceSection({
     fetchPriceSeriesData(stockTwoSymbol),
   ]);
 
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  const filteredSeriesOne = seriesOne?.filter(
-    (pt) => new Date(pt.date) >= oneYearAgo,
-  );
-  const filteredSeriesTwo = seriesTwo?.filter(
-    (pt) => new Date(pt.date) >= oneYearAgo,
-  );
-
   const stockOnePriceSeries =
-    filteredSeriesOne && filteredSeriesOne.length > 0
-      ? filteredSeriesOne
-      : null;
+    seriesOne && seriesOne.length > 0 ? seriesOne : null;
   const stockTwoPriceSeries =
-    filteredSeriesTwo && filteredSeriesTwo.length > 0
-      ? filteredSeriesTwo
-      : null;
+    seriesTwo && seriesTwo.length > 0 ? seriesTwo : null;
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (
@@ -51,8 +37,9 @@ export async function HistoricalPerformanceSection({
     <Section ariaLabelledby="historical-performance">
       <H2 id="historical-performance">历史表现</H2>
       <P>
-        下图展示了{stockOneSymbol}和{stockTwoSymbol}
-        过去一年的历史表现，假设初始投资均为1万美元，以比较其投资回报表现。
+        此图表通过追踪$10,000的初始投资在每只股票中的增长情况，来比较{" "}
+        {stockOneSymbol} 和 {stockTwoSymbol}{" "}
+        的表现。请使用选项卡选择所需的时间周期。
       </P>
       <P>数据已根据股息和股票拆分进行调整。</P>
       <Chart
@@ -66,6 +53,7 @@ export async function HistoricalPerformanceSection({
             priceSeries: stockTwoPriceSeries,
           },
         }}
+        defaultTimeRange="1Y"
       />
     </Section>
   );

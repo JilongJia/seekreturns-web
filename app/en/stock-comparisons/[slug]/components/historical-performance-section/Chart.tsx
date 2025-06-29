@@ -1,25 +1,35 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import clsx from "clsx";
 import {
   createChart,
   ColorType,
   LineSeries,
+  LineStyle,
   type MouseEventParams,
-  type ISeriesApi,
 } from "lightweight-charts";
+import { useRef, useEffect, useState } from "react";
 
 import styles from "./Chart.module.css";
-
-type RawPoint = { date: string; price: number };
-
-type ProcessedPoint = { time: string; value: number };
 
 type ChartProps = {
   data: {
     stockOne: { symbol: string; priceSeries: RawPoint[] };
     stockTwo: { symbol: string; priceSeries: RawPoint[] };
   };
+  defaultTimeRange: TimeRangeOption;
+};
+
+type RawPoint = { date: string; price: number };
+type ProcessedPoint = { time: string; value: number };
+type TimeRangeOption = "6M" | "1Y" | "3Y" | "5Y";
+
+const timeRangeOptions: TimeRangeOption[] = ["6M", "1Y", "3Y", "5Y"];
+const rangeDescriptions: Record<TimeRangeOption, string> = {
+  "6M": "six months",
+  "1Y": "one year",
+  "3Y": "three years",
+  "5Y": "five years",
 };
 
 function generateWeekdayArray(startDate: string, endDate: string): string[] {
@@ -58,16 +68,56 @@ function fillMissingPrices(
   return filledSeries;
 }
 
-export function Chart({ data }: ChartProps): JSX.Element {
+export function Chart({ data, defaultTimeRange }: ChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedRange, setSelectedRange] =
+    useState<TimeRangeOption>(defaultTimeRange);
 
   useEffect(() => {
     const container = chartContainerRef.current;
     if (!container) return;
 
-    // Prepare date ranges
-    const stockOneDates = data.stockOne.priceSeries.map((p) => p.date);
-    const stockTwoDates = data.stockTwo.priceSeries.map((p) => p.date);
+    // 1. Filter data based on selectedRange
+    const getStartDate = (range: TimeRangeOption): Date => {
+      const now = new Date();
+      switch (range) {
+        case "6M":
+          now.setMonth(now.getMonth() - 6);
+          break;
+        case "1Y":
+          now.setFullYear(now.getFullYear() - 1);
+          break;
+        case "3Y":
+          now.setFullYear(now.getFullYear() - 3);
+          break;
+        case "5Y":
+          now.setFullYear(now.getFullYear() - 5);
+          break;
+      }
+      return now;
+    };
+
+    const filterStartDate = getStartDate(selectedRange);
+    const stockOneFilteredSeries = data.stockOne.priceSeries.filter(
+      (p) => new Date(p.date) >= filterStartDate,
+    );
+    const stockTwoFilteredSeries = data.stockTwo.priceSeries.filter(
+      (p) => new Date(p.date) >= filterStartDate,
+    );
+
+    container.innerHTML = "";
+
+    if (
+      stockOneFilteredSeries.length === 0 ||
+      stockTwoFilteredSeries.length === 0
+    ) {
+      container.innerHTML = `<p class="${styles.noDataMessage}">No data available for this time range.</p>`;
+      return;
+    }
+
+    // 2. Process the filtered data
+    const stockOneDates = stockOneFilteredSeries.map((p) => p.date);
+    const stockTwoDates = stockTwoFilteredSeries.map((p) => p.date);
     const startDate = [stockOneDates[0], stockTwoDates[0]].sort()[0];
     const endDate = [
       stockOneDates[stockOneDates.length - 1],
@@ -75,13 +125,12 @@ export function Chart({ data }: ChartProps): JSX.Element {
     ].sort()[1];
     const weekdayDates = generateWeekdayArray(startDate, endDate);
 
-    // Fill missing prices for weekends
     const stockOneFilledSeries = fillMissingPrices(
-      data.stockOne.priceSeries,
+      stockOneFilteredSeries,
       weekdayDates,
     );
     const stockTwoFilledSeries = fillMissingPrices(
-      data.stockTwo.priceSeries,
+      stockTwoFilteredSeries,
       weekdayDates,
     );
 
@@ -94,7 +143,6 @@ export function Chart({ data }: ChartProps): JSX.Element {
         value: (pt.price / stockOneBasePrice - 1) * 100,
       }),
     );
-
     const stockTwoPercentageSeries: ProcessedPoint[] = stockTwoFilledSeries.map(
       (pt) => ({
         time: pt.time,
@@ -102,11 +150,8 @@ export function Chart({ data }: ChartProps): JSX.Element {
       }),
     );
 
-    // Initialize chart
-    container.style.position = "relative";
-    const formatPercentage = (price: number): string => {
-      return `${price.toFixed(2)}%`;
-    };
+    // 3. Create Chart and Series
+    const formatPercentage = (price: number): string => `${price.toFixed(2)}%`;
     const chart = createChart(container, {
       layout: {
         background: { type: ColorType.Solid, color: "#fafafa" },
@@ -116,39 +161,49 @@ export function Chart({ data }: ChartProps): JSX.Element {
       width: container.clientWidth,
       height: 300,
       localization: { locale: "en", priceFormatter: formatPercentage },
+      rightPriceScale: { borderVisible: false },
+      timeScale: { borderVisible: false },
+      grid: {
+        vertLines: {
+          color: "oklch(87% 0 0)",
+          style: LineStyle.LargeDashed,
+        },
+        horzLines: {
+          color: "oklch(87% 0 0)",
+          style: LineStyle.LargeDashed,
+        },
+      },
     });
 
-    // Add series lines
-    const stockOneLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
+    const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
     });
-    const stockTwoLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
+    const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
     });
     stockOneLineSeries.setData(stockOnePercentageSeries);
     stockTwoLineSeries.setData(stockTwoPercentageSeries);
     chart.timeScale().fitContent();
 
-    // Legend creation
+    // 4. Create Legend
     const legendContainer = document.createElement("ul");
     legendContainer.className = styles.legend;
     container.appendChild(legendContainer);
 
     const createLegendItem = (
       symbol: string,
-      latestPercentageValue: number,
+      value: number,
       bulletClass: string,
     ): HTMLLIElement => {
       const listItem = document.createElement("li");
       listItem.className = `${styles.legendItem} ${bulletClass}`;
-      const scaledValueEquivalent = (1 + latestPercentageValue / 100) * 10000;
-      listItem.innerHTML = `${symbol}: $${scaledValueEquivalent.toFixed(2)} (${latestPercentageValue.toFixed(2)}%)`;
+      const scaledValue = (1 + value / 100) * 10000;
+      listItem.innerHTML = `${symbol}: $${scaledValue.toFixed(2)} (${value.toFixed(2)}%)`;
       return listItem;
     };
 
     const latestStockOnePercentageValue =
       stockOnePercentageSeries[stockOnePercentageSeries.length - 1].value;
-
     const latestStockTwoPercentageValue =
       stockTwoPercentageSeries[stockTwoPercentageSeries.length - 1].value;
 
@@ -164,7 +219,7 @@ export function Chart({ data }: ChartProps): JSX.Element {
     );
     legendContainer.append(stockOneLegendItem, stockTwoLegendItem);
 
-    // Crosshair move handler
+    // 5. Setup Interactive Crosshair
     const handleCrosshairMove = (params: MouseEventParams): void => {
       let currentStockOnePerc = latestStockOnePercentageValue;
       let currentStockTwoPerc = latestStockTwoPercentageValue;
@@ -189,21 +244,41 @@ export function Chart({ data }: ChartProps): JSX.Element {
     };
     chart.subscribeCrosshairMove(handleCrosshairMove);
 
-    // Resize handler
-    const handleWindowResize = (): void => {
-      if (container) {
-        chart.applyOptions({ width: container.clientWidth });
-      }
+    // 6. Setup Resize Observer
+    const handleResize = () => {
+      chart.applyOptions({ width: container.clientWidth });
     };
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener("resize", handleResize);
 
+    // 7. Cleanup
     return () => {
       chart.unsubscribeCrosshairMove(handleCrosshairMove);
-      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener("resize", handleResize);
       legendContainer.remove();
       chart.remove();
     };
-  }, [data]);
+  }, [data, selectedRange]);
 
-  return <div ref={chartContainerRef} />;
+  return (
+    <figure>
+      <div className={styles.tabsContainer}>
+        {timeRangeOptions.map((range) => (
+          <button
+            key={range}
+            onClick={() => setSelectedRange(range)}
+            className={clsx(styles.tabButton, {
+              [styles.activeTab]: selectedRange === range,
+            })}
+          >
+            {range}
+          </button>
+        ))}
+      </div>
+      <div ref={chartContainerRef} className={styles.chartContainer} />
+      <figcaption className={styles.figcaption}>
+        {data.stockOne.symbol} vs. {data.stockTwo.symbol}: Growth of a $10,000
+        investment over the past {rangeDescriptions[selectedRange]}.
+      </figcaption>
+    </figure>
+  );
 }

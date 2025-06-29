@@ -5,7 +5,7 @@ import {
   createChart,
   ColorType,
   LineSeries,
-  type ISeriesApi,
+  LineStyle,
 } from "lightweight-charts";
 
 import styles from "./GrowthComparisonChart.module.css";
@@ -80,26 +80,28 @@ export function FinancialGrowthChart({
       width: container.clientWidth,
       height: 300,
       localization: { locale: "en-US", priceFormatter: formatPercentage },
-      rightPriceScale: {
-        scaleMargins: { top: 0.2, bottom: 0.1 },
-      },
-      timeScale: {
-        borderColor: "#cccccc",
-      },
+      rightPriceScale: { borderVisible: false },
+      timeScale: { borderVisible: false },
       grid: {
-        vertLines: { color: "#e0e0e0" },
-        horzLines: { color: "#e0e0e0" },
+        vertLines: {
+          color: "oklch(87% 0 0)",
+          style: LineStyle.LargeDashed,
+        },
+        horzLines: {
+          color: "oklch(87% 0 0)",
+          style: LineStyle.LargeDashed,
+        },
       },
     });
 
     // Add series lines
-    const stockOneLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
+    const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
       lineWidth: 2,
       // Add a title for the series which can be shown in a tooltip
       title: stockOne.symbol,
     });
-    const stockTwoLineSeries: ISeriesApi<"Line"> = chart.addSeries(LineSeries, {
+    const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
       lineWidth: 2,
       // Add a title for the series which can be shown in a tooltip

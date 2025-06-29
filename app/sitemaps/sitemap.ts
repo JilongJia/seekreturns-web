@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { generateRootPagesSitemap } from "./lib/sitemap/generateRootPagesSitemap";
-import { generateUtilityPagesSitemap } from "./lib/sitemap/generateUtilityPagesSitemap";
-import { generateSectionPagesSitemap } from "./lib/sitemap/generateSectionPagesSitemap";
-import { generateInformationalPagesSitemap } from "./lib/sitemap/generateInformationalPagesSitemap";
+import { generateRootPagesSitemap } from "@/app/lib/sitemap/generateRootPagesSitemap";
+import { generateUtilityPagesSitemap } from "@/app/lib/sitemap/generateUtilityPagesSitemap";
+import { generateSectionPagesSitemap } from "@/app/lib/sitemap/generateSectionPagesSitemap";
+import { generateInformationalPagesSitemap } from "@/app/lib/sitemap/generateInformationalPagesSitemap";
 import stockComparisonPages from "@/app/data/stock-comparisons/pages.json";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;

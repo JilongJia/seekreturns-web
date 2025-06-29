@@ -19,24 +19,10 @@ export async function HistoricalPerformanceSection({
     fetchPriceSeriesData(stockTwoSymbol),
   ]);
 
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  const filteredSeriesOne = seriesOne?.filter(
-    (pt) => new Date(pt.date) >= oneYearAgo,
-  );
-  const filteredSeriesTwo = seriesTwo?.filter(
-    (pt) => new Date(pt.date) >= oneYearAgo,
-  );
-
   const stockOnePriceSeries =
-    filteredSeriesOne && filteredSeriesOne.length > 0
-      ? filteredSeriesOne
-      : null;
+    seriesOne && seriesOne.length > 0 ? seriesOne : null;
   const stockTwoPriceSeries =
-    filteredSeriesTwo && filteredSeriesTwo.length > 0
-      ? filteredSeriesTwo
-      : null;
+    seriesTwo && seriesTwo.length > 0 ? seriesTwo : null;
 
   if (!stockOnePriceSeries || !stockTwoPriceSeries) {
     return (
@@ -52,8 +38,8 @@ export async function HistoricalPerformanceSection({
       <H2 id="historical-performance">Historical Performance</H2>
       <P>
         This chart compares the performance of {stockOneSymbol} and{" "}
-        {stockTwoSymbol} over the past year by tracking the growth of an initial
-        $10,000 investment in each (starting one year ago).
+        {stockTwoSymbol} by tracking the growth of an initial $10,000 investment
+        in each. Use the tabs to select the desired time period.
       </P>
       <P>Data is adjusted for dividends and splits.</P>
       <Chart
@@ -67,6 +53,7 @@ export async function HistoricalPerformanceSection({
             priceSeries: stockTwoPriceSeries,
           },
         }}
+        defaultTimeRange="1Y"
       />
     </Section>
   );

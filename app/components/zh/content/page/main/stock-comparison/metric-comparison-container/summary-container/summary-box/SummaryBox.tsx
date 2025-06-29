@@ -54,6 +54,7 @@ export function SummaryBox({
       <dl
         className={clsx(
           styles.statsList,
+          !industryMetricStats && styles.neutral,
           !isMetricApplicable && styles.notApplicable,
         )}
       >

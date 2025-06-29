@@ -53,6 +53,7 @@ export async function StockComparisonSection({
             priceSeries: stockTwoPriceSeries,
           },
         }}
+        defaultTimeRange="5Y"
       />
     </section>
   );
