@@ -30,7 +30,6 @@ export async function fetchRatiosData(
 
   try {
     const response = await fetch(url, {
-      cache: "force-cache",
       next: { revalidate: 86400 },
     });
     if (!response.ok) {
