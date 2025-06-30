@@ -93,7 +93,11 @@ export function LanguageSelector({
               {isCurrentLanguage ? (
                 <span className={styles.menuItemText}>{label}</span>
               ) : (
-                <Link href={pathname} className={styles.menuItemLink}>
+                <Link
+                  href={pathname}
+                  prefetch={false}
+                  className={styles.menuItemLink}
+                >
                   {label}
                 </Link>
               )}

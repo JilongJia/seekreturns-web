@@ -1,7 +1,7 @@
 import { generateFeaturedImage } from "@/app/lib/en/content/generateFeaturedImage";
 import { generatePageInfo } from "./lib/generatePageInfo";
 
-import pagesRaw from "@/app/data/stock-comparisons/pages.json";
+import { stockComparisonList } from "@/data/stock-comparisons";
 import { tableOfContents } from "./data/tableOfContents";
 
 type GenerateImageMetadataParams = { params: Promise<{ slug: string }> };
@@ -12,13 +12,15 @@ export async function generateImageMetadata({
 }: GenerateImageMetadataParams) {
   const slug = (await params).slug;
 
-  const pageRaw = pagesRaw.find((page) => page.slug === slug);
+  const matchingComparison = stockComparisonList.find(
+    (comparison) => comparison.slug === slug,
+  );
 
-  if (!pageRaw) {
+  if (!matchingComparison) {
     return new Response("Image Not Found", { status: 404 });
   }
 
-  const { title } = generatePageInfo(pageRaw);
+  const { title } = generatePageInfo(matchingComparison);
 
   return [
     {
@@ -36,13 +38,16 @@ async function OpenGraphImage({ params, id }: OpenGraphImageParams) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const pageRaw = pagesRaw.find((page) => page.slug === slug);
+  const matchingComparison = stockComparisonList.find(
+    (comparison) => comparison.slug === slug,
+  );
 
-  if (!pageRaw) {
+  if (!matchingComparison) {
     return new Response("Image Not Found", { status: 404 });
   }
 
-  const { title, description, modifiedDate } = generatePageInfo(pageRaw);
+  const { title, description, modifiedDate } =
+    generatePageInfo(matchingComparison);
 
   const section = "Stock Comparison";
 

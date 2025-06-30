@@ -3,21 +3,14 @@ import { generateRootPagesSitemap } from "@/app/lib/sitemap/generateRootPagesSit
 import { generateUtilityPagesSitemap } from "@/app/lib/sitemap/generateUtilityPagesSitemap";
 import { generateSectionPagesSitemap } from "@/app/lib/sitemap/generateSectionPagesSitemap";
 import { generateInformationalPagesSitemap } from "@/app/lib/sitemap/generateInformationalPagesSitemap";
-import stockComparisonPages from "@/app/data/stock-comparisons/pages.json";
+import { stockComparisonList } from "@/data/stock-comparisons";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 const URLS_PER_SITEMAP = 30_000;
 const LANGUAGES = ["en", "zh"] as const;
 
-type StockComparisonPage = {
-  symbolOne: string;
-  symbolTwo: string;
-  slug: string;
-};
-
 export async function generateSitemaps(): Promise<{ id: string }[]> {
-  const pages = stockComparisonPages as StockComparisonPage[];
-  const totalUrls = pages.length * LANGUAGES.length;
+  const totalUrls = stockComparisonList.length * LANGUAGES.length;
   const chunkCount = Math.ceil(totalUrls / URLS_PER_SITEMAP);
 
   const routes = [{ id: "general" }];
@@ -41,10 +34,9 @@ async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
   if (id.startsWith("stock-comparisons-")) {
     const chunkId = parseInt(id.split("-").pop() || "1", 10);
 
-    const pages = stockComparisonPages as StockComparisonPage[];
     const slugsPerChunk = Math.floor(URLS_PER_SITEMAP / LANGUAGES.length);
     const start = (chunkId - 1) * slugsPerChunk;
-    const slice = pages.slice(start, start + slugsPerChunk);
+    const slice = stockComparisonList.slice(start, start + slugsPerChunk);
 
     return slice.flatMap(({ slug }) =>
       LANGUAGES.map((lang) => {

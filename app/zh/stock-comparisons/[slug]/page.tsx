@@ -23,7 +23,7 @@ import { DividendSection } from "./components/DividendSection";
 import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
 
-import pagesRaw from "@/app/data/stock-comparisons/pages.json";
+import { stockComparisonList } from "@/data/stock-comparisons";
 import { tableOfContents } from "./data/tableOfContents";
 
 type GenerateMetadataParams = { params: Promise<{ slug: string }> };
@@ -32,13 +32,15 @@ type PageProps = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: GenerateMetadataParams) {
   const slug = (await params).slug;
 
-  const pageRaw = pagesRaw.find((page) => page.slug === slug);
+  const matchingComparison = stockComparisonList.find(
+    (comparison) => comparison.slug === slug,
+  );
 
-  if (!pageRaw) {
+  if (!matchingComparison) {
     notFound();
   }
 
-  const pageInfo = generatePageInfo(pageRaw);
+  const pageInfo = generatePageInfo(matchingComparison);
 
   const {
     title,
@@ -64,13 +66,15 @@ export async function generateMetadata({ params }: GenerateMetadataParams) {
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
 
-  const pageRaw = pagesRaw.find((page) => page.slug === slug);
+  const matchingComparison = stockComparisonList.find(
+    (comparison) => comparison.slug === slug,
+  );
 
-  if (!pageRaw) {
+  if (!matchingComparison) {
     notFound();
   }
 
-  const { symbolOne, symbolTwo } = pageRaw;
+  const { symbolOne, symbolTwo } = matchingComparison;
   const stockOneSymbol = symbolOne;
   const stockTwoSymbol = symbolTwo;
 

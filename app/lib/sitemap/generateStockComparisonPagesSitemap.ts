@@ -1,19 +1,11 @@
 import { MetadataRoute } from "next";
 
-import stockComparisonPages from "@/app/data/stock-comparisons/pages.json";
-
-type StockComparisonPage = {
-  symbolOne: string;
-  symbolTwo: string;
-  slug: string;
-};
+import { stockComparisonList } from "@/data/stock-comparisons";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export function generateStockComparisonPagesSitemap(): MetadataRoute.Sitemap {
-  const pages = stockComparisonPages as StockComparisonPage[];
-
-  return pages.flatMap(({ slug }) => {
+  return stockComparisonList.flatMap(({ slug }) => {
     const enPath = `/en/stock-comparisons/${slug}`;
     const zhPath = `/zh/stock-comparisons/${slug}`;
 

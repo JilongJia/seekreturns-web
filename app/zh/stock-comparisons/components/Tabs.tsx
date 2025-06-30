@@ -6,22 +6,24 @@ import clsx from "clsx";
 
 import styles from "./Tabs.module.css";
 
-import pagesRaw from "@/app/data/stock-comparisons/pages.json";
+import { stockComparisonList } from "@/data/stock-comparisons";
 
 export function Tabs() {
-  const pages = pagesRaw.map(({ symbolOne, symbolTwo, slug }) => ({
-    title: `${symbolOne}与${symbolTwo}`,
-    pathname: `/zh/stock-comparisons/${slug}`,
-  }));
+  const comparisonPages = stockComparisonList.map(
+    ({ symbolOne, symbolTwo, slug }) => ({
+      title: `${symbolOne}与${symbolTwo}`,
+      pathname: `/zh/stock-comparisons/${slug}`,
+    }),
+  );
 
-  const groups: Record<string, typeof pages> = pages.reduce(
-    (acc, page) => {
-      const letter = page.title.charAt(0);
+  const groups: Record<string, typeof comparisonPages> = comparisonPages.reduce(
+    (acc, comparisonPage) => {
+      const letter = comparisonPage.title.charAt(0);
       if (!acc[letter]) acc[letter] = [];
-      acc[letter].push(page);
+      acc[letter].push(comparisonPage);
       return acc;
     },
-    {} as Record<string, typeof pages>,
+    {} as Record<string, typeof comparisonPages>,
   );
 
   const sortedLetters = Object.keys(groups).sort((a, b) =>
@@ -69,14 +71,14 @@ export function Tabs() {
       >
         <h2 className={styles.screenReaderH2}>{activeLetter}</h2>
         <ul className={styles.ul}>
-          {groups[activeLetter].map((page) => (
-            <li key={page.pathname} className={styles.li}>
+          {groups[activeLetter].map((comparisonPage) => (
+            <li key={comparisonPage.pathname} className={styles.li}>
               <Link
-                href={page.pathname}
+                href={comparisonPage.pathname}
                 prefetch={false}
                 className={styles.link}
               >
-                {page.title}
+                {comparisonPage.title}
               </Link>
             </li>
           ))}
