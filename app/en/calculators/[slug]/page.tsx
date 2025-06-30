@@ -7,11 +7,12 @@ import { fetchStaticParams } from "@/app/lib/db/fetchStaticParams";
 import { generateArticleMetadata } from "@/app/lib/en/content/generateMetadata";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { type MainProps } from "@/app/components/en/content/page/main";
 import { Header } from "@/components/en/layout/Header";
 import { TableOfContentsSidebar } from "@/components/en/layout/TableOfContentsSidebar";
 import { Footer } from "@/components/en/layout/Footer";
+
 import styles from "./page.module.css";
+import type { MainProps } from "@/components/en/ui/Main";
 
 type GenerateMetadataParams = { params: Promise<{ slug: string }> };
 type PageProps = { params: Promise<{ slug: string }> };

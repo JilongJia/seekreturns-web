@@ -1,10 +1,9 @@
-import { type MainProps } from "@/app/components/en/content/page/main";
 import { Article } from "@/app/components/en/content/page/main/article/Article";
 import { Br } from "@/app/components/en/content/page/main/article/Br";
 import { H1 } from "@/app/components/en/content/page/main/article/H1";
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { H3 } from "@/app/components/en/content/page/main/article/H3";
-import { Header } from "@/app/components/en/content/page/main/article/Header";
+import { Header } from "@/components/en/ui/Header";
 import { ImageFigure } from "@/app/components/en/content/page/main/article/ImageFigure";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { Ol } from "@/app/components/en/content/page/main/article/Ol";
@@ -12,7 +11,9 @@ import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Strong } from "@/app/components/en/content/page/main/article/Strong";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";
+
 import styles from "./Main.module.css";
+import type { MainProps } from "@/components/en/ui/Main";
 
 import protectivePutOptionsStrategyProfitAndLossGraph from "./images/protective-put-options-strategy-profit-and-loss-graph.png";
 

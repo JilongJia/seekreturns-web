@@ -11,7 +11,7 @@ import { Footer } from "@/components/en/layout/Footer";
 import { Header as PageHeader } from "@/components/en/layout/Header";
 import { TableOfContentsSidebar } from "@/components/en/layout/TableOfContentsSidebar";
 import { H1 } from "@/app/components/en/content/page/main/article/H1";
-import { Header as ArticleHeader } from "@/app/components/en/content/page/main/article/Header";
+import { Header as ArticleHeader } from "@/components/en/ui/Header";
 import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";

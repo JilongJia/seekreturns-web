@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
-import type { MainProps } from "@/app/components/zh/content/page/main";
 import { Article } from "@/app/components/zh/content/page/main/article/Article";
 import {
   BlockMath,
@@ -10,14 +9,16 @@ import {
 import { H1 } from "@/app/components/zh/content/page/main/header/H1";
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { H3 } from "@/app/components/zh/content/page/main/article/H3";
-import { Header } from "@/app/components/zh/content/page/main/header/Header";
+import { Header } from "@/components/zh/ui/Header";
 import { ModifiedDate } from "@/app/components/zh/content/page/main/header/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Strong } from "@/app/components/zh/content/page/main/article/Strong";
 import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
 import { Calculator } from "./components/Calculator";
+
 import styles from "./Main.module.css";
+import type { MainProps } from "@/components/zh/ui/Main";
 
 export function Main({ pathname, className }: MainProps) {
   return (

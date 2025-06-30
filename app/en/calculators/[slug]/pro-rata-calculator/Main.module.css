@@ -1,18 +1,9 @@
-.header {
-  margin-bottom: 1.25rem;
-}
-
 @media (min-width: 768px) {
   .main {
     display: grid;
     grid-template-rows: auto 1fr;
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     column-gap: 4rem;
-    row-gap: 1.25rem;
-  }
-
-  .header {
-    margin-bottom: 0;
   }
 
   .calculator {
