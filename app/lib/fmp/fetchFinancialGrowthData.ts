@@ -6,7 +6,7 @@ type FinancialGrowthDataPoint = {
   freeCashFlowGrowth: number;
 };
 
-type FinancialGrowthData = {
+export type FinancialGrowthData = {
   date: string;
   revenueGrowth: number;
   epsgrowth: number;

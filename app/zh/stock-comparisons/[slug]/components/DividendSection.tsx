@@ -1,35 +1,35 @@
-import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
-import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
-
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { H3 } from "@/app/components/zh/content/page/main/article/H3";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
+
 import styles from "./DividendSection.module.css";
+import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+
+type RatiosData = {
+  dividendYieldTTM: number;
+  dividendPayoutRatioTTM: number;
+};
 
 type DividendSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneProfileData: ProfileData | null;
+  stockOneRatiosData: RatiosData | null;
+  stockTwoProfileData: ProfileData | null;
+  stockTwoRatiosData: RatiosData | null;
 };
 
-export async function DividendSection({
+export function DividendSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneProfileData,
+  stockOneRatiosData,
+  stockTwoProfileData,
+  stockTwoRatiosData,
 }: DividendSectionProps) {
-  const [
-    stockOneProfileData,
-    stockOneRatiosData,
-    stockTwoProfileData,
-    stockTwoRatiosData,
-  ] = await Promise.all([
-    fetchProfileData(stockOneSymbol),
-    fetchRatiosData(stockOneSymbol),
-    fetchProfileData(stockTwoSymbol),
-    fetchRatiosData(stockTwoSymbol),
-  ]);
-
   if (
     !stockOneProfileData ||
     !stockOneRatiosData ||

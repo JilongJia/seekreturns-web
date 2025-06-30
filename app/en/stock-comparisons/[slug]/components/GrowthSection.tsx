@@ -1,29 +1,25 @@
-import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData"; // Assumed path
-
+import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { H3 } from "@/app/components/en/content/page/main/article/H3";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { FinancialGrowthChart } from "@/app/components/en/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonChart";
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-// Assuming you have a CSS module for custom styles like the figcaption
+
 import styles from "./GrowthSection.module.css";
+import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
 
 type GrowthSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneGrowthData: FinancialGrowthData | null;
+  stockTwoGrowthData: FinancialGrowthData | null;
 };
 
-export async function GrowthSection({
+export function GrowthSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneGrowthData,
+  stockTwoGrowthData,
 }: GrowthSectionProps) {
-  // Fetch financial growth data for both stocks in parallel
-  const [stockOneGrowthData, stockTwoGrowthData] = await Promise.all([
-    fetchFinancialGrowthData(stockOneSymbol),
-    fetchFinancialGrowthData(stockTwoSymbol),
-  ]);
-
-  // Handle cases where data might be unavailable for either stock
   if (!stockOneGrowthData || !stockTwoGrowthData) {
     return (
       <Section ariaLabelledby="growth">

@@ -1,40 +1,46 @@
-import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
-import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
-import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
-
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { H3 } from "@/app/components/zh/content/page/main/article/H3";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";
 import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
+
 import styles from "./ProfitabilitySection.module.css";
+import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+
+type KeyMetricsData = {
+  returnOnEquityTTM: number | null;
+  returnOnAssetsTTM: number | null;
+  returnOnInvestedCapitalTTM: number | null;
+};
+
+type RatiosData = {
+  netProfitMarginTTM: number | null;
+  operatingProfitMarginTTM: number | null;
+  grossProfitMarginTTM: number | null;
+};
 
 type ProfitabilitySectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneProfileData: ProfileData | null;
+  stockOneKeyMetricsData: KeyMetricsData | null;
+  stockOneRatiosData: RatiosData | null;
+  stockTwoProfileData: ProfileData | null;
+  stockTwoKeyMetricsData: KeyMetricsData | null;
+  stockTwoRatiosData: RatiosData | null;
 };
 
-export async function ProfitabilitySection({
+export function ProfitabilitySection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneProfileData,
+  stockOneKeyMetricsData,
+  stockOneRatiosData,
+  stockTwoProfileData,
+  stockTwoKeyMetricsData,
+  stockTwoRatiosData,
 }: ProfitabilitySectionProps) {
-  const [
-    stockOneProfileData,
-    stockOneKeyMetricsData,
-    stockOneRatiosData,
-    stockTwoProfileData,
-    stockTwoKeyMetricsData,
-    stockTwoRatiosData,
-  ] = await Promise.all([
-    fetchProfileData(stockOneSymbol),
-    fetchKeyMetricsData(stockOneSymbol),
-    fetchRatiosData(stockOneSymbol),
-    fetchProfileData(stockTwoSymbol),
-    fetchKeyMetricsData(stockTwoSymbol),
-    fetchRatiosData(stockTwoSymbol),
-  ]);
-
   if (
     !stockOneProfileData ||
     !stockOneKeyMetricsData ||

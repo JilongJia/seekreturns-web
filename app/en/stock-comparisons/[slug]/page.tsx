@@ -6,6 +6,12 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
+import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
+import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
+import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
+import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
+import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
+
 import { AdvertisementSidebar } from "@/components/en/layout/AdvertisementSidebar";
 import { Footer } from "@/components/en/layout/Footer";
 import { Header as PageHeader } from "@/components/en/layout/Header";
@@ -74,11 +80,38 @@ async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const { symbolOne, symbolTwo } = matchingComparison;
-  const stockOneSymbol = symbolOne;
-  const stockTwoSymbol = symbolTwo;
+  const { symbolOne: stockOneSymbol, symbolTwo: stockTwoSymbol } =
+    matchingComparison;
 
-  const pageInfo = generatePageInfo({ symbolOne, symbolTwo, slug });
+  const [
+    stockOneProfileData,
+    stockTwoProfileData,
+    stockOnePriceSeries,
+    stockTwoPriceSeries,
+    stockOneKeyMetricsData,
+    stockTwoKeyMetricsData,
+    stockOneRatiosData,
+    stockTwoRatiosData,
+    stockOneGrowthData,
+    stockTwoGrowthData,
+  ] = await Promise.all([
+    fetchProfileData(stockOneSymbol),
+    fetchProfileData(stockTwoSymbol),
+    fetchPriceSeriesData(stockOneSymbol),
+    fetchPriceSeriesData(stockTwoSymbol),
+    fetchKeyMetricsData(stockOneSymbol),
+    fetchKeyMetricsData(stockTwoSymbol),
+    fetchRatiosData(stockOneSymbol),
+    fetchRatiosData(stockTwoSymbol),
+    fetchFinancialGrowthData(stockOneSymbol),
+    fetchFinancialGrowthData(stockTwoSymbol),
+  ]);
+
+  const pageInfo = generatePageInfo({
+    symbolOne: stockOneSymbol,
+    symbolTwo: stockTwoSymbol,
+    slug,
+  });
 
   const {
     title: pageTitle,
@@ -88,7 +121,10 @@ async function Page({ params }: PageProps) {
     modifiedDate: pageModifiedDate,
   } = pageInfo;
 
-  const articleInfo = generateArticleInfo({ symbolOne, symbolTwo });
+  const articleInfo = generateArticleInfo({
+    symbolOne: stockOneSymbol,
+    symbolTwo: stockTwoSymbol,
+  });
 
   const {
     title: articleTitle,
@@ -135,30 +171,58 @@ async function Page({ params }: PageProps) {
             <CompanyOverviewSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneProfileData={stockOneProfileData}
+              stockTwoProfileData={stockTwoProfileData}
             />
             <HistoricalPerformanceSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOnePriceSeries={stockOnePriceSeries}
+              stockTwoPriceSeries={stockTwoPriceSeries}
             />
             <ProfitabilitySection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneProfileData={stockOneProfileData}
+              stockOneKeyMetricsData={stockOneKeyMetricsData}
+              stockOneRatiosData={stockOneRatiosData}
+              stockTwoProfileData={stockTwoProfileData}
+              stockTwoKeyMetricsData={stockTwoKeyMetricsData}
+              stockTwoRatiosData={stockTwoRatiosData}
             />
             <FinancialStrengthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneProfileData={stockOneProfileData}
+              stockOneKeyMetricsData={stockOneKeyMetricsData}
+              stockOneRatiosData={stockOneRatiosData}
+              stockTwoProfileData={stockTwoProfileData}
+              stockTwoKeyMetricsData={stockTwoKeyMetricsData}
+              stockTwoRatiosData={stockTwoRatiosData}
             />
             <GrowthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneGrowthData={stockOneGrowthData}
+              stockTwoGrowthData={stockTwoGrowthData}
             />
             <DividendSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneProfileData={stockOneProfileData}
+              stockOneRatiosData={stockOneRatiosData}
+              stockTwoProfileData={stockTwoProfileData}
+              stockTwoRatiosData={stockTwoRatiosData}
             />
             <ValuationSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
+              stockOneProfileData={stockOneProfileData}
+              stockOneKeyMetricsData={stockOneKeyMetricsData}
+              stockOneRatiosData={stockOneRatiosData}
+              stockTwoProfileData={stockTwoProfileData}
+              stockTwoKeyMetricsData={stockTwoKeyMetricsData}
+              stockTwoRatiosData={stockTwoRatiosData}
             />
           </article>
         </main>

@@ -1,6 +1,6 @@
 import type { IndustryCode } from "@/app/data/fmp/industryCodes";
 
-type ProfileData = {
+export type ProfileData = {
   companyName: string;
   country: string;
   sector: string;

@@ -1,30 +1,29 @@
-import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
-
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Chart } from "./historical-performance-section/Chart";
 
+type PriceSeries = Array<{ date: string; price: number }>;
+
 type HistoricalPerformanceSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOnePriceSeries: PriceSeries | null;
+  stockTwoPriceSeries: PriceSeries | null;
 };
 
-export async function HistoricalPerformanceSection({
+export function HistoricalPerformanceSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOnePriceSeries,
+  stockTwoPriceSeries,
 }: HistoricalPerformanceSectionProps) {
-  const [seriesOne, seriesTwo] = await Promise.all([
-    fetchPriceSeriesData(stockOneSymbol),
-    fetchPriceSeriesData(stockTwoSymbol),
-  ]);
-
-  const stockOnePriceSeries =
-    seriesOne && seriesOne.length > 0 ? seriesOne : null;
-  const stockTwoPriceSeries =
-    seriesTwo && seriesTwo.length > 0 ? seriesTwo : null;
-
-  if (!stockOnePriceSeries || !stockTwoPriceSeries) {
+  if (
+    !stockOnePriceSeries ||
+    stockOnePriceSeries.length === 0 ||
+    !stockTwoPriceSeries ||
+    stockTwoPriceSeries.length === 0
+  ) {
     return (
       <Section ariaLabelledby="historical-performance">
         <H2 id="historical-performance">历史表现</H2>

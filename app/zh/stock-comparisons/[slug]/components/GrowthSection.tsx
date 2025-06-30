@@ -1,26 +1,25 @@
-import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
-
 import { H2 } from "@/app/components/zh/content/page/main/article/H2";
 import { H3 } from "@/app/components/zh/content/page/main/article/H3";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { FinancialGrowthChart } from "@/app/components/zh/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonChart";
+
 import styles from "./GrowthSection.module.css";
+import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
 
 type GrowthSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneGrowthData: FinancialGrowthData | null;
+  stockTwoGrowthData: FinancialGrowthData | null;
 };
 
-export async function GrowthSection({
+export function GrowthSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneGrowthData,
+  stockTwoGrowthData,
 }: GrowthSectionProps) {
-  const [stockOneGrowthData, stockTwoGrowthData] = await Promise.all([
-    fetchFinancialGrowthData(stockOneSymbol),
-    fetchFinancialGrowthData(stockTwoSymbol),
-  ]);
-
   if (!stockOneGrowthData || !stockTwoGrowthData) {
     return (
       <Section ariaLabelledby="growth">

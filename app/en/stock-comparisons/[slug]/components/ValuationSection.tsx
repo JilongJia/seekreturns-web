@@ -1,40 +1,47 @@
-import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
-import { fetchRatiosData } from "@/app/lib/fmp/fetchRatiosData";
-import { fetchKeyMetricsData } from "@/app/lib/fmp/fetchKeyMetricsData";
-
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
+import { H3 } from "@/app/components/en/content/page/main/article/H3";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
-import styles from "./ValuationSection.module.css";
 import { MetricComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/MetricComparisonContainer";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
+
+import styles from "./ValuationSection.module.css";
+import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+
+type KeyMetricsData = {
+  evToEBITDATTM: number | null;
+  evToSalesTTM: number | null;
+};
+
+type RatiosData = {
+  priceToEarningsRatioTTM: number | null;
+  forwardPriceToEarningsGrowthRatioTTM: number | null;
+  priceToSalesRatioTTM: number | null;
+  priceToBookRatioTTM: number | null;
+  priceToFreeCashFlowRatioTTM: number | null;
+};
 
 type ValuationSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneProfileData: ProfileData | null;
+  stockOneKeyMetricsData: KeyMetricsData | null;
+  stockOneRatiosData: RatiosData | null;
+  stockTwoProfileData: ProfileData | null;
+  stockTwoKeyMetricsData: KeyMetricsData | null;
+  stockTwoRatiosData: RatiosData | null;
 };
 
-export async function ValuationSection({
+export function ValuationSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneProfileData,
+  stockOneKeyMetricsData,
+  stockOneRatiosData,
+  stockTwoProfileData,
+  stockTwoKeyMetricsData,
+  stockTwoRatiosData,
 }: ValuationSectionProps) {
-  const [
-    stockOneProfileData,
-    stockOneKeyMetricsData,
-    stockOneRatiosData,
-    stockTwoProfileData,
-    stockTwoKeyMetricsData,
-    stockTwoRatiosData,
-  ] = await Promise.all([
-    fetchProfileData(stockOneSymbol),
-    fetchKeyMetricsData(stockOneSymbol),
-    fetchRatiosData(stockOneSymbol),
-    fetchProfileData(stockTwoSymbol),
-    fetchKeyMetricsData(stockTwoSymbol),
-    fetchRatiosData(stockTwoSymbol),
-  ]);
-
   if (
     !stockOneProfileData ||
     !stockOneKeyMetricsData ||

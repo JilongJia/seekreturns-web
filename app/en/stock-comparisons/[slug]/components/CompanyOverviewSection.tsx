@@ -1,4 +1,3 @@
-import { fetchProfileData } from "@/app/lib/fmp/fetchProfileData";
 import { generateMarketCapCommentary } from "./lib/generateMarketCapCommentary";
 import { generateBetaCommentary } from "./lib/generateBetaCommentary";
 import { generateAdrCommentary } from "./lib/generateAdrCommentary";
@@ -7,22 +6,23 @@ import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";
+
 import styles from "./CompanyOverviewSection.module.css";
+import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
+  stockOneProfileData: ProfileData | null;
+  stockTwoProfileData: ProfileData | null;
 };
 
-export async function CompanyOverviewSection({
+export function CompanyOverviewSection({
   stockOneSymbol,
   stockTwoSymbol,
+  stockOneProfileData,
+  stockTwoProfileData,
 }: CompanyOverviewSectionProps) {
-  const [stockOneProfileData, stockTwoProfileData] = await Promise.all([
-    fetchProfileData(stockOneSymbol),
-    fetchProfileData(stockTwoSymbol),
-  ]);
-
   if (!stockOneProfileData || !stockTwoProfileData) {
     return (
       <Section ariaLabelledby="company-overview">
