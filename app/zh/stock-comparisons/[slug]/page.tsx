@@ -6,10 +6,10 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { AdvertisementSidebar } from "@/app/components/zh/content/page/AdvertisementSidebar";
+import { AdvertisementSidebar } from "@/components/zh/layout/AdvertisementSidebar";
 import { Footer } from "@/components/zh/layout/Footer";
 import { Header as PageHeader } from "@/components/zh/layout/Header";
-import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
+import { TableOfContentsSidebar } from "@/components/zh/layout/TableOfContentsSidebar";
 import { H1 } from "@/app/components/zh/content/page/main/article/H1";
 import { Header as ArticleHeader } from "@/app/components/zh/content/page/main/article/Header";
 import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";

@@ -15,23 +15,22 @@ type StockComparisonPage = {
   slug: string;
 };
 
-export async function generateSitemaps(): Promise<{ id: number }[]> {
+export async function generateSitemaps(): Promise<{ id: string }[]> {
   const pages = stockComparisonPages as StockComparisonPage[];
-
   const totalUrls = pages.length * LANGUAGES.length;
   const chunkCount = Math.ceil(totalUrls / URLS_PER_SITEMAP);
 
-  const routes = [{ id: 0 }];
+  const routes = [{ id: "general" }];
+
   for (let i = 1; i <= chunkCount; i++) {
-    routes.push({ id: i });
+    routes.push({ id: `stock-comparisons-${i}` });
   }
+
   return routes;
 }
 
 async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
-  const chunkId = parseInt(id, 10);
-
-  if (chunkId === 0) {
+  if (id === "general") {
     const root = generateRootPagesSitemap();
     const utility = generateUtilityPagesSitemap();
     const section = generateSectionPagesSitemap();
@@ -39,23 +38,29 @@ async function sitemap({ id }: { id: string }): Promise<MetadataRoute.Sitemap> {
     return [...root, ...utility, ...section, ...info];
   }
 
-  const pages = stockComparisonPages as StockComparisonPage[];
-  const slugsPerChunk = Math.floor(URLS_PER_SITEMAP / LANGUAGES.length);
-  const start = (chunkId - 1) * slugsPerChunk;
-  const slice = pages.slice(start, start + slugsPerChunk);
+  if (id.startsWith("stock-comparisons-")) {
+    const chunkId = parseInt(id.split("-").pop() || "1", 10);
 
-  return slice.flatMap(({ slug }) =>
-    LANGUAGES.map((lang) => {
-      const path = `/${lang}/stock-comparisons/${slug}`;
-      return {
-        url: `${BASE_URL}${path}`,
-        lastModified: new Date(),
-        changeFrequency: "daily" as const,
-        priority: 1.0,
-        images: [`${BASE_URL}${path}/featured-image`],
-      };
-    }),
-  );
+    const pages = stockComparisonPages as StockComparisonPage[];
+    const slugsPerChunk = Math.floor(URLS_PER_SITEMAP / LANGUAGES.length);
+    const start = (chunkId - 1) * slugsPerChunk;
+    const slice = pages.slice(start, start + slugsPerChunk);
+
+    return slice.flatMap(({ slug }) =>
+      LANGUAGES.map((lang) => {
+        const path = `/${lang}/stock-comparisons/${slug}`;
+        return {
+          url: `${BASE_URL}${path}`,
+          lastModified: new Date(),
+          changeFrequency: "daily" as const,
+          priority: 1.0,
+          images: [`${BASE_URL}${path}/featured-image`],
+        };
+      }),
+    );
+  }
+
+  return [];
 }
 
 export default sitemap;

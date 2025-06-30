@@ -10,11 +10,11 @@ function robots(): MetadataRoute.Robots {
       disallow: ["/go/", "/en/search/", "/ja/search/", "/zh/search/"],
     },
     sitemap: [
-      `${baseUrl}/sitemaps/sitemap/0.xml`,
-      `${baseUrl}/sitemaps/sitemap/1.xml`,
-      `${baseUrl}/sitemaps/sitemap/2.xml`,
-      `${baseUrl}/sitemaps/sitemap/3.xml`,
-      `${baseUrl}/sitemaps/sitemap/4.xml`,
+      `${baseUrl}/sitemaps/sitemap/general.xml`,
+      `${baseUrl}/sitemaps/sitemap/stock-comparisons-1.xml`,
+      `${baseUrl}/sitemaps/sitemap/stock-comparisons-2.xml`,
+      `${baseUrl}/sitemaps/sitemap/stock-comparisons-3.xml`,
+      `${baseUrl}/sitemaps/sitemap/stock-comparisons-4.xml`,
     ],
   };
 }

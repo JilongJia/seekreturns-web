@@ -1,8 +1,7 @@
-import {
-  TableOfContents,
-  type TableOfContentsData,
-} from "./table_of_contents_sidebar/TableOfContents";
+import { TableOfContents } from "./TableOfContents";
+
 import styles from "./TableOfContentsSidebar.module.css";
+import type { TableOfContentsData } from "./tableOfContents.types";
 
 type TableOfContentsSidebarProps = {
   tableOfContents: TableOfContentsData;

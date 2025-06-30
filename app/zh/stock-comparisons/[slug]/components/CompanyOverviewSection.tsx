@@ -94,43 +94,47 @@ export async function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">公司名称</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.companyName}
+                {stockOneProfileData.companyName || "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.companyName}
+                {stockTwoProfileData.companyName || "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">国家</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.country}
+                {stockOneProfileData.country || "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.country}
+                {stockTwoProfileData.country || "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">板块</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.sector}
+                {stockOneProfileData.sector || "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.sector}
+                {stockTwoProfileData.sector || "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">行业</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.industry}
+                {stockOneProfileData.industry || "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.industry}
+                {stockTwoProfileData.industry || "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">首席执行官</Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>{stockOneProfileData.ceo}</Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>{stockTwoProfileData.ceo}</Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockOneProfileData.ceo || "--"}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {stockTwoProfileData.ceo || "--"}
+              </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">价格</Table.Tbody.Tr.Th>
@@ -178,33 +182,37 @@ export async function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">交易所</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.exchange}
+                {stockOneProfileData.exchange || "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.exchange}
+                {stockTwoProfileData.exchange || "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">IPO日期</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {new Date(stockOneProfileData.ipoDate).toLocaleDateString(
-                  "zh",
-                  {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  },
-                )}
+                {stockOneProfileData.ipoDate
+                  ? new Date(stockOneProfileData.ipoDate).toLocaleDateString(
+                      "zh",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      },
+                    )
+                  : "--"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {new Date(stockTwoProfileData.ipoDate).toLocaleDateString(
-                  "zh",
-                  {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  },
-                )}
+                {stockTwoProfileData.ipoDate
+                  ? new Date(stockTwoProfileData.ipoDate).toLocaleDateString(
+                      "zh",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      },
+                    )
+                  : "--"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>

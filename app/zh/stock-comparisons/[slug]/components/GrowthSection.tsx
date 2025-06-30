@@ -38,7 +38,7 @@ export async function GrowthSection({
         指标。这些指标基于公司的年度财务报告。
       </P>
 
-      <H3>营收同比增长率 (YoY)</H3>
+      <H3>营收同比增长率</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -57,7 +57,7 @@ export async function GrowthSection({
         </figcaption>
       </figure>
 
-      <H3>每股收益同比增长率 (YoY)</H3>
+      <H3>每股收益同比增长率</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -76,7 +76,7 @@ export async function GrowthSection({
         </figcaption>
       </figure>
 
-      <H3>自由现金流同比增长率 (YoY)</H3>
+      <H3>自由现金流同比增长率</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{

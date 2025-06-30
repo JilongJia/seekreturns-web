@@ -42,7 +42,7 @@ export async function GrowthSection({
         companies’ annual financial reports.
       </P>
 
-      <H3>Revenue Growth (YoY)</H3>
+      <H3>Revenue Growth</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -61,7 +61,7 @@ export async function GrowthSection({
         </figcaption>
       </figure>
 
-      <H3>EPS Growth (YoY)</H3>
+      <H3>EPS Growth</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{
@@ -80,7 +80,7 @@ export async function GrowthSection({
         </figcaption>
       </figure>
 
-      <H3>Free Cash Flow Growth (YoY)</H3>
+      <H3>Free Cash Flow Growth</H3>
       <figure className={styles.figure}>
         <FinancialGrowthChart
           stockOne={{

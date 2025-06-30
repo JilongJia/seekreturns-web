@@ -9,7 +9,7 @@ import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { type MainProps } from "@/app/components/zh/content/page/main";
 import { Header } from "@/components/zh/layout/Header";
-import { TableOfContentsSidebar } from "@/app/components/zh/content/page/TableOfContentsSidebar";
+import { TableOfContentsSidebar } from "@/components/zh/layout/TableOfContentsSidebar";
 import { Footer } from "@/components/zh/layout/Footer";
 import styles from "./page.module.css";
 

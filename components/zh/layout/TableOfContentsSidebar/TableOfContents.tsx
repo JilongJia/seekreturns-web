@@ -5,14 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import styles from "./TableOfContents.module.css";
-
-type SubHeadingsData = { id: string; label: string }[];
-
-export type TableOfContentsData = {
-  id: string;
-  label: string;
-  subHeadingsData?: SubHeadingsData;
-}[];
+import type { TableOfContentsData } from "./tableOfContents.types";
 
 type TableOfContentsProps = { data: TableOfContentsData; className?: string };
 
