@@ -3,11 +3,11 @@ import "katex/dist/katex.min.css";
 
 import { Article } from "@/app/components/en/content/page/main/article/Article";
 import { BlockMath } from "@/app/components/en/content/page/main/article/Math";
-import { H1 } from "@/app/components/en/content/page/main/header/H1";
+import { H1 } from "@/components/en/ui/H1";
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { H3 } from "@/app/components/en/content/page/main/article/H3";
 import { Header } from "@/components/en/ui/Header";
-import { ModifiedDate } from "@/app/components/en/content/page/main/header/ModifiedDate";
+import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
 import { Ol } from "@/app/components/en/content/page/main/article/Ol";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";

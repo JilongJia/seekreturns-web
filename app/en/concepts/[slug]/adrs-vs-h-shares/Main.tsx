@@ -1,9 +1,9 @@
 import { Article } from "@/app/components/en/content/page/main/article/Article";
-import { H1 } from "@/app/components/en/content/page/main/article/H1";
+import { H1 } from "@/components/en/ui/H1";
 import { H2 } from "@/app/components/en/content/page/main/article/H2";
 import { H3 } from "@/app/components/en/content/page/main/article/H3";
 import { Header } from "@/components/en/ui/Header";
-import { ModifiedDate } from "@/app/components/en/content/page/main/article/ModifiedDate";
+import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Ul } from "@/app/components/en/content/page/main/article/Ul";

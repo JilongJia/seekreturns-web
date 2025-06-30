@@ -10,9 +10,9 @@ import { AdvertisementSidebar } from "@/components/zh/layout/AdvertisementSideba
 import { Footer } from "@/components/zh/layout/Footer";
 import { Header as PageHeader } from "@/components/zh/layout/Header";
 import { TableOfContentsSidebar } from "@/components/zh/layout/TableOfContentsSidebar";
-import { H1 } from "@/app/components/zh/content/page/main/article/H1";
+import { H1 } from "@/components/zh/ui/H1";
 import { Header as ArticleHeader } from "@/components/zh/ui/Header";
-import { ModifiedDate } from "@/app/components/zh/content/page/main/article/ModifiedDate";
+import { ModifiedDate } from "@/components/zh/ui/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
