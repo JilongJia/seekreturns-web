@@ -19,7 +19,7 @@ import { TableOfContentsSidebar } from "@/components/zh/layout/TableOfContentsSi
 import { H1 } from "@/components/zh/ui/H1";
 import { Header as ArticleHeader } from "@/components/zh/ui/Header";
 import { ModifiedDate } from "@/components/zh/ui/ModifiedDate";
-import { P } from "@/app/components/zh/content/page/main/article/P";
+import { P } from "@/components/zh/ui/P";
 import { CompanyOverviewSection } from "./components/CompanyOverviewSection";
 import { HistoricalPerformanceSection } from "./components/HistoricalPerformanceSection";
 import { ProfitabilitySection } from "./components/ProfitabilitySection";

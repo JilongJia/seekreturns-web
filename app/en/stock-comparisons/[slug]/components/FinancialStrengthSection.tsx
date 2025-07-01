@@ -1,8 +1,8 @@
 import { H2 } from "@/components/en/ui/H2";
 import { H3 } from "@/components/en/ui/H3";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Table } from "@/app/components/en/content/page/main/article/Table";
+import { P } from "@/components/en/ui/P";
+import { Section } from "@/components/en/ui/Section";
+import { Table } from "@/components/en/ui/Table";
 import { MetricComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/MetricComparisonContainer";
 
 import styles from "./FinancialStrengthSection.module.css";

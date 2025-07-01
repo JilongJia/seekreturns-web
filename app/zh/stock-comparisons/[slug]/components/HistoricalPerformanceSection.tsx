@@ -1,6 +1,6 @@
 import { H2 } from "@/components/zh/ui/H2";
-import { P } from "@/app/components/zh/content/page/main/article/P";
-import { Section } from "@/app/components/zh/content/page/main/article/Section";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
 import { Chart } from "./historical-performance-section/Chart";
 
 type PriceSeries = Array<{ date: string; price: number }>;

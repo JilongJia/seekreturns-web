@@ -4,9 +4,9 @@ import { H2 } from "@/components/en/ui/H2";
 import { H3 } from "@/components/en/ui/H3";
 import { Header } from "@/components/en/ui/Header";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
-import { P } from "@/app/components/en/content/page/main/article/P";
-import { Section } from "@/app/components/en/content/page/main/article/Section";
-import { Ul } from "@/app/components/en/content/page/main/article/Ul";
+import { P } from "@/components/en/ui/P";
+import { Section } from "@/components/en/ui/Section";
+import { Ul } from "@/components/en/ui/Ul";
 
 import type { MainProps } from "@/components/en/ui/Main";
 

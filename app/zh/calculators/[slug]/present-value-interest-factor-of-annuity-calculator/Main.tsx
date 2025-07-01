@@ -2,19 +2,16 @@ import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
 import { Article } from "@/components/zh/ui/Article";
-import {
-  BlockMath,
-  InlineMath,
-} from "@/app/components/zh/content/page/main/article/Math";
+import { BlockMath, InlineMath } from "@/components/zh/ui/Math";
 import { H1 } from "@/components/zh/ui/H1";
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { Header } from "@/components/zh/ui/Header";
 import { ModifiedDate } from "@/components/zh/ui/ModifiedDate";
-import { P } from "@/app/components/zh/content/page/main/article/P";
-import { Section } from "@/app/components/zh/content/page/main/article/Section";
-import { Strong } from "@/app/components/zh/content/page/main/article/Strong";
-import { Ul } from "@/app/components/zh/content/page/main/article/Ul";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
+import { Strong } from "@/components/zh/ui/Strong";
+import { Ul } from "@/components/zh/ui/Ul";
 import { Calculator } from "./components/Calculator";
 
 import styles from "./Main.module.css";

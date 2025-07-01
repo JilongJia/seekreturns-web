@@ -1,8 +1,8 @@
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
-import { P } from "@/app/components/zh/content/page/main/article/P";
-import { Section } from "@/app/components/zh/content/page/main/article/Section";
-import { Table } from "@/app/components/zh/content/page/main/article/Table";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
+import { Table } from "@/components/zh/ui/Table";
 import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
 
 import styles from "./DividendSection.module.css";
