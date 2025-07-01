@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import "katex/dist/katex.min.css";
 
-import { Article } from "@/app/components/zh/content/page/main/article/Article";
+import { Article } from "@/components/zh/ui/Article";
 import {
   BlockMath,
   InlineMath,
 } from "@/app/components/zh/content/page/main/article/Math";
 import { H1 } from "@/components/zh/ui/H1";
-import { H2 } from "@/app/components/zh/content/page/main/article/H2";
-import { H3 } from "@/app/components/zh/content/page/main/article/H3";
+import { H2 } from "@/components/zh/ui/H2";
+import { H3 } from "@/components/zh/ui/H3";
 import { Header } from "@/components/zh/ui/Header";
 import { ModifiedDate } from "@/components/zh/ui/ModifiedDate";
 import { P } from "@/app/components/zh/content/page/main/article/P";

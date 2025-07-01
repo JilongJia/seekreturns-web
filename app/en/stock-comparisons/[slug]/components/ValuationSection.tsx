@@ -1,5 +1,5 @@
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
+import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Table } from "@/app/components/en/content/page/main/article/Table";

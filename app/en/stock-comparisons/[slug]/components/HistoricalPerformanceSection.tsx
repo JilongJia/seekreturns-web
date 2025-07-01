@@ -1,4 +1,4 @@
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
+import { H2 } from "@/components/en/ui/H2";
 import { P } from "@/app/components/en/content/page/main/article/P";
 import { Section } from "@/app/components/en/content/page/main/article/Section";
 import { Chart } from "./historical-performance-section/Chart";

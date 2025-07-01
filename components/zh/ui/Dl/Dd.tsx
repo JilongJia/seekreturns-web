@@ -1,4 +1,4 @@
-import { P } from "./dd/P";
+import { P } from "./P";
 
 type DdProps = { children: React.ReactNode; className?: string };
 

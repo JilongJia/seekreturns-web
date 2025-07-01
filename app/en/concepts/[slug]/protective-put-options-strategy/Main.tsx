@@ -1,8 +1,8 @@
-import { Article } from "@/app/components/en/content/page/main/article/Article";
-import { Br } from "@/app/components/en/content/page/main/article/Br";
+import { Article } from "@/components/en/ui/Article";
+import { Br } from "@/components/en/ui/Br";
 import { H1 } from "@/components/en/ui/H1";
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
+import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
 import { Header } from "@/components/en/ui/Header";
 import { ImageFigure } from "@/app/components/en/content/page/main/article/ImageFigure";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";

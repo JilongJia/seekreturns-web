@@ -1,12 +1,12 @@
 import "katex/dist/katex.min.css";
 
-import { Article } from "@/app/components/en/content/page/main/article/Article";
+import { Article } from "@/components/en/ui/Article";
 import { BlockMath } from "@/app/components/en/content/page/main/article/Math";
-import { Code } from "@/app/components/en/content/page/main/article/Code";
-import { Dl } from "@/app/components/en/content/page/main/article/Dl";
+import { Code } from "@/components/en/ui/Code";
+import { Dl } from "@/components/en/ui/Dl";
 import { H1 } from "@/components/en/ui/H1";
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
+import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
 import { Header } from "@/components/en/ui/Header";
 import { ImageFigure } from "@/app/components/en/content/page/main/article/ImageFigure";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";

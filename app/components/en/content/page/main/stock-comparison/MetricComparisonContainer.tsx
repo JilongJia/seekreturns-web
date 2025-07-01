@@ -6,7 +6,7 @@ import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricCo
 import type { IndustryCode } from "@/app/data/fmp/industryCodes";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-import { H3 } from "../article/H3";
+import { H3 } from "@/components/en/ui/H3";
 import { MetricComparisonBoxPlot } from "./metric-comparison-container/MetricComparisonBoxPlot";
 import { MetricComparisonBoxPlotFigcaption } from "./metric-comparison-container/MetricComparisonBoxPlotFigcaption";
 import { SummaryContainer } from "./metric-comparison-container/summary-container/SummaryContainer";

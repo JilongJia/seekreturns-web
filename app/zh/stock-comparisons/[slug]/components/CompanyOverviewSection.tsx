@@ -2,7 +2,7 @@ import { generateMarketCapCommentary } from "./lib/generateMarketCapCommentary";
 import { generateBetaCommentary } from "./lib/generateBetaCommentary";
 import { generateAdrCommentary } from "./lib/generateAdrCommentary";
 
-import { H2 } from "@/app/components/zh/content/page/main/article/H2";
+import { H2 } from "@/components/zh/ui/H2";
 import { P } from "@/app/components/zh/content/page/main/article/P";
 import { Section } from "@/app/components/zh/content/page/main/article/Section";
 import { Table } from "@/app/components/zh/content/page/main/article/Table";

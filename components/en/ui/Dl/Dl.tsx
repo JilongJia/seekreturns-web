@@ -1,7 +1,8 @@
 import clsx from "clsx";
 
-import { Dt } from "./dl/Dt";
-import { Dd } from "./dl/Dd";
+import { Dt } from "./Dt";
+import { Dd } from "./Dd";
+
 import styles from "./Dl.module.css";
 
 type DlProps = { children: React.ReactNode; className?: string };

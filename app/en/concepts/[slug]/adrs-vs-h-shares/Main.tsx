@@ -1,7 +1,7 @@
-import { Article } from "@/app/components/en/content/page/main/article/Article";
+import { Article } from "@/components/en/ui/Article";
 import { H1 } from "@/components/en/ui/H1";
-import { H2 } from "@/app/components/en/content/page/main/article/H2";
-import { H3 } from "@/app/components/en/content/page/main/article/H3";
+import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
 import { Header } from "@/components/en/ui/Header";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
 import { P } from "@/app/components/en/content/page/main/article/P";
