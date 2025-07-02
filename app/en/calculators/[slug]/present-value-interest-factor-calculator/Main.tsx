@@ -12,7 +12,7 @@ import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { Strong } from "@/components/en/ui/Strong";
 import { Ul } from "@/components/en/ui/Ul";
-import { Calculator } from "./components/Calculator";
+import { PVIFCalculator } from "@/components/en/features/calculators";
 
 import styles from "./Main.module.css";
 import type { MainProps } from "@/components/en/ui/Main";
@@ -24,7 +24,7 @@ export function Main({ pathname, className }: MainProps) {
         <H1>Present Value Interest Factor (PVIF) Calculator</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className={styles.calculator} />
+      <PVIFCalculator className={styles.calculator} />
       <Article>
         <P>
           What if you could figure out exactly what a dollar tomorrow is worth

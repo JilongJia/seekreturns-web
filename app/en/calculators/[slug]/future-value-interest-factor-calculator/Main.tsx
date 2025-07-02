@@ -10,7 +10,7 @@ import { Header } from "@/components/en/ui/Header";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
-import { Calculator } from "./components/Calculator";
+import { FVIFCalculator } from "@/components/en/features/calculators";
 
 import styles from "./Main.module.css";
 import type { MainProps } from "@/components/en/ui/Main";
@@ -22,7 +22,7 @@ export function Main({ pathname, className }: MainProps) {
         <H1>Future Value Interest Factor (FVIF) Calculator</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className={styles.calculator} />
+      <FVIFCalculator className={styles.calculator} />
       <Article>
         <P>
           Understanding how your money grows over time is an essential aspect of

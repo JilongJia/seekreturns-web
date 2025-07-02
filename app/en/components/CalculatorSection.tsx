@@ -1,7 +1,7 @@
-import Link from "next/link";
 import clsx from "clsx";
+import Link from "next/link";
 
-import { Calculator } from "./calculator_section/Calculator";
+import { ROICalculator } from "@/components/en/features/calculators";
 
 import styles from "./CalculatorSection.module.css";
 
@@ -31,7 +31,7 @@ export function CalculatorSection({ className }: CalculatorSectionProps) {
           precision.
         </p>
       </div>
-      <Calculator />
+      <ROICalculator />
     </section>
   );
 }

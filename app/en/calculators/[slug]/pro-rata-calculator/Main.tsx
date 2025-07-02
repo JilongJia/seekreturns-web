@@ -12,7 +12,7 @@ import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { Strong } from "@/components/en/ui/Strong";
 import { Ul } from "@/components/en/ui/Ul";
-import { Calculator } from "./components/Calculator";
+import { ProRataCalculator } from "@/components/en/features/calculators";
 
 import styles from "./Main.module.css";
 import type { MainProps } from "@/components/en/ui/Main";
@@ -24,7 +24,7 @@ export function Main({ pathname, className }: MainProps) {
         <H1>Pro Rata Calculator</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className={styles.calculator} />
+      <ProRataCalculator className={styles.calculator} />
       <Article>
         <P>
           Ever wondered how to fairly divide a cost or value when contributions

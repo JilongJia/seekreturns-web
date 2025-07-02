@@ -1,7 +1,7 @@
-import Link from "next/link";
 import clsx from "clsx";
+import Link from "next/link";
 
-import { Calculator } from "./calculator_section/Calculator";
+import { ROICalculator } from "@/components/zh/features/calculators";
 
 import styles from "./CalculatorSection.module.css";
 
@@ -29,7 +29,7 @@ export function CalculatorSection({ className }: CalculatorSectionProps) {
           ”页面，体验完整工具集合，清晰分析您的投资机会。
         </p>
       </div>
-      <Calculator />
+      <ROICalculator />
     </section>
   );
 }

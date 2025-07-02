@@ -12,7 +12,7 @@ import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Strong } from "@/components/zh/ui/Strong";
 import { Ul } from "@/components/zh/ui/Ul";
-import { Calculator } from "./components/Calculator";
+import { PVIFACalculator } from "@/components/zh/features/calculators";
 
 import styles from "./Main.module.css";
 import type { MainProps } from "@/components/zh/ui/Main";
@@ -24,7 +24,7 @@ export function Main({ pathname, className }: MainProps) {
         <H1>年金现值系数计算器</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className={styles.calculator} />
+      <PVIFACalculator className={styles.calculator} />
       <Article>
         <P>
           年金现值系数（Present Value Interest Factor of an

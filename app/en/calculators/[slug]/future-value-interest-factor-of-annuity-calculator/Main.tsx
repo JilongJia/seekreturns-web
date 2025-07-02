@@ -13,7 +13,7 @@ import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { Strong } from "@/components/en/ui/Strong";
 import { Ul } from "@/components/en/ui/Ul";
-import { Calculator } from "./components/Calculator";
+import { FVIFACalculator } from "@/components/en/features/calculators";
 
 import styles from "./Main.module.css";
 import type { MainProps } from "@/components/en/ui/Main";
@@ -25,7 +25,7 @@ export function Main({ pathname, className }: MainProps) {
         <H1>Future Value Interest Factor of Annuity (FVIFA) Calculator</H1>
         <ModifiedDate pathname={pathname} />
       </Header>
-      <Calculator className={styles.calculator} />
+      <FVIFACalculator className={styles.calculator} />
       <Article>
         <P>
           What if you could predict how much your regular investments will grow
