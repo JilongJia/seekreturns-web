@@ -1,7 +1,7 @@
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 
 import { H3 } from "@/components/zh/ui/H3";
-import { GrowthComparisonChart } from "./GrowthComparisonChart";
+import { GrowthComparisonLineChart } from "@/components/zh/features/charts";
 
 import styles from "./GrowthComparisonContainer.module.css";
 import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
@@ -30,7 +30,7 @@ export function GrowthComparisonContainer({
     <>
       <H3>{metricLongName}</H3>
       <figure className={styles.figure}>
-        <GrowthComparisonChart
+        <GrowthComparisonLineChart
           stockOne={{
             symbol: stockOneSymbol,
             growthSeries: stockOneGrowthData,

@@ -8,7 +8,7 @@ import {
   LineStyle,
 } from "lightweight-charts";
 
-import styles from "./GrowthComparisonChart.module.css";
+import styles from "./GrowthComparisonLineChart.module.css";
 
 type FinancialGrowthPoint = {
   date: string;
@@ -24,7 +24,7 @@ type ProcessedGrowthPoint = {
   value: number;
 };
 
-type GrowthComparisonChartProps = {
+type GrowthComparisonLineChartProps = {
   stockOne: {
     symbol: string;
     growthSeries: FinancialGrowthPoint[];
@@ -48,11 +48,11 @@ function processDataForChart(
     .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
 }
 
-export function GrowthComparisonChart({
+export function GrowthComparisonLineChart({
   stockOne,
   stockTwo,
   metricCode,
-}: GrowthComparisonChartProps): JSX.Element {
+}: GrowthComparisonLineChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
