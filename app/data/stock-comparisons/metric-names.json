@@ -145,5 +145,26 @@
     "longNameEN": "Dividend Payout Ratio",
     "shortNameZH": "股息支付率",
     "longNameZH": "股息支付率"
+  },
+  {
+    "metric": "revenueGrowth",
+    "shortNameEN": "Revenue Growth",
+    "longNameEN": "Revenue Growth",
+    "shortNameZH": "营收增长率",
+    "longNameZH": "营收同比增长率"
+  },
+  {
+    "metric": "epsgrowth",
+    "shortNameEN": "EPS Growth",
+    "longNameEN": "Earnings Per Share (EPS) Growth",
+    "shortNameZH": "每股收益增长率",
+    "longNameZH": "每股收益同比增长率"
+  },
+  {
+    "metric": "freeCashFlowGrowth",
+    "shortNameEN": "FCF Growth",
+    "longNameEN": "Free Cash Flow Growth",
+    "shortNameZH": "自由现金流增长率",
+    "longNameZH": "自由现金流同比增长率"
   }
 ]

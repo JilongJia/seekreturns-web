@@ -20,6 +20,9 @@ export const metricCodes = [
   "interestCoverageRatioTTM",
   "dividendYieldTTM",
   "dividendPayoutRatioTTM",
+  "revenueGrowth",
+  "epsgrowth",
+  "freeCashFlowGrowth",
 ] as const;
 
 export type MetricCode = (typeof metricCodes)[number];

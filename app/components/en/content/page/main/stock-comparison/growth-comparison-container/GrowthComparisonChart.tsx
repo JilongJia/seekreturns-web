@@ -17,14 +17,14 @@ type FinancialGrowthPoint = {
   freeCashFlowGrowth: number;
 };
 
-type MetricKey = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
+type MetricCode = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
 
 type ProcessedGrowthPoint = {
   time: string;
   value: number;
 };
 
-type FinancialGrowthChartProps = {
+type GrowthComparisonChartProps = {
   stockOne: {
     symbol: string;
     growthSeries: FinancialGrowthPoint[];
@@ -33,33 +33,32 @@ type FinancialGrowthChartProps = {
     symbol: string;
     growthSeries: FinancialGrowthPoint[];
   };
-  metricCode: MetricKey;
+  metricCode: MetricCode;
 };
 
 function processDataForChart(
   series: FinancialGrowthPoint[],
-  metric: MetricKey,
+  metric: MetricCode,
 ): ProcessedGrowthPoint[] {
   return series
     .map((point) => ({
       time: point.date,
-      value: point[metric] * 100, // Convert to percentage
+      value: point[metric] * 100,
     }))
-    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()); // Ensure data is sorted by date
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
 }
 
-export function FinancialGrowthChart({
+export function GrowthComparisonChart({
   stockOne,
   stockTwo,
   metricCode,
-}: FinancialGrowthChartProps): JSX.Element {
+}: GrowthComparisonChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = chartContainerRef.current;
     if (!container || !stockOne.growthSeries || !stockTwo.growthSeries) return;
 
-    // Process the raw data for the selected metric
     const stockOneProcessedSeries = processDataForChart(
       stockOne.growthSeries,
       metricCode,
@@ -94,24 +93,20 @@ export function FinancialGrowthChart({
       },
     });
 
-    // Add series lines
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
       lineWidth: 2,
-      // Add a title for the series which can be shown in a tooltip
       title: stockOne.symbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
       lineWidth: 2,
-      // Add a title for the series which can be shown in a tooltip
       title: stockTwo.symbol,
     });
     stockOneLineSeries.setData(stockOneProcessedSeries);
     stockTwoLineSeries.setData(stockTwoProcessedSeries);
     chart.timeScale().fitContent();
 
-    // Resize handler
     const handleWindowResize = (): void => {
       if (container) {
         chart.applyOptions({ width: container.clientWidth });
@@ -119,7 +114,6 @@ export function FinancialGrowthChart({
     };
     window.addEventListener("resize", handleWindowResize);
 
-    // Cleanup on component unmount
     return () => {
       window.removeEventListener("resize", handleWindowResize);
       chart.remove();

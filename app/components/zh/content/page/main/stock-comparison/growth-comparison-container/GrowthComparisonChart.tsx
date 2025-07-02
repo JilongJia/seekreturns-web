@@ -17,14 +17,14 @@ type FinancialGrowthPoint = {
   freeCashFlowGrowth: number;
 };
 
-type MetricKey = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
+type MetricCode = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
 
 type ProcessedGrowthPoint = {
   time: string;
   value: number;
 };
 
-type FinancialGrowthChartProps = {
+type GrowthComparisonChartProps = {
   stockOne: {
     symbol: string;
     growthSeries: FinancialGrowthPoint[];
@@ -33,26 +33,26 @@ type FinancialGrowthChartProps = {
     symbol: string;
     growthSeries: FinancialGrowthPoint[];
   };
-  metricCode: MetricKey;
+  metricCode: MetricCode;
 };
 
 function processDataForChart(
   series: FinancialGrowthPoint[],
-  metric: MetricKey,
+  metric: MetricCode,
 ): ProcessedGrowthPoint[] {
   return series
     .map((point) => ({
       time: point.date,
-      value: point[metric] * 100, // Convert to percentage
+      value: point[metric] * 100,
     }))
-    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()); // Ensure data is sorted by date
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
 }
 
-export function FinancialGrowthChart({
+export function GrowthComparisonChart({
   stockOne,
   stockTwo,
   metricCode,
-}: FinancialGrowthChartProps): JSX.Element {
+}: GrowthComparisonChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

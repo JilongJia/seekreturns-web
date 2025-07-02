@@ -1,11 +1,9 @@
 import { H2 } from "@/components/en/ui/H2";
-import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
-import { FinancialGrowthChart } from "@/app/components/en/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonChart";
 
-import styles from "./GrowthSection.module.css";
 import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
+import { GrowthComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonContainer";
 
 type GrowthSectionProps = {
   stockOneSymbol: string;
@@ -13,6 +11,12 @@ type GrowthSectionProps = {
   stockOneGrowthData: FinancialGrowthData | null;
   stockTwoGrowthData: FinancialGrowthData | null;
 };
+
+const growthMetrics = [
+  "revenueGrowth",
+  "epsgrowth",
+  "freeCashFlowGrowth",
+] as const;
 
 export function GrowthSection({
   stockOneSymbol,
@@ -38,62 +42,16 @@ export function GrowthSection({
         companies’ annual financial reports.
       </P>
 
-      <H3>Revenue Growth</H3>
-      <figure className={styles.figure}>
-        <FinancialGrowthChart
-          stockOne={{
-            symbol: stockOneSymbol,
-            growthSeries: stockOneGrowthData,
-          }}
-          stockTwo={{
-            symbol: stockTwoSymbol,
-            growthSeries: stockTwoGrowthData,
-          }}
-          metricCode="revenueGrowth"
+      {growthMetrics.map((metric) => (
+        <GrowthComparisonContainer
+          key={metric}
+          metricCode={metric}
+          stockOneSymbol={stockOneSymbol}
+          stockTwoSymbol={stockTwoSymbol}
+          stockOneGrowthData={stockOneGrowthData}
+          stockTwoGrowthData={stockTwoGrowthData}
         />
-        <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year Revenue Growth.
-        </figcaption>
-      </figure>
-
-      <H3>EPS Growth</H3>
-      <figure className={styles.figure}>
-        <FinancialGrowthChart
-          stockOne={{
-            symbol: stockOneSymbol,
-            growthSeries: stockOneGrowthData,
-          }}
-          stockTwo={{
-            symbol: stockTwoSymbol,
-            growthSeries: stockTwoGrowthData,
-          }}
-          metricCode="epsgrowth"
-        />
-        <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year EPS (Earnings Per Share) Growth.
-        </figcaption>
-      </figure>
-
-      <H3>Free Cash Flow Growth</H3>
-      <figure className={styles.figure}>
-        <FinancialGrowthChart
-          stockOne={{
-            symbol: stockOneSymbol,
-            growthSeries: stockOneGrowthData,
-          }}
-          stockTwo={{
-            symbol: stockTwoSymbol,
-            growthSeries: stockTwoGrowthData,
-          }}
-          metricCode="freeCashFlowGrowth"
-        />
-        <figcaption className={styles.figcaption}>
-          {stockOneSymbol} vs. {stockTwoSymbol}: A comparison of their annual
-          year-over-year Free Cash Flow Growth.
-        </figcaption>
-      </figure>
+      ))}
     </Section>
   );
 }
