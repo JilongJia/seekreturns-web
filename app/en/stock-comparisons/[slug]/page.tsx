@@ -203,8 +203,8 @@ async function Page({ params }: PageProps) {
             <GrowthSection
               stockOneSymbol={stockOneSymbol}
               stockTwoSymbol={stockTwoSymbol}
-              stockOneGrowthData={stockOneGrowthData}
-              stockTwoGrowthData={stockTwoGrowthData}
+              stockOneFinancialGrowthData={stockOneGrowthData}
+              stockTwoFinancialGrowthData={stockTwoGrowthData}
             />
             <DividendSection
               stockOneSymbol={stockOneSymbol}

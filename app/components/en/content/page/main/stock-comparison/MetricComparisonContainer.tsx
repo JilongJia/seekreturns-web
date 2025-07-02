@@ -7,7 +7,7 @@ import type { IndustryCode } from "@/app/data/fmp/industryCodes";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 import { H3 } from "@/components/en/ui/H3";
-import { MetricComparisonBoxPlot } from "@/components/en/features/charts";
+import { MetricComparisonBoxPlot } from "@/components/en/features/chart-figures";
 import { MetricComparisonBoxPlotFigcaption } from "./metric-comparison-container/MetricComparisonBoxPlotFigcaption";
 import { SummaryContainer } from "./metric-comparison-container/summary-container/SummaryContainer";
 import styles from "./MetricComparisonContainer.module.css";

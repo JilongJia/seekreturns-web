@@ -1,30 +1,61 @@
+import React from "react";
+
 import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 
+import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
+
+import { GrowthComparisonLineChartFigure } from "@/components/en/features/chart-figures/GrowthComparisonLineChartFigure";
 import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
-import { GrowthComparisonContainer } from "@/app/components/en/content/page/main/stock-comparison/growth-comparison-container/GrowthComparisonContainer";
 
 type GrowthSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
-  stockOneGrowthData: FinancialGrowthData | null;
-  stockTwoGrowthData: FinancialGrowthData | null;
+  stockOneFinancialGrowthData: FinancialGrowthData | null;
+  stockTwoFinancialGrowthData: FinancialGrowthData | null;
 };
 
-const growthMetrics = [
+type FinancialGrowthPoint = {
+  date: string;
+  revenueGrowth: number;
+  epsgrowth: number;
+  freeCashFlowGrowth: number;
+};
+
+type GrowthPoint = {
+  time: string;
+  value: number;
+};
+
+type MetricCode = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
+
+const growthMetrics: MetricCode[] = [
   "revenueGrowth",
   "epsgrowth",
   "freeCashFlowGrowth",
-] as const;
+];
+
+function processData(
+  metric: MetricCode,
+  series: FinancialGrowthPoint[],
+): GrowthPoint[] {
+  return series
+    .map((point) => ({
+      time: point.date,
+      value: point[metric],
+    }))
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+}
 
 export function GrowthSection({
   stockOneSymbol,
   stockTwoSymbol,
-  stockOneGrowthData,
-  stockTwoGrowthData,
+  stockOneFinancialGrowthData,
+  stockTwoFinancialGrowthData,
 }: GrowthSectionProps) {
-  if (!stockOneGrowthData || !stockTwoGrowthData) {
+  if (!stockOneFinancialGrowthData || !stockTwoFinancialGrowthData) {
     return (
       <Section ariaLabelledby="growth">
         <H2 id="growth">Growth</H2>
@@ -42,16 +73,33 @@ export function GrowthSection({
         companies’ annual financial reports.
       </P>
 
-      {growthMetrics.map((metric) => (
-        <GrowthComparisonContainer
-          key={metric}
-          metricCode={metric}
-          stockOneSymbol={stockOneSymbol}
-          stockTwoSymbol={stockTwoSymbol}
-          stockOneGrowthData={stockOneGrowthData}
-          stockTwoGrowthData={stockTwoGrowthData}
-        />
-      ))}
+      {growthMetrics.map((metric) => {
+        const metricLongName = getMetricName({
+          metricCode: metric,
+          nameType: "longNameEN",
+        });
+        const stockOneGrowthSeries = processData(
+          metric,
+          stockOneFinancialGrowthData,
+        );
+        const stockTwoGrowthSeries = processData(
+          metric,
+          stockTwoFinancialGrowthData,
+        );
+
+        return (
+          <React.Fragment key={metric}>
+            <H3>{metricLongName}</H3>
+            <GrowthComparisonLineChartFigure
+              metricName={metricLongName}
+              stockOneSymbol={stockOneSymbol}
+              stockTwoSymbol={stockTwoSymbol}
+              stockOneGrowthSeries={stockOneGrowthSeries}
+              stockTwoGrowthSeries={stockTwoGrowthSeries}
+            />
+          </React.Fragment>
+        );
+      })}
     </Section>
   );
 }

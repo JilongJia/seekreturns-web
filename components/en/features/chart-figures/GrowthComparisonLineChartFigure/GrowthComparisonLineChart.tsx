@@ -1,74 +1,41 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import {
   createChart,
   ColorType,
   LineSeries,
   LineStyle,
 } from "lightweight-charts";
+import { useRef, useEffect } from "react";
 
 import styles from "./GrowthComparisonLineChart.module.css";
 
-type FinancialGrowthPoint = {
-  date: string;
-  revenueGrowth: number;
-  epsgrowth: number;
-  freeCashFlowGrowth: number;
-};
-
-type MetricCode = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
-
-type ProcessedGrowthPoint = {
+type GrowthPoint = {
   time: string;
   value: number;
 };
 
 type GrowthComparisonLineChartProps = {
-  stockOne: {
-    symbol: string;
-    growthSeries: FinancialGrowthPoint[];
-  };
-  stockTwo: {
-    symbol: string;
-    growthSeries: FinancialGrowthPoint[];
-  };
-  metricCode: MetricCode;
+  stockOneSymbol: string;
+  stockOneGrowthSeries: GrowthPoint[];
+  stockTwoSymbol: string;
+  stockTwoGrowthSeries: GrowthPoint[];
 };
 
-function processDataForChart(
-  series: FinancialGrowthPoint[],
-  metric: MetricCode,
-): ProcessedGrowthPoint[] {
-  return series
-    .map((point) => ({
-      time: point.date,
-      value: point[metric] * 100,
-    }))
-    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
-}
-
 export function GrowthComparisonLineChart({
-  stockOne,
-  stockTwo,
-  metricCode,
+  stockOneSymbol,
+  stockOneGrowthSeries,
+  stockTwoSymbol,
+  stockTwoGrowthSeries,
 }: GrowthComparisonLineChartProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = chartContainerRef.current;
-    if (!container || !stockOne.growthSeries || !stockTwo.growthSeries) return;
+    if (!container) return;
 
-    const stockOneProcessedSeries = processDataForChart(
-      stockOne.growthSeries,
-      metricCode,
-    );
-    const stockTwoProcessedSeries = processDataForChart(
-      stockTwo.growthSeries,
-      metricCode,
-    );
-
-    const formatPercentage = (value: number): string => `${value.toFixed(2)}%`;
+    const formatPercentage = (value: number): string =>
+      `${(value * 100).toFixed(2)}%`;
 
     const chart = createChart(container, {
       layout: {
@@ -96,15 +63,15 @@ export function GrowthComparisonLineChart({
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
       lineWidth: 2,
-      title: stockOne.symbol,
+      title: stockOneSymbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
       lineWidth: 2,
-      title: stockTwo.symbol,
+      title: stockTwoSymbol,
     });
-    stockOneLineSeries.setData(stockOneProcessedSeries);
-    stockTwoLineSeries.setData(stockTwoProcessedSeries);
+    stockOneLineSeries.setData(stockOneGrowthSeries);
+    stockTwoLineSeries.setData(stockTwoGrowthSeries);
     chart.timeScale().fitContent();
 
     const handleWindowResize = (): void => {
@@ -118,7 +85,12 @@ export function GrowthComparisonLineChart({
       window.removeEventListener("resize", handleWindowResize);
       chart.remove();
     };
-  }, [stockOne, stockTwo, metricCode]);
+  }, [
+    stockOneSymbol,
+    stockOneGrowthSeries,
+    stockTwoSymbol,
+    stockTwoGrowthSeries,
+  ]);
 
   return <div ref={chartContainerRef} className={styles.container} />;
 }
