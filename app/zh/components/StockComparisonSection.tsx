@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 
-import { Chart } from "@/app/zh/stock-comparisons/[slug]/components/historical-performance-section/Chart";
+import { PriceComparisonLineChartFigure } from "@/components/zh/features/chart-figures";
 import { Form } from "./stock_comparison_section/Form";
 import styles from "./StockComparisonSection.module.css";
 
@@ -37,7 +37,7 @@ export async function StockComparisonSection({
         <p className={styles.p}>输入股票代码，即可快速生成对比图表。</p>
       </div>
       <Form className={styles.form} />
-      <Chart
+      <PriceComparisonLineChartFigure
         data={{
           stockOne: {
             symbol: stockOneSymbol,

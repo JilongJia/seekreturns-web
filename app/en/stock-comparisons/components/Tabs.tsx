@@ -6,12 +6,12 @@ import clsx from "clsx";
 
 import styles from "./Tabs.module.css";
 
-import { stockComparisonList } from "@/data/stock-comparisons";
+import { stockComparisonList } from "@/data/stock-comparison-list";
 
 export function Tabs() {
   const comparisonPages = stockComparisonList.map(
-    ({ symbolOne, symbolTwo, slug }) => ({
-      title: `${symbolOne} vs. ${symbolTwo}`,
+    ({ stockOneSymbol, stockTwoSymbol, slug }) => ({
+      title: `${stockOneSymbol} vs. ${stockTwoSymbol}`,
       pathname: `/en/stock-comparisons/${slug}`,
     }),
   );

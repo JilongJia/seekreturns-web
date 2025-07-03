@@ -1,7 +1,7 @@
 import { H2 } from "@/components/zh/ui/H2";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
-import { Chart } from "./historical-performance-section/Chart";
+import { PriceComparisonLineChartFigure } from "@/components/zh/features/chart-figures";
 
 type PriceSeries = Array<{ date: string; price: number }>;
 
@@ -41,7 +41,7 @@ export function HistoricalPerformanceSection({
         的表现。请使用选项卡选择所需的时间周期。
       </P>
       <P>数据已根据股息和股票拆分进行调整。</P>
-      <Chart
+      <PriceComparisonLineChartFigure
         data={{
           stockOne: {
             symbol: stockOneSymbol,

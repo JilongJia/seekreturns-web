@@ -3,7 +3,7 @@ import { generateRootPagesSitemap } from "@/app/lib/sitemap/generateRootPagesSit
 import { generateUtilityPagesSitemap } from "@/app/lib/sitemap/generateUtilityPagesSitemap";
 import { generateSectionPagesSitemap } from "@/app/lib/sitemap/generateSectionPagesSitemap";
 import { generateInformationalPagesSitemap } from "@/app/lib/sitemap/generateInformationalPagesSitemap";
-import { stockComparisonList } from "@/data/stock-comparisons";
+import { stockComparisonList } from "@/data/stock-comparison-list";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 const URLS_PER_SITEMAP = 30_000;

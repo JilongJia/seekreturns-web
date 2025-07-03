@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-import { stockComparisonList } from "@/data/stock-comparisons";
+import { stockComparisonList } from "@/data/stock-comparison-list";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 

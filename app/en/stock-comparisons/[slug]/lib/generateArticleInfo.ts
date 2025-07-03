@@ -1,6 +1,6 @@
 type GenerateArticleInfoParams = {
-  symbolOne: string;
-  symbolTwo: string;
+  stockOneSymbol: string;
+  stockTwoSymbol: string;
 };
 
 type Image = {
@@ -12,11 +12,11 @@ type Image = {
 };
 
 export function generateArticleInfo({
-  symbolOne,
-  symbolTwo,
+  stockOneSymbol,
+  stockTwoSymbol,
 }: GenerateArticleInfoParams) {
-  const title = `${symbolOne} vs. ${symbolTwo}: A Head-to-Head Stock Comparison`;
-  const description = `Explore a head-to-head stock comparison of ${symbolOne} versus ${symbolTwo}. This analysis covers their company overviews, historical performance, profitability, financial strength, growth, dividend, and valuation.`;
+  const title = `${stockOneSymbol} vs. ${stockTwoSymbol}: A Head-to-Head Stock Comparison`;
+  const description = `Explore a head-to-head stock comparison of ${stockOneSymbol} versus ${stockTwoSymbol}. This analysis covers their company overviews, historical performance, profitability, financial strength, growth, dividend, and valuation.`;
   const images: Image[] = [];
 
   return {

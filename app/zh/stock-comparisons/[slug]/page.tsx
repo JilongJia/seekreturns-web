@@ -29,7 +29,7 @@ import { DividendSection } from "./components/DividendSection";
 import { ValuationSection } from "./components/ValuationSection";
 import styles from "./page.module.css";
 
-import { stockComparisonList } from "@/data/stock-comparisons";
+import { stockComparisonList } from "@/data/stock-comparison-list";
 import { tableOfContents } from "./data/tableOfContents";
 
 type GenerateMetadataParams = { params: Promise<{ slug: string }> };
@@ -80,8 +80,7 @@ async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const { symbolOne: stockOneSymbol, symbolTwo: stockTwoSymbol } =
-    matchingComparison;
+  const { stockOneSymbol, stockTwoSymbol } = matchingComparison;
 
   const [
     stockOneProfileData,
@@ -108,8 +107,8 @@ async function Page({ params }: PageProps) {
   ]);
 
   const pageInfo = generatePageInfo({
-    symbolOne: stockOneSymbol,
-    symbolTwo: stockTwoSymbol,
+    stockOneSymbol,
+    stockTwoSymbol,
     slug,
   });
 
@@ -122,8 +121,8 @@ async function Page({ params }: PageProps) {
   } = pageInfo;
 
   const articleInfo = generateArticleInfo({
-    symbolOne: stockOneSymbol,
-    symbolTwo: stockTwoSymbol,
+    stockOneSymbol,
+    stockTwoSymbol,
   });
 
   const {

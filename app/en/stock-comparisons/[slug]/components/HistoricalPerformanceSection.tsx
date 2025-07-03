@@ -1,7 +1,7 @@
 import { H2 } from "@/components/en/ui/H2";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
-import { Chart } from "./historical-performance-section/Chart";
+import { PriceComparisonLineChartFigure } from "@/components/en/features/chart-figures";
 
 type PriceSeries = Array<{ date: string; price: number }>;
 
@@ -41,7 +41,7 @@ export function HistoricalPerformanceSection({
         in each. Use the tabs to select the desired time period.
       </P>
       <P>Data is adjusted for dividends and splits.</P>
-      <Chart
+      <PriceComparisonLineChartFigure
         data={{
           stockOne: {
             symbol: stockOneSymbol,

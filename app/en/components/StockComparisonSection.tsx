@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 
-import { Chart } from "@/app/en/stock-comparisons/[slug]/components/historical-performance-section/Chart";
+import { PriceComparisonLineChartFigure } from "@/components/en/features/chart-figures";
 import { Form } from "./stock_comparison_section/Form";
 import styles from "./StockComparisonSection.module.css";
 
@@ -42,7 +42,7 @@ export async function StockComparisonSection({
         </p>
       </div>
       <Form className={styles.form} />
-      <Chart
+      <PriceComparisonLineChartFigure
         data={{
           stockOne: {
             symbol: stockOneSymbol,

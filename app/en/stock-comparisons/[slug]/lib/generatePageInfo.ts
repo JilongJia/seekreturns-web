@@ -1,18 +1,18 @@
 type GeneratePageInfoParams = {
-  symbolOne: string;
-  symbolTwo: string;
+  stockOneSymbol: string;
+  stockTwoSymbol: string;
   slug: string;
 };
 
 export function generatePageInfo({
-  symbolOne,
-  symbolTwo,
+  stockOneSymbol,
+  stockTwoSymbol,
   slug,
 }: GeneratePageInfoParams) {
-  const title = `${symbolOne} vs. ${symbolTwo}: A Head-to-Head Stock Comparison`;
+  const title = `${stockOneSymbol} vs. ${stockTwoSymbol}: A Head-to-Head Stock Comparison`;
   const pathname = `/en/stock-comparisons/${slug}`;
 
-  const description = `See the full head-to-head analysis of ${symbolOne} vs. ${symbolTwo}. We compare profitability, financial strength, growth, and valuation to inform your final view.`;
+  const description = `See the full head-to-head analysis of ${stockOneSymbol} vs. ${stockTwoSymbol}. We compare profitability, financial strength, growth, and valuation to inform your final view.`;
 
   const publishedDate = new Date("2025-05-05");
   const modifiedDate = new Date();

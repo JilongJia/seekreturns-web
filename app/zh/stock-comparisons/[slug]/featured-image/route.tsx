@@ -1,7 +1,7 @@
 import { generateFeaturedImage } from "@/app/lib/zh/content/generateFeaturedImage";
 import { generatePageInfo } from "../lib/generatePageInfo";
 
-import { stockComparisonList } from "@/data/stock-comparisons";
+import { stockComparisonList } from "@/data/stock-comparison-list";
 import { tableOfContents } from "../data/tableOfContents";
 
 type GetRouteContext = {
