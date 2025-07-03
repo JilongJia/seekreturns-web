@@ -36,7 +36,7 @@ const NON_ZERO_METRICS = new Set([
   "interestCoverageRatioTTM",
 ]);
 
-type MetricStats = {
+export type MetricStats = {
   min: number;
   q1: number;
   median: number;

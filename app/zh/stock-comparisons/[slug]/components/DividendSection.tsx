@@ -1,12 +1,22 @@
+import React from "react";
+
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
-import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./summary-container/SummaryContainer";
+
+import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
+import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
+import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplicability";
+import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
+import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
 import styles from "./DividendSection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type RatiosData = {
   dividendYieldTTM: number;
@@ -21,6 +31,11 @@ type DividendSectionProps = {
   stockTwoProfileData: ProfileData | null;
   stockTwoRatiosData: RatiosData | null;
 };
+
+const metricsForComparison: (keyof RatiosData)[] = [
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
+];
 
 export function DividendSection({
   stockOneSymbol,
@@ -48,25 +63,92 @@ export function DividendSection({
     <Section ariaLabelledby="dividend">
       <H2 id="dividend">股息</H2>
 
-      <MetricComparisonContainer
-        metricCode="dividendYieldTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.dividendYieldTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.dividendYieldTTM}
-      />
+      {metricsForComparison.map((metricCode) => {
+        const stockOneMetricValue = stockOneRatiosData[metricCode];
+        const stockTwoMetricValue = stockTwoRatiosData[metricCode];
 
-      <MetricComparisonContainer
-        metricCode="dividendPayoutRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.dividendPayoutRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.dividendPayoutRatioTTM}
-      />
+        const metricLongName = getMetricName({
+          metricCode,
+          nameType: "longNameZH",
+        });
+        const metricShortName = getMetricName({
+          metricCode,
+          nameType: "shortNameZH",
+        });
+
+        const stockOneIndustryMetricStats = calculateMetricStats({
+          metricCode,
+          metricValues: getIndustryMetric({
+            industryCode: stockOneProfileData.industry,
+            metricCode,
+          }),
+        });
+        const stockTwoIndustryMetricStats = calculateMetricStats({
+          metricCode,
+          metricValues: getIndustryMetric({
+            industryCode: stockTwoProfileData.industry,
+            metricCode,
+          }),
+        });
+
+        const stockOneMetricColor = calculateMetricColor({
+          metricCode,
+          metricValue: stockOneMetricValue,
+          metricStats: stockOneIndustryMetricStats,
+        });
+        const stockTwoMetricColor = calculateMetricColor({
+          metricCode,
+          metricValue: stockTwoMetricValue,
+          metricStats: stockTwoIndustryMetricStats,
+        });
+
+        const isStockOneMetricApplicable = getMetricApplicability({
+          industryCode: stockOneProfileData.industry,
+          metricCode,
+        });
+        const isStockTwoMetricApplicable = getMetricApplicability({
+          industryCode: stockTwoProfileData.industry,
+          metricCode,
+        });
+
+        return (
+          <React.Fragment key={metricCode}>
+            <H3>{metricLongName}</H3>
+            <SummaryContainer
+              metricCode={metricCode as MetricCode}
+              metricName={metricShortName}
+              stockOneSymbol={stockOneSymbol}
+              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneMetricValue={stockOneMetricValue}
+              stockOneMetricColor={stockOneMetricColor}
+              stockOneIndustryMetricStats={stockOneIndustryMetricStats}
+              isStockOneMetricApplicable={isStockOneMetricApplicable}
+              stockTwoSymbol={stockTwoSymbol}
+              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoMetricValue={stockTwoMetricValue}
+              stockTwoMetricColor={stockTwoMetricColor}
+              stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
+              isStockTwoMetricApplicable={isStockTwoMetricApplicable}
+            />
+            <MetricComparisonBoxPlotFigure
+              metricCode={metricCode as MetricCode}
+              metricName={metricShortName}
+              stockOneSymbol={stockOneSymbol}
+              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneMetricValue={stockOneMetricValue}
+              stockOneMetricColor={stockOneMetricColor}
+              stockOneIndustryMetricStats={stockOneIndustryMetricStats}
+              isStockOneMetricApplicable={isStockOneMetricApplicable}
+              stockTwoSymbol={stockTwoSymbol}
+              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoMetricValue={stockTwoMetricValue}
+              stockTwoMetricColor={stockTwoMetricColor}
+              stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
+              isStockTwoMetricApplicable={isStockTwoMetricApplicable}
+            />
+          </React.Fragment>
+        );
+      })}
 
       <H3>股息概览</H3>
 

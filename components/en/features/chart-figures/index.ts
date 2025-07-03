@@ -1,2 +1,2 @@
 export * from "./GrowthComparisonLineChartFigure";
-export * from "./MetricComparisonBoxPlot";
+export * from "./MetricComparisonBoxPlotFigure";

@@ -1,6 +1,6 @@
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type MetricColor = "green" | "red" | "yellow" | "neutral";
+export type MetricColor = "green" | "red" | "yellow" | "neutral";
 
 type MetricStats = {
   min: number;

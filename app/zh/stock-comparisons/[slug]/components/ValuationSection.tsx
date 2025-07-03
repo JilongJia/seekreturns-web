@@ -1,12 +1,22 @@
+import React from "react";
+
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
-import { MetricComparisonContainer } from "@/app/components/zh/content/page/main/stock-comparison/MetricComparisonContainer";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./summary-container/SummaryContainer";
+
+import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
+import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
+import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplicability";
+import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
+import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
 import styles from "./ValuationSection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type KeyMetricsData = {
   evToEBITDATTM: number | null;
@@ -31,6 +41,13 @@ type ValuationSectionProps = {
   stockTwoKeyMetricsData: KeyMetricsData | null;
   stockTwoRatiosData: RatiosData | null;
 };
+
+const metricsForComparison: (keyof KeyMetricsData | keyof RatiosData)[] = [
+  "priceToEarningsRatioTTM",
+  "forwardPriceToEarningsGrowthRatioTTM",
+  "priceToSalesRatioTTM",
+  "priceToBookRatioTTM",
+];
 
 export function ValuationSection({
   stockOneSymbol,
@@ -65,53 +82,99 @@ export function ValuationSection({
     return value.toFixed(2);
   };
 
+  const stockOneMetrics = { ...stockOneKeyMetricsData, ...stockOneRatiosData };
+  const stockTwoMetrics = { ...stockTwoKeyMetricsData, ...stockTwoRatiosData };
+
   return (
     <Section ariaLabelledby="valuation">
       <H2 id="valuation">估值</H2>
 
-      <MetricComparisonContainer
-        metricCode="priceToEarningsRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.priceToEarningsRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.priceToEarningsRatioTTM}
-      />
+      {metricsForComparison.map((metricCode) => {
+        const stockOneMetricValue = stockOneMetrics[metricCode];
+        const stockTwoMetricValue = stockTwoMetrics[metricCode];
 
-      <MetricComparisonContainer
-        metricCode="forwardPriceToEarningsGrowthRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={
-          stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM
-        }
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={
-          stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM
-        }
-      />
+        const metricLongName = getMetricName({
+          metricCode,
+          nameType: "longNameZH",
+        });
+        const metricShortName = getMetricName({
+          metricCode,
+          nameType: "shortNameZH",
+        });
 
-      <MetricComparisonContainer
-        metricCode="priceToSalesRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.priceToSalesRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.priceToSalesRatioTTM}
-      />
+        const stockOneIndustryMetricStats = calculateMetricStats({
+          metricCode,
+          metricValues: getIndustryMetric({
+            industryCode: stockOneProfileData.industry,
+            metricCode,
+          }),
+        });
+        const stockTwoIndustryMetricStats = calculateMetricStats({
+          metricCode,
+          metricValues: getIndustryMetric({
+            industryCode: stockTwoProfileData.industry,
+            metricCode,
+          }),
+        });
 
-      <MetricComparisonContainer
-        metricCode="priceToBookRatioTTM"
-        stockOneSymbol={stockOneSymbol}
-        stockOneIndustryCode={stockOneProfileData.industry}
-        stockOneMetricValue={stockOneRatiosData.priceToBookRatioTTM}
-        stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryCode={stockTwoProfileData.industry}
-        stockTwoMetricValue={stockTwoRatiosData.priceToBookRatioTTM}
-      />
+        const stockOneMetricColor = calculateMetricColor({
+          metricCode,
+          metricValue: stockOneMetricValue,
+          metricStats: stockOneIndustryMetricStats,
+        });
+        const stockTwoMetricColor = calculateMetricColor({
+          metricCode,
+          metricValue: stockTwoMetricValue,
+          metricStats: stockTwoIndustryMetricStats,
+        });
+
+        const isStockOneMetricApplicable = getMetricApplicability({
+          industryCode: stockOneProfileData.industry,
+          metricCode,
+        });
+        const isStockTwoMetricApplicable = getMetricApplicability({
+          industryCode: stockTwoProfileData.industry,
+          metricCode,
+        });
+
+        return (
+          <React.Fragment key={metricCode}>
+            <H3>{metricLongName}</H3>
+            <SummaryContainer
+              metricCode={metricCode as MetricCode}
+              metricName={metricShortName}
+              stockOneSymbol={stockOneSymbol}
+              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneMetricValue={stockOneMetricValue}
+              stockOneMetricColor={stockOneMetricColor}
+              stockOneIndustryMetricStats={stockOneIndustryMetricStats}
+              isStockOneMetricApplicable={isStockOneMetricApplicable}
+              stockTwoSymbol={stockTwoSymbol}
+              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoMetricValue={stockTwoMetricValue}
+              stockTwoMetricColor={stockTwoMetricColor}
+              stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
+              isStockTwoMetricApplicable={isStockTwoMetricApplicable}
+            />
+            <MetricComparisonBoxPlotFigure
+              metricCode={metricCode as MetricCode}
+              metricName={metricShortName}
+              stockOneSymbol={stockOneSymbol}
+              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneMetricValue={stockOneMetricValue}
+              stockOneMetricColor={stockOneMetricColor}
+              stockOneIndustryMetricStats={stockOneIndustryMetricStats}
+              isStockOneMetricApplicable={isStockOneMetricApplicable}
+              stockTwoSymbol={stockTwoSymbol}
+              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoMetricValue={stockTwoMetricValue}
+              stockTwoMetricColor={stockTwoMetricColor}
+              stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
+              isStockTwoMetricApplicable={isStockTwoMetricApplicable}
+            />
+          </React.Fragment>
+        );
+      })}
 
       <H3>估值概览</H3>
       <div className={styles.tableContainer}>
