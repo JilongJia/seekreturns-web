@@ -1,6 +1,6 @@
 .outputCard {
   border-radius: 0.75rem;
-  background-color: #2563eb;
+  background-color: var(--color-background-info);
   padding: 2rem;
   color: #fafafa;
 }

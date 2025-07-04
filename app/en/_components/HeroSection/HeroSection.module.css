@@ -35,7 +35,7 @@
     grid-template-columns: 3fr 2fr;
     column-gap: 2rem;
     align-items: center;
-    background-color: #2563eb;
+    background-color: var(--color-background-brand);
     padding-top: 3rem;
     padding-right: 3rem;
     padding-bottom: 3rem;

@@ -1,6 +1,6 @@
 .errorMessageCard {
   border-radius: 0.75rem;
-  background-color: #dc2626;
+  background-color: var(--color-background-error);
   padding: 2rem;
   color: #fafafa;
 }

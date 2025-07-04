@@ -81,7 +81,7 @@
 }
 
 .link {
-  color: var(--article-link-color);
+  color: var(--color-text-link);
 }
 
 .link:hover {

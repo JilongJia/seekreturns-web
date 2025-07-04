@@ -12,7 +12,7 @@
 }
 
 .link:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 

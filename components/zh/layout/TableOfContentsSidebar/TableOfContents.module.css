@@ -37,7 +37,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  border-left: 3px solid #2563eb;
+  border-left: 3px solid var(--color-outline-active);
   border-radius: 0.125rem 0 0 0.125rem;
   height: 100%;
   content: "";
@@ -84,7 +84,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  border-left: 3px solid #2563eb;
+  border-left: 3px solid var(--color-outline-active);
   border-radius: 0.125rem 0 0 0.125rem;
   height: 100%;
   content: "";

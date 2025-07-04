@@ -13,7 +13,7 @@
 }
 
 .openDialogButton:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .closeButton:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .input:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .submitButton:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 

@@ -44,7 +44,7 @@
 }
 
 .input:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 
@@ -57,7 +57,7 @@
   transition: 0.2s;
   cursor: pointer;
   border-radius: 0.5rem;
-  background-color: #2563eb;
+  background-color: var(--color-primary);
   padding-top: 8px;
   padding-right: 16px;
   padding-bottom: 8px;

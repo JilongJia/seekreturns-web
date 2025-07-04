@@ -22,7 +22,7 @@
 }
 
 .button:focus-visible {
-  outline-color: var(--outline-focus-color);
+  outline-color: var(--color-outline-focus);
   outline-width: 2px;
 }
 
@@ -108,10 +108,10 @@
 
 .menuItemLink:hover::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--outline-hover-color);
+  border-left: 3px solid var(--color-outline-hover);
 }
 
 .menuItemLink:focus-visible::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--outline-focus-color);
+  border-left: 3px solid var(--color-outline-focus);
 }

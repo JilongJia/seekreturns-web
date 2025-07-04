@@ -27,10 +27,10 @@
 
 .link:hover::before {
   transition-duration: 0.2s;
-  border-left: 3px solid #2563eb;
+  border-left: 3px solid var(--color-outline-hover);
 }
 
 .link:focus-visible::before {
   transition-duration: 0.2s;
-  border-left: 3px solid #2563eb;
+  border-left: 3px solid var(--color-outline-focus);
 }
