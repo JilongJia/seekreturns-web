@@ -34,17 +34,17 @@ export async function generateFeaturedImage({
   breadcrumbList,
 }: GenerateFeaturedImageParams) {
   const notoSansScRegular = await readFile(
-    join(process.cwd(), "app/fonts/NotoSansSC-Regular.ttf"),
+    join(process.cwd(), "assets/fonts/NotoSansSC-Regular.ttf"),
   );
   const notoSansScMedium = await readFile(
-    join(process.cwd(), "app/fonts/NotoSansSC-Medium.ttf"),
+    join(process.cwd(), "assets/fonts/NotoSansSC-Medium.ttf"),
   );
   const notoSansScSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/NotoSansSC-SemiBold.ttf"),
+    join(process.cwd(), "assets/fonts/NotoSansSC-SemiBold.ttf"),
   );
 
   const logoData = await readFile(
-    join(process.cwd(), "app/images/zh/seekreturns-logo.png"),
+    join(process.cwd(), "public/images/seekreturns-logo.png"),
   );
   const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 

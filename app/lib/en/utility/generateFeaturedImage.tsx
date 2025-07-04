@@ -11,11 +11,11 @@ export async function generateFeaturedImage({
   title,
 }: GenerateFeaturedImageParams) {
   const interSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
+    join(process.cwd(), "assets/fonts/Inter_28pt-SemiBold.ttf"),
   );
 
   const iconData = await readFile(
-    join(process.cwd(), "app/images/en/seekreturns-icon.svg"),
+    join(process.cwd(), "public/images/seekreturns-icon.svg"),
   );
   const iconSrc = `data:image/svg+xml;base64,${iconData.toString("base64")}`;
 

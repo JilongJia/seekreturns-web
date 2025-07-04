@@ -34,17 +34,17 @@ export async function generateFeaturedImage({
   breadcrumbList,
 }: GenerateFeaturedImageParams) {
   const interRegular = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-Regular.ttf"),
+    join(process.cwd(), "assets/fonts/Inter_28pt-Regular.ttf"),
   );
   const interMedium = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-Medium.ttf"),
+    join(process.cwd(), "assets/fonts/Inter_28pt-Medium.ttf"),
   );
   const interSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/Inter_28pt-SemiBold.ttf"),
+    join(process.cwd(), "assets/fonts/Inter_28pt-SemiBold.ttf"),
   );
 
   const logoData = await readFile(
-    join(process.cwd(), "app/images/en/seekreturns-logo.png"),
+    join(process.cwd(), "public/images/seekreturns-logo.png"),
   );
   const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
 

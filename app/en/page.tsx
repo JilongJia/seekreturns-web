@@ -5,9 +5,9 @@ import { generateJsonLd } from "./lib/generateJsonLd";
 
 import { Header } from "@/components/en/layout/Header";
 import { Footer } from "@/components/en/layout/Footer";
-import { HeroSection } from "./components/HeroSection";
-import { StockComparisonSection } from "./components/StockComparisonSection";
-import { CalculatorSection } from "./components/CalculatorSection";
+import { HeroSection } from "./_components/HeroSection";
+import { StockComparisonSection } from "./_components/StockComparisonSection";
+import { CalculatorSection } from "./_components/CalculatorSection";
 import styles from "./page.module.css";
 
 import { pageInfo } from "./data/info";

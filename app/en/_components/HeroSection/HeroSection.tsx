@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styles from "./HeroSection.module.css";
 
-import seekReturnsStrategically from "../images/seek-returns-strategically.gif";
+import seekReturnsStrategically from "./seek-returns-strategically.gif";
 
 type HeroSectionProps = { className?: string };
 

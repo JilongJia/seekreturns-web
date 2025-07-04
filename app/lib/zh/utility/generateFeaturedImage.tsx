@@ -11,11 +11,11 @@ export async function generateFeaturedImage({
   title,
 }: GenerateFeaturedImageParams) {
   const notoSansScSemiBold = await readFile(
-    join(process.cwd(), "app/fonts/NotoSansSC-SemiBold.ttf"),
+    join(process.cwd(), "assets/fonts/NotoSansSC-SemiBold.ttf"),
   );
 
   const iconData = await readFile(
-    join(process.cwd(), "app/images/zh/seekreturns-icon.svg"),
+    join(process.cwd(), "public/images/seekreturns-icon.svg"),
   );
   const iconSrc = `data:image/svg+xml;base64,${iconData.toString("base64")}`;
 
