@@ -40,7 +40,7 @@
     padding-right: 3rem;
     padding-bottom: 3rem;
     padding-left: 3rem;
-    color: #fafafa;
+    color: var(--color-text-on-brand);
     text-align: left;
   }
 
@@ -49,7 +49,7 @@
   }
 
   .h1 .lineTwo .highlight {
-    color: #fde047;
+    color: var(--color-text-on-brand-emphasis);
   }
 
   .image {

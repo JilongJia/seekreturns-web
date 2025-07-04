@@ -1,5 +1,5 @@
 .p {
   margin-bottom: 1rem;
-  color: var(--article-text-color);
+  color: var(--color-text-primary);
   line-height: 1.75rem;
 }

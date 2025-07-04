@@ -26,7 +26,7 @@
 
 .primaryMenuItemLink.current {
   border-radius: 0 0.25rem 0.25rem 0;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   color: #525252;
@@ -37,7 +37,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  border-left: 3px solid var(--color-outline-active);
+  border-left: 3px solid var(--color-border-active);
   border-radius: 0.125rem 0 0 0.125rem;
   height: 100%;
   content: "";
@@ -65,7 +65,7 @@
 
 .secondaryMenuItemLink.current {
   border-radius: 0 0.25rem 0.25rem 0;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   color: #525252;
@@ -84,7 +84,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  border-left: 3px solid var(--color-outline-active);
+  border-left: 3px solid var(--color-border-active);
   border-radius: 0.125rem 0 0 0.125rem;
   height: 100%;
   content: "";

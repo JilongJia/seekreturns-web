@@ -1,7 +1,7 @@
 .link {
   display: block;
   transition-duration: 0.1s;
-  outline: 0 solid var(--outline-color);
+  outline: 0 solid var(--color-border-default);
   outline-offset: -2px;
   padding-top: 0.75rem;
   padding-right: 1.5rem;
@@ -11,11 +11,11 @@
 
 .link:hover {
   transition-duration: 0.2s;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
 }
 
 .link:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 

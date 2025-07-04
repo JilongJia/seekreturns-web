@@ -42,7 +42,7 @@ export function RangeInput({
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.style.background = `linear-gradient(to right, #2563eb ${progress}%, #e5e5e5 ${progress}%)`;
+      inputRef.current.style.setProperty("--progress-percent", `${progress}%`);
     }
   }, [progress]);
 

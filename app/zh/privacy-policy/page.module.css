@@ -16,7 +16,7 @@
 
 .h1 {
   margin-bottom: 1rem;
-  color: var(--article-heading-color);
+  color: var(--color-text-primary);
   font-weight: 600;
   font-size: 1.875rem;
   line-height: 2.5rem;
@@ -31,7 +31,7 @@
   margin-top: 2rem;
   margin-bottom: 1rem;
   scroll-margin-top: 100px;
-  color: var(--article-heading-color);
+  color: var(--color-text-primary);
   font-weight: 600;
   font-size: 1.5rem;
 }
@@ -40,7 +40,7 @@
   margin-top: 1.5rem;
   margin-bottom: 1rem;
   scroll-margin-top: 100px;
-  color: var(--article-heading-color);
+  color: var(--color-text-primary);
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -49,13 +49,13 @@
   margin-top: 1.2rem;
   margin-bottom: 1rem;
   scroll-margin-top: 100px;
-  color: var(--article-heading-color);
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
 .ul {
   margin-bottom: 1rem;
-  color: var(--article-text-color);
+  color: var(--color-text-primary);
   line-height: 1.75rem;
   list-style: none;
 }
@@ -79,7 +79,7 @@
 
 .p {
   margin-bottom: 1rem;
-  color: var(--article-text-color);
+  color: var(--color-text-primary);
   line-height: 1.75rem;
 }
 

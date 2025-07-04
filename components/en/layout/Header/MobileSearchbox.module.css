@@ -1,7 +1,7 @@
 .openDialogButton {
   vertical-align: middle;
   transition-duration: 0.1s;
-  outline: 0 solid var(--outline-color);
+  outline: 0 solid var(--color-border-default);
   outline-offset: 2px;
   border-radius: 0.25rem;
   color: #525252;
@@ -13,7 +13,7 @@
 }
 
 .openDialogButton:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 
@@ -48,13 +48,13 @@
   animation: fade-in 0.2s ease-in-out;
   border: 1px solid #d4d4d4;
   border-radius: 0.375rem;
-  background-color: #fafafa;
+  background-color: var(--color-background-surface);
   padding: 2rem 1.25rem;
 }
 
 .dialog::backdrop {
   opacity: 0.8;
-  background-color: #fafafa;
+  background-color: var(--color-background-backdrop);
 }
 
 .closeButton {
@@ -63,7 +63,7 @@
   right: 0.75rem;
   transition-duration: 0.1s;
   cursor: pointer;
-  outline: 0 solid var(--outline-color);
+  outline: 0 solid var(--color-border-default);
   outline-offset: 2px;
   border-radius: 0.25rem;
   color: #525252;
@@ -75,7 +75,7 @@
 }
 
 .closeButton:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 
@@ -105,7 +105,7 @@
 .input {
   display: block;
   transition-duration: 0.1s;
-  outline: 1px solid var(--outline-color);
+  outline: 1px solid var(--color-border-default);
   border-radius: 9999px;
   padding: 0.5rem 2.5rem 0.5rem 1rem;
   width: 100%;
@@ -118,7 +118,7 @@
 }
 
 .input:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 
@@ -129,7 +129,7 @@
   bottom: 0;
   transition-duration: 0.1s;
   cursor: pointer;
-  outline: 0 solid var(--outline-color);
+  outline: 0 solid var(--color-border-default);
   border-radius: 0 9999px 9999px 0;
   padding: 0 0.5rem;
   color: #737373;
@@ -142,7 +142,7 @@
 }
 
 .submitButton:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 

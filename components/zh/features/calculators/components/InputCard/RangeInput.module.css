@@ -14,6 +14,11 @@
   cursor: pointer;
   outline: 1px solid transparent;
   border-radius: 0.5rem;
+  background: linear-gradient(
+    to right,
+    var(--color-control-track-active) var(--progress-percent, 0%),
+    var(--color-control-track-inactive) var(--progress-percent, 0%)
+  );
   height: 0.75rem;
 }
 
@@ -24,7 +29,7 @@
   outline: 1px solid transparent;
   box-shadow: 0 0 6px 0 rgba(10, 10, 10, 0.3);
   border-radius: 9999px;
-  background: #fafafa;
+  background: var(--color-control-thumb-background);
   width: 1.25rem;
   height: 1.25rem;
 }
@@ -37,7 +42,7 @@
   box-shadow: 0 0 6px 0 rgba(10, 10, 10, 0.3);
   border: 0;
   border-radius: 9999px;
-  background: #fafafa;
+  background: var(--color-control-thumb-background);
   width: 1.25rem;
   height: 1.25rem;
 }

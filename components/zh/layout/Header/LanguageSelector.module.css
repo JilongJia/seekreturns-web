@@ -11,7 +11,7 @@
   gap: 0.25rem;
   transition-duration: 0.1s;
   cursor: pointer;
-  outline: 0 solid var(--outline-color);
+  outline: 0 solid var(--color-border-default);
   border-radius: 0.375rem;
   padding: 0.5rem 1rem;
 }
@@ -22,7 +22,7 @@
 }
 
 .button:focus-visible {
-  outline-color: var(--color-outline-focus);
+  outline-color: var(--color-border-focus);
   outline-width: 2px;
 }
 
@@ -52,7 +52,7 @@
   border: 1px solid #e5e5e5;
   border-top: 0;
   border-radius: 0.375rem;
-  background-color: #fafafa;
+  background-color: var(--color-background-surface);
   padding: 0.75rem 0;
   width: 9rem;
   list-style: none;
@@ -88,13 +88,13 @@
 
 .menuItemLink:hover {
   transition-duration: 0.2s;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
 }
 
 .menuItemLink:focus-visible {
   transition-duration: 0.2s;
   outline-style: none;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
 }
 
 .menuItemLink::before {
@@ -108,10 +108,10 @@
 
 .menuItemLink:hover::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--color-outline-hover);
+  border-left: 3px solid var(--color-border-hover);
 }
 
 .menuItemLink:focus-visible::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--color-outline-focus);
+  border-left: 3px solid var(--color-border-focus);
 }

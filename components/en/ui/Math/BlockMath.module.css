@@ -1,5 +1,5 @@
 .blockMath {
   margin-bottom: 1rem;
   overflow-x: auto;
-  color: var(--article-text-color);
+  color: var(--color-text-primary);
 }

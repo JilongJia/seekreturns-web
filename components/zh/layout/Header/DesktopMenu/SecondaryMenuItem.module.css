@@ -7,13 +7,13 @@
 
 .link:hover {
   transition-duration: 0.2s;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
 }
 
 .link:focus-visible {
   transition-duration: 0.2s;
   outline-style: none;
-  background-color: #dbeafe;
+  background-color: var(--color-background-accent);
 }
 
 .link::before {
@@ -27,10 +27,10 @@
 
 .link:hover::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--color-outline-hover);
+  border-left: 3px solid var(--color-border-hover);
 }
 
 .link:focus-visible::before {
   transition-duration: 0.2s;
-  border-left: 3px solid var(--color-outline-focus);
+  border-left: 3px solid var(--color-border-focus);
 }
