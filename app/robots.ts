@@ -6,9 +6,15 @@ function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: ["Googlebot", "Bingbot"],
+        userAgent: "Googlebot",
         allow: "/",
         disallow: ["/go/", "/en/search/", "/ja/search/", "/zh/search/"],
+      },
+      {
+        userAgent: "Bingbot",
+        allow: "/",
+        disallow: ["/go/", "/en/search/", "/ja/search/", "/zh/search/"],
+        crawlDelay: 3,
       },
       {
         userAgent: "*",

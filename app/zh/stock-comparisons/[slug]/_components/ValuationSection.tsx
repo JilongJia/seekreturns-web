@@ -1,12 +1,12 @@
 import React from "react";
 
-import { H2 } from "@/components/en/ui/H2";
-import { H3 } from "@/components/en/ui/H3";
-import { P } from "@/components/en/ui/P";
-import { Section } from "@/components/en/ui/Section";
-import { Table } from "@/components/en/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
-import { SummaryContainer } from "./summary-container/SummaryContainer";
+import { H2 } from "@/components/zh/ui/H2";
+import { H3 } from "@/components/zh/ui/H3";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
+import { Table } from "@/components/zh/ui/Table";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./SummaryContainer";
 
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
@@ -14,23 +14,24 @@ import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplic
 import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
-import styles from "./ProfitabilitySection.module.css";
+import styles from "./ValuationSection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type KeyMetricsData = {
-  returnOnEquityTTM: number | null;
-  returnOnAssetsTTM: number | null;
-  returnOnInvestedCapitalTTM: number | null;
+  evToEBITDATTM: number | null;
+  evToSalesTTM: number | null;
 };
 
 type RatiosData = {
-  netProfitMarginTTM: number | null;
-  operatingProfitMarginTTM: number | null;
-  grossProfitMarginTTM: number | null;
+  priceToEarningsRatioTTM: number | null;
+  forwardPriceToEarningsGrowthRatioTTM: number | null;
+  priceToSalesRatioTTM: number | null;
+  priceToBookRatioTTM: number | null;
+  priceToFreeCashFlowRatioTTM: number | null;
 };
 
-type ProfitabilitySectionProps = {
+type ValuationSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
   stockOneProfileData: ProfileData | null;
@@ -42,13 +43,13 @@ type ProfitabilitySectionProps = {
 };
 
 const metricsForComparison: (keyof KeyMetricsData | keyof RatiosData)[] = [
-  "returnOnEquityTTM",
-  "returnOnInvestedCapitalTTM",
-  "netProfitMarginTTM",
-  "operatingProfitMarginTTM",
+  "priceToEarningsRatioTTM",
+  "forwardPriceToEarningsGrowthRatioTTM",
+  "priceToSalesRatioTTM",
+  "priceToBookRatioTTM",
 ];
 
-export function ProfitabilitySection({
+export function ValuationSection({
   stockOneSymbol,
   stockTwoSymbol,
   stockOneProfileData,
@@ -57,7 +58,7 @@ export function ProfitabilitySection({
   stockTwoProfileData,
   stockTwoKeyMetricsData,
   stockTwoRatiosData,
-}: ProfitabilitySectionProps) {
+}: ValuationSectionProps) {
   if (
     !stockOneProfileData ||
     !stockOneKeyMetricsData ||
@@ -67,26 +68,26 @@ export function ProfitabilitySection({
     !stockTwoRatiosData
   ) {
     return (
-      <Section ariaLabelledby="profitability">
-        <H2 id="profitability">Profitability</H2>
-        <P>Profitability data is currently unavailable.</P>
+      <Section ariaLabelledby="valuation">
+        <H2 id="valuation">估值</H2>
+        <P>估值数据当前不可用。</P>
       </Section>
     );
   }
 
-  const formatPercentage = (value: number | null): string => {
+  const formatNumber = (value: number | null): string => {
     if (value === null) {
       return "--";
     }
-    return `${(value * 100).toFixed(2)}%`;
+    return value.toFixed(2);
   };
 
   const stockOneMetrics = { ...stockOneKeyMetricsData, ...stockOneRatiosData };
   const stockTwoMetrics = { ...stockTwoKeyMetricsData, ...stockTwoRatiosData };
 
   return (
-    <Section ariaLabelledby="profitability">
-      <H2 id="profitability">Profitability</H2>
+    <Section ariaLabelledby="valuation">
+      <H2 id="valuation">估值</H2>
 
       {metricsForComparison.map((metricCode) => {
         const stockOneMetricValue = stockOneMetrics[metricCode];
@@ -94,11 +95,11 @@ export function ProfitabilitySection({
 
         const metricLongName = getMetricName({
           metricCode,
-          nameType: "longNameEN",
+          nameType: "longNameZH",
         });
         const metricShortName = getMetricName({
           metricCode,
-          nameType: "shortNameEN",
+          nameType: "shortNameZH",
         });
 
         const stockOneIndustryMetricStats = calculateMetricStats({
@@ -175,12 +176,12 @@ export function ProfitabilitySection({
         );
       })}
 
-      <H3>Profitability at a Glance</H3>
+      <H3>估值概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -189,75 +190,93 @@ export function ProfitabilitySection({
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
+
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Return on Equity (TTM)
+                市盈率 (P/E, TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneKeyMetricsData.returnOnEquityTTM)}
+                {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoKeyMetricsData.returnOnEquityTTM)}
+                {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
+
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Return on Assets (TTM)
+                预期市盈增长率 (PEG, TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneKeyMetricsData.returnOnAssetsTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoKeyMetricsData.returnOnAssetsTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Return on Invested Capital (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(
-                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM,
+                {formatNumber(
+                  stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
                 )}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(
-                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM,
+                {formatNumber(
+                  stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
                 )}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
+
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Net Profit Margin (TTM)
+                市销率 (P/S, TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.netProfitMarginTTM)}
+                {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.netProfitMarginTTM)}
+                {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
+
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Operating Profit Margin (TTM)
+                市净率 (P/B, TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.operatingProfitMarginTTM)}
+                {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.operatingProfitMarginTTM)}
+                {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
+
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Gross Profit Margin (TTM)
+                市现率 (P/FCF, TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.grossProfitMarginTTM)}
+                {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.grossProfitMarginTTM)}
+                {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                企业价值倍数 (EV/EBITDA, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                企业价值与销售额比率 (EV/Sales, TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

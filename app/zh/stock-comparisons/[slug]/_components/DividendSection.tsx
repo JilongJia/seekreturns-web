@@ -6,7 +6,7 @@ import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
 import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
-import { SummaryContainer } from "./summary-container/SummaryContainer";
+import { SummaryContainer } from "./SummaryContainer";
 
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
@@ -14,84 +14,58 @@ import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplic
 import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
-import styles from "./ValuationSection.module.css";
+import styles from "./DividendSection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type KeyMetricsData = {
-  evToEBITDATTM: number | null;
-  evToSalesTTM: number | null;
-};
-
 type RatiosData = {
-  priceToEarningsRatioTTM: number | null;
-  forwardPriceToEarningsGrowthRatioTTM: number | null;
-  priceToSalesRatioTTM: number | null;
-  priceToBookRatioTTM: number | null;
-  priceToFreeCashFlowRatioTTM: number | null;
+  dividendYieldTTM: number;
+  dividendPayoutRatioTTM: number;
 };
 
-type ValuationSectionProps = {
+type DividendSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
   stockOneProfileData: ProfileData | null;
-  stockOneKeyMetricsData: KeyMetricsData | null;
   stockOneRatiosData: RatiosData | null;
   stockTwoProfileData: ProfileData | null;
-  stockTwoKeyMetricsData: KeyMetricsData | null;
   stockTwoRatiosData: RatiosData | null;
 };
 
-const metricsForComparison: (keyof KeyMetricsData | keyof RatiosData)[] = [
-  "priceToEarningsRatioTTM",
-  "forwardPriceToEarningsGrowthRatioTTM",
-  "priceToSalesRatioTTM",
-  "priceToBookRatioTTM",
+const metricsForComparison: (keyof RatiosData)[] = [
+  "dividendYieldTTM",
+  "dividendPayoutRatioTTM",
 ];
 
-export function ValuationSection({
+export function DividendSection({
   stockOneSymbol,
   stockTwoSymbol,
   stockOneProfileData,
-  stockOneKeyMetricsData,
   stockOneRatiosData,
   stockTwoProfileData,
-  stockTwoKeyMetricsData,
   stockTwoRatiosData,
-}: ValuationSectionProps) {
+}: DividendSectionProps) {
   if (
     !stockOneProfileData ||
-    !stockOneKeyMetricsData ||
     !stockOneRatiosData ||
     !stockTwoProfileData ||
-    !stockTwoKeyMetricsData ||
     !stockTwoRatiosData
   ) {
     return (
-      <Section ariaLabelledby="valuation">
-        <H2 id="valuation">估值</H2>
-        <P>估值数据当前不可用。</P>
+      <Section ariaLabelledby="dividend">
+        <H2 id="dividend">股息</H2>
+        <P>股息数据当前不可用。</P>
       </Section>
     );
   }
 
-  const formatNumber = (value: number | null): string => {
-    if (value === null) {
-      return "--";
-    }
-    return value.toFixed(2);
-  };
-
-  const stockOneMetrics = { ...stockOneKeyMetricsData, ...stockOneRatiosData };
-  const stockTwoMetrics = { ...stockTwoKeyMetricsData, ...stockTwoRatiosData };
-
   return (
-    <Section ariaLabelledby="valuation">
-      <H2 id="valuation">估值</H2>
+    <Section ariaLabelledby="dividend">
+      <H2 id="dividend">股息</H2>
 
       {metricsForComparison.map((metricCode) => {
-        const stockOneMetricValue = stockOneMetrics[metricCode];
-        const stockTwoMetricValue = stockTwoMetrics[metricCode];
+        const stockOneMetricValue = stockOneRatiosData[metricCode];
+        const stockTwoMetricValue = stockTwoRatiosData[metricCode];
 
         const metricLongName = getMetricName({
           metricCode,
@@ -176,7 +150,8 @@ export function ValuationSection({
         );
       })}
 
-      <H3>估值概览</H3>
+      <H3>股息概览</H3>
+
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
@@ -190,93 +165,25 @@ export function ValuationSection({
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
-
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                市盈率 (P/E, TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.priceToEarningsRatioTTM)}
+                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.priceToEarningsRatioTTM)}
+                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                预期市盈增长率 (PEG, TTM)
+                股息支付率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(
-                  stockOneRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-                )}
+                {(stockOneRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(
-                  stockTwoRatiosData.forwardPriceToEarningsGrowthRatioTTM,
-                )}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                市销率 (P/S, TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.priceToSalesRatioTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.priceToSalesRatioTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                市净率 (P/B, TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.priceToBookRatioTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.priceToBookRatioTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                市现率 (P/FCF, TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.priceToFreeCashFlowRatioTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.priceToFreeCashFlowRatioTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                企业价值倍数 (EV/EBITDA, TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneKeyMetricsData.evToEBITDATTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoKeyMetricsData.evToEBITDATTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                企业价值与销售额比率 (EV/Sales, TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneKeyMetricsData.evToSalesTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoKeyMetricsData.evToSalesTTM)}
+                {(stockTwoRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

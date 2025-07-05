@@ -1,12 +1,12 @@
 import React from "react";
 
-import { H2 } from "@/components/en/ui/H2";
-import { H3 } from "@/components/en/ui/H3";
-import { P } from "@/components/en/ui/P";
-import { Section } from "@/components/en/ui/Section";
-import { Table } from "@/components/en/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
-import { SummaryContainer } from "./summary-container/SummaryContainer";
+import { H2 } from "@/components/zh/ui/H2";
+import { H3 } from "@/components/zh/ui/H3";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
+import { Table } from "@/components/zh/ui/Table";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./SummaryContainer";
 
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
@@ -14,54 +14,75 @@ import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplic
 import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
-import styles from "./DividendSection.module.css";
+import styles from "./FinancialStrengthSection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type RatiosData = {
-  dividendYieldTTM: number;
-  dividendPayoutRatioTTM: number;
+type KeyMetricsData = {
+  netDebtToEBITDATTM: number | null;
 };
 
-type DividendSectionProps = {
+type RatiosData = {
+  currentRatioTTM: number | null;
+  quickRatioTTM: number | null;
+  debtToEquityRatioTTM: number | null;
+  debtToAssetsRatioTTM: number | null;
+  interestCoverageRatioTTM: number | null;
+};
+
+type FinancialStrengthSectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
   stockOneProfileData: ProfileData | null;
+  stockOneKeyMetricsData: KeyMetricsData | null;
   stockOneRatiosData: RatiosData | null;
   stockTwoProfileData: ProfileData | null;
+  stockTwoKeyMetricsData: KeyMetricsData | null;
   stockTwoRatiosData: RatiosData | null;
 };
 
 const metricsForComparison: (keyof RatiosData)[] = [
-  "dividendYieldTTM",
-  "dividendPayoutRatioTTM",
+  "currentRatioTTM",
+  "debtToEquityRatioTTM",
+  "interestCoverageRatioTTM",
 ];
 
-export function DividendSection({
+export function FinancialStrengthSection({
   stockOneSymbol,
   stockTwoSymbol,
   stockOneProfileData,
+  stockOneKeyMetricsData,
   stockOneRatiosData,
   stockTwoProfileData,
+  stockTwoKeyMetricsData,
   stockTwoRatiosData,
-}: DividendSectionProps) {
+}: FinancialStrengthSectionProps) {
   if (
     !stockOneProfileData ||
+    !stockOneKeyMetricsData ||
     !stockOneRatiosData ||
     !stockTwoProfileData ||
+    !stockTwoKeyMetricsData ||
     !stockTwoRatiosData
   ) {
     return (
-      <Section ariaLabelledby="dividend">
-        <H2 id="dividend">Dividend</H2>
-        <P>Dividend data is currently unavailable.</P>
+      <Section ariaLabelledby="financial-strength">
+        <H2 id="financial-strength">财务实力</H2>
+        <P>财务实力数据当前不可用。</P>
       </Section>
     );
   }
 
+  const formatNumber = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return value.toFixed(2);
+  };
+
   return (
-    <Section ariaLabelledby="dividend">
-      <H2 id="dividend">Dividend</H2>
+    <Section ariaLabelledby="financial-strength">
+      <H2 id="financial-strength">财务实力</H2>
 
       {metricsForComparison.map((metricCode) => {
         const stockOneMetricValue = stockOneRatiosData[metricCode];
@@ -69,11 +90,11 @@ export function DividendSection({
 
         const metricLongName = getMetricName({
           metricCode,
-          nameType: "longNameEN",
+          nameType: "longNameZH",
         });
         const metricShortName = getMetricName({
           metricCode,
-          nameType: "shortNameEN",
+          nameType: "shortNameZH",
         });
 
         const stockOneIndustryMetricStats = calculateMetricStats({
@@ -150,13 +171,12 @@ export function DividendSection({
         );
       })}
 
-      <H3>Dividend at a Glance</H3>
-
+      <H3>财务实力概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -165,27 +185,71 @@ export function DividendSection({
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
+
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Dividend Yield (TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {formatNumber(stockOneRatiosData.currentRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {formatNumber(stockTwoRatiosData.currentRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
+
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Dividend Payout Ratio (TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
+                {formatNumber(stockOneRatiosData.quickRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
+                {formatNumber(stockTwoRatiosData.quickRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">产权比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                资产负债率 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                净负债与EBITDA比率 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneKeyMetricsData.netDebtToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoKeyMetricsData.netDebtToEBITDATTM)}
+              </Table.Tbody.Tr.Td>
+            </Table.Tbody.Tr>
+
+            <Table.Tbody.Tr>
+              <Table.Tbody.Tr.Th scope="row">
+                利息保障倍数 (TTM)
+              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
+              </Table.Tbody.Tr.Td>
+              <Table.Tbody.Tr.Td>
+                {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

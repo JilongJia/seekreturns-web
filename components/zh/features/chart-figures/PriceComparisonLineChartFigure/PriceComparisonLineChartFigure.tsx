@@ -179,9 +179,11 @@ export function PriceComparisonLineChartFigure({
 
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
+      title: data.stockOne.symbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
+      title: data.stockTwo.symbol,
     });
     stockOneLineSeries.setData(stockOneNormalizedSeries);
     stockTwoLineSeries.setData(stockTwoNormalizedSeries);

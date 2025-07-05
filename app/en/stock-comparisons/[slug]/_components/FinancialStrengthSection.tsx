@@ -1,12 +1,12 @@
 import React from "react";
 
-import { H2 } from "@/components/zh/ui/H2";
-import { H3 } from "@/components/zh/ui/H3";
-import { P } from "@/components/zh/ui/P";
-import { Section } from "@/components/zh/ui/Section";
-import { Table } from "@/components/zh/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
-import { SummaryContainer } from "./summary-container/SummaryContainer";
+import { H2 } from "@/components/en/ui/H2";
+import { H3 } from "@/components/en/ui/H3";
+import { P } from "@/components/en/ui/P";
+import { Section } from "@/components/en/ui/Section";
+import { Table } from "@/components/en/ui/Table";
+import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./SummaryContainer";
 
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
@@ -67,8 +67,8 @@ export function FinancialStrengthSection({
   ) {
     return (
       <Section ariaLabelledby="financial-strength">
-        <H2 id="financial-strength">财务实力</H2>
-        <P>财务实力数据当前不可用。</P>
+        <H2 id="financial-strength">Financial Strength</H2>
+        <P>Financial strength data is currently unavailable.</P>
       </Section>
     );
   }
@@ -82,7 +82,7 @@ export function FinancialStrengthSection({
 
   return (
     <Section ariaLabelledby="financial-strength">
-      <H2 id="financial-strength">财务实力</H2>
+      <H2 id="financial-strength">Financial Strength</H2>
 
       {metricsForComparison.map((metricCode) => {
         const stockOneMetricValue = stockOneRatiosData[metricCode];
@@ -90,11 +90,11 @@ export function FinancialStrengthSection({
 
         const metricLongName = getMetricName({
           metricCode,
-          nameType: "longNameZH",
+          nameType: "longNameEN",
         });
         const metricShortName = getMetricName({
           metricCode,
-          nameType: "shortNameZH",
+          nameType: "shortNameEN",
         });
 
         const stockOneIndustryMetricStats = calculateMetricStats({
@@ -171,12 +171,12 @@ export function FinancialStrengthSection({
         );
       })}
 
-      <H3>财务实力概览</H3>
+      <H3>Financial Strength at a Glance</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -188,7 +188,9 @@ export function FinancialStrengthSection({
 
           <Table.Tbody>
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">流动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">
+                Current Ratio (TTM)
+              </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.currentRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -198,7 +200,9 @@ export function FinancialStrengthSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">速动比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">
+                Quick Ratio (TTM)
+              </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.quickRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -208,7 +212,9 @@ export function FinancialStrengthSection({
             </Table.Tbody.Tr>
 
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">产权比率 (TTM)</Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">
+                Debt-to-Equity Ratio (TTM)
+              </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
               </Table.Tbody.Tr.Td>
@@ -219,7 +225,7 @@ export function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                资产负债率 (TTM)
+                Debt-to-Asset Ratio (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
@@ -231,7 +237,7 @@ export function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                净负债与EBITDA比率 (TTM)
+                Net Debt-to-EBITDA Ratio (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneKeyMetricsData.netDebtToEBITDATTM)}
@@ -243,7 +249,7 @@ export function FinancialStrengthSection({
 
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                利息保障倍数 (TTM)
+                Interest Coverage Ratio (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
                 {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}

@@ -1,12 +1,12 @@
 import React from "react";
 
-import { H2 } from "@/components/en/ui/H2";
-import { H3 } from "@/components/en/ui/H3";
-import { P } from "@/components/en/ui/P";
-import { Section } from "@/components/en/ui/Section";
-import { Table } from "@/components/en/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
-import { SummaryContainer } from "./summary-container/SummaryContainer";
+import { H2 } from "@/components/zh/ui/H2";
+import { H3 } from "@/components/zh/ui/H3";
+import { P } from "@/components/zh/ui/P";
+import { Section } from "@/components/zh/ui/Section";
+import { Table } from "@/components/zh/ui/Table";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { SummaryContainer } from "./SummaryContainer";
 
 import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
 import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
@@ -14,23 +14,23 @@ import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplic
 import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
-import styles from "./FinancialStrengthSection.module.css";
+import styles from "./ProfitabilitySection.module.css";
 import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type KeyMetricsData = {
-  netDebtToEBITDATTM: number | null;
+  returnOnEquityTTM: number | null;
+  returnOnAssetsTTM: number | null;
+  returnOnInvestedCapitalTTM: number | null;
 };
 
 type RatiosData = {
-  currentRatioTTM: number | null;
-  quickRatioTTM: number | null;
-  debtToEquityRatioTTM: number | null;
-  debtToAssetsRatioTTM: number | null;
-  interestCoverageRatioTTM: number | null;
+  netProfitMarginTTM: number | null;
+  operatingProfitMarginTTM: number | null;
+  grossProfitMarginTTM: number | null;
 };
 
-type FinancialStrengthSectionProps = {
+type ProfitabilitySectionProps = {
   stockOneSymbol: string;
   stockTwoSymbol: string;
   stockOneProfileData: ProfileData | null;
@@ -41,13 +41,14 @@ type FinancialStrengthSectionProps = {
   stockTwoRatiosData: RatiosData | null;
 };
 
-const metricsForComparison: (keyof RatiosData)[] = [
-  "currentRatioTTM",
-  "debtToEquityRatioTTM",
-  "interestCoverageRatioTTM",
+const metricsForComparison: (keyof KeyMetricsData | keyof RatiosData)[] = [
+  "returnOnEquityTTM",
+  "returnOnInvestedCapitalTTM",
+  "netProfitMarginTTM",
+  "operatingProfitMarginTTM",
 ];
 
-export function FinancialStrengthSection({
+export function ProfitabilitySection({
   stockOneSymbol,
   stockTwoSymbol,
   stockOneProfileData,
@@ -56,7 +57,7 @@ export function FinancialStrengthSection({
   stockTwoProfileData,
   stockTwoKeyMetricsData,
   stockTwoRatiosData,
-}: FinancialStrengthSectionProps) {
+}: ProfitabilitySectionProps) {
   if (
     !stockOneProfileData ||
     !stockOneKeyMetricsData ||
@@ -66,35 +67,38 @@ export function FinancialStrengthSection({
     !stockTwoRatiosData
   ) {
     return (
-      <Section ariaLabelledby="financial-strength">
-        <H2 id="financial-strength">Financial Strength</H2>
-        <P>Financial strength data is currently unavailable.</P>
+      <Section ariaLabelledby="profitability">
+        <H2 id="profitability">盈利能力</H2>
+        <P>盈利能力数据当前不可用。</P>
       </Section>
     );
   }
 
-  const formatNumber = (value: number | null): string => {
+  const formatPercentage = (value: number | null): string => {
     if (value === null) {
       return "--";
     }
-    return value.toFixed(2);
+    return `${(value * 100).toFixed(2)}%`;
   };
 
+  const stockOneMetrics = { ...stockOneKeyMetricsData, ...stockOneRatiosData };
+  const stockTwoMetrics = { ...stockTwoKeyMetricsData, ...stockTwoRatiosData };
+
   return (
-    <Section ariaLabelledby="financial-strength">
-      <H2 id="financial-strength">Financial Strength</H2>
+    <Section ariaLabelledby="profitability">
+      <H2 id="profitability">盈利能力</H2>
 
       {metricsForComparison.map((metricCode) => {
-        const stockOneMetricValue = stockOneRatiosData[metricCode];
-        const stockTwoMetricValue = stockTwoRatiosData[metricCode];
+        const stockOneMetricValue = stockOneMetrics[metricCode];
+        const stockTwoMetricValue = stockTwoMetrics[metricCode];
 
         const metricLongName = getMetricName({
           metricCode,
-          nameType: "longNameEN",
+          nameType: "longNameZH",
         });
         const metricShortName = getMetricName({
           metricCode,
-          nameType: "shortNameEN",
+          nameType: "shortNameZH",
         });
 
         const stockOneIndustryMetricStats = calculateMetricStats({
@@ -171,12 +175,12 @@ export function FinancialStrengthSection({
         );
       })}
 
-      <H3>Financial Strength at a Glance</H3>
+      <H3>盈利能力概览</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneSymbol}
               </Table.Thead.Tr.Th>
@@ -185,77 +189,71 @@ export function FinancialStrengthSection({
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
-
           <Table.Tbody>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Current Ratio (TTM)
+                净资产收益率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.currentRatioTTM)}
+                {formatPercentage(stockOneKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.currentRatioTTM)}
+                {formatPercentage(stockTwoKeyMetricsData.returnOnEquityTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Quick Ratio (TTM)
+                资产回报率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.quickRatioTTM)}
+                {formatPercentage(stockOneKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.quickRatioTTM)}
+                {formatPercentage(stockTwoKeyMetricsData.returnOnAssetsTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Debt-to-Equity Ratio (TTM)
+                投入资本回报率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.debtToEquityRatioTTM)}
+                {formatPercentage(
+                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.debtToEquityRatioTTM)}
+                {formatPercentage(
+                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM,
+                )}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Debt-to-Asset Ratio (TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">净利率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.debtToAssetsRatioTTM)}
+                {formatPercentage(stockOneRatiosData.netProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.debtToAssetsRatioTTM)}
+                {formatPercentage(stockTwoRatiosData.netProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">
-                Net Debt-to-EBITDA Ratio (TTM)
+                营业利润率 (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneKeyMetricsData.netDebtToEBITDATTM)}
+                {formatPercentage(stockOneRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoKeyMetricsData.netDebtToEBITDATTM)}
+                {formatPercentage(stockTwoRatiosData.operatingProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
-
             <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                Interest Coverage Ratio (TTM)
-              </Table.Tbody.Tr.Th>
+              <Table.Tbody.Tr.Th scope="row">毛利率 (TTM)</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockOneRatiosData.interestCoverageRatioTTM)}
+                {formatPercentage(stockOneRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {formatNumber(stockTwoRatiosData.interestCoverageRatioTTM)}
+                {formatPercentage(stockTwoRatiosData.grossProfitMarginTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

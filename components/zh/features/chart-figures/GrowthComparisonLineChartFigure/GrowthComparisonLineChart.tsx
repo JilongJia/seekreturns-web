@@ -62,12 +62,10 @@ export function GrowthComparisonLineChart({
 
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
-      lineWidth: 2,
       title: stockOneSymbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
-      lineWidth: 2,
       title: stockTwoSymbol,
     });
     stockOneLineSeries.setData(stockOneGrowthSeries);
