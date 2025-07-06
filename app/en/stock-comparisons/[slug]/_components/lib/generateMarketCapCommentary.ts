@@ -1,10 +1,10 @@
 type GenerateMarketCapCommentaryParams = {
   stockOneSymbol: string;
-  stockOneMarketCap: number;
-  stockOneCurrency: string;
+  stockOneMarketCap: number | null;
+  stockOneCurrency: string | null;
   stockTwoSymbol: string;
-  stockTwoMarketCap: number;
-  stockTwoCurrency: string;
+  stockTwoMarketCap: number | null;
+  stockTwoCurrency: string | null;
 };
 
 export function generateMarketCapCommentary({
@@ -15,7 +15,14 @@ export function generateMarketCapCommentary({
   stockTwoMarketCap,
   stockTwoCurrency,
 }: GenerateMarketCapCommentaryParams): string {
-  if (stockOneMarketCap <= 0 || stockTwoMarketCap <= 0) {
+  if (
+    stockOneMarketCap == null ||
+    stockOneMarketCap <= 0 ||
+    stockTwoMarketCap == null ||
+    stockTwoMarketCap <= 0 ||
+    stockOneCurrency == null ||
+    stockTwoCurrency == null
+  ) {
     return "";
   }
 

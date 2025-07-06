@@ -9,7 +9,7 @@ type MetricApplicability = {
 type MetricApplicabilitiesData = MetricApplicability[];
 
 type GetMetricApplicabilityParams = {
-  industryCode: IndustryCode;
+  industryCode: IndustryCode | null;
   metricCode: MetricCode;
 };
 
@@ -20,6 +20,10 @@ export function getMetricApplicability({
   industryCode,
   metricCode,
 }: GetMetricApplicabilityParams): boolean {
+  if (industryCode == null) {
+    return false;
+  }
+
   const metricApplicabilities = allMetricApplicabilities.find(
     (item) => item.industry === industryCode,
   );

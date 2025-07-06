@@ -15,12 +15,12 @@ import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricSt
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
 import styles from "./DividendSection.module.css";
-import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { ProfileData } from "@/lib/firebase/stocks";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type RatiosData = {
-  dividendYieldTTM: number;
-  dividendPayoutRatioTTM: number;
+  dividendYieldTTM: number | null;
+  dividendPayoutRatioTTM: number | null;
 };
 
 type DividendSectionProps = {
@@ -58,6 +58,13 @@ export function DividendSection({
       </Section>
     );
   }
+
+  const formatPercentage = (value: number | null): string => {
+    if (value === null) {
+      return "--";
+    }
+    return `${(value * 100).toFixed(2)}%`;
+  };
 
   return (
     <Section ariaLabelledby="dividend">
@@ -118,13 +125,13 @@ export function DividendSection({
               metricCode={metricCode as MetricCode}
               metricName={metricShortName}
               stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -134,13 +141,13 @@ export function DividendSection({
               metricCode={metricCode as MetricCode}
               metricName={metricShortName}
               stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -171,10 +178,10 @@ export function DividendSection({
                 Dividend Yield (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneRatiosData.dividendYieldTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.dividendYieldTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.dividendYieldTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -182,10 +189,10 @@ export function DividendSection({
                 Dividend Payout Ratio (TTM)
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
+                {formatPercentage(stockOneRatiosData.dividendPayoutRatioTTM)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoRatiosData.dividendPayoutRatioTTM * 100).toFixed(2)}%
+                {formatPercentage(stockTwoRatiosData.dividendPayoutRatioTTM)}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

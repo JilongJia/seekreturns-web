@@ -1,8 +1,8 @@
 type GenerateAdrCommentaryParams = {
   stockOneSymbol: string;
-  stockOneIsAdr: boolean;
+  stockOneIsAdr: boolean | null;
   stockTwoSymbol: string;
-  stockTwoIsAdr: boolean;
+  stockTwoIsAdr: boolean | null;
 };
 
 export function generateAdrCommentary({
@@ -11,6 +11,10 @@ export function generateAdrCommentary({
   stockTwoSymbol,
   stockTwoIsAdr,
 }: GenerateAdrCommentaryParams): string {
+  if (stockOneIsAdr == null || stockTwoIsAdr == null) {
+    return "";
+  }
+
   if (stockOneIsAdr && stockTwoIsAdr) {
     return `${stockOneSymbol} and ${stockTwoSymbol} are both American Depositary Receipts (ADRs). This provides U.S. investors with straightforward access to investing in these foreign-listed companies without directly engaging with overseas stock exchanges.`;
   }

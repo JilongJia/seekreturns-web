@@ -1,8 +1,8 @@
 type GenerateBetaCommentaryParams = {
   stockOneSymbol: string;
-  stockOneBeta: number;
+  stockOneBeta: number | null;
   stockTwoSymbol: string;
-  stockTwoBeta: number;
+  stockTwoBeta: number | null;
 };
 
 export function generateBetaCommentary({
@@ -11,7 +11,12 @@ export function generateBetaCommentary({
   stockTwoSymbol,
   stockTwoBeta,
 }: GenerateBetaCommentaryParams): string {
-  if (stockOneBeta === 0 || stockTwoBeta === 0) {
+  if (
+    stockOneBeta == null ||
+    stockTwoBeta == null ||
+    stockOneBeta === 0 ||
+    stockTwoBeta === 0
+  ) {
     return "";
   }
 

@@ -15,7 +15,7 @@ import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricSt
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
 import styles from "./ValuationSection.module.css";
-import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { ProfileData } from "@/lib/firebase/stocks";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type KeyMetricsData = {
@@ -144,13 +144,13 @@ export function ValuationSection({
               metricCode={metricCode as MetricCode}
               metricName={metricShortName}
               stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -160,13 +160,13 @@ export function ValuationSection({
               metricCode={metricCode as MetricCode}
               metricName={metricShortName}
               stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry}
+              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry}
+              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}

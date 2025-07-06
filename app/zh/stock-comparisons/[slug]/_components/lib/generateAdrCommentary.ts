@@ -1,8 +1,8 @@
 type GenerateAdrCommentaryParams = {
   stockOneSymbol: string;
-  stockOneIsAdr: boolean;
+  stockOneIsAdr: boolean | null;
   stockTwoSymbol: string;
-  stockTwoIsAdr: boolean;
+  stockTwoIsAdr: boolean | null;
 };
 
 export function generateAdrCommentary({
@@ -11,6 +11,10 @@ export function generateAdrCommentary({
   stockTwoSymbol,
   stockTwoIsAdr,
 }: GenerateAdrCommentaryParams): string {
+  if (stockOneIsAdr == null || stockTwoIsAdr == null) {
+    return "";
+  }
+
   if (stockOneIsAdr && stockTwoIsAdr) {
     return `${stockOneSymbol}与${stockTwoSymbol}均为美国存托凭证（ADR）。这意味着美国投资者可以便捷地通过美国本土交易所投资这两家外国公司，而无需直接参与海外市场的交易。`;
   }

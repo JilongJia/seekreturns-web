@@ -9,7 +9,7 @@ type IndustryMetric = {
 type IndustryMetricsData = IndustryMetric[];
 
 type GetIndustryMetricParams = {
-  industryCode: IndustryCode;
+  industryCode: IndustryCode | null;
   metricCode: MetricCode;
 };
 
@@ -19,6 +19,10 @@ export function getIndustryMetric({
   industryCode,
   metricCode,
 }: GetIndustryMetricParams): number[] {
+  if (industryCode == null) {
+    return [];
+  }
+
   const industryMetrics = allIndustryMetrics.find(
     (item) => item.industry === industryCode,
   );

@@ -1,10 +1,10 @@
 type GenerateMarketCapCommentaryParams = {
   stockOneSymbol: string;
-  stockOneMarketCap: number;
-  stockOneCurrency: string;
+  stockOneMarketCap: number | null;
+  stockOneCurrency: string | null;
   stockTwoSymbol: string;
-  stockTwoMarketCap: number;
-  stockTwoCurrency: string;
+  stockTwoMarketCap: number | null;
+  stockTwoCurrency: string | null;
 };
 
 export function generateMarketCapCommentary({
@@ -15,6 +15,17 @@ export function generateMarketCapCommentary({
   stockTwoMarketCap,
   stockTwoCurrency,
 }: GenerateMarketCapCommentaryParams): string {
+  if (
+    stockOneMarketCap == null ||
+    stockOneMarketCap <= 0 ||
+    stockTwoMarketCap == null ||
+    stockTwoMarketCap <= 0 ||
+    stockOneCurrency == null ||
+    stockTwoCurrency == null
+  ) {
+    return "";
+  }
+
   const stockOneMarketCapString = (stockOneMarketCap / 1e8).toLocaleString(
     "zh",
     {
@@ -29,10 +40,6 @@ export function generateMarketCapCommentary({
       maximumFractionDigits: 2,
     },
   );
-
-  if (stockOneMarketCap <= 0 || stockTwoMarketCap <= 0) {
-    return "";
-  }
 
   const ratio = stockOneMarketCap / stockTwoMarketCap;
 

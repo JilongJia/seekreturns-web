@@ -8,7 +8,7 @@ import { Section } from "@/components/en/ui/Section";
 import { Table } from "@/components/en/ui/Table";
 
 import styles from "./CompanyOverviewSection.module.css";
-import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { ProfileData } from "@/lib/firebase/stocks";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
@@ -141,40 +141,60 @@ export function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">Price</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.price.toLocaleString("en")}{" "}
-                {stockOneProfileData.currency}
+                {stockOneProfileData.price === null ||
+                stockOneProfileData.currency === null
+                  ? "--"
+                  : `${stockOneProfileData.price.toLocaleString("en")} ${
+                      stockOneProfileData.currency
+                    }`}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.price.toLocaleString("en")}{" "}
-                {stockTwoProfileData.currency}
+                {stockTwoProfileData.price === null ||
+                stockTwoProfileData.currency === null
+                  ? "--"
+                  : `${stockTwoProfileData.price.toLocaleString("en")} ${
+                      stockTwoProfileData.currency
+                    }`}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">Market Cap</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneProfileData.marketCap / 1e9).toLocaleString("en", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{" "}
-                billion {stockOneProfileData.currency}
+                {stockOneProfileData.marketCap === null ||
+                stockOneProfileData.currency === null
+                  ? "--"
+                  : `${(stockOneProfileData.marketCap / 1e9).toLocaleString(
+                      "en",
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      },
+                    )} billion ${stockOneProfileData.currency}`}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoProfileData.marketCap / 1e9).toLocaleString("en", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{" "}
-                billion {stockTwoProfileData.currency}
+                {stockTwoProfileData.marketCap === null ||
+                stockTwoProfileData.currency === null
+                  ? "--"
+                  : `${(stockTwoProfileData.marketCap / 1e9).toLocaleString(
+                      "en",
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      },
+                    )} billion ${stockTwoProfileData.currency}`}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">Beta</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.beta === 0
+                {stockOneProfileData.beta === null ||
+                stockOneProfileData.beta === 0
                   ? "--"
                   : stockOneProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.beta === 0
+                {stockTwoProfileData.beta === null ||
+                stockTwoProfileData.beta === 0
                   ? "--"
                   : stockTwoProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
@@ -218,10 +238,18 @@ export function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">ADR</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.isAdr ? "Yes" : "No"}
+                {stockOneProfileData.isAdr === null
+                  ? "--"
+                  : stockOneProfileData.isAdr
+                    ? "Yes"
+                    : "No"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.isAdr ? "Yes" : "No"}
+                {stockTwoProfileData.isAdr === null
+                  ? "--"
+                  : stockTwoProfileData.isAdr
+                    ? "Yes"
+                    : "No"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>

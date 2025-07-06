@@ -2,7 +2,6 @@ import { MetricComparisonBoxPlot } from "./MetricComparisonBoxPlot";
 import { MetricComparisonBoxPlotFigcaption } from "./MetricComparisonBoxPlotFigcaption";
 
 import styles from "./MetricComparisonBoxPlotFigure.module.css";
-import type { IndustryCode } from "@/app/data/fmp/industryCodes";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 import type { MetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
 import type { MetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
@@ -11,13 +10,13 @@ type MetricComparisonBoxPlotFigureProps = {
   metricCode: MetricCode;
   metricName: string;
   stockOneSymbol: string;
-  stockOneIndustryName: IndustryCode;
+  stockOneIndustryName: string;
   stockOneMetricValue: number | null;
   stockOneMetricColor: MetricColor;
   stockOneIndustryMetricStats: MetricStats | null;
   isStockOneMetricApplicable: boolean;
   stockTwoSymbol: string;
-  stockTwoIndustryName: IndustryCode;
+  stockTwoIndustryName: string;
   stockTwoMetricValue: number | null;
   stockTwoMetricColor: MetricColor;
   stockTwoIndustryMetricStats: MetricStats | null;

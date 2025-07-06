@@ -8,7 +8,7 @@ import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
 
 import styles from "./CompanyOverviewSection.module.css";
-import type { ProfileData } from "@/app/lib/fmp/fetchProfileData";
+import type { ProfileData } from "@/lib/firebase/stocks";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
@@ -139,29 +139,47 @@ export function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">价格</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.price.toLocaleString("zh")}{" "}
-                {stockOneProfileData.currency}
+                {stockOneProfileData.price === null ||
+                stockOneProfileData.currency === null
+                  ? "--"
+                  : `${stockOneProfileData.price.toLocaleString("zh")}${
+                      stockOneProfileData.currency
+                    }`}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.price.toLocaleString("zh")}{" "}
-                {stockTwoProfileData.currency}
+                {stockTwoProfileData.price === null ||
+                stockTwoProfileData.currency === null
+                  ? "--"
+                  : `${stockTwoProfileData.price.toLocaleString("zh")}${
+                      stockTwoProfileData.currency
+                    }`}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">市值</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {(stockOneProfileData.marketCap / 1e8).toLocaleString("zh", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{" "}
-                亿 {stockOneProfileData.currency}
+                {stockOneProfileData.marketCap === null ||
+                stockOneProfileData.currency === null
+                  ? "--"
+                  : `${(stockOneProfileData.marketCap / 1e8).toLocaleString(
+                      "zh",
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      },
+                    )}亿${stockOneProfileData.currency}`}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {(stockTwoProfileData.marketCap / 1e8).toLocaleString("zh", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}{" "}
-                亿 {stockTwoProfileData.currency}
+                {stockTwoProfileData.marketCap === null ||
+                stockTwoProfileData.currency === null
+                  ? "--"
+                  : `${(stockTwoProfileData.marketCap / 1e8).toLocaleString(
+                      "zh",
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      },
+                    )}亿${stockTwoProfileData.currency}`}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
             <Table.Tbody.Tr>
@@ -169,12 +187,14 @@ export function CompanyOverviewSection({
                 贝塔值（波动性）
               </Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.beta === 0
+                {stockOneProfileData.beta === null ||
+                stockOneProfileData.beta === 0
                   ? "--"
                   : stockOneProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.beta === 0
+                {stockTwoProfileData.beta === null ||
+                stockTwoProfileData.beta === 0
                   ? "--"
                   : stockTwoProfileData.beta.toFixed(2)}
               </Table.Tbody.Tr.Td>
@@ -218,10 +238,18 @@ export function CompanyOverviewSection({
             <Table.Tbody.Tr>
               <Table.Tbody.Tr.Th scope="row">ADR</Table.Tbody.Tr.Th>
               <Table.Tbody.Tr.Td>
-                {stockOneProfileData.isAdr ? "是" : "否"}
+                {stockOneProfileData.isAdr === null
+                  ? "--"
+                  : stockOneProfileData.isAdr
+                    ? "是"
+                    : "否"}
               </Table.Tbody.Tr.Td>
               <Table.Tbody.Tr.Td>
-                {stockTwoProfileData.isAdr ? "是" : "否"}
+                {stockTwoProfileData.isAdr === null
+                  ? "--"
+                  : stockTwoProfileData.isAdr
+                    ? "是"
+                    : "否"}
               </Table.Tbody.Tr.Td>
             </Table.Tbody.Tr>
           </Table.Tbody>
