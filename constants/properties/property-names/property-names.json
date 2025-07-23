@@ -1,0 +1,324 @@
+[
+  {
+    "property": "symbol",
+    "shortNameEn": "Symbol",
+    "longNameEn": "Stock Symbol",
+    "shortNameZh": "代码",
+    "longNameZh": "股票代码"
+  },
+  {
+    "property": "companyName",
+    "shortNameEn": "Company Name",
+    "longNameEn": "Company Name",
+    "shortNameZh": "公司名称",
+    "longNameZh": "公司名称"
+  },
+  {
+    "property": "country",
+    "shortNameEn": "Country",
+    "longNameEn": "Country",
+    "shortNameZh": "国家",
+    "longNameZh": "国家"
+  },
+  {
+    "property": "sector",
+    "shortNameEn": "Sector",
+    "longNameEn": "Sector",
+    "shortNameZh": "板块",
+    "longNameZh": "板块"
+  },
+  {
+    "property": "industryGroup",
+    "shortNameEn": "Industry Group",
+    "longNameEn": "Industry Group",
+    "shortNameZh": "行业组",
+    "longNameZh": "行业组"
+  },
+  {
+    "property": "industry",
+    "shortNameEn": "Industry",
+    "longNameEn": "Industry",
+    "shortNameZh": "行业",
+    "longNameZh": "行业"
+  },
+  {
+    "property": "subIndustry",
+    "shortNameEn": "Sub-Industry",
+    "longNameEn": "Sub-Industry",
+    "shortNameZh": "子行业",
+    "longNameZh": "子行业"
+  },
+  {
+    "property": "marketCapitalization",
+    "shortNameEn": "Market Cap",
+    "longNameEn": "Market Capitalization",
+    "shortNameZh": "市值",
+    "longNameZh": "市值"
+  },
+  {
+    "property": "currency",
+    "shortNameEn": "Currency",
+    "longNameEn": "Currency",
+    "shortNameZh": "货币",
+    "longNameZh": "货币"
+  },
+  {
+    "property": "ticker",
+    "shortNameEn": "Ticker",
+    "longNameEn": "Ticker",
+    "shortNameZh": "代码",
+    "longNameZh": "交易所代码"
+  },
+  {
+    "property": "ipoDate",
+    "shortNameEn": "IPO Date",
+    "longNameEn": "IPO Date",
+    "shortNameZh": "上市日期",
+    "longNameZh": "上市日期"
+  },
+  {
+    "property": "exchange",
+    "shortNameEn": "Exchange",
+    "longNameEn": "Exchange",
+    "shortNameZh": "交易所",
+    "longNameZh": "交易所"
+  },
+  {
+    "property": "securityType",
+    "shortNameEn": "Type",
+    "longNameEn": "Security Type",
+    "shortNameZh": "类型",
+    "longNameZh": "证券类型"
+  },
+  {
+    "property": "priceReturnDaily5d",
+    "shortNameEn": "5D Return",
+    "longNameEn": "5-Day Price Return",
+    "shortNameZh": "5日回报率",
+    "longNameZh": "5日价格回报率"
+  },
+  {
+    "property": "priceReturnDaily13w",
+    "shortNameEn": "13W Return",
+    "longNameEn": "13-Week Price Return",
+    "shortNameZh": "13周回报率",
+    "longNameZh": "13周价格回报率"
+  },
+  {
+    "property": "priceReturnDaily26w",
+    "shortNameEn": "26W Return",
+    "longNameEn": "26-Week Price Return",
+    "shortNameZh": "26周回报率",
+    "longNameZh": "26周价格回报率"
+  },
+  {
+    "property": "priceReturnDaily52w",
+    "shortNameEn": "52W Return",
+    "longNameEn": "52-Week Price Return",
+    "shortNameZh": "52周回报率",
+    "longNameZh": "52周价格回报率"
+  },
+  {
+    "property": "priceReturnDailyMtd",
+    "shortNameEn": "MTD Return",
+    "longNameEn": "Month-to-Date Return",
+    "shortNameZh": "月初至今回报率",
+    "longNameZh": "月初至今价格回报率"
+  },
+  {
+    "property": "priceReturnDailyYtd",
+    "shortNameEn": "YTD Return",
+    "longNameEn": "Year-to-Date Return",
+    "shortNameZh": "年初至今回报率",
+    "longNameZh": "年初至今价格回报率"
+  },
+  {
+    "property": "averageTradingVolume10d",
+    "shortNameEn": "Avg Vol (10D)",
+    "longNameEn": "10-Day Avg. Volume",
+    "shortNameZh": "10日均成交量",
+    "longNameZh": "10日平均成交量"
+  },
+  {
+    "property": "averageTradingVolume3m",
+    "shortNameEn": "Avg Vol (3M)",
+    "longNameEn": "3-Month Avg. Volume",
+    "shortNameZh": "3月均成交量",
+    "longNameZh": "3个月平均成交量"
+  },
+  {
+    "property": "dailyReturnStandardDeviation3m",
+    "shortNameEn": "Volatility (3M)",
+    "longNameEn": "3-Month Volatility",
+    "shortNameZh": "3月波动率",
+    "longNameZh": "3个月每日回报波动率"
+  },
+  {
+    "property": "beta",
+    "shortNameEn": "Beta",
+    "longNameEn": "Beta",
+    "shortNameZh": "贝塔系数",
+    "longNameZh": "贝塔系数"
+  },
+  {
+    "property": "returnOnEquityTtm",
+    "shortNameEn": "ROE (TTM)",
+    "longNameEn": "Return on Equity (TTM)",
+    "shortNameZh": "净资产收益率 (TTM)",
+    "longNameZh": "净资产收益率 (TTM)"
+  },
+  {
+    "property": "returnOnAssetsTtm",
+    "shortNameEn": "ROA (TTM)",
+    "longNameEn": "Return on Assets (TTM)",
+    "shortNameZh": "资产回报率 (TTM)",
+    "longNameZh": "资产回报率 (TTM)"
+  },
+  {
+    "property": "netProfitMarginTtm",
+    "shortNameEn": "Net Margin (TTM)",
+    "longNameEn": "Net Profit Margin (TTM)",
+    "shortNameZh": "净利率 (TTM)",
+    "longNameZh": "净利润率 (TTM)"
+  },
+  {
+    "property": "operatingProfitMarginTtm",
+    "shortNameEn": "Operating Margin (TTM)",
+    "longNameEn": "Operating Profit Margin (TTM)",
+    "shortNameZh": "营业利润率 (TTM)",
+    "longNameZh": "营业利润率 (TTM)"
+  },
+  {
+    "property": "grossProfitMarginTtm",
+    "shortNameEn": "Gross Margin (TTM)",
+    "longNameEn": "Gross Profit Margin (TTM)",
+    "shortNameZh": "毛利率 (TTM)",
+    "longNameZh": "毛利率 (TTM)"
+  },
+  {
+    "property": "currentRatioMrq",
+    "shortNameEn": "Current Ratio (MRQ)",
+    "longNameEn": "Current Ratio (MRQ)",
+    "shortNameZh": "流动比率 (MRQ)",
+    "longNameZh": "流动比率 (MRQ)"
+  },
+  {
+    "property": "quickRatioMrq",
+    "shortNameEn": "Quick Ratio (MRQ)",
+    "longNameEn": "Quick Ratio (MRQ)",
+    "shortNameZh": "速动比率 (MRQ)",
+    "longNameZh": "速动比率 (MRQ)"
+  },
+  {
+    "property": "debtToEquityRatioMrq",
+    "shortNameEn": "D/E Ratio (MRQ)",
+    "longNameEn": "Debt-to-Equity Ratio (MRQ)",
+    "shortNameZh": "产权比率 (MRQ)",
+    "longNameZh": "产权比率 (MRQ)"
+  },
+  {
+    "property": "interestCoverageRatioTtm",
+    "shortNameEn": "Interest Coverage (TTM)",
+    "longNameEn": "Interest Coverage Ratio (TTM)",
+    "shortNameZh": "利息保障倍数 (TTM)",
+    "longNameZh": "利息保障倍数 (TTM)"
+  },
+  {
+    "property": "dividendYieldTtm",
+    "shortNameEn": "Dividend Yield (TTM)",
+    "longNameEn": "Dividend Yield (TTM)",
+    "shortNameZh": "股息率 (TTM)",
+    "longNameZh": "股息率 (TTM)"
+  },
+  {
+    "property": "dividendPayoutRatioTtm",
+    "shortNameEn": "Payout Ratio (TTM)",
+    "longNameEn": "Dividend Payout Ratio (TTM)",
+    "shortNameZh": "股息支付率 (TTM)",
+    "longNameZh": "股息支付率 (TTM)"
+  },
+  {
+    "property": "priceToEarningsRatioTtm",
+    "shortNameEn": "P/E Ratio (TTM)",
+    "longNameEn": "Price-to-Earnings Ratio (TTM)",
+    "shortNameZh": "市盈率 (TTM)",
+    "longNameZh": "市盈率 (TTM)"
+  },
+  {
+    "property": "priceToSalesRatioTtm",
+    "shortNameEn": "P/S Ratio (TTM)",
+    "longNameEn": "Price-to-Sales Ratio (TTM)",
+    "shortNameZh": "市销率 (TTM)",
+    "longNameZh": "市销率 (TTM)"
+  },
+  {
+    "property": "priceToBookRatioMrq",
+    "shortNameEn": "P/B Ratio (MRQ)",
+    "longNameEn": "Price-to-Book Ratio (MRQ)",
+    "shortNameZh": "市净率 (MRQ)",
+    "longNameZh": "市净率 (MRQ)"
+  },
+  {
+    "property": "priceToFreeCashFlowRatioTtm",
+    "shortNameEn": "P/FCF Ratio (TTM)",
+    "longNameEn": "Price-to-Free Cash Flow Ratio (TTM)",
+    "shortNameZh": "市现率 (TTM)",
+    "longNameZh": "价格与自由现金流比率 (TTM)"
+  },
+  {
+    "property": "revenueGrowthMrqYoy",
+    "shortNameEn": "Revenue Growth (MRQ)",
+    "longNameEn": "Revenue Growth (MRQ vs Prior YoY)",
+    "shortNameZh": "营收增长率 (MRQ)",
+    "longNameZh": "营收同比增长率 (MRQ)"
+  },
+  {
+    "property": "revenueGrowthTtmYoy",
+    "shortNameEn": "Revenue Growth (TTM)",
+    "longNameEn": "Revenue Growth (TTM vs Prior YoY)",
+    "shortNameZh": "营收增长率 (TTM)",
+    "longNameZh": "营收同比增长率 (TTM)"
+  },
+  {
+    "property": "revenueGrowth3yCagr",
+    "shortNameEn": "Revenue Growth (3Y)",
+    "longNameEn": "3-Year Revenue CAGR",
+    "shortNameZh": "营收增长率 (3年)",
+    "longNameZh": "3年营收复合年增长率"
+  },
+  {
+    "property": "revenueGrowth5yCagr",
+    "shortNameEn": "Revenue Growth (5Y)",
+    "longNameEn": "5-Year Revenue CAGR",
+    "shortNameZh": "营收增长率 (5年)",
+    "longNameZh": "5年营收复合年增长率"
+  },
+  {
+    "property": "epsGrowthMrqYoy",
+    "shortNameEn": "EPS Growth (MRQ)",
+    "longNameEn": "EPS Growth (MRQ vs Prior YoY)",
+    "shortNameZh": "每股收益增长率 (MRQ)",
+    "longNameZh": "每股收益同比增长率 (MRQ)"
+  },
+  {
+    "property": "epsGrowthTtmYoy",
+    "shortNameEn": "EPS Growth (TTM)",
+    "longNameEn": "EPS Growth (TTM vs Prior YoY)",
+    "shortNameZh": "每股收益增长率 (TTM)",
+    "longNameZh": "每股收益同比增长率 (TTM)"
+  },
+  {
+    "property": "epsGrowth3yCagr",
+    "shortNameEn": "EPS Growth (3Y)",
+    "longNameEn": "3-Year EPS CAGR",
+    "shortNameZh": "每股收益增长率 (3年)",
+    "longNameZh": "3年每股收益复合年增长率"
+  },
+  {
+    "property": "epsGrowth5yCagr",
+    "shortNameEn": "EPS Growth (5Y)",
+    "longNameEn": "5-Year EPS CAGR",
+    "shortNameZh": "每股收益增长率 (5年)",
+    "longNameZh": "5年每股收益复合年增长率"
+  }
+]

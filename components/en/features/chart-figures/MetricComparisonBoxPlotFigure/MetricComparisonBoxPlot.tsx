@@ -9,8 +9,8 @@ import { scaleLinear, type ScaleLinear } from "d3-scale";
 import styles from "./MetricComparisonBoxPlot.module.css";
 import { MetricCode } from "@/app/data/fmp/metricCodes";
 
-const plotConfig = {
-  plot: {
+const chartConfig = {
+  chart: {
     height: 450,
     minWidth: 250,
     margin: { top: 20, right: 20, bottom: 40, left: 50 },
@@ -47,7 +47,7 @@ const plotConfig = {
     },
   },
   label: {
-    yOffset: -10,
+    yOffset: 30,
     symbolFontSize: "14px",
     symbolFontWeight: 600,
     symbolFontColor: "oklch(26.9% 0 0)",
@@ -91,7 +91,7 @@ function createTickFormatter(
     );
 }
 
-function createPlotGroup({
+function createChartGroup({
   svg,
   width,
   height,
@@ -100,7 +100,7 @@ function createPlotGroup({
   width: number;
   height: number;
 }) {
-  const { margin } = plotConfig.plot;
+  const { margin } = chartConfig.chart;
   return svg
     .attr("width", width)
     .attr("height", height)
@@ -109,24 +109,25 @@ function createPlotGroup({
 }
 
 function drawYAxis({
-  plotGroup,
+  chartGroup,
   yScale,
   innerWidth,
   tickFormatter,
 }: {
-  plotGroup: Selection<SVGGElement, unknown, null, undefined>;
+  chartGroup: Selection<SVGGElement, unknown, null, undefined>;
   yScale: ScaleLinear<number, number>;
   innerWidth: number;
   tickFormatter: (d: number | { valueOf(): number }) => string;
 }) {
-  const { axis } = plotConfig;
+  const { axis } = chartConfig;
   const yAxisGenerator = axisLeft(yScale)
     .ticks(axis.ticks)
     .tickSize(-innerWidth)
     .tickFormat(tickFormatter);
 
-  plotGroup
+  chartGroup
     .append("g")
+    .attr("class", "y-axis")
     .call(yAxisGenerator)
     .call((g) => g.select(".domain").remove())
     .call((g) =>
@@ -146,20 +147,23 @@ function drawYAxis({
 }
 
 function drawLabel({
-  plotGroup,
+  chartGroup,
   centerX,
   innerHeight,
   stockSymbol,
 }: {
-  plotGroup: Selection<SVGGElement, unknown, null, undefined>;
+  chartGroup: Selection<SVGGElement, unknown, null, undefined>;
   centerX: number;
   innerHeight: number;
   stockSymbol: string;
 }) {
-  const { label, plot } = plotConfig;
-  const yPosition = innerHeight + plot.margin.bottom + label.yOffset;
-  plotGroup
+  const { label } = chartConfig;
+
+  const yPosition = innerHeight + label.yOffset;
+
+  chartGroup
     .append("text")
+    .attr("class", "x-axis-label")
     .attr("text-anchor", "middle")
     .attr("fill", label.symbolFontColor)
     .append("tspan")
@@ -171,14 +175,14 @@ function drawLabel({
 }
 
 function drawBoxAndWhiskers({
-  plotGroup,
+  chartGroup,
   centerX,
   yScale,
   metricType,
   industryMetricStats,
   width,
 }: {
-  plotGroup: Selection<SVGGElement, unknown, null, undefined>;
+  chartGroup: Selection<SVGGElement, unknown, null, undefined>;
   centerX: number;
   yScale: ScaleLinear<number, number>;
   metricType: "normal" | "inapplicable";
@@ -187,7 +191,7 @@ function drawBoxAndWhiskers({
 }) {
   if (!industryMetricStats) return;
 
-  const { boxAndWhiskers } = plotConfig;
+  const { boxAndWhiskers } = chartConfig;
   const isMetricApplicable = metricType === "normal";
 
   const fillColor = isMetricApplicable
@@ -197,7 +201,9 @@ function drawBoxAndWhiskers({
     ? boxAndWhiskers.strokeColor.applicable
     : boxAndWhiskers.strokeColor.inapplicable;
 
-  const boxAndWhiskersGroup = plotGroup.append("g");
+  const boxAndWhiskersGroup = chartGroup
+    .append("g")
+    .attr("class", "box-and-whiskers-group");
 
   boxAndWhiskersGroup
     .append("rect")
@@ -259,14 +265,14 @@ function drawBoxAndWhiskers({
 }
 
 function drawMarker({
-  plotGroup,
+  chartGroup,
   centerX,
   yScale,
   metricValue,
   metricType,
   metricColor,
 }: {
-  plotGroup: Selection<SVGGElement, unknown, null, undefined>;
+  chartGroup: Selection<SVGGElement, unknown, null, undefined>;
   centerX: number;
   yScale: ScaleLinear<number, number>;
   metricValue: number | null;
@@ -275,7 +281,7 @@ function drawMarker({
 }) {
   if (metricValue === null) return;
 
-  const { marker } = plotConfig;
+  const { marker } = chartConfig;
   const isMetricApplicable = metricType === "normal";
   const domain = yScale.domain();
 
@@ -288,8 +294,9 @@ function drawMarker({
       .type(symbolTriangle)
       .size(marker.radius * marker.radius * 3);
 
-    plotGroup
+    chartGroup
       .append("path")
+      .attr("class", "metric-marker off-scale-marker")
       .attr("d", symbolGenerator)
       .attr("transform", `translate(${centerX}, ${yScale(domain[1])})`)
       .attr("fill", fillColor);
@@ -298,8 +305,9 @@ function drawMarker({
       .type(symbolTriangle)
       .size(marker.radius * marker.radius * 3);
 
-    plotGroup
+    chartGroup
       .append("path")
+      .attr("class", "metric-marker off-scale-marker")
       .attr("d", symbolGenerator)
       .attr(
         "transform",
@@ -307,8 +315,9 @@ function drawMarker({
       )
       .attr("fill", fillColor);
   } else {
-    plotGroup
+    chartGroup
       .append("circle")
+      .attr("class", "metric-marker")
       .attr("cx", centerX)
       .attr("cy", yScale(metricValue))
       .attr("r", marker.radius)
@@ -333,7 +342,7 @@ type MetricComparisonBoxPlotProps = {
   isStockTwoMetricApplicable: boolean;
 };
 
-type PlotConfiguration = {
+type ChartConfiguration = {
   stockSymbol: string;
   centerX: number;
   industryMetricStats: IndustryMetricStats | null;
@@ -361,8 +370,8 @@ export function MetricComparisonBoxPlot({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [dimensions, setDimensions] = useState({
-    width: plotConfig.plot.minWidth,
-    height: plotConfig.plot.height,
+    width: chartConfig.chart.minWidth,
+    height: chartConfig.chart.height,
   });
 
   useEffect(() => {
@@ -371,8 +380,8 @@ export function MetricComparisonBoxPlot({
         const containerWidth =
           containerRef.current.getBoundingClientRect().width;
         setDimensions({
-          width: Math.max(containerWidth, plotConfig.plot.minWidth),
-          height: plotConfig.plot.height,
+          width: Math.max(containerWidth, chartConfig.chart.minWidth),
+          height: chartConfig.chart.height,
         });
       }
     };
@@ -383,7 +392,7 @@ export function MetricComparisonBoxPlot({
 
   useEffect(() => {
     const { width, height } = dimensions;
-    const { margin } = plotConfig.plot;
+    const { margin } = chartConfig.chart;
 
     if (!svgRef.current) {
       return;
@@ -406,7 +415,7 @@ export function MetricComparisonBoxPlot({
 
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-    const plotGroup = createPlotGroup({ svg, width, height });
+    const chartGroup = createChartGroup({ svg, width, height });
 
     const overallMin =
       validIndustryMetricStats.length > 0
@@ -418,8 +427,29 @@ export function MetricComparisonBoxPlot({
         : 0;
 
     const padding = (overallMax - overallMin) * 0.1 || 1;
-    const domainMin = overallMin - padding;
-    const domainMax = overallMax + padding;
+
+    const validMetricValues = [stockOneMetricValue, stockTwoMetricValue].filter(
+      (v): v is number => v !== null,
+    );
+
+    const minStockValue =
+      validMetricValues.length > 0
+        ? Math.min(...validMetricValues)
+        : overallMin;
+    const maxStockValue =
+      validMetricValues.length > 0
+        ? Math.max(...validMetricValues)
+        : overallMax;
+
+    const domainMin =
+      minStockValue < overallMin
+        ? Math.max(minStockValue, overallMin - padding)
+        : overallMin;
+
+    const domainMax =
+      maxStockValue > overallMax
+        ? Math.min(maxStockValue, overallMax + padding)
+        : overallMax;
 
     const yScale = scaleLinear()
       .domain([domainMin, domainMax])
@@ -427,16 +457,16 @@ export function MetricComparisonBoxPlot({
       .nice();
 
     const tickFormatter = createTickFormatter(metricCode);
-    drawYAxis({ plotGroup, yScale, innerWidth, tickFormatter });
+    drawYAxis({ chartGroup, yScale, innerWidth, tickFormatter });
 
     const boxAndWhiskersWidth = Math.min(
-      plotConfig.boxAndWhiskers.minWidth,
+      chartConfig.boxAndWhiskers.minWidth,
       innerWidth / 5,
     );
     const stockOneCenterX = (innerWidth * 1) / 3;
     const stockTwoCenterX = (innerWidth * 2) / 3;
 
-    const plotConfigurations: PlotConfiguration[] = [
+    const chartConfigurations: ChartConfiguration[] = [
       {
         stockSymbol: stockOneSymbol,
         metricType: stockOneMetricType,
@@ -455,9 +485,9 @@ export function MetricComparisonBoxPlot({
       },
     ];
 
-    for (const config of plotConfigurations) {
+    for (const config of chartConfigurations) {
       drawBoxAndWhiskers({
-        plotGroup,
+        chartGroup,
         yScale,
         centerX: config.centerX,
         metricType: config.metricType,
@@ -466,7 +496,7 @@ export function MetricComparisonBoxPlot({
       });
 
       drawMarker({
-        plotGroup,
+        chartGroup,
         yScale,
         centerX: config.centerX,
         metricValue: config.metricValue,
@@ -475,7 +505,7 @@ export function MetricComparisonBoxPlot({
       });
 
       drawLabel({
-        plotGroup,
+        chartGroup,
         innerHeight,
         centerX: config.centerX,
         stockSymbol: config.stockSymbol,
