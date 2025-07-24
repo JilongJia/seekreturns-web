@@ -1,5 +1,5 @@
-import { propertyNames } from "@/constants/properties";
-import type { PropertyKey } from "@/constants/properties";
+import { propertyNames } from "@/constants/stock-properties";
+import type { PropertyKey } from "@/constants/stock-properties";
 
 type Language = "en" | "zh";
 type NameType = "short" | "long";
