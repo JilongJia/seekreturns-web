@@ -15,7 +15,7 @@ import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricSt
 import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
 
 import styles from "./DividendSection.module.css";
-import type { ProfileData } from "@/lib/firebase/stocks";
+import type { ProfileData } from "@/lib/firestore/stocks";
 import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
 type RatiosData = {

@@ -6,7 +6,7 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { fetchStockData } from "@/lib/firebase/stocks";
+import { fetchStockData } from "@/lib/firestore/stocks";
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
 

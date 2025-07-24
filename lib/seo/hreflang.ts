@@ -1,4 +1,4 @@
-import { fetchHreflangPages } from "@/lib/firebase";
+import { fetchHreflangPages } from "@/lib/firestore";
 
 import { supportedLocales } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";

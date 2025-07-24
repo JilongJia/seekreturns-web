@@ -8,7 +8,7 @@ import { Section } from "@/components/en/ui/Section";
 import { Table } from "@/components/en/ui/Table";
 
 import styles from "./CompanyOverviewSection.module.css";
-import type { ProfileData } from "@/lib/firebase/stocks";
+import type { ProfileData } from "@/lib/firestore/stocks";
 
 type CompanyOverviewSectionProps = {
   stockOneSymbol: string;
