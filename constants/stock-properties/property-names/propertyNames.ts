@@ -1,4 +1,4 @@
-import type { PropertyName } from "./types";
+import type { PropertyName } from "./propertyNames.types";
 
 export const propertyNames: PropertyName[] = [
   {

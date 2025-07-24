@@ -1,4 +1,4 @@
-import type { MetricApplicability } from "./types";
+import type { MetricApplicability } from "./metricApplicabilities.types";
 
 export const metricApplicability: MetricApplicability[] = [
   {
