@@ -1,4 +1,4 @@
-import type { PropertyKey } from "./types";
+import type { PropertyKey } from "../types";
 
 export type PropertyName = {
   property: PropertyKey;

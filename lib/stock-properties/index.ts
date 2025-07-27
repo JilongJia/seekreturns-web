@@ -1,3 +1,4 @@
 export * from "./getPropertyName";
 export * from "./getMetricApplicability";
-export * from "./calculateMetricStats";
+export * from "./getIndustryMetricStats";
+export * from "./calculateMetricColor";

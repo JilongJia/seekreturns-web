@@ -1,18 +1,6 @@
 import { metricApplicability } from "@/constants/stock-properties";
 import type { GicsIndustry } from "@/constants/gics/types";
-
-type ComparableMetricKey =
-  | "returnOnEquityTtm"
-  | "netProfitMarginTtm"
-  | "operatingProfitMarginTtm"
-  | "currentRatioMrq"
-  | "debtToEquityRatioMrq"
-  | "interestCoverageRatioTtm"
-  | "dividendYieldTtm"
-  | "dividendPayoutRatioTtm"
-  | "priceToEarningsRatioTtm"
-  | "priceToBookRatioMrq"
-  | "priceToSalesRatioTtm";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 export function getMetricApplicability(
   gicsIndustry: GicsIndustry,

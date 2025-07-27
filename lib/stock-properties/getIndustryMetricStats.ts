@@ -1,5 +1,9 @@
 import { quantile } from "d3-array";
 
+import { industryMetricStatistics } from "@/data/industry-metric-statistics";
+import type { GicsIndustry } from "@/constants/gics/types";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
+
 export type MetricStats = {
   min: number;
   q1: number;
@@ -8,7 +12,26 @@ export type MetricStats = {
   max: number;
 };
 
-export function calculateMetricStats(
+export function getIndustryMetricStats(
+  gicsIndustry: GicsIndustry,
+  metricKey: ComparableMetricKey,
+): MetricStats | null {
+  const industryData = industryMetricStatistics[gicsIndustry];
+
+  if (!industryData) {
+    return null;
+  }
+
+  const metricValues = industryData[metricKey];
+
+  if (!metricValues) {
+    return null;
+  }
+
+  return calculateMetricStats(metricValues);
+}
+
+function calculateMetricStats(
   metricValues: (number | null)[],
 ): MetricStats | null {
   const filteredValues = metricValues.filter((v): v is number => v !== null);
