@@ -121,12 +121,15 @@ function drawYAxis({
   innerWidth: number;
 }) {
   const { yAxis } = chartConfig;
+
+  const tickFormatter = new Intl.NumberFormat("en-US", {
+    style: "percent",
+  });
+
   const yAxisGenerator = axisLeft(yScale)
     .ticks(yAxis.ticks)
     .tickSize(-innerWidth)
-    .tickFormat((d) =>
-      new Intl.NumberFormat("en-US", { style: "percent" }).format(d as number),
-    );
+    .tickFormat((d) => tickFormatter.format(d as number));
 
   chartGroup
     .append("g")

@@ -50,10 +50,10 @@ const chartConfig = {
 };
 
 const metricLabels: Record<keyof GrowthData, string> = {
-  growthMrqYoy: "MRQ (YoY)",
-  growthTtmYoy: "TTM (YoY)",
-  growth3yCagr: "3-Year CAGR",
-  growth5yCagr: "5-Year CAGR",
+  growthMrqYoy: "最新季度 (同比)",
+  growthTtmYoy: "TTM (同比)",
+  growth3yCagr: "3年复合年增长率",
+  growth5yCagr: "5年复合年增长率",
 };
 
 const metricKeys: (keyof GrowthData)[] = [
@@ -121,12 +121,15 @@ function drawYAxis({
   innerWidth: number;
 }) {
   const { yAxis } = chartConfig;
+
+  const tickFormatter = new Intl.NumberFormat("zh-CN", {
+    style: "percent",
+  });
+
   const yAxisGenerator = axisLeft(yScale)
     .ticks(yAxis.ticks)
     .tickSize(-innerWidth)
-    .tickFormat((d) =>
-      new Intl.NumberFormat("en-US", { style: "percent" }).format(d as number),
-    );
+    .tickFormat((d) => tickFormatter.format(d as number));
 
   chartGroup
     .append("g")

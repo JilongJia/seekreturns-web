@@ -1,104 +1,82 @@
-import React from "react";
-
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
+import { GrowthComparisonBarChartFigure } from "@/components/zh/features/chart-figures";
 
-import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
+import type { StockPropertyData } from "@/constants/stock-properties/types";
 
-import { GrowthComparisonLineChartFigure } from "@/components/zh/features/chart-figures/GrowthComparisonLineChartFigure";
-import type { FinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
+type GrowthData = {
+  growthMrqYoy: number | null;
+  growthTtmYoy: number | null;
+  growth3yCagr: number | null;
+  growth5yCagr: number | null;
+};
 
 type GrowthSectionProps = {
-  stockOneSymbol: string;
-  stockTwoSymbol: string;
-  stockOneFinancialGrowthData: FinancialGrowthData | null;
-  stockTwoFinancialGrowthData: FinancialGrowthData | null;
+  stockOneData: StockPropertyData | null;
+  stockTwoData: StockPropertyData | null;
 };
 
-type FinancialGrowthPoint = {
-  date: string;
-  revenueGrowth: number;
-  epsgrowth: number;
-  freeCashFlowGrowth: number;
-};
-
-type GrowthPoint = {
-  time: string;
-  value: number;
-};
-
-type MetricCode = "revenueGrowth" | "epsgrowth" | "freeCashFlowGrowth";
-
-const growthMetrics: MetricCode[] = [
-  "revenueGrowth",
-  "epsgrowth",
-  "freeCashFlowGrowth",
-];
-
-function processData(
-  metric: MetricCode,
-  series: FinancialGrowthPoint[],
-): GrowthPoint[] {
-  return series
-    .map((point) => ({
-      time: point.date,
-      value: point[metric],
-    }))
-    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+function extractGrowthData(
+  data: StockPropertyData,
+  type: "revenue" | "eps",
+): GrowthData {
+  if (type === "revenue") {
+    return {
+      growthMrqYoy: data.revenueGrowthMrqYoy,
+      growthTtmYoy: data.revenueGrowthTtmYoy,
+      growth3yCagr: data.revenueGrowth3yCagr,
+      growth5yCagr: data.revenueGrowth5yCagr,
+    };
+  }
+  return {
+    growthMrqYoy: data.epsGrowthMrqYoy,
+    growthTtmYoy: data.epsGrowthTtmYoy,
+    growth3yCagr: data.epsGrowth3yCagr,
+    growth5yCagr: data.epsGrowth5yCagr,
+  };
 }
 
 export function GrowthSection({
-  stockOneSymbol,
-  stockTwoSymbol,
-  stockOneFinancialGrowthData,
-  stockTwoFinancialGrowthData,
+  stockOneData,
+  stockTwoData,
 }: GrowthSectionProps) {
-  if (!stockOneFinancialGrowthData || !stockTwoFinancialGrowthData) {
+  if (!stockOneData || !stockTwoData) {
     return (
       <Section ariaLabelledby="growth">
         <H2 id="growth">成长性</H2>
-        <P>成长性数据当前不可用，无法进行比较。</P>
+        <P>成长性数据当前不可用。</P>
       </Section>
     );
   }
 
+  const revenueGrowthOne = extractGrowthData(stockOneData, "revenue");
+  const revenueGrowthTwo = extractGrowthData(stockTwoData, "revenue");
+  const epsGrowthOne = extractGrowthData(stockOneData, "eps");
+  const epsGrowthTwo = extractGrowthData(stockTwoData, "eps");
+
   return (
     <Section ariaLabelledby="growth">
       <H2 id="growth">成长性</H2>
-      <P>
-        以下图表比较了 {stockOneSymbol} 和 {stockTwoSymbol} 的关键同比增长 (YoY)
-        指标。这些指标基于公司的年度财务报告。
-      </P>
 
-      {growthMetrics.map((metric) => {
-        const metricLongName = getMetricName({
-          metricCode: metric,
-          nameType: "longNameZH",
-        });
-        const stockOneGrowthSeries = processData(
-          metric,
-          stockOneFinancialGrowthData,
-        );
-        const stockTwoGrowthSeries = processData(
-          metric,
-          stockTwoFinancialGrowthData,
-        );
+      <H3>营收增长</H3>
+      <GrowthComparisonBarChartFigure
+        metricName="营收增长"
+        stockOneSymbol={stockOneData.symbol}
+        stockOneGrowth={revenueGrowthOne}
+        stockTwoSymbol={stockTwoData.symbol}
+        stockTwoGrowth={revenueGrowthTwo}
+      />
 
-        return (
-          <React.Fragment key={metric}>
-            <H3>{metricLongName}</H3>
-            <GrowthComparisonLineChartFigure
-              metricName={metricLongName}
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneGrowthSeries={stockOneGrowthSeries}
-              stockTwoGrowthSeries={stockTwoGrowthSeries}
-            />
-          </React.Fragment>
-        );
-      })}
+      <H3>每股收益增长</H3>
+      <GrowthComparisonBarChartFigure
+        metricName="每股收益增长"
+        stockOneSymbol={stockOneData.symbol}
+        stockOneGrowth={epsGrowthOne}
+        stockTwoSymbol={stockTwoData.symbol}
+        stockTwoGrowth={epsGrowthTwo}
+      />
     </Section>
   );
 }

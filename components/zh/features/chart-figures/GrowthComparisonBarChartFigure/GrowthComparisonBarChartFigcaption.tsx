@@ -13,9 +13,8 @@ export function GrowthComparisonBarChartFigcaption({
 }: GrowthComparisonBarChartFigcaptionProps) {
   return (
     <figcaption className={styles.figcaption}>
-      {stockOneSymbol} vs. {stockTwoSymbol}: A side-by-side comparison of their{" "}
-      {metricName} for the MRQ (YoY), TTM (YoY), 3-Year CAGR, and 5-Year CAGR
-      periods.
+      {stockOneSymbol}与{stockTwoSymbol}的{metricName}
+      对比，涵盖最新季度（同比）、TTM（同比）、3年及5年复合年增长率。
     </figcaption>
   );
 }

@@ -1,71 +1,50 @@
 import React from "react";
-
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures";
 import { SummaryContainer } from "./SummaryContainer";
-
-import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
-import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
-import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplicability";
-import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
-import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
-
 import styles from "./ProfitabilitySection.module.css";
-import type { ProfileData } from "@/lib/firestore/stocks";
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type KeyMetricsData = {
-  returnOnEquityTTM: number | null;
-  returnOnAssetsTTM: number | null;
-  returnOnInvestedCapitalTTM: number | null;
-};
-
-type RatiosData = {
-  netProfitMarginTTM: number | null;
-  operatingProfitMarginTTM: number | null;
-  grossProfitMarginTTM: number | null;
-};
+import {
+  getPropertyName,
+  getMetricApplicability,
+  getIndustryMetricStats,
+  calculateMetricColor,
+  formatPropertyValue,
+} from "@/lib/stock-properties";
+import type {
+  StockPropertyData,
+  ProfitabilityKey,
+  ComparableMetricKey,
+} from "@/constants/stock-properties";
 
 type ProfitabilitySectionProps = {
-  stockOneSymbol: string;
-  stockTwoSymbol: string;
-  stockOneProfileData: ProfileData | null;
-  stockOneKeyMetricsData: KeyMetricsData | null;
-  stockOneRatiosData: RatiosData | null;
-  stockTwoProfileData: ProfileData | null;
-  stockTwoKeyMetricsData: KeyMetricsData | null;
-  stockTwoRatiosData: RatiosData | null;
+  stockOneData: StockPropertyData | null;
+  stockTwoData: StockPropertyData | null;
 };
 
-const metricsForComparison: (keyof KeyMetricsData | keyof RatiosData)[] = [
-  "returnOnEquityTTM",
-  "returnOnInvestedCapitalTTM",
-  "netProfitMarginTTM",
-  "operatingProfitMarginTTM",
+const comparableProfitabilityKeys: ComparableMetricKey[] = [
+  "returnOnEquityTtm",
+  "netProfitMarginTtm",
+  "operatingProfitMarginTtm",
+];
+
+const tableRows: ProfitabilityKey[] = [
+  "returnOnEquityTtm",
+  "returnOnAssetsTtm",
+  "netProfitMarginTtm",
+  "operatingProfitMarginTtm",
+  "grossProfitMarginTtm",
 ];
 
 export function ProfitabilitySection({
-  stockOneSymbol,
-  stockTwoSymbol,
-  stockOneProfileData,
-  stockOneKeyMetricsData,
-  stockOneRatiosData,
-  stockTwoProfileData,
-  stockTwoKeyMetricsData,
-  stockTwoRatiosData,
+  stockOneData,
+  stockTwoData,
 }: ProfitabilitySectionProps) {
-  if (
-    !stockOneProfileData ||
-    !stockOneKeyMetricsData ||
-    !stockOneRatiosData ||
-    !stockTwoProfileData ||
-    !stockTwoKeyMetricsData ||
-    !stockTwoRatiosData
-  ) {
+  if (!stockOneData || !stockTwoData) {
     return (
       <Section ariaLabelledby="profitability">
         <H2 id="profitability">盈利能力</H2>
@@ -74,98 +53,70 @@ export function ProfitabilitySection({
     );
   }
 
-  const formatPercentage = (value: number | null): string => {
-    if (value === null) {
-      return "--";
-    }
-    return `${(value * 100).toFixed(2)}%`;
-  };
-
-  const stockOneMetrics = { ...stockOneKeyMetricsData, ...stockOneRatiosData };
-  const stockTwoMetrics = { ...stockTwoKeyMetricsData, ...stockTwoRatiosData };
-
   return (
     <Section ariaLabelledby="profitability">
       <H2 id="profitability">盈利能力</H2>
 
-      {metricsForComparison.map((metricCode) => {
-        const stockOneMetricValue = stockOneMetrics[metricCode];
-        const stockTwoMetricValue = stockTwoMetrics[metricCode];
-
-        const metricLongName = getMetricName({
-          metricCode,
-          nameType: "longNameZH",
-        });
-        const metricShortName = getMetricName({
-          metricCode,
-          nameType: "shortNameZH",
-        });
-
-        const stockOneIndustryMetricStats = calculateMetricStats({
-          metricCode,
-          metricValues: getIndustryMetric({
-            industryCode: stockOneProfileData.industry,
-            metricCode,
-          }),
-        });
-        const stockTwoIndustryMetricStats = calculateMetricStats({
-          metricCode,
-          metricValues: getIndustryMetric({
-            industryCode: stockTwoProfileData.industry,
-            metricCode,
-          }),
-        });
-
-        const stockOneMetricColor = calculateMetricColor({
-          metricCode,
-          metricValue: stockOneMetricValue,
-          metricStats: stockOneIndustryMetricStats,
-        });
-        const stockTwoMetricColor = calculateMetricColor({
-          metricCode,
-          metricValue: stockTwoMetricValue,
-          metricStats: stockTwoIndustryMetricStats,
-        });
-
-        const isStockOneMetricApplicable = getMetricApplicability({
-          industryCode: stockOneProfileData.industry,
-          metricCode,
-        });
-        const isStockTwoMetricApplicable = getMetricApplicability({
-          industryCode: stockTwoProfileData.industry,
-          metricCode,
-        });
+      {comparableProfitabilityKeys.map((key) => {
+        const stockOneMetricValue = stockOneData[key];
+        const stockTwoMetricValue = stockTwoData[key];
+        const metricLongName = getPropertyName(key, "zh", "long");
+        const stockOneIndustryMetricStats = getIndustryMetricStats(
+          stockOneData.industry,
+          key,
+        );
+        const stockTwoIndustryMetricStats = getIndustryMetricStats(
+          stockTwoData.industry,
+          key,
+        );
+        const stockOneMetricColor = calculateMetricColor(
+          key,
+          stockOneMetricValue,
+          stockOneIndustryMetricStats,
+        );
+        const stockTwoMetricColor = calculateMetricColor(
+          key,
+          stockTwoMetricValue,
+          stockTwoIndustryMetricStats,
+        );
+        const isStockOneMetricApplicable = getMetricApplicability(
+          stockOneData.industry,
+          key,
+        );
+        const isStockTwoMetricApplicable = getMetricApplicability(
+          stockTwoData.industry,
+          key,
+        );
 
         return (
-          <React.Fragment key={metricCode}>
+          <React.Fragment key={key}>
             <H3>{metricLongName}</H3>
             <SummaryContainer
-              metricCode={metricCode as MetricCode}
-              metricName={metricShortName}
-              stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
+              metricKey={key}
+              stockOneSymbol={stockOneData.symbol}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
+              stockTwoSymbol={stockTwoData.symbol}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
               isStockTwoMetricApplicable={isStockTwoMetricApplicable}
             />
             <MetricComparisonBoxPlotFigure
-              metricCode={metricCode as MetricCode}
-              metricName={metricShortName}
-              stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
+              metricKey={key}
+              metricName={metricLongName}
+              stockOneSymbol={stockOneData.symbol}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
+              stockTwoSymbol={stockTwoData.symbol}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -180,82 +131,35 @@ export function ProfitabilitySection({
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
-              <Table.Thead.Tr.Th scope="col">
-                {stockOneSymbol}
+              <Table.Thead.Tr.Th scope="row">
+                {getPropertyName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoSymbol}
+                {stockOneData.symbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoData.symbol}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
           <Table.Tbody>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                净资产收益率 (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneKeyMetricsData.returnOnEquityTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoKeyMetricsData.returnOnEquityTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                资产回报率 (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneKeyMetricsData.returnOnAssetsTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoKeyMetricsData.returnOnAssetsTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                投入资本回报率 (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(
-                  stockOneKeyMetricsData.returnOnInvestedCapitalTTM,
-                )}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(
-                  stockTwoKeyMetricsData.returnOnInvestedCapitalTTM,
-                )}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">净利率 (TTM)</Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.netProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.netProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                营业利润率 (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.operatingProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.operatingProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">毛利率 (TTM)</Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.grossProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.grossProfitMarginTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
+            {tableRows.map((key) => (
+              <Table.Tbody.Tr key={key}>
+                <Table.Tbody.Tr.Th scope="row">
+                  {getPropertyName(key, "zh", "long")}
+                </Table.Tbody.Tr.Th>
+                <Table.Tbody.Tr.Td>
+                  {formatPropertyValue(key, stockOneData[key], {
+                    lang: "zh",
+                  })}
+                </Table.Tbody.Tr.Td>
+                <Table.Tbody.Tr.Td>
+                  {formatPropertyValue(key, stockTwoData[key], {
+                    lang: "zh",
+                  })}
+                </Table.Tbody.Tr.Td>
+              </Table.Tbody.Tr>
+            ))}
           </Table.Tbody>
         </Table>
       </div>

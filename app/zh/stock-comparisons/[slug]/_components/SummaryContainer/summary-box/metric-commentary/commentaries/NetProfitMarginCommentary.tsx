@@ -1,31 +1,22 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import { formatMetricValue } from "./formatMetricValue";
-import { P } from "./P";
-
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
+import { P } from "@/components/zh/ui/P";
+import type { MetricStats } from "@/lib/stock-properties";
 
 type MetricCommentaryProps = {
-  metricCode: MetricCode;
   stockSymbol: string;
   industryName: string;
-  metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
   isMetricApplicable: boolean;
+  metricValue: number | null;
+  formattedMetricValue: string;
+  industryMetricStats: MetricStats | null;
 };
 
 export function NetProfitMarginCommentary({
-  isMetricApplicable,
-  industryName,
-  metricValue,
   stockSymbol,
+  industryName,
+  isMetricApplicable,
+  metricValue,
+  formattedMetricValue,
   industryMetricStats,
-  metricCode,
 }: MetricCommentaryProps) {
   // 1. 检查指标是否适用于该行业
   if (!isMetricApplicable) {
@@ -40,8 +31,6 @@ export function NetProfitMarginCommentary({
   if (metricValue === null) {
     return <P>{stockSymbol} 的净利润率数据目前无法获得。</P>;
   }
-
-  const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
   // 3. 处理特殊情况：负净利润率
   if (metricValue < 0) {
@@ -97,7 +86,7 @@ export function NetProfitMarginCommentary({
       </P>
     );
   } else {
-    // 覆盖了四分位距（Q1到Q3） (此处的解释非常清晰)
+    // 覆盖了四分位距（Q1到Q3）
     return (
       <P>
         {stockSymbol} 的净利润率为 {formattedMetricValue}，处于 {industryName}{" "}

@@ -1,31 +1,22 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import { formatMetricValue } from "./formatMetricValue";
-import { P } from "./P";
-
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
+import { P } from "@/components/zh/ui/P";
+import type { MetricStats } from "@/lib/stock-properties";
 
 type MetricCommentaryProps = {
-  metricCode: MetricCode;
   stockSymbol: string;
   industryName: string;
-  metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
   isMetricApplicable: boolean;
+  metricValue: number | null;
+  formattedMetricValue: string;
+  industryMetricStats: MetricStats | null;
 };
 
 export function DividendYieldCommentary({
-  isMetricApplicable,
-  industryName,
-  metricValue,
   stockSymbol,
+  industryName,
+  isMetricApplicable,
+  metricValue,
+  formattedMetricValue,
   industryMetricStats,
-  metricCode,
 }: MetricCommentaryProps) {
   // 1. 检查指标是否适用
   if (!isMetricApplicable) {
@@ -41,7 +32,7 @@ export function DividendYieldCommentary({
     return <P>目前无法获取 {stockSymbol} 的股息率数据。</P>;
   }
 
-  // 3. 处理特殊情况：零股息率 (此处的分析非常出色)
+  // 3. 处理特殊情况：零股息率
   if (metricValue === 0) {
     return (
       <P>
@@ -50,8 +41,6 @@ export function DividendYieldCommentary({
       </P>
     );
   }
-
-  const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
   // 4. 检查行业基准数据是否可用
   if (!industryMetricStats) {

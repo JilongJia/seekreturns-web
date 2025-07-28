@@ -4,8 +4,8 @@ import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { Table } from "@/components/en/ui/Table";
+import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures";
 import { SummaryContainer } from "./SummaryContainer";
-import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
 import styles from "./ValuationSection.module.css";
 
 import {

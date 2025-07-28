@@ -1,31 +1,22 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import { formatMetricValue } from "./formatMetricValue";
-import { P } from "./P";
-
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
+import { P } from "@/components/zh/ui/P";
+import type { MetricStats } from "@/lib/stock-properties";
 
 type MetricCommentaryProps = {
-  metricCode: MetricCode;
   stockSymbol: string;
   industryName: string;
-  metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
   isMetricApplicable: boolean;
+  metricValue: number | null;
+  formattedMetricValue: string;
+  industryMetricStats: MetricStats | null;
 };
 
 export function DividendPayoutRatioCommentary({
-  isMetricApplicable,
-  industryName,
-  metricValue,
   stockSymbol,
+  industryName,
+  isMetricApplicable,
+  metricValue,
+  formattedMetricValue,
   industryMetricStats,
-  metricCode,
 }: MetricCommentaryProps) {
   // 1. 检查指标是否适用
   if (!isMetricApplicable) {
@@ -41,8 +32,6 @@ export function DividendPayoutRatioCommentary({
   if (metricValue === null) {
     return <P>{stockSymbol} 的股息支付率数据当前不可用。</P>;
   }
-
-  const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
 
   // 3. 优先处理特殊数值情况
   if (metricValue < 0) {

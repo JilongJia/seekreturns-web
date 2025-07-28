@@ -1,9 +1,8 @@
-import React from "react";
 import { H2 } from "@/components/en/ui/H2";
 import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
-import { GrowthComparisonBarChartFigure } from "@/components/en/features/chart-figures/GrowthComparisonBarChartFigure";
+import { GrowthComparisonBarChartFigure } from "@/components/en/features/chart-figures";
 
 import type { StockPropertyData } from "@/constants/stock-properties/types";
 

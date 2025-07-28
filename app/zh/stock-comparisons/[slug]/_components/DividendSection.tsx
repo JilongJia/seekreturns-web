@@ -1,56 +1,43 @@
 import React from "react";
-
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { Table } from "@/components/zh/ui/Table";
-import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures/MetricComparisonBoxPlotFigure";
+import { MetricComparisonBoxPlotFigure } from "@/components/zh/features/chart-figures";
 import { SummaryContainer } from "./SummaryContainer";
-
-import { getMetricName } from "@/app/lib/stock-analysis/getMetricName";
-import { getIndustryMetric } from "@/app/lib/stock-analysis/getIndustryMetric";
-import { getMetricApplicability } from "@/app/lib/stock-analysis/getMetricApplicability";
-import { calculateMetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
-import { calculateMetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
-
 import styles from "./DividendSection.module.css";
-import type { ProfileData } from "@/lib/firestore/stocks";
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
 
-type RatiosData = {
-  dividendYieldTTM: number | null;
-  dividendPayoutRatioTTM: number | null;
-};
+import {
+  getPropertyName,
+  getMetricApplicability,
+  getIndustryMetricStats,
+  calculateMetricColor,
+  formatPropertyValue,
+} from "@/lib/stock-properties";
+import type {
+  StockPropertyData,
+  DividendKey,
+  ComparableMetricKey,
+} from "@/constants/stock-properties";
 
 type DividendSectionProps = {
-  stockOneSymbol: string;
-  stockTwoSymbol: string;
-  stockOneProfileData: ProfileData | null;
-  stockOneRatiosData: RatiosData | null;
-  stockTwoProfileData: ProfileData | null;
-  stockTwoRatiosData: RatiosData | null;
+  stockOneData: StockPropertyData | null;
+  stockTwoData: StockPropertyData | null;
 };
 
-const metricsForComparison: (keyof RatiosData)[] = [
-  "dividendYieldTTM",
-  "dividendPayoutRatioTTM",
+const comparableDividendKeys: ComparableMetricKey[] = [
+  "dividendYieldTtm",
+  "dividendPayoutRatioTtm",
 ];
 
+const tableRows: DividendKey[] = ["dividendYieldTtm", "dividendPayoutRatioTtm"];
+
 export function DividendSection({
-  stockOneSymbol,
-  stockTwoSymbol,
-  stockOneProfileData,
-  stockOneRatiosData,
-  stockTwoProfileData,
-  stockTwoRatiosData,
+  stockOneData,
+  stockTwoData,
 }: DividendSectionProps) {
-  if (
-    !stockOneProfileData ||
-    !stockOneRatiosData ||
-    !stockTwoProfileData ||
-    !stockTwoRatiosData
-  ) {
+  if (!stockOneData || !stockTwoData) {
     return (
       <Section ariaLabelledby="dividend">
         <H2 id="dividend">股息</H2>
@@ -59,95 +46,71 @@ export function DividendSection({
     );
   }
 
-  const formatPercentage = (value: number | null): string => {
-    if (value === null) {
-      return "--";
-    }
-    return `${(value * 100).toFixed(2)}%`;
-  };
-
   return (
     <Section ariaLabelledby="dividend">
       <H2 id="dividend">股息</H2>
 
-      {metricsForComparison.map((metricCode) => {
-        const stockOneMetricValue = stockOneRatiosData[metricCode];
-        const stockTwoMetricValue = stockTwoRatiosData[metricCode];
+      {comparableDividendKeys.map((key) => {
+        const stockOneMetricValue = stockOneData[key];
+        const stockTwoMetricValue = stockTwoData[key];
+        const metricLongName = getPropertyName(key, "zh", "long");
 
-        const metricLongName = getMetricName({
-          metricCode,
-          nameType: "longNameZH",
-        });
-        const metricShortName = getMetricName({
-          metricCode,
-          nameType: "shortNameZH",
-        });
-
-        const stockOneIndustryMetricStats = calculateMetricStats({
-          metricCode,
-          metricValues: getIndustryMetric({
-            industryCode: stockOneProfileData.industry,
-            metricCode,
-          }),
-        });
-        const stockTwoIndustryMetricStats = calculateMetricStats({
-          metricCode,
-          metricValues: getIndustryMetric({
-            industryCode: stockTwoProfileData.industry,
-            metricCode,
-          }),
-        });
-
-        const stockOneMetricColor = calculateMetricColor({
-          metricCode,
-          metricValue: stockOneMetricValue,
-          metricStats: stockOneIndustryMetricStats,
-        });
-        const stockTwoMetricColor = calculateMetricColor({
-          metricCode,
-          metricValue: stockTwoMetricValue,
-          metricStats: stockTwoIndustryMetricStats,
-        });
-
-        const isStockOneMetricApplicable = getMetricApplicability({
-          industryCode: stockOneProfileData.industry,
-          metricCode,
-        });
-        const isStockTwoMetricApplicable = getMetricApplicability({
-          industryCode: stockTwoProfileData.industry,
-          metricCode,
-        });
+        const stockOneIndustryMetricStats = getIndustryMetricStats(
+          stockOneData.industry,
+          key,
+        );
+        const stockTwoIndustryMetricStats = getIndustryMetricStats(
+          stockTwoData.industry,
+          key,
+        );
+        const stockOneMetricColor = calculateMetricColor(
+          key,
+          stockOneMetricValue,
+          stockOneIndustryMetricStats,
+        );
+        const stockTwoMetricColor = calculateMetricColor(
+          key,
+          stockTwoMetricValue,
+          stockTwoIndustryMetricStats,
+        );
+        const isStockOneMetricApplicable = getMetricApplicability(
+          stockOneData.industry,
+          key,
+        );
+        const isStockTwoMetricApplicable = getMetricApplicability(
+          stockTwoData.industry,
+          key,
+        );
 
         return (
-          <React.Fragment key={metricCode}>
+          <React.Fragment key={key}>
             <H3>{metricLongName}</H3>
             <SummaryContainer
-              metricCode={metricCode as MetricCode}
-              metricName={metricShortName}
-              stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
+              metricKey={key}
+              stockOneSymbol={stockOneData.symbol}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
+              stockTwoSymbol={stockTwoData.symbol}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
               isStockTwoMetricApplicable={isStockTwoMetricApplicable}
             />
             <MetricComparisonBoxPlotFigure
-              metricCode={metricCode as MetricCode}
-              metricName={metricShortName}
-              stockOneSymbol={stockOneSymbol}
-              stockOneIndustryName={stockOneProfileData.industry ?? "--"}
+              metricKey={key}
+              metricName={metricLongName}
+              stockOneSymbol={stockOneData.symbol}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoSymbol}
-              stockTwoIndustryName={stockTwoProfileData.industry ?? "--"}
+              stockTwoSymbol={stockTwoData.symbol}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -163,36 +126,35 @@ export function DividendSection({
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">股票代码</Table.Thead.Tr.Th>
-              <Table.Thead.Tr.Th scope="col">
-                {stockOneSymbol}
+              <Table.Thead.Tr.Th scope="row">
+                {getPropertyName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoSymbol}
+                {stockOneData.symbol}
+              </Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="col">
+                {stockTwoData.symbol}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
           <Table.Tbody>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">股息率 (TTM)</Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.dividendYieldTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.dividendYieldTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
-            <Table.Tbody.Tr>
-              <Table.Tbody.Tr.Th scope="row">
-                股息支付率 (TTM)
-              </Table.Tbody.Tr.Th>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockOneRatiosData.dividendPayoutRatioTTM)}
-              </Table.Tbody.Tr.Td>
-              <Table.Tbody.Tr.Td>
-                {formatPercentage(stockTwoRatiosData.dividendPayoutRatioTTM)}
-              </Table.Tbody.Tr.Td>
-            </Table.Tbody.Tr>
+            {tableRows.map((key) => (
+              <Table.Tbody.Tr key={key}>
+                <Table.Tbody.Tr.Th scope="row">
+                  {getPropertyName(key, "zh", "long")}
+                </Table.Tbody.Tr.Th>
+                <Table.Tbody.Tr.Td>
+                  {formatPropertyValue(key, stockOneData[key], {
+                    lang: "zh",
+                  })}
+                </Table.Tbody.Tr.Td>
+                <Table.Tbody.Tr.Td>
+                  {formatPropertyValue(key, stockTwoData[key], {
+                    lang: "zh",
+                  })}
+                </Table.Tbody.Tr.Td>
+              </Table.Tbody.Tr>
+            ))}
           </Table.Tbody>
         </Table>
       </div>

@@ -6,9 +6,8 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { fetchStockData } from "@/lib/firestore/stocks";
+import { fetchStockPropertyData } from "@/lib/firestore/stocks";
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
-import { fetchFinancialGrowthData } from "@/app/lib/fmp/fetchFinancialGrowthData";
 
 import { AdvertisementSidebar } from "@/components/zh/layout/AdvertisementSidebar";
 import { Footer } from "@/components/zh/layout/Footer";
@@ -80,21 +79,13 @@ async function Page({ params }: PageProps) {
 
   const { stockOneSymbol, stockTwoSymbol } = matchingComparison;
 
-  const [
-    stockOneData,
-    stockTwoData,
-    stockOnePriceSeries,
-    stockTwoPriceSeries,
-    stockOneGrowthData,
-    stockTwoGrowthData,
-  ] = await Promise.all([
-    fetchStockData(stockOneSymbol),
-    fetchStockData(stockTwoSymbol),
-    fetchPriceSeriesData(stockOneSymbol),
-    fetchPriceSeriesData(stockTwoSymbol),
-    fetchFinancialGrowthData(stockOneSymbol),
-    fetchFinancialGrowthData(stockTwoSymbol),
-  ]);
+  const [stockOneData, stockTwoData, stockOnePriceSeries, stockTwoPriceSeries] =
+    await Promise.all([
+      fetchStockPropertyData(stockOneSymbol),
+      fetchStockPropertyData(stockTwoSymbol),
+      fetchPriceSeriesData(stockOneSymbol),
+      fetchPriceSeriesData(stockTwoSymbol),
+    ]);
 
   if (!stockOneData || !stockTwoData) {
     notFound();
@@ -159,11 +150,10 @@ async function Page({ params }: PageProps) {
               本文对{stockOneSymbol}和{stockTwoSymbol}
               进行了全面对比，涵盖历史表现、盈利能力、财务实力、成长性、股息以及估值等方面。
             </P>
+
             <CompanyOverviewSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneProfileData={stockOneData}
-              stockTwoProfileData={stockTwoData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
             <HistoricalPerformanceSection
               stockOneSymbol={stockOneSymbol}
@@ -172,48 +162,24 @@ async function Page({ params }: PageProps) {
               stockTwoPriceSeries={stockTwoPriceSeries}
             />
             <ProfitabilitySection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneProfileData={stockOneData}
-              stockOneKeyMetricsData={stockOneData}
-              stockOneRatiosData={stockOneData}
-              stockTwoProfileData={stockTwoData}
-              stockTwoKeyMetricsData={stockTwoData}
-              stockTwoRatiosData={stockTwoData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
             <FinancialStrengthSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneProfileData={stockOneData}
-              stockOneKeyMetricsData={stockOneData}
-              stockOneRatiosData={stockOneData}
-              stockTwoProfileData={stockTwoData}
-              stockTwoKeyMetricsData={stockTwoData}
-              stockTwoRatiosData={stockTwoData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
             <GrowthSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneFinancialGrowthData={stockOneGrowthData}
-              stockTwoFinancialGrowthData={stockTwoGrowthData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
             <DividendSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneProfileData={stockOneData}
-              stockOneRatiosData={stockOneData}
-              stockTwoProfileData={stockTwoData}
-              stockTwoRatiosData={stockTwoData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
             <ValuationSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOneProfileData={stockOneData}
-              stockOneKeyMetricsData={stockOneData}
-              stockOneRatiosData={stockOneData}
-              stockTwoProfileData={stockTwoData}
-              stockTwoKeyMetricsData={stockTwoData}
-              stockTwoRatiosData={stockTwoData}
+              stockOneData={stockOneData}
+              stockTwoData={stockTwoData}
             />
           </article>
         </main>

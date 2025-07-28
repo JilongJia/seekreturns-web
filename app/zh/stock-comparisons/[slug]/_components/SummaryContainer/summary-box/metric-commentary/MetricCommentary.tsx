@@ -1,10 +1,7 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-
 import { PriceToEarningsRatioCommentary } from "./commentaries/PriceToEarningsRatioCommentary";
 import { CurrentRatioCommentary } from "./commentaries/CurrentRatioCommentary";
 import { DebtToEquityRatioCommentary } from "./commentaries/DebtToEquityRatioCommentary";
 import { PriceToBookRatioCommentary } from "./commentaries/PriceToBookRatioCommentary";
-import { ForwardPriceToEarningsGrowthRatioCommentary } from "./commentaries/ForwardPriceToEarningsGrowthRatioCommentary";
 import { DividendPayoutRatioCommentary } from "./commentaries/DividendPayoutRatioCommentary";
 import { DividendYieldCommentary } from "./commentaries/DividendYieldCommentary";
 import { InterestCoverageRatioCommentary } from "./commentaries/InterestCoverageRatioCommentary";
@@ -12,65 +9,61 @@ import { NetProfitMarginCommentary } from "./commentaries/NetProfitMarginComment
 import { OperatingProfitMarginCommentary } from "./commentaries/OperatingProfitMarginCommentary";
 import { PriceToSalesRatioCommentary } from "./commentaries/PriceToSalesRatioCommentary";
 import { ReturnOnEquityCommentary } from "./commentaries/ReturnOnEquityCommentary";
-import { ReturnOnInvestedCapitalCommentary } from "./commentaries/ReturnOnInvestedCapitalCommentary";
+
+import type { MetricStats } from "@/lib/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 type MetricCommentaryProps = {
-  metricCode: MetricCode;
+  metricKey: ComparableMetricKey;
   stockSymbol: string;
   industryName: string;
   metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
+  formattedMetricValue: string;
+  industryMetricStats: MetricStats | null;
   isMetricApplicable: boolean;
 };
 
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
-
-const METRIC_COMMENTARIES: Partial<
-  Record<MetricCode, (props: MetricCommentaryProps) => JSX.Element>
+const METRIC_COMMENTARIES: Record<
+  ComparableMetricKey,
+  (props: MetricCommentaryProps) => JSX.Element | null
 > = {
-  currentRatioTTM: CurrentRatioCommentary,
-  debtToEquityRatioTTM: DebtToEquityRatioCommentary,
-  priceToBookRatioTTM: PriceToBookRatioCommentary,
-
-  forwardPriceToEarningsGrowthRatioTTM:
-    ForwardPriceToEarningsGrowthRatioCommentary,
-  dividendPayoutRatioTTM: DividendPayoutRatioCommentary,
-  dividendYieldTTM: DividendYieldCommentary,
-  interestCoverageRatioTTM: InterestCoverageRatioCommentary,
-  netProfitMarginTTM: NetProfitMarginCommentary,
-  operatingProfitMarginTTM: OperatingProfitMarginCommentary,
-  priceToEarningsRatioTTM: PriceToEarningsRatioCommentary,
-  priceToSalesRatioTTM: PriceToSalesRatioCommentary,
-  returnOnEquityTTM: ReturnOnEquityCommentary,
-  returnOnInvestedCapitalTTM: ReturnOnInvestedCapitalCommentary,
+  returnOnEquityTtm: ReturnOnEquityCommentary,
+  netProfitMarginTtm: NetProfitMarginCommentary,
+  operatingProfitMarginTtm: OperatingProfitMarginCommentary,
+  currentRatioMrq: CurrentRatioCommentary,
+  debtToEquityRatioMrq: DebtToEquityRatioCommentary,
+  interestCoverageRatioTtm: InterestCoverageRatioCommentary,
+  dividendYieldTtm: DividendYieldCommentary,
+  dividendPayoutRatioTtm: DividendPayoutRatioCommentary,
+  priceToEarningsRatioTtm: PriceToEarningsRatioCommentary,
+  priceToSalesRatioTtm: PriceToSalesRatioCommentary,
+  priceToBookRatioMrq: PriceToBookRatioCommentary,
 };
 
 export function MetricCommentary({
-  metricCode,
+  metricKey,
   stockSymbol,
   industryName,
   metricValue,
+  formattedMetricValue,
   industryMetricStats,
   isMetricApplicable,
 }: MetricCommentaryProps) {
-  const CommentaryComponent = METRIC_COMMENTARIES[metricCode];
+  const CommentaryComponent = METRIC_COMMENTARIES[metricKey];
 
   if (!CommentaryComponent) {
     return null;
   }
 
-  return CommentaryComponent({
-    metricCode,
-    stockSymbol,
-    industryName,
-    metricValue,
-    industryMetricStats,
-    isMetricApplicable,
-  });
+  return (
+    <CommentaryComponent
+      metricKey={metricKey}
+      stockSymbol={stockSymbol}
+      industryName={industryName}
+      metricValue={metricValue}
+      formattedMetricValue={formattedMetricValue}
+      industryMetricStats={industryMetricStats}
+      isMetricApplicable={isMetricApplicable}
+    />
+  );
 }
