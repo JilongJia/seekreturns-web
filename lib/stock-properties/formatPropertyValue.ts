@@ -56,6 +56,7 @@ export function formatPropertyValue(
     case "operatingProfitMarginTtm":
     case "grossProfitMarginTtm":
     case "dividendYieldTtm":
+    case "dividendPayoutRatioTtm":
     case "revenueGrowthMrqYoy":
     case "revenueGrowthTtmYoy":
     case "revenueGrowth3yCagr":
@@ -85,13 +86,6 @@ export function formatPropertyValue(
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
-
-    // Payout Ratio (already a percentage value, just add the sign)
-    case "dividendPayoutRatioTtm":
-      return `${Number(value).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}%`;
 
     // Volume (in Millions)
     case "averageTradingVolume10d":

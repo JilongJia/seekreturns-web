@@ -95,6 +95,7 @@ function drawYAxis({
   tickFormatter: (d: number | { valueOf(): number }) => string;
 }) {
   const { axis } = chartConfig;
+
   const yAxisGenerator = axisLeft(yScale)
     .ticks(axis.ticks)
     .tickSize(-innerWidth)
@@ -372,7 +373,6 @@ export function MetricComparisonBoxPlot({
     const stockOneMetricType = isStockOneMetricApplicable
       ? "normal"
       : "inapplicable";
-
     const stockTwoMetricType = isStockTwoMetricApplicable
       ? "normal"
       : "inapplicable";
@@ -414,7 +414,6 @@ export function MetricComparisonBoxPlot({
       minStockValue < overallMin
         ? Math.max(minStockValue, overallMin - padding)
         : overallMin;
-
     const domainMax =
       maxStockValue > overallMax
         ? Math.min(maxStockValue, overallMax + padding)
