@@ -1,36 +1,27 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
 import { SummaryBox } from "./summary-box/SummaryBox";
-
 import styles from "./SummaryContainer.module.css";
 
-type IndustryMetricStats = {
-  max: number;
-  q3: number;
-  median: number;
-  q1: number;
-  min: number;
-};
+import type { MetricStats } from "@/lib/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 type SummaryContainerProps = {
-  metricCode: MetricCode;
-  metricName: string;
+  metricKey: ComparableMetricKey;
   stockOneSymbol: string;
   stockOneIndustryName: string;
   stockOneMetricValue: number | null;
   stockOneMetricColor: "green" | "yellow" | "red" | "neutral";
-  stockOneIndustryMetricStats: IndustryMetricStats | null;
+  stockOneIndustryMetricStats: MetricStats | null;
   isStockOneMetricApplicable: boolean;
   stockTwoSymbol: string;
   stockTwoIndustryName: string;
   stockTwoMetricValue: number | null;
   stockTwoMetricColor: "green" | "yellow" | "red" | "neutral";
-  stockTwoIndustryMetricStats: IndustryMetricStats | null;
+  stockTwoIndustryMetricStats: MetricStats | null;
   isStockTwoMetricApplicable: boolean;
 };
 
 export function SummaryContainer({
-  metricCode,
-  metricName,
+  metricKey,
   stockOneSymbol,
   stockOneIndustryName,
   stockOneMetricValue,
@@ -47,9 +38,8 @@ export function SummaryContainer({
   return (
     <div className={styles.container}>
       <SummaryBox
-        metricCode={metricCode}
+        metricKey={metricKey}
         stockSymbol={stockOneSymbol}
-        metricName={metricName}
         metricValue={stockOneMetricValue}
         metricColor={stockOneMetricColor}
         industryName={stockOneIndustryName}
@@ -61,9 +51,8 @@ export function SummaryContainer({
       <div className={styles.divider}></div>
 
       <SummaryBox
-        metricCode={metricCode}
+        metricKey={metricKey}
         stockSymbol={stockTwoSymbol}
-        metricName={metricName}
         metricValue={stockTwoMetricValue}
         metricColor={stockTwoMetricColor}
         industryName={stockTwoIndustryName}

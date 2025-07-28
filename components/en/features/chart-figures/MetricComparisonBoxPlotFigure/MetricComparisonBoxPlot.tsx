@@ -5,9 +5,11 @@ import { axisLeft } from "d3-axis";
 import { symbol, symbolTriangle } from "d3-shape";
 import { select, type Selection } from "d3-selection";
 import { scaleLinear, type ScaleLinear } from "d3-scale";
-
 import styles from "./MetricComparisonBoxPlot.module.css";
-import { MetricCode } from "@/app/data/fmp/metricCodes";
+
+import { formatPropertyValue } from "@/lib/stock-properties";
+import type { MetricStats } from "@/lib/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 const chartConfig = {
   chart: {
@@ -54,41 +56,14 @@ const chartConfig = {
   },
 };
 
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
-
 type MetricColor = "green" | "yellow" | "red" | "neutral";
 
-const percentageMetrics: Set<MetricCode> = new Set([
-  "returnOnEquityTTM",
-  "returnOnAssetsTTM",
-  "returnOnInvestedCapitalTTM",
-  "netProfitMarginTTM",
-  "grossProfitMarginTTM",
-  "operatingProfitMarginTTM",
-  "dividendYieldTTM",
-  "dividendPayoutRatioTTM",
-]);
-
 function createTickFormatter(
-  metricCode: MetricCode,
+  metricKey: ComparableMetricKey,
 ): (d: number | { valueOf(): number }) => string {
-  if (percentageMetrics.has(metricCode)) {
-    return (d) =>
-      new Intl.NumberFormat("en-US", {
-        style: "percent",
-        maximumFractionDigits: 1,
-      }).format(d as number);
-  }
-  return (d) =>
-    new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(
-      d as number,
-    );
+  return (d) => {
+    return formatPropertyValue(metricKey, d.valueOf(), { lang: "en" });
+  };
 }
 
 function createChartGroup({
@@ -186,7 +161,7 @@ function drawBoxAndWhiskers({
   centerX: number;
   yScale: ScaleLinear<number, number>;
   metricType: "normal" | "inapplicable";
-  industryMetricStats: IndustryMetricStats | null;
+  industryMetricStats: MetricStats | null;
   width: number;
 }) {
   if (!industryMetricStats) return;
@@ -326,42 +301,36 @@ function drawMarker({
 }
 
 type MetricComparisonBoxPlotProps = {
-  metricCode: MetricCode;
-  metricName: string;
+  metricKey: ComparableMetricKey;
   stockOneSymbol: string;
-  stockOneIndustryName: string;
   stockOneMetricValue: number | null;
   stockOneMetricColor: MetricColor;
-  stockOneIndustryMetricStats: IndustryMetricStats | null;
+  stockOneIndustryMetricStats: MetricStats | null;
   isStockOneMetricApplicable: boolean;
   stockTwoSymbol: string;
-  stockTwoIndustryName: string;
   stockTwoMetricValue: number | null;
   stockTwoMetricColor: MetricColor;
-  stockTwoIndustryMetricStats: IndustryMetricStats | null;
+  stockTwoIndustryMetricStats: MetricStats | null;
   isStockTwoMetricApplicable: boolean;
 };
 
 type ChartConfiguration = {
   stockSymbol: string;
   centerX: number;
-  industryMetricStats: IndustryMetricStats | null;
+  industryMetricStats: MetricStats | null;
   metricType: "normal" | "inapplicable";
   metricValue: number | null;
   metricColor: MetricColor;
 };
 
 export function MetricComparisonBoxPlot({
-  metricCode,
-  metricName,
+  metricKey,
   stockOneSymbol,
-  stockOneIndustryName,
   stockOneMetricValue,
   stockOneMetricColor,
   stockOneIndustryMetricStats,
   isStockOneMetricApplicable,
   stockTwoSymbol,
-  stockTwoIndustryName,
   stockTwoMetricValue,
   stockTwoMetricColor,
   stockTwoIndustryMetricStats,
@@ -411,7 +380,7 @@ export function MetricComparisonBoxPlot({
     const validIndustryMetricStats = [
       stockOneIndustryMetricStats,
       stockTwoIndustryMetricStats,
-    ].filter((stats): stats is IndustryMetricStats => !!stats);
+    ].filter((stats): stats is MetricStats => !!stats);
 
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -456,7 +425,7 @@ export function MetricComparisonBoxPlot({
       .range([innerHeight, 0])
       .nice();
 
-    const tickFormatter = createTickFormatter(metricCode);
+    const tickFormatter = createTickFormatter(metricKey);
     drawYAxis({ chartGroup, yScale, innerWidth, tickFormatter });
 
     const boxAndWhiskersWidth = Math.min(
@@ -513,16 +482,13 @@ export function MetricComparisonBoxPlot({
     }
   }, [
     dimensions,
-    metricCode,
-    metricName,
+    metricKey,
     stockOneSymbol,
-    stockOneIndustryName,
     stockOneMetricValue,
     stockOneMetricColor,
     stockOneIndustryMetricStats,
     isStockOneMetricApplicable,
     stockTwoSymbol,
-    stockTwoIndustryName,
     stockTwoMetricValue,
     stockTwoMetricColor,
     stockTwoIndustryMetricStats,

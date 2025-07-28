@@ -13,9 +13,13 @@ export type MetricStats = {
 };
 
 export function getIndustryMetricStats(
-  gicsIndustry: GicsIndustry,
+  gicsIndustry: GicsIndustry | null,
   metricKey: ComparableMetricKey,
 ): MetricStats | null {
+  if (gicsIndustry === null) {
+    return null;
+  }
+
   const industryData = industryMetricStatistics[gicsIndustry];
 
   if (!industryData) {

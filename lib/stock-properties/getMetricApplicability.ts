@@ -3,19 +3,25 @@ import type { GicsIndustry } from "@/constants/gics/types";
 import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 export function getMetricApplicability(
-  gicsIndustry: GicsIndustry,
+  gicsIndustry: GicsIndustry | null,
   metricKey: ComparableMetricKey,
 ): boolean {
-  // Find the applicability rule object for the given industry.
+  // If the industry is unknown, we default to the metric being applicable.
+  if (gicsIndustry === null) {
+    return true;
+  }
+
   const industryRule = metricApplicability.find(
     (rule) => rule.industry === gicsIndustry,
   );
 
-  // If no rule is found for that industry, the metric is not applicable.
+  // 2. If no specific rule is found for the industry, default to applicable.
   if (!industryRule) {
-    return false;
+    return true;
   }
 
-  // Return the boolean value for the metric key from the rule object.
-  return industryRule[metricKey] || false;
+  const isApplicable = industryRule[metricKey];
+
+  // 3. If the key is not on the rule object (isApplicable is undefined), default to true.
+  return isApplicable ?? true;
 }

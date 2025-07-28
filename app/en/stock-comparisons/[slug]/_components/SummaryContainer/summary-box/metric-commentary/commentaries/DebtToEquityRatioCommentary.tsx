@@ -1,33 +1,24 @@
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import { formatMetricValue } from "./formatMetricValue";
-import { P } from "./P";
-
-type IndustryMetricStats = {
-  min: number;
-  q1: number;
-  median: number;
-  q3: number;
-  max: number;
-};
+import { P } from "@/components/en/ui/P";
+import type { MetricStats } from "@/lib/stock-properties";
 
 type MetricCommentaryProps = {
-  metricCode: MetricCode;
   stockSymbol: string;
   industryName: string;
-  metricValue: number | null;
-  industryMetricStats: IndustryMetricStats | null;
   isMetricApplicable: boolean;
+  metricValue: number | null;
+  formattedMetricValue: string;
+  industryMetricStats: MetricStats | null;
 };
 
 export function DebtToEquityRatioCommentary({
-  isMetricApplicable,
-  industryName,
-  metricValue,
   stockSymbol,
+  industryName,
+  isMetricApplicable,
+  metricValue,
+  formattedMetricValue,
   industryMetricStats,
-  metricCode,
 }: MetricCommentaryProps) {
-  // 1. Check if the metric is applicable
+  // 1. Check if the metric is applicable.
   if (!isMetricApplicable) {
     return (
       <P>
@@ -37,7 +28,7 @@ export function DebtToEquityRatioCommentary({
     );
   }
 
-  // 2. Check if data is available
+  // 2. Check if data is available.
   if (metricValue === null) {
     return (
       <P>
@@ -46,9 +37,7 @@ export function DebtToEquityRatioCommentary({
     );
   }
 
-  const formattedMetricValue = formatMetricValue({ metricCode, metricValue });
-
-  // 3. Handle specific numerical cases first (Excellent check!)
+  // 3. Handle specific numerical cases first.
   if (metricValue < 0) {
     return (
       <P>
@@ -59,7 +48,7 @@ export function DebtToEquityRatioCommentary({
     );
   }
 
-  // 4. Check if industry benchmark data is available
+  // 4. Check if industry benchmark data is available.
   if (!industryMetricStats) {
     return (
       <P>
@@ -72,7 +61,7 @@ export function DebtToEquityRatioCommentary({
 
   const { min, q1, q3, max } = industryMetricStats;
 
-  // 5. Handle cases based on industry benchmarks
+  // 5. Handle cases based on industry benchmarks.
   if (metricValue > max) {
     return (
       <P>

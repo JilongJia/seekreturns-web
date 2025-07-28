@@ -7,29 +7,30 @@ import { Table } from "@/components/en/ui/Table";
 import { SummaryContainer } from "./SummaryContainer";
 import { MetricComparisonBoxPlotFigure } from "@/components/en/features/chart-figures/MetricComparisonBoxPlotFigure";
 import styles from "./DividendSection.module.css";
-
-// Import types from their correct locations
-import type {
-  StockPropertyData,
-  DividendKey,
-} from "@/constants/stock-properties/types";
-// 1. Corrected import path for ComparableMetricKey.
 import {
   getPropertyName,
   getMetricApplicability,
   getIndustryMetricStats,
   calculateMetricColor,
+  formatPropertyValue,
 } from "@/lib/stock-properties";
+import type {
+  StockPropertyData,
+  DividendKey,
+  ComparableMetricKey,
+} from "@/constants/stock-properties";
 
 type DividendSectionProps = {
   stockOneData: StockPropertyData | null;
   stockTwoData: StockPropertyData | null;
 };
 
-const dividendKeys: DividendKey[] = [
+const comparableDividendKeys: ComparableMetricKey[] = [
   "dividendYieldTtm",
   "dividendPayoutRatioTtm",
 ];
+
+const tableRows: DividendKey[] = ["dividendYieldTtm", "dividendPayoutRatioTtm"];
 
 export function DividendSection({
   stockOneData,
@@ -44,84 +45,71 @@ export function DividendSection({
     );
   }
 
-  const formatValue = (key: DividendKey, value: number | null): string => {
-    if (value === null) return "--";
-    if (key === "dividendYieldTtm") return `${(value * 100).toFixed(2)}%`;
-    if (key === "dividendPayoutRatioTtm") return `${value.toFixed(2)}%`;
-    return String(value);
-  };
-
   return (
     <Section ariaLabelledby="dividend">
       <H2 id="dividend">Dividend</H2>
 
-      {dividendKeys.map((metricKey) => {
-        const stockOneMetricValue = stockOneData[metricKey];
-        const stockTwoMetricValue = stockTwoData[metricKey];
+      {comparableDividendKeys.map((key) => {
+        const stockOneMetricValue = stockOneData[key];
+        const stockTwoMetricValue = stockTwoData[key];
+        const metricLongName = getPropertyName(key, "en", "long");
 
-        // 2. Reverted parameter order for getPropertyName.
-        const metricLongName = getPropertyName(metricKey, "en", "long");
-
-        // 3. Removed 'as' type assertions as requested.
         const stockOneIndustryMetricStats = getIndustryMetricStats(
           stockOneData.industry,
-          metricKey,
+          key,
         );
         const stockTwoIndustryMetricStats = getIndustryMetricStats(
           stockTwoData.industry,
-          metricKey,
+          key,
         );
-
         const stockOneMetricColor = calculateMetricColor(
-          metricKey,
+          key,
           stockOneMetricValue,
           stockOneIndustryMetricStats,
         );
         const stockTwoMetricColor = calculateMetricColor(
-          metricKey,
+          key,
           stockTwoMetricValue,
           stockTwoIndustryMetricStats,
         );
-
         const isStockOneMetricApplicable = getMetricApplicability(
           stockOneData.industry,
-          metricKey,
+          key,
         );
         const isStockTwoMetricApplicable = getMetricApplicability(
           stockTwoData.industry,
-          metricKey,
+          key,
         );
 
         return (
-          <React.Fragment key={metricKey}>
+          <React.Fragment key={key}>
             <H3>{metricLongName}</H3>
             <SummaryContainer
-              metricKey={metricKey}
-              metricName={metricLongName}
+              metricKey={key}
               stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry ?? "--"}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry ?? "--"}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
               isStockTwoMetricApplicable={isStockTwoMetricApplicable}
             />
             <MetricComparisonBoxPlotFigure
-              metricKey={metricKey}
+              metricKey={key}
               metricName={metricLongName}
               stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry ?? "--"}
+              stockOneIndustryName={stockOneData.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
               stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry ?? "--"}
+              stockTwoIndustryName={stockTwoData.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -137,7 +125,9 @@ export function DividendSection({
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Metric</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">
+                {getPropertyName("symbol", "en", "long")}
+              </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneData.symbol}
               </Table.Thead.Tr.Th>
@@ -147,17 +137,20 @@ export function DividendSection({
             </Table.Thead.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {dividendKeys.map((metricKey) => (
-              <Table.Tbody.Tr key={metricKey}>
+            {tableRows.map((key) => (
+              <Table.Tbody.Tr key={key}>
                 <Table.Tbody.Tr.Th scope="row">
-                  {/* 2. Reverted parameter order for getPropertyName. */}
-                  {getPropertyName(metricKey, "en", "long")}
+                  {getPropertyName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatValue(metricKey, stockOneData[metricKey])}
+                  {formatPropertyValue(key, stockOneData[key], {
+                    lang: "en",
+                  })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatValue(metricKey, stockTwoData[metricKey])}
+                  {formatPropertyValue(key, stockTwoData[key], {
+                    lang: "en",
+                  })}
                 </Table.Tbody.Tr.Td>
               </Table.Tbody.Tr>
             ))}

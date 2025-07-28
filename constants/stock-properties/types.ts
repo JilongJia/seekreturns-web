@@ -1,17 +1,26 @@
+import type {
+  GicsSector,
+  GicsIndustryGroup,
+  GicsIndustry,
+  GicsSubIndustry,
+} from "@/constants/gics/types";
+
+export type SecurityType = "Common Stock" | "REIT" | "ADR" | "NY Reg Shrs";
+
 export type ProfileData = {
   symbol: string;
   companyName: string | null;
   country: string | null;
-  sector: string | null;
-  industryGroup: string | null;
-  industry: string | null;
-  subIndustry: string | null;
+  sector: GicsSector | null;
+  industryGroup: GicsIndustryGroup | null;
+  industry: GicsIndustry | null;
+  subIndustry: GicsSubIndustry | null;
   marketCapitalization: number | null;
   currency: string | null;
   ticker: string | null;
   ipoDate: string | null;
   exchange: string | null;
-  securityType: string | null;
+  securityType: SecurityType | null;
 };
 
 export type HistoricalPerformanceData = {

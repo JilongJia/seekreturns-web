@@ -1,13 +1,12 @@
 import { MetricComparisonBoxPlot } from "./MetricComparisonBoxPlot";
 import { MetricComparisonBoxPlotFigcaption } from "./MetricComparisonBoxPlotFigcaption";
-
 import styles from "./MetricComparisonBoxPlotFigure.module.css";
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import type { MetricStats } from "@/app/lib/stock-analysis/calculateMetricStats";
-import type { MetricColor } from "@/app/lib/stock-analysis/calculateMetricColor";
+
+import type { MetricStats, MetricColor } from "@/lib/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 type MetricComparisonBoxPlotFigureProps = {
-  metricCode: MetricCode;
+  metricKey: ComparableMetricKey;
   metricName: string;
   stockOneSymbol: string;
   stockOneIndustryName: string;
@@ -24,7 +23,7 @@ type MetricComparisonBoxPlotFigureProps = {
 };
 
 export function MetricComparisonBoxPlotFigure({
-  metricCode,
+  metricKey,
   metricName,
   stockOneSymbol,
   stockOneIndustryName,
@@ -42,16 +41,13 @@ export function MetricComparisonBoxPlotFigure({
   return (
     <figure className={styles.figure}>
       <MetricComparisonBoxPlot
-        metricCode={metricCode}
-        metricName={metricName}
+        metricKey={metricKey}
         stockOneSymbol={stockOneSymbol}
-        stockOneIndustryName={stockOneIndustryName}
         stockOneMetricValue={stockOneMetricValue}
         stockOneMetricColor={stockOneMetricColor}
         stockOneIndustryMetricStats={stockOneIndustryMetricStats}
         isStockOneMetricApplicable={isStockOneMetricApplicable}
         stockTwoSymbol={stockTwoSymbol}
-        stockTwoIndustryName={stockTwoIndustryName}
         stockTwoMetricValue={stockTwoMetricValue}
         stockTwoMetricColor={stockTwoMetricColor}
         stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}

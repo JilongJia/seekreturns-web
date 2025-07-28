@@ -1,33 +1,24 @@
 import clsx from "clsx";
-
-import type { MetricCode } from "@/app/data/fmp/metricCodes";
-import { formatMetricValue } from "../../formatMetricValue";
-
 import { MetricCommentary } from "./metric-commentary/MetricCommentary";
 import styles from "./SummaryBox.module.css";
 
-type IndustryMetricStats = {
-  max: number;
-  q3: number;
-  median: number;
-  q1: number;
-  min: number;
-};
+import { formatPropertyValue } from "@/lib/stock-properties";
+import type { MetricStats } from "@/lib/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock-properties";
 
 type SummaryBoxProps = {
-  metricCode: MetricCode;
+  metricKey: ComparableMetricKey;
   stockSymbol: string;
-  metricName: string;
   metricValue: number | null;
   metricColor: "green" | "yellow" | "red" | "neutral";
   industryName: string;
-  industryMetricStats: IndustryMetricStats | null;
+  industryMetricStats: MetricStats | null;
   isMetricApplicable: boolean;
   className?: string;
 };
 
 export function SummaryBox({
-  metricCode,
+  metricKey,
   stockSymbol,
   metricValue,
   metricColor,
@@ -36,6 +27,10 @@ export function SummaryBox({
   isMetricApplicable,
   className,
 }: SummaryBoxProps) {
+  const formattedMetricValue = formatPropertyValue(metricKey, metricValue, {
+    lang: "en",
+  });
+
   return (
     <article className={className}>
       <h4 className={styles.symbolHeading}>{stockSymbol}</h4>
@@ -46,7 +41,7 @@ export function SummaryBox({
           isMetricApplicable ? styles[metricColor] : styles.notApplicable,
         )}
       >
-        {formatMetricValue({ metricCode, metricValue })}
+        {formattedMetricValue}
       </p>
 
       <h4 className={styles.industryHeading}>{industryName} Industry</h4>
@@ -60,49 +55,45 @@ export function SummaryBox({
       >
         <dt>Max</dt>
         <dd>
-          {formatMetricValue({
-            metricCode,
-            metricValue: industryMetricStats?.max,
+          {formatPropertyValue(metricKey, industryMetricStats?.max ?? null, {
+            lang: "en",
           })}
         </dd>
 
         <dt>Q3</dt>
         <dd>
-          {formatMetricValue({
-            metricCode,
-            metricValue: industryMetricStats?.q3,
+          {formatPropertyValue(metricKey, industryMetricStats?.q3 ?? null, {
+            lang: "en",
           })}
         </dd>
 
         <dt>Median</dt>
         <dd>
-          {formatMetricValue({
-            metricCode,
-            metricValue: industryMetricStats?.median,
+          {formatPropertyValue(metricKey, industryMetricStats?.median ?? null, {
+            lang: "en",
           })}
         </dd>
 
         <dt>Q1</dt>
         <dd>
-          {formatMetricValue({
-            metricCode,
-            metricValue: industryMetricStats?.q1,
+          {formatPropertyValue(metricKey, industryMetricStats?.q1 ?? null, {
+            lang: "en",
           })}
         </dd>
 
         <dt>Min</dt>
         <dd>
-          {formatMetricValue({
-            metricCode,
-            metricValue: industryMetricStats?.min,
+          {formatPropertyValue(metricKey, industryMetricStats?.min ?? null, {
+            lang: "en",
           })}
         </dd>
       </dl>
 
       <MetricCommentary
-        metricCode={metricCode}
+        metricKey={metricKey}
         stockSymbol={stockSymbol}
         metricValue={metricValue}
+        formattedMetricValue={formattedMetricValue}
         industryName={industryName}
         industryMetricStats={industryMetricStats}
         isMetricApplicable={isMetricApplicable}

@@ -4,22 +4,27 @@ import { Section } from "@/components/en/ui/Section";
 import { Table } from "@/components/en/ui/Table";
 import { SecurityTypeCommentary } from "./commentaries";
 import styles from "./CompanyOverviewSection.module.css";
-import type { StockPropertyData } from "@/constants/stock-properties";
+
+import { formatPropertyValue, getPropertyName } from "@/lib/stock-properties";
+import type {
+  StockPropertyData,
+  ProfileKey,
+} from "@/constants/stock-properties";
 
 type CompanyOverviewSectionProps = {
   stockOneData: StockPropertyData | null;
   stockTwoData: StockPropertyData | null;
 };
 
-const tableRows: { key: keyof StockPropertyData; label: string }[] = [
-  { key: "companyName", label: "Company Name" },
-  { key: "country", label: "Country" },
-  { key: "sector", label: "GICS Sector" },
-  { key: "industry", label: "GICS Industry" },
-  { key: "marketCapitalization", label: "Market Capitalization" },
-  { key: "exchange", label: "Exchange" },
-  { key: "ipoDate", label: "IPO Date" },
-  { key: "securityType", label: "Security Type" },
+const tableRows: ProfileKey[] = [
+  "companyName",
+  "country",
+  "sector",
+  "industry",
+  "marketCapitalization",
+  "exchange",
+  "ipoDate",
+  "securityType",
 ];
 
 export function CompanyOverviewSection({
@@ -34,35 +39,6 @@ export function CompanyOverviewSection({
       </Section>
     );
   }
-
-  const formatValue = (
-    key: keyof StockPropertyData,
-    data: StockPropertyData,
-  ): string => {
-    const value = data[key];
-
-    if (value === null || value === undefined) {
-      return "--";
-    }
-
-    switch (key) {
-      case "marketCapitalization":
-        return `${(Number(value) / 1000).toLocaleString("en", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })} billion ${data.currency}`;
-
-      case "ipoDate":
-        return new Date(value as string).toLocaleDateString("en", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-
-      default:
-        return String(value);
-    }
-  };
 
   return (
     <Section ariaLabelledby="company-overview">
@@ -79,7 +55,9 @@ export function CompanyOverviewSection({
         <Table>
           <Table.Thead>
             <Table.Thead.Tr>
-              <Table.Thead.Tr.Th scope="row">Symbol</Table.Thead.Tr.Th>
+              <Table.Thead.Tr.Th scope="row">
+                {getPropertyName("symbol", "en", "long")}
+              </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneData.symbol}
               </Table.Thead.Tr.Th>
@@ -89,14 +67,22 @@ export function CompanyOverviewSection({
             </Table.Thead.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {tableRows.map(({ key, label }) => (
+            {tableRows.map((key) => (
               <Table.Tbody.Tr key={key}>
-                <Table.Tbody.Tr.Th scope="row">{label}</Table.Tbody.Tr.Th>
+                <Table.Tbody.Tr.Th scope="row">
+                  {getPropertyName(key, "en", "long")}
+                </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatValue(key, stockOneData)}
+                  {formatPropertyValue(key, stockOneData[key], {
+                    lang: "en",
+                    currency: stockOneData.currency,
+                  })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatValue(key, stockTwoData)}
+                  {formatPropertyValue(key, stockTwoData[key], {
+                    lang: "en",
+                    currency: stockTwoData.currency,
+                  })}
                 </Table.Tbody.Tr.Td>
               </Table.Tbody.Tr>
             ))}
