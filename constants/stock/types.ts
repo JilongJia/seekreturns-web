@@ -74,7 +74,7 @@ export type ValuationData = {
   priceToFreeCashFlowRatioTtm: number | null;
 };
 
-export type StockPropertyData = ProfileData &
+export type StockInfoData = ProfileData &
   HistoricalPerformanceData &
   ProfitabilityData &
   FinancialStrengthData &
@@ -103,7 +103,7 @@ export type ComparableMetricKey =
   | "priceToBookRatioMrq"
   | "priceToSalesRatioTtm";
 
-export type PropertyKey =
+export type StockInfoKey =
   | ProfileKey
   | HistoricalPerformanceKey
   | ProfitabilityKey

@@ -1,7 +1,4 @@
-import type {
-  PropertyKey,
-  StockPropertyData,
-} from "@/constants/stock-properties/types";
+import type { StockInfoKey, StockInfoData } from "@/constants/stock/types";
 
 type Lang = "en" | "zh";
 
@@ -10,9 +7,9 @@ export type FormatOptions = {
   currency?: string | null;
 };
 
-export function formatPropertyValue(
-  key: PropertyKey,
-  value: StockPropertyData[PropertyKey],
+export function formatStockInfo(
+  key: StockInfoKey,
+  value: StockInfoData[StockInfoKey],
   options: FormatOptions,
 ): string {
   if (value === null || value === undefined) {
@@ -101,7 +98,7 @@ export function formatPropertyValue(
         maximumFractionDigits: 2,
       })}M`;
 
-    // Default case for string properties
+    // Default case for string keys
     default:
       return String(value);
   }

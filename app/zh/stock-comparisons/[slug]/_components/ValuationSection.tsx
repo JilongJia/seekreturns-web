@@ -9,21 +9,21 @@ import { SummaryContainer } from "./SummaryContainer";
 import styles from "./ValuationSection.module.css";
 
 import {
-  getPropertyName,
+  getDisplayName,
   getMetricApplicability,
   getIndustryMetricStats,
   calculateMetricColor,
-  formatPropertyValue,
-} from "@/lib/stock-properties";
+  formatStockInfo,
+} from "@/lib/stock";
 import type {
-  StockPropertyData,
+  StockInfoData,
   ValuationKey,
   ComparableMetricKey,
-} from "@/constants/stock-properties";
+} from "@/constants/stock";
 
 type ValuationSectionProps = {
-  stockOneData: StockPropertyData | null;
-  stockTwoData: StockPropertyData | null;
+  stockOneData: StockInfoData | null;
+  stockTwoData: StockInfoData | null;
 };
 
 const comparableValuationKeys: ComparableMetricKey[] = [
@@ -59,7 +59,7 @@ export function ValuationSection({
       {comparableValuationKeys.map((key) => {
         const stockOneMetricValue = stockOneData[key];
         const stockTwoMetricValue = stockTwoData[key];
-        const metricLongName = getPropertyName(key, "zh", "long");
+        const metricLongName = getDisplayName(key, "zh", "long");
         const stockOneIndustryMetricStats = getIndustryMetricStats(
           stockOneData.industry,
           key,
@@ -131,7 +131,7 @@ export function ValuationSection({
           <Table.Thead>
             <Table.Thead.Tr>
               <Table.Thead.Tr.Th scope="row">
-                {getPropertyName("symbol", "zh", "long")}
+                {getDisplayName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneData.symbol}
@@ -145,15 +145,15 @@ export function ValuationSection({
             {tableRows.map((key) => (
               <Table.Tbody.Tr key={key}>
                 <Table.Tbody.Tr.Th scope="row">
-                  {getPropertyName(key, "zh", "long")}
+                  {getDisplayName(key, "zh", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneData[key], {
                     lang: "zh",
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoData[key], {
                     lang: "zh",
                   })}
                 </Table.Tbody.Tr.Td>

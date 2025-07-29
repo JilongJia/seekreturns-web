@@ -5,15 +5,12 @@ import { Table } from "@/components/zh/ui/Table";
 import { SecurityTypeCommentary } from "./commentaries";
 import styles from "./CompanyOverviewSection.module.css";
 
-import { formatPropertyValue, getPropertyName } from "@/lib/stock-properties";
-import type {
-  StockPropertyData,
-  ProfileKey,
-} from "@/constants/stock-properties";
+import { formatStockInfo, getDisplayName } from "@/lib/stock";
+import type { StockInfoData, ProfileKey } from "@/constants/stock";
 
 type CompanyOverviewSectionProps = {
-  stockOneData: StockPropertyData | null;
-  stockTwoData: StockPropertyData | null;
+  stockOneData: StockInfoData | null;
+  stockTwoData: StockInfoData | null;
 };
 
 const tableRows: ProfileKey[] = [
@@ -56,7 +53,7 @@ export function CompanyOverviewSection({
           <Table.Thead>
             <Table.Thead.Tr>
               <Table.Thead.Tr.Th scope="row">
-                {getPropertyName("symbol", "zh", "long")}
+                {getDisplayName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneData.symbol}
@@ -70,16 +67,16 @@ export function CompanyOverviewSection({
             {tableRows.map((key) => (
               <Table.Tbody.Tr key={key}>
                 <Table.Tbody.Tr.Th scope="row">
-                  {getPropertyName(key, "zh", "long")}
+                  {getDisplayName(key, "zh", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneData[key], {
                     lang: "zh",
                     currency: stockOneData.currency,
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoData[key], {
                     lang: "zh",
                     currency: stockTwoData.currency,
                   })}

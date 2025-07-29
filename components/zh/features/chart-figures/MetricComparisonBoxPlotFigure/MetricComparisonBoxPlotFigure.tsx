@@ -2,8 +2,8 @@ import { MetricComparisonBoxPlot } from "./MetricComparisonBoxPlot";
 import { MetricComparisonBoxPlotFigcaption } from "./MetricComparisonBoxPlotFigcaption";
 import styles from "./MetricComparisonBoxPlotFigure.module.css";
 
-import type { MetricStats, MetricColor } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { MetricStats, MetricColor } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 type MetricComparisonBoxPlotFigureProps = {
   metricKey: ComparableMetricKey;

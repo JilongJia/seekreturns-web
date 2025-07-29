@@ -1,6 +1,6 @@
-import { metricApplicability } from "@/constants/stock-properties";
+import { metricApplicability } from "@/constants/stock";
 import type { GicsIndustry } from "@/constants/gics/types";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 export function getMetricApplicability(
   gicsIndustry: GicsIndustry | null,

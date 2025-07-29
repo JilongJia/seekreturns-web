@@ -1,5 +1,5 @@
 import { P } from "@/components/en/ui/P";
-import type { MetricStats } from "@/lib/stock-properties";
+import type { MetricStats } from "@/lib/stock";
 
 type MetricCommentaryProps = {
   stockSymbol: string;

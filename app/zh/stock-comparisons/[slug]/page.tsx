@@ -6,7 +6,7 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { fetchStockPropertyData } from "@/lib/firestore/stocks";
+import { fetchStockInfo } from "@/lib/firestore/stocks";
 import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
 
 import { AdvertisementSidebar } from "@/components/zh/layout/AdvertisementSidebar";
@@ -81,8 +81,8 @@ async function Page({ params }: PageProps) {
 
   const [stockOneData, stockTwoData, stockOnePriceSeries, stockTwoPriceSeries] =
     await Promise.all([
-      fetchStockPropertyData(stockOneSymbol),
-      fetchStockPropertyData(stockTwoSymbol),
+      fetchStockInfo(stockOneSymbol),
+      fetchStockInfo(stockTwoSymbol),
       fetchPriceSeriesData(stockOneSymbol),
       fetchPriceSeriesData(stockTwoSymbol),
     ]);

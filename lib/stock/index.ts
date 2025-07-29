@@ -1,5 +1,5 @@
-export * from "./getPropertyName";
+export * from "./getDisplayName";
 export * from "./getMetricApplicability";
 export * from "./getIndustryMetricStats";
 export * from "./calculateMetricColor";
-export * from "./formatPropertyValue";
+export * from "./formatStockInfo";

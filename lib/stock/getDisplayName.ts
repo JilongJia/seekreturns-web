@@ -1,23 +1,23 @@
-import { propertyNames } from "@/constants/stock-properties";
-import type { PropertyKey } from "@/constants/stock-properties";
+import { displayNames } from "@/constants/stock";
+import type { StockInfoKey } from "@/constants/stock";
 
 type Language = "en" | "zh";
 type NameType = "short" | "long";
 
-export function getPropertyName(
-  key: PropertyKey,
+export function getDisplayName(
+  key: StockInfoKey,
   lang: Language = "en",
   nameType: NameType = "short",
 ): string {
-  const propertyInfo = propertyNames.find((p) => p.property === key);
+  const displayNameInfo = displayNames.find((d) => d.key === key);
 
-  if (!propertyInfo) {
+  if (!displayNameInfo) {
     return key;
   }
 
   const fieldMap: Record<
     Language,
-    Record<NameType, keyof typeof propertyInfo>
+    Record<NameType, keyof typeof displayNameInfo>
   > = {
     en: {
       short: "shortNameEn",
@@ -30,5 +30,5 @@ export function getPropertyName(
   };
 
   const field = fieldMap[lang][nameType];
-  return propertyInfo[field];
+  return displayNameInfo[field];
 }

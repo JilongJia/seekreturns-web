@@ -10,8 +10,8 @@ import { OperatingProfitMarginCommentary } from "./commentaries/OperatingProfitM
 import { PriceToSalesRatioCommentary } from "./commentaries/PriceToSalesRatioCommentary";
 import { ReturnOnEquityCommentary } from "./commentaries/ReturnOnEquityCommentary";
 
-import type { MetricStats } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { MetricStats } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 type MetricCommentaryProps = {
   metricKey: ComparableMetricKey;

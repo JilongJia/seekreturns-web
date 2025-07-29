@@ -4,7 +4,7 @@ import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { GrowthComparisonBarChartFigure } from "@/components/en/features/chart-figures";
 
-import type { StockPropertyData } from "@/constants/stock-properties/types";
+import type { StockInfoData } from "@/constants/stock/types";
 
 type GrowthData = {
   growthMrqYoy: number | null;
@@ -14,12 +14,12 @@ type GrowthData = {
 };
 
 type GrowthSectionProps = {
-  stockOneData: StockPropertyData | null;
-  stockTwoData: StockPropertyData | null;
+  stockOneData: StockInfoData | null;
+  stockTwoData: StockInfoData | null;
 };
 
 function extractGrowthData(
-  data: StockPropertyData,
+  data: StockInfoData,
   type: "revenue" | "eps",
 ): GrowthData {
   if (type === "revenue") {

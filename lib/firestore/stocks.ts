@@ -1,9 +1,9 @@
 import { adminDb } from "./admin";
 import { unstable_cache } from "next/cache";
-import type { StockPropertyData } from "@/constants/stock-properties/types";
+import type { StockInfoData } from "@/constants/stock";
 
-export const fetchStockPropertyData = unstable_cache(
-  async (symbol: string): Promise<StockPropertyData | null> => {
+export const fetchStockInfo = unstable_cache(
+  async (symbol: string): Promise<StockInfoData | null> => {
     console.log(`CACHE MISS: Hitting Firestore for stock data: ${symbol}`);
 
     const docRef = adminDb
@@ -18,7 +18,7 @@ export const fetchStockPropertyData = unstable_cache(
         return null;
       }
 
-      return docSnap.data() as StockPropertyData;
+      return docSnap.data() as StockInfoData;
     } catch (error) {
       console.error(
         `Error fetching stock data for ${symbol} from Firestore:`,
@@ -27,7 +27,7 @@ export const fetchStockPropertyData = unstable_cache(
       return null;
     }
   },
-  ["stock_property_data"],
+  ["stock_info_data"],
   {
     revalidate: 86400,
   },

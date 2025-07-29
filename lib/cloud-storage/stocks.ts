@@ -1,18 +1,18 @@
 import { storage } from "./client";
 import { unstable_cache } from "next/cache";
 
-export type PricePoint = {
+export type StockAdjustedClosesPricePoint = {
   date: string;
   adjClose: number;
 };
 
-export type StockAdjustedCloseData = {
+export type StockAdjustedClosesData = {
   symbol: string;
-  series: PricePoint[];
+  series: StockAdjustedClosesPricePoint[];
 };
 
-export const fetchStockAdjustedCloseData = unstable_cache(
-  async (symbol: string): Promise<StockAdjustedCloseData | null> => {
+export const fetchStockAdjustedCloses = unstable_cache(
+  async (symbol: string): Promise<StockAdjustedClosesData | null> => {
     console.log(
       `CACHE MISS: Hitting Cloud Storage for adjusted close data: ${symbol}`,
     );
@@ -29,7 +29,7 @@ export const fetchStockAdjustedCloseData = unstable_cache(
       const dataString = fileContents[0].toString("utf8");
       const data = JSON.parse(dataString);
 
-      return data as StockAdjustedCloseData;
+      return data as StockAdjustedClosesData;
     } catch (error) {
       console.error(
         `Error fetching adjusted close data for ${symbol} from Cloud Storage:`,

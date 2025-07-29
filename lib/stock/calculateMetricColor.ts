@@ -1,4 +1,4 @@
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock";
 import type { MetricStats } from "./getIndustryMetricStats";
 
 export type MetricColor = "green" | "red" | "yellow" | "neutral";

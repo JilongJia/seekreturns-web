@@ -1,11 +1,11 @@
 import { P } from "@/components/zh/ui/P";
-import type { StockPropertyData } from "@/constants/stock-properties";
+import type { StockInfoData } from "@/constants/stock";
 
 type SecurityTypeCommentaryProps = {
   stockOneSymbol: string;
-  stockOneSecurityType: StockPropertyData["securityType"];
+  stockOneSecurityType: StockInfoData["securityType"];
   stockTwoSymbol: string;
-  stockTwoSecurityType: StockPropertyData["securityType"];
+  stockTwoSecurityType: StockInfoData["securityType"];
 };
 
 export function SecurityTypeCommentary({

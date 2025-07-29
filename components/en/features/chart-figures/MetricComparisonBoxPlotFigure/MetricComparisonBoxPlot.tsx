@@ -7,9 +7,9 @@ import { select, type Selection } from "d3-selection";
 import { scaleLinear, type ScaleLinear } from "d3-scale";
 import styles from "./MetricComparisonBoxPlot.module.css";
 
-import { formatPropertyValue } from "@/lib/stock-properties";
-import type { MetricStats } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import { formatStockInfo } from "@/lib/stock";
+import type { MetricStats } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 const chartConfig = {
   chart: {
@@ -62,7 +62,7 @@ function createTickFormatter(
   metricKey: ComparableMetricKey,
 ): (d: number | { valueOf(): number }) => string {
   return (d) => {
-    return formatPropertyValue(metricKey, d.valueOf(), { lang: "en" });
+    return formatStockInfo(metricKey, d.valueOf(), { lang: "en" });
   };
 }
 

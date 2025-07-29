@@ -2,9 +2,9 @@ import clsx from "clsx";
 import { MetricCommentary } from "./metric-commentary/MetricCommentary";
 import styles from "./SummaryBox.module.css";
 
-import { formatPropertyValue } from "@/lib/stock-properties";
-import type { MetricStats } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import { formatStockInfo } from "@/lib/stock";
+import type { MetricStats } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 type SummaryBoxProps = {
   metricKey: ComparableMetricKey;
@@ -27,7 +27,7 @@ export function SummaryBox({
   isMetricApplicable,
   className,
 }: SummaryBoxProps) {
-  const formattedMetricValue = formatPropertyValue(metricKey, metricValue, {
+  const formattedMetricValue = formatStockInfo(metricKey, metricValue, {
     lang: "en",
   });
 
@@ -55,35 +55,35 @@ export function SummaryBox({
       >
         <dt>Max</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.max ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.max ?? null, {
             lang: "en",
           })}
         </dd>
 
         <dt>Q3</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.q3 ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.q3 ?? null, {
             lang: "en",
           })}
         </dd>
 
         <dt>Median</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.median ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.median ?? null, {
             lang: "en",
           })}
         </dd>
 
         <dt>Q1</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.q1 ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.q1 ?? null, {
             lang: "en",
           })}
         </dd>
 
         <dt>Min</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.min ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.min ?? null, {
             lang: "en",
           })}
         </dd>

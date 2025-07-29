@@ -9,21 +9,21 @@ import { SummaryContainer } from "./SummaryContainer";
 import styles from "./DividendSection.module.css";
 
 import {
-  getPropertyName,
+  getDisplayName,
   getMetricApplicability,
   getIndustryMetricStats,
   calculateMetricColor,
-  formatPropertyValue,
-} from "@/lib/stock-properties";
+  formatStockInfo,
+} from "@/lib/stock";
 import type {
-  StockPropertyData,
+  StockInfoData,
   DividendKey,
   ComparableMetricKey,
-} from "@/constants/stock-properties";
+} from "@/constants/stock";
 
 type DividendSectionProps = {
-  stockOneData: StockPropertyData | null;
-  stockTwoData: StockPropertyData | null;
+  stockOneData: StockInfoData | null;
+  stockTwoData: StockInfoData | null;
 };
 
 const comparableDividendKeys: ComparableMetricKey[] = [
@@ -53,7 +53,7 @@ export function DividendSection({
       {comparableDividendKeys.map((key) => {
         const stockOneMetricValue = stockOneData[key];
         const stockTwoMetricValue = stockTwoData[key];
-        const metricLongName = getPropertyName(key, "en", "long");
+        const metricLongName = getDisplayName(key, "en", "long");
 
         const stockOneIndustryMetricStats = getIndustryMetricStats(
           stockOneData.industry,
@@ -127,7 +127,7 @@ export function DividendSection({
           <Table.Thead>
             <Table.Thead.Tr>
               <Table.Thead.Tr.Th scope="row">
-                {getPropertyName("symbol", "en", "long")}
+                {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneData.symbol}
@@ -141,15 +141,15 @@ export function DividendSection({
             {tableRows.map((key) => (
               <Table.Tbody.Tr key={key}>
                 <Table.Tbody.Tr.Th scope="row">
-                  {getPropertyName(key, "en", "long")}
+                  {getDisplayName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneData[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatPropertyValue(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoData[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>

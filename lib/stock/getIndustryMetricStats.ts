@@ -2,7 +2,7 @@ import { quantile } from "d3-array";
 
 import { industryMetricStatistics } from "@/data/industry-metric-statistics";
 import type { GicsIndustry } from "@/constants/gics/types";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 export type MetricStats = {
   min: number;

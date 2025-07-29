@@ -2,9 +2,9 @@ import clsx from "clsx";
 import { MetricCommentary } from "./metric-commentary/MetricCommentary";
 import styles from "./SummaryBox.module.css";
 
-import { formatPropertyValue } from "@/lib/stock-properties";
-import type { MetricStats } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import { formatStockInfo } from "@/lib/stock";
+import type { MetricStats } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 type SummaryBoxProps = {
   metricKey: ComparableMetricKey;
@@ -27,7 +27,7 @@ export function SummaryBox({
   isMetricApplicable,
   className,
 }: SummaryBoxProps) {
-  const formattedMetricValue = formatPropertyValue(metricKey, metricValue, {
+  const formattedMetricValue = formatStockInfo(metricKey, metricValue, {
     lang: "zh",
   });
 
@@ -55,35 +55,35 @@ export function SummaryBox({
       >
         <dt>最大值</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.max ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.max ?? null, {
             lang: "zh",
           })}
         </dd>
 
         <dt>上四分位数</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.q3 ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.q3 ?? null, {
             lang: "zh",
           })}
         </dd>
 
         <dt>中位数</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.median ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.median ?? null, {
             lang: "zh",
           })}
         </dd>
 
         <dt>下四分位数</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.q1 ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.q1 ?? null, {
             lang: "zh",
           })}
         </dd>
 
         <dt>最小值</dt>
         <dd>
-          {formatPropertyValue(metricKey, industryMetricStats?.min ?? null, {
+          {formatStockInfo(metricKey, industryMetricStats?.min ?? null, {
             lang: "zh",
           })}
         </dd>

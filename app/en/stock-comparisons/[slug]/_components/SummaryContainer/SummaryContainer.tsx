@@ -1,8 +1,8 @@
 import { SummaryBox } from "./summary-box/SummaryBox";
 import styles from "./SummaryContainer.module.css";
 
-import type { MetricStats } from "@/lib/stock-properties";
-import type { ComparableMetricKey } from "@/constants/stock-properties";
+import type { MetricStats } from "@/lib/stock";
+import type { ComparableMetricKey } from "@/constants/stock";
 
 type SummaryContainerProps = {
   metricKey: ComparableMetricKey;
