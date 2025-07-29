@@ -4,9 +4,9 @@ export const propertyNames: PropertyName[] = [
   {
     property: "symbol",
     shortNameEn: "Symbol",
-    longNameEn: "Stock Symbol",
+    longNameEn: "Symbol",
     shortNameZh: "代码",
-    longNameZh: "股票代码",
+    longNameZh: "代码",
   },
   {
     property: "companyName",

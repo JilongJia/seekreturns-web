@@ -27,7 +27,7 @@ export const fetchStockPropertyData = unstable_cache(
       return null;
     }
   },
-  ["stock_data"],
+  ["stock_property_data"],
   {
     revalidate: 86400,
   },
