@@ -20,7 +20,7 @@
 .legendItem {
   position: relative;
   margin-bottom: 0.25rem;
-  padding-left: 1em;
+  padding-left: 1.5em;
 }
 
 .legendItem:last-child {
@@ -32,7 +32,7 @@
   top: 0;
   left: 0;
   content: "•";
-  font-size: 1rem;
+  font-size: 1.5em;
 }
 
 .legendItem.blueBullet::before {
@@ -40,7 +40,7 @@
 }
 
 .legendItem.redBullet::before {
-  color: #ef4444;
+  color: #ea580c;
 }
 
 .tabsContainer {

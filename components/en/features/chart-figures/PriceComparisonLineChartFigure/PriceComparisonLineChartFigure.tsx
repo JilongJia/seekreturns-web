@@ -17,14 +17,15 @@ import type {
 } from "@/lib/cloud-storage";
 
 type NormalizedPoint = { time: string; value: number };
-type TimeRangeOption = "6M" | "1Y" | "3Y" | "5Y";
+type TimeRangeOption = "6M" | "1Y" | "3Y" | "5Y" | "Max";
 
-const timeRangeOptions: TimeRangeOption[] = ["6M", "1Y", "3Y", "5Y"];
+const timeRangeOptions: TimeRangeOption[] = ["6M", "1Y", "3Y", "5Y", "Max"];
 const rangeDescriptions: Record<TimeRangeOption, string> = {
   "6M": "six months",
   "1Y": "one year",
   "3Y": "three years",
   "5Y": "five years",
+  Max: "maximum",
 };
 
 function generateWeekdayArray(startDate: string, endDate: string): string[] {
@@ -47,10 +48,10 @@ function fillMissingPrices(
   weekdayDates: string[],
 ): { date: string; adjClose: number }[] {
   const priceLookup = new Map(
-    originalSeries.map((point) => [point.date, point.adjClose]),
+    originalSeries.map((point) => [point.date, point.adjClose as number]),
   );
   const filledSeries: { date: string; adjClose: number }[] = [];
-  let lastKnownPrice = originalSeries[0].adjClose;
+  let lastKnownPrice = originalSeries[0].adjClose as number;
 
   weekdayDates.forEach((date) => {
     if (priceLookup.has(date)) {
@@ -83,6 +84,7 @@ export function PriceComparisonLineChartFigure({
 
     const getStartDate = (range: TimeRangeOption): Date => {
       const now = new Date();
+      if (range === "Max") return new Date("1970-01-01");
       switch (range) {
         case "6M":
           now.setMonth(now.getMonth() - 6);
@@ -101,37 +103,49 @@ export function PriceComparisonLineChartFigure({
     };
 
     const filterStartDate = getStartDate(selectedRange);
-    const stockOneFilteredSeries = stockOneAdjustedCloses.series.filter(
-      (p) => new Date(p.date) >= filterStartDate,
+
+    const stockOneValidSeries = stockOneAdjustedCloses.series.filter(
+      (p): p is StockAdjustedClosesPricePoint & { adjClose: number } =>
+        p.adjClose !== null && new Date(p.date) >= filterStartDate,
     );
-    const stockTwoFilteredSeries = stockTwoAdjustedCloses.series.filter(
-      (p) => new Date(p.date) >= filterStartDate,
+    const stockTwoValidSeries = stockTwoAdjustedCloses.series.filter(
+      (p): p is StockAdjustedClosesPricePoint & { adjClose: number } =>
+        p.adjClose !== null && new Date(p.date) >= filterStartDate,
     );
 
     container.innerHTML = "";
-    if (
-      stockOneFilteredSeries.length === 0 ||
-      stockTwoFilteredSeries.length === 0
-    ) {
+    if (stockOneValidSeries.length === 0 || stockTwoValidSeries.length === 0) {
       container.innerHTML = `<p class="${styles.noDataMessage}">No data available for this time range.</p>`;
       return;
     }
 
-    const stockOneDates = stockOneFilteredSeries.map((p) => p.date);
-    const stockTwoDates = stockTwoFilteredSeries.map((p) => p.date);
-    const startDate = [stockOneDates[0], stockTwoDates[0]].sort()[0];
+    const stockOneFirstDate = stockOneValidSeries[0].date;
+    const stockTwoFirstDate = stockTwoValidSeries[0].date;
+    const commonStartDate =
+      stockOneFirstDate > stockTwoFirstDate
+        ? stockOneFirstDate
+        : stockTwoFirstDate;
+
     const endDate = [
-      stockOneDates[stockOneDates.length - 1],
-      stockTwoDates[stockTwoDates.length - 1],
-    ].sort()[1];
-    const weekdayDates = generateWeekdayArray(startDate, endDate);
+      stockOneValidSeries[stockOneValidSeries.length - 1].date,
+      stockTwoValidSeries[stockTwoValidSeries.length - 1].date,
+    ].sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0];
+
+    const stockOneTrimmedSeries = stockOneValidSeries.filter(
+      (p) => p.date >= commonStartDate,
+    );
+    const stockTwoTrimmedSeries = stockTwoValidSeries.filter(
+      (p) => p.date >= commonStartDate,
+    );
+
+    const weekdayDates = generateWeekdayArray(commonStartDate, endDate);
 
     const stockOneFilledSeries = fillMissingPrices(
-      stockOneFilteredSeries,
+      stockOneTrimmedSeries,
       weekdayDates,
     );
     const stockTwoFilledSeries = fillMissingPrices(
-      stockTwoFilteredSeries,
+      stockTwoTrimmedSeries,
       weekdayDates,
     );
 
@@ -184,7 +198,7 @@ export function PriceComparisonLineChartFigure({
       title: stockOneAdjustedCloses.symbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
-      color: "#ef4444",
+      color: "#ea580c",
       title: stockTwoAdjustedCloses.symbol,
     });
     stockOneLineSeries.setData(stockOneNormalizedSeries);
@@ -291,8 +305,10 @@ export function PriceComparisonLineChartFigure({
       <div ref={chartContainerRef} className={styles.chartContainer} />
       <figcaption className={styles.figcaption}>
         {stockOneAdjustedCloses.symbol} vs. {stockTwoAdjustedCloses.symbol}:
-        Growth of a $10,000 investment over the past{" "}
-        {rangeDescriptions[selectedRange]}.
+        Growth of a $10,000 investment{" "}
+        {selectedRange === "Max"
+          ? "over the entire available period."
+          : `over the past ${rangeDescriptions[selectedRange]}.`}
       </figcaption>
     </figure>
   );

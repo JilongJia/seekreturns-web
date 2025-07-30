@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 
 export type StockAdjustedClosesPricePoint = {
   date: string;
-  adjClose: number;
+  adjClose: number | null;
 };
 
 export type StockAdjustedClosesData = {
@@ -27,12 +27,15 @@ export const fetchStockAdjustedCloses = unstable_cache(
         .download();
 
       const dataString = fileContents[0].toString("utf8");
-      const data = JSON.parse(dataString);
+
+      const sanitizedString = dataString.replace(/NaN/g, "null");
+
+      const data = JSON.parse(sanitizedString);
 
       return data as StockAdjustedClosesData;
     } catch (error) {
       console.error(
-        `Error fetching adjusted close data for ${symbol} from Cloud Storage:`,
+        `Error fetching or parsing adjusted close data for ${symbol} from Cloud Storage:`,
         error,
       );
       return null;
