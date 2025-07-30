@@ -3,6 +3,7 @@ import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
 import { Section } from "@/components/zh/ui/Section";
 import { GrowthComparisonBarChartFigure } from "@/components/zh/features/chart-figures";
+
 import type { StockInfoData } from "@/constants/stock";
 
 type GrowthData = {
@@ -50,10 +51,10 @@ export function GrowthSection({
     );
   }
 
-  const revenueGrowthOne = extractGrowthData(stockOneInfo, "revenue");
-  const revenueGrowthTwo = extractGrowthData(stockTwoInfo, "revenue");
-  const epsGrowthOne = extractGrowthData(stockOneInfo, "eps");
-  const epsGrowthTwo = extractGrowthData(stockTwoInfo, "eps");
+  const stockOneRevenueGrowth = extractGrowthData(stockOneInfo, "revenue");
+  const stockTwoRevenueGrowth = extractGrowthData(stockTwoInfo, "revenue");
+  const stockOneEpsGrowth = extractGrowthData(stockOneInfo, "eps");
+  const stockTwoEpsGrowth = extractGrowthData(stockTwoInfo, "eps");
 
   return (
     <Section ariaLabelledby="growth">
@@ -63,18 +64,18 @@ export function GrowthSection({
       <GrowthComparisonBarChartFigure
         metricName="营收增长"
         stockOneSymbol={stockOneInfo.symbol}
-        stockOneGrowth={revenueGrowthOne}
+        stockOneGrowth={stockOneRevenueGrowth}
         stockTwoSymbol={stockTwoInfo.symbol}
-        stockTwoGrowth={revenueGrowthTwo}
+        stockTwoGrowth={stockTwoRevenueGrowth}
       />
 
       <H3>每股收益增长</H3>
       <GrowthComparisonBarChartFigure
         metricName="每股收益增长"
         stockOneSymbol={stockOneInfo.symbol}
-        stockOneGrowth={epsGrowthOne}
+        stockOneGrowth={stockOneEpsGrowth}
         stockTwoSymbol={stockTwoInfo.symbol}
-        stockTwoGrowth={epsGrowthTwo}
+        stockTwoGrowth={stockTwoEpsGrowth}
       />
     </Section>
   );

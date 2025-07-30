@@ -49,7 +49,7 @@ export function HistoricalPerformanceSection({
     return (
       <Section ariaLabelledby="historical-performance">
         <H2 id="historical-performance">Historical Performance</H2>
-        <P>Performance data is currently unavailable.</P>
+        <P>Historical performance data is currently unavailable.</P>
       </Section>
     );
   }
@@ -79,10 +79,14 @@ export function HistoricalPerformanceSection({
                 {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneInfo.symbol}
+                {formatStockInfo("symbol", stockOneInfo.symbol, {
+                  lang: "en",
+                })}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoInfo.symbol}
+                {formatStockInfo("symbol", stockTwoInfo.symbol, {
+                  lang: "en",
+                })}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>

@@ -33,6 +33,19 @@ export function formatStockInfo(
         maximumFractionDigits: 2,
       })} billion ${displayCurrency}`;
 
+    case "averageTradingVolume10d":
+    case "averageTradingVolume3m":
+      if (lang === "zh") {
+        return `${(Number(value) / 1e4).toLocaleString(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}万`;
+      }
+      return `${(Number(value) / 1e6).toLocaleString(locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}M`;
+
     case "listingDate":
       return new Date(value as string).toLocaleDateString(locale, {
         year: "numeric",
@@ -40,7 +53,7 @@ export function formatStockInfo(
         day: "numeric",
       });
 
-    // Percentages (Ratios like 0.15 that are multiplied by 100)
+    // Percentages
     case "priceReturnDaily5d":
     case "priceReturnDaily13w":
     case "priceReturnDaily26w":
@@ -83,20 +96,6 @@ export function formatStockInfo(
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
-
-    // Volume (in Millions)
-    case "averageTradingVolume10d":
-    case "averageTradingVolume3m":
-      if (lang === "zh") {
-        return `${(Number(value) * 100).toLocaleString(locale, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}万`;
-      }
-      return `${Number(value).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}M`;
 
     // Default case for string keys
     default:

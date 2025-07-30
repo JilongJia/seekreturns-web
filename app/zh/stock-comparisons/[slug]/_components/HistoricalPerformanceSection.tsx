@@ -58,7 +58,7 @@ export function HistoricalPerformanceSection({
       <H2 id="historical-performance">历史表现</H2>
       <P>
         此图表通过追踪$10,000的初始投资在每只股票中的增长情况，来比较{" "}
-        {stockOneInfo.symbol} 和 {stockTwoInfo.symbol}{" "}
+        {stockOneInfo.symbol}和{stockTwoInfo.symbol}{" "}
         的表现。请使用选项卡选择所需的时间周期。数据已根据股息和股票拆分进行调整。
       </P>
 
@@ -77,10 +77,14 @@ export function HistoricalPerformanceSection({
                 {getDisplayName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneInfo.symbol}
+                {formatStockInfo("symbol", stockOneInfo.symbol, {
+                  lang: "zh",
+                })}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoInfo.symbol}
+                {formatStockInfo("symbol", stockTwoInfo.symbol, {
+                  lang: "zh",
+                })}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>

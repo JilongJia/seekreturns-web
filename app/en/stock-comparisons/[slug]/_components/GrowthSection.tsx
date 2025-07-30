@@ -3,6 +3,7 @@ import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { GrowthComparisonBarChartFigure } from "@/components/en/features/chart-figures";
+
 import type { StockInfoData } from "@/constants/stock";
 
 type GrowthData = {
@@ -50,10 +51,10 @@ export function GrowthSection({
     );
   }
 
-  const revenueGrowthOne = extractGrowthData(stockOneInfo, "revenue");
-  const revenueGrowthTwo = extractGrowthData(stockTwoInfo, "revenue");
-  const epsGrowthOne = extractGrowthData(stockOneInfo, "eps");
-  const epsGrowthTwo = extractGrowthData(stockTwoInfo, "eps");
+  const stockOneRevenueGrowth = extractGrowthData(stockOneInfo, "revenue");
+  const stockTwoRevenueGrowth = extractGrowthData(stockTwoInfo, "revenue");
+  const stockOneEpsGrowth = extractGrowthData(stockOneInfo, "eps");
+  const stockTwoEpsGrowth = extractGrowthData(stockTwoInfo, "eps");
 
   return (
     <Section ariaLabelledby="growth">
@@ -63,18 +64,18 @@ export function GrowthSection({
       <GrowthComparisonBarChartFigure
         metricName="Revenue Growth"
         stockOneSymbol={stockOneInfo.symbol}
-        stockOneGrowth={revenueGrowthOne}
+        stockOneGrowth={stockOneRevenueGrowth}
         stockTwoSymbol={stockTwoInfo.symbol}
-        stockTwoGrowth={revenueGrowthTwo}
+        stockTwoGrowth={stockTwoRevenueGrowth}
       />
 
       <H3>EPS Growth</H3>
       <GrowthComparisonBarChartFigure
         metricName="EPS Growth"
         stockOneSymbol={stockOneInfo.symbol}
-        stockOneGrowth={epsGrowthOne}
+        stockOneGrowth={stockOneEpsGrowth}
         stockTwoSymbol={stockTwoInfo.symbol}
-        stockTwoGrowth={epsGrowthTwo}
+        stockTwoGrowth={stockTwoEpsGrowth}
       />
     </Section>
   );

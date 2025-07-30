@@ -1,10 +1,10 @@
 import clsx from "clsx";
 
-import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
-
 import { PriceComparisonLineChartFigure } from "@/components/zh/features/chart-figures";
 import { Form } from "./Form";
 import styles from "./StockComparisonSection.module.css";
+
+import { fetchStockAdjustedCloses } from "@/lib/cloud-storage";
 
 type StockComparisonSectionProps = { className?: string };
 
@@ -14,12 +14,12 @@ export async function StockComparisonSection({
   const stockOneSymbol = "AAPL";
   const stockTwoSymbol = "NVDA";
 
-  const [stockOnePriceSeries, stockTwoPriceSeries] = await Promise.all([
-    fetchPriceSeriesData(stockOneSymbol),
-    fetchPriceSeriesData(stockTwoSymbol),
+  const [stockOneAdjustedCloses, stockTwoAdjustedCloses] = await Promise.all([
+    fetchStockAdjustedCloses(stockOneSymbol),
+    fetchStockAdjustedCloses(stockTwoSymbol),
   ]);
 
-  if (!stockOnePriceSeries || !stockTwoPriceSeries) return null;
+  if (!stockOneAdjustedCloses || !stockTwoAdjustedCloses) return null;
 
   return (
     <section
@@ -38,16 +38,8 @@ export async function StockComparisonSection({
       </div>
       <Form className={styles.form} />
       <PriceComparisonLineChartFigure
-        data={{
-          stockOne: {
-            symbol: stockOneSymbol,
-            priceSeries: stockOnePriceSeries,
-          },
-          stockTwo: {
-            symbol: stockTwoSymbol,
-            priceSeries: stockTwoPriceSeries,
-          },
-        }}
+        stockOneAdjustedCloses={stockOneAdjustedCloses}
+        stockTwoAdjustedCloses={stockTwoAdjustedCloses}
         defaultTimeRange="5Y"
       />
     </section>

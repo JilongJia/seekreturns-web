@@ -1,4 +1,5 @@
 import React from "react";
+
 import { H2 } from "@/components/zh/ui/H2";
 import { H3 } from "@/components/zh/ui/H3";
 import { P } from "@/components/zh/ui/P";
@@ -135,10 +136,14 @@ export function ProfitabilitySection({
                 {getDisplayName("symbol", "zh", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneInfo.symbol}
+                {formatStockInfo("symbol", stockOneInfo.symbol, {
+                  lang: "zh",
+                })}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoInfo.symbol}
+                {formatStockInfo("symbol", stockTwoInfo.symbol, {
+                  lang: "zh",
+                })}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>

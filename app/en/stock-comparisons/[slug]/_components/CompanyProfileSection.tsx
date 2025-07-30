@@ -56,10 +56,14 @@ export function CompanyProfileSection({
                 {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneInfo.symbol}
+                {formatStockInfo("symbol", stockOneInfo.symbol, {
+                  lang: "en",
+                })}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoInfo.symbol}
+                {formatStockInfo("symbol", stockTwoInfo.symbol, {
+                  lang: "en",
+                })}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>

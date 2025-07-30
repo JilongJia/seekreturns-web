@@ -122,7 +122,7 @@ async function Page({ params }: PageProps) {
           <article>
             <ArticleHeader className={styles.articleHeader}>
               <H1>
-                {stockOneSymbol}与{stockTwoSymbol}：股票综合比较
+                {stockOneSymbol}与{stockTwoSymbol}：股票综合对比
               </H1>
               <ModifiedDate />
             </ArticleHeader>
