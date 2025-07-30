@@ -17,7 +17,7 @@ import { H1 } from "@/components/en/ui/H1";
 import { Header as ArticleHeader } from "@/components/en/ui/Header";
 import { ModifiedDate } from "@/components/en/ui/ModifiedDate";
 import { P } from "@/components/en/ui/P";
-import { CompanyOverviewSection } from "./_components/CompanyOverviewSection";
+import { CompanyProfileSection } from "./_components/CompanyProfileSection";
 import { HistoricalPerformanceSection } from "./_components/HistoricalPerformanceSection";
 import { ProfitabilitySection } from "./_components/ProfitabilitySection";
 import { FinancialStrengthSection } from "./_components/FinancialStrengthSection";
@@ -133,7 +133,7 @@ async function Page({ params }: PageProps) {
               financial strength, growth, dividend, and valuation.
             </P>
 
-            <CompanyOverviewSection
+            <CompanyProfileSection
               stockOneInfo={stockOneInfo}
               stockTwoInfo={stockTwoInfo}
             />

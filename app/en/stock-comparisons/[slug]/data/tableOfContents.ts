@@ -1,5 +1,5 @@
 export const tableOfContents = [
-  { id: "company-overview", label: "Company Overview" },
+  { id: "company-profile", label: "Company Profile" },
   { id: "historical-performance", label: "Historical Performance" },
   { id: "profitability", label: "Profitability" },
   {

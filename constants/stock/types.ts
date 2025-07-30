@@ -3,7 +3,7 @@ import type {
   GicsIndustryGroup,
   GicsIndustry,
   GicsSubIndustry,
-} from "@/constants/gics/types";
+} from "@/constants/gics";
 
 export type SecurityType = "Common Stock" | "REIT" | "ADR" | "NY Reg Shrs";
 
@@ -17,8 +17,7 @@ export type ProfileData = {
   subIndustry: GicsSubIndustry | null;
   marketCapitalization: number | null;
   currency: string | null;
-  ticker: string | null;
-  ipoDate: string | null;
+  listingDate: string | null;
   exchange: string | null;
   securityType: SecurityType | null;
 };

@@ -23,17 +23,17 @@ export function formatStockInfo(
     case "marketCapitalization":
       const displayCurrency = currency || "";
       if (lang === "zh") {
-        return `${(Number(value) / 100).toLocaleString(locale, {
+        return `${(Number(value) / 1e8).toLocaleString(locale, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}亿 ${displayCurrency}`;
       }
-      return `${(Number(value) / 1000).toLocaleString(locale, {
+      return `${(Number(value) / 1e9).toLocaleString(locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })} billion ${displayCurrency}`;
 
-    case "ipoDate":
+    case "listingDate":
       return new Date(value as string).toLocaleDateString(locale, {
         year: "numeric",
         month: "long",
@@ -47,6 +47,7 @@ export function formatStockInfo(
     case "priceReturnDaily52w":
     case "priceReturnDailyMtd":
     case "priceReturnDailyYtd":
+    case "dailyReturnStandardDeviation3m":
     case "returnOnEquityTtm":
     case "returnOnAssetsTtm":
     case "netProfitMarginTtm":
@@ -70,7 +71,6 @@ export function formatStockInfo(
 
     // Ratios, Multiples, and other numbers
     case "beta":
-    case "dailyReturnStandardDeviation3m":
     case "priceToEarningsRatioTtm":
     case "priceToSalesRatioTtm":
     case "priceToBookRatioMrq":

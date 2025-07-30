@@ -1,14 +1,14 @@
-import { H2 } from "@/components/zh/ui/H2";
-import { P } from "@/components/zh/ui/P";
-import { Section } from "@/components/zh/ui/Section";
-import { Table } from "@/components/zh/ui/Table";
+import { H2 } from "@/components/en/ui/H2";
+import { P } from "@/components/en/ui/P";
+import { Section } from "@/components/en/ui/Section";
+import { Table } from "@/components/en/ui/Table";
 import { SecurityTypeCommentary } from "./commentaries";
-import styles from "./CompanyOverviewSection.module.css";
+import styles from "./CompanyProfileSection.module.css";
 
 import { formatStockInfo, getDisplayName } from "@/lib/stock";
 import type { StockInfoData, ProfileKey } from "@/constants/stock";
 
-type CompanyOverviewSectionProps = {
+type CompanyProfileSectionProps = {
   stockOneInfo: StockInfoData | null;
   stockTwoInfo: StockInfoData | null;
 };
@@ -20,26 +20,26 @@ const tableRows: ProfileKey[] = [
   "industry",
   "marketCapitalization",
   "exchange",
-  "ipoDate",
+  "listingDate",
   "securityType",
 ];
 
-export function CompanyOverviewSection({
+export function CompanyProfileSection({
   stockOneInfo,
   stockTwoInfo,
-}: CompanyOverviewSectionProps) {
+}: CompanyProfileSectionProps) {
   if (!stockOneInfo || !stockTwoInfo) {
     return (
-      <Section ariaLabelledby="company-overview">
-        <H2 id="company-overview">公司概况</H2>
-        <P>暂时无法加载公司概况数据。</P>
+      <Section ariaLabelledby="company-profile">
+        <H2 id="company-profile">Company Profile</H2>
+        <P>Company profile data is currently unavailable.</P>
       </Section>
     );
   }
 
   return (
-    <Section ariaLabelledby="company-overview">
-      <H2 id="company-overview">公司概况</H2>
+    <Section ariaLabelledby="company-profile">
+      <H2 id="company-profile">Company Profile</H2>
 
       <SecurityTypeCommentary
         stockOneSymbol={stockOneInfo.symbol}
@@ -53,7 +53,7 @@ export function CompanyOverviewSection({
           <Table.Thead>
             <Table.Thead.Tr>
               <Table.Thead.Tr.Th scope="row">
-                {getDisplayName("symbol", "zh", "long")}
+                {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
                 {stockOneInfo.symbol}
@@ -67,17 +67,17 @@ export function CompanyOverviewSection({
             {tableRows.map((key) => (
               <Table.Tbody.Tr key={key}>
                 <Table.Tbody.Tr.Th scope="row">
-                  {getDisplayName(key, "zh", "long")}
+                  {getDisplayName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
                   {formatStockInfo(key, stockOneInfo[key], {
-                    lang: "zh",
+                    lang: "en",
                     currency: stockOneInfo.currency,
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
                   {formatStockInfo(key, stockTwoInfo[key], {
-                    lang: "zh",
+                    lang: "en",
                     currency: stockTwoInfo.currency,
                   })}
                 </Table.Tbody.Tr.Td>

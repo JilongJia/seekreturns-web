@@ -6,9 +6,7 @@ export const fetchStockInfo = unstable_cache(
   async (symbol: string): Promise<StockInfoData | null> => {
     console.log(`CACHE MISS: Hitting Firestore for stock data: ${symbol}`);
 
-    const docRef = adminDb
-      .collection("stockProfileAndFinancials")
-      .doc(symbol.toUpperCase());
+    const docRef = adminDb.collection("stockInfo").doc(symbol.toUpperCase());
 
     try {
       const docSnap = await docRef.get();

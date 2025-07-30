@@ -17,7 +17,7 @@ import { H1 } from "@/components/zh/ui/H1";
 import { Header as ArticleHeader } from "@/components/zh/ui/Header";
 import { ModifiedDate } from "@/components/zh/ui/ModifiedDate";
 import { P } from "@/components/zh/ui/P";
-import { CompanyOverviewSection } from "./_components/CompanyOverviewSection";
+import { CompanyProfileSection } from "./_components/CompanyProfileSection";
 import { HistoricalPerformanceSection } from "./_components/HistoricalPerformanceSection";
 import { ProfitabilitySection } from "./_components/ProfitabilitySection";
 import { FinancialStrengthSection } from "./_components/FinancialStrengthSection";
@@ -131,7 +131,7 @@ async function Page({ params }: PageProps) {
               进行了全面对比，涵盖历史表现、盈利能力、财务实力、成长性、股息以及估值等方面。
             </P>
 
-            <CompanyOverviewSection
+            <CompanyProfileSection
               stockOneInfo={stockOneInfo}
               stockTwoInfo={stockTwoInfo}
             />
