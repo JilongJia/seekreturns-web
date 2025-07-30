@@ -65,12 +65,12 @@ export function HistoricalPerformanceSection({
       </P>
 
       <PriceComparisonLineChartFigure
-        stockOneAdjustedClose={stockOneAdjustedCloses}
-        stockTwoAdjustedClose={stockTwoAdjustedCloses}
+        stockOneAdjustedCloses={stockOneAdjustedCloses}
+        stockTwoAdjustedCloses={stockTwoAdjustedCloses}
         defaultTimeRange="1Y"
       />
 
-      <H3>Performance at a Glance</H3>
+      <H3>Historical Performance at a Glance</H3>
       <div className={styles.tableContainer}>
         <Table>
           <Table.Thead>

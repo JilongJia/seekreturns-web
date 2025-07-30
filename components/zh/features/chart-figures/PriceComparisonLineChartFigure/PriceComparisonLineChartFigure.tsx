@@ -63,14 +63,14 @@ function fillMissingPrices(
 }
 
 type PriceComparisonLineChartFigureProps = {
-  stockOneAdjustedClose: StockAdjustedClosesData;
-  stockTwoAdjustedClose: StockAdjustedClosesData;
+  stockOneAdjustedCloses: StockAdjustedClosesData;
+  stockTwoAdjustedCloses: StockAdjustedClosesData;
   defaultTimeRange: TimeRangeOption;
 };
 
 export function PriceComparisonLineChartFigure({
-  stockOneAdjustedClose,
-  stockTwoAdjustedClose,
+  stockOneAdjustedCloses,
+  stockTwoAdjustedCloses,
   defaultTimeRange,
 }: PriceComparisonLineChartFigureProps): JSX.Element {
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -101,10 +101,10 @@ export function PriceComparisonLineChartFigure({
     };
 
     const filterStartDate = getStartDate(selectedRange);
-    const stockOneFilteredSeries = stockOneAdjustedClose.series.filter(
+    const stockOneFilteredSeries = stockOneAdjustedCloses.series.filter(
       (p) => new Date(p.date) >= filterStartDate,
     );
-    const stockTwoFilteredSeries = stockTwoAdjustedClose.series.filter(
+    const stockTwoFilteredSeries = stockTwoAdjustedCloses.series.filter(
       (p) => new Date(p.date) >= filterStartDate,
     );
 
@@ -154,6 +154,10 @@ export function PriceComparisonLineChartFigure({
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
+    const currencyFormatter = new Intl.NumberFormat("zh-CN", {
+      style: "currency",
+      currency: "USD",
+    });
 
     const chart = createChart(container, {
       layout: {
@@ -177,11 +181,11 @@ export function PriceComparisonLineChartFigure({
 
     const stockOneLineSeries = chart.addSeries(LineSeries, {
       color: "#2563eb",
-      title: stockOneAdjustedClose.symbol,
+      title: stockOneAdjustedCloses.symbol,
     });
     const stockTwoLineSeries = chart.addSeries(LineSeries, {
       color: "#ef4444",
-      title: stockTwoAdjustedClose.symbol,
+      title: stockTwoAdjustedCloses.symbol,
     });
     stockOneLineSeries.setData(stockOneNormalizedSeries);
     stockTwoLineSeries.setData(stockTwoNormalizedSeries);
@@ -199,7 +203,10 @@ export function PriceComparisonLineChartFigure({
       const listItem = document.createElement("li");
       listItem.className = `${styles.legendItem} ${bulletClass}`;
       const scaledValue = (1 + value) * 10000;
-      listItem.innerHTML = `${symbol}：$${scaledValue.toFixed(2)} (${percentageFormatter.format(value)})`;
+
+      listItem.innerHTML = `${symbol}：${currencyFormatter.format(
+        scaledValue,
+      )} (${percentageFormatter.format(value)})`;
       return listItem;
     };
 
@@ -209,12 +216,12 @@ export function PriceComparisonLineChartFigure({
       stockTwoNormalizedSeries[stockTwoNormalizedSeries.length - 1].value;
 
     const stockOneLegendItem = createLegendItem(
-      stockOneAdjustedClose.symbol,
+      stockOneAdjustedCloses.symbol,
       latestStockOneNormalizedValue,
       styles.blueBullet,
     );
     const stockTwoLegendItem = createLegendItem(
-      stockTwoAdjustedClose.symbol,
+      stockTwoAdjustedCloses.symbol,
       latestStockTwoNormalizedValue,
       styles.redBullet,
     );
@@ -241,8 +248,16 @@ export function PriceComparisonLineChartFigure({
       const stockOneScaledEquiv = (1 + currentStockOneNormalizedValue) * 10000;
       const stockTwoScaledEquiv = (1 + currentStockTwoNormalizedValue) * 10000;
 
-      stockOneLegendItem.innerHTML = `${stockOneAdjustedClose.symbol}：$${stockOneScaledEquiv.toFixed(2)} (${percentageFormatter.format(currentStockOneNormalizedValue)})`;
-      stockTwoLegendItem.innerHTML = `${stockTwoAdjustedClose.symbol}：$${stockTwoScaledEquiv.toFixed(2)} (${percentageFormatter.format(currentStockTwoNormalizedValue)})`;
+      stockOneLegendItem.innerHTML = `${
+        stockOneAdjustedCloses.symbol
+      }：${currencyFormatter.format(
+        stockOneScaledEquiv,
+      )} (${percentageFormatter.format(currentStockOneNormalizedValue)})`;
+      stockTwoLegendItem.innerHTML = `${
+        stockTwoAdjustedCloses.symbol
+      }：${currencyFormatter.format(
+        stockTwoScaledEquiv,
+      )} (${percentageFormatter.format(currentStockTwoNormalizedValue)})`;
     };
     chart.subscribeCrosshairMove(handleCrosshairMove);
 
@@ -256,7 +271,7 @@ export function PriceComparisonLineChartFigure({
       legendContainer.remove();
       chart.remove();
     };
-  }, [stockOneAdjustedClose, stockTwoAdjustedClose, selectedRange]);
+  }, [stockOneAdjustedCloses, stockTwoAdjustedCloses, selectedRange]);
 
   return (
     <figure>
@@ -275,7 +290,7 @@ export function PriceComparisonLineChartFigure({
       </div>
       <div ref={chartContainerRef} className={styles.chartContainer} />
       <figcaption className={styles.figcaption}>
-        {stockOneAdjustedClose.symbol} 与 {stockTwoAdjustedClose.symbol}
+        {stockOneAdjustedCloses.symbol} 与 {stockTwoAdjustedCloses.symbol}
         ：过去{rangeDescriptions[selectedRange]}内$10,000投资回报对比。
       </figcaption>
     </figure>

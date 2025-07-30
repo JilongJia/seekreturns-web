@@ -9,8 +9,8 @@ import { formatStockInfo, getDisplayName } from "@/lib/stock";
 import type { StockInfoData, ProfileKey } from "@/constants/stock";
 
 type CompanyOverviewSectionProps = {
-  stockOneData: StockInfoData | null;
-  stockTwoData: StockInfoData | null;
+  stockOneInfo: StockInfoData | null;
+  stockTwoInfo: StockInfoData | null;
 };
 
 const tableRows: ProfileKey[] = [
@@ -25,10 +25,10 @@ const tableRows: ProfileKey[] = [
 ];
 
 export function CompanyOverviewSection({
-  stockOneData,
-  stockTwoData,
+  stockOneInfo,
+  stockTwoInfo,
 }: CompanyOverviewSectionProps) {
-  if (!stockOneData || !stockTwoData) {
+  if (!stockOneInfo || !stockTwoInfo) {
     return (
       <Section ariaLabelledby="company-overview">
         <H2 id="company-overview">Company Overview</H2>
@@ -42,10 +42,10 @@ export function CompanyOverviewSection({
       <H2 id="company-overview">Company Overview</H2>
 
       <SecurityTypeCommentary
-        stockOneSymbol={stockOneData.symbol}
-        stockOneSecurityType={stockOneData.securityType}
-        stockTwoSymbol={stockTwoData.symbol}
-        stockTwoSecurityType={stockTwoData.securityType}
+        stockOneSymbol={stockOneInfo.symbol}
+        stockOneSecurityType={stockOneInfo.securityType}
+        stockTwoSymbol={stockTwoInfo.symbol}
+        stockTwoSecurityType={stockTwoInfo.securityType}
       />
 
       <div className={styles.tableContainer}>
@@ -56,10 +56,10 @@ export function CompanyOverviewSection({
                 {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneData.symbol}
+                {stockOneInfo.symbol}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoData.symbol}
+                {stockTwoInfo.symbol}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
@@ -70,15 +70,15 @@ export function CompanyOverviewSection({
                   {getDisplayName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneInfo[key], {
                     lang: "en",
-                    currency: stockOneData.currency,
+                    currency: stockOneInfo.currency,
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoInfo[key], {
                     lang: "en",
-                    currency: stockTwoData.currency,
+                    currency: stockTwoInfo.currency,
                   })}
                 </Table.Tbody.Tr.Td>
               </Table.Tbody.Tr>

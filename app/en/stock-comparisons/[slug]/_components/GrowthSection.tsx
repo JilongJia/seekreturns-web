@@ -3,8 +3,7 @@ import { H3 } from "@/components/en/ui/H3";
 import { P } from "@/components/en/ui/P";
 import { Section } from "@/components/en/ui/Section";
 import { GrowthComparisonBarChartFigure } from "@/components/en/features/chart-figures";
-
-import type { StockInfoData } from "@/constants/stock/types";
+import type { StockInfoData } from "@/constants/stock";
 
 type GrowthData = {
   growthMrqYoy: number | null;
@@ -14,8 +13,8 @@ type GrowthData = {
 };
 
 type GrowthSectionProps = {
-  stockOneData: StockInfoData | null;
-  stockTwoData: StockInfoData | null;
+  stockOneInfo: StockInfoData | null;
+  stockTwoInfo: StockInfoData | null;
 };
 
 function extractGrowthData(
@@ -39,10 +38,10 @@ function extractGrowthData(
 }
 
 export function GrowthSection({
-  stockOneData,
-  stockTwoData,
+  stockOneInfo,
+  stockTwoInfo,
 }: GrowthSectionProps) {
-  if (!stockOneData || !stockTwoData) {
+  if (!stockOneInfo || !stockTwoInfo) {
     return (
       <Section ariaLabelledby="growth">
         <H2 id="growth">Growth</H2>
@@ -51,10 +50,10 @@ export function GrowthSection({
     );
   }
 
-  const revenueGrowthOne = extractGrowthData(stockOneData, "revenue");
-  const revenueGrowthTwo = extractGrowthData(stockTwoData, "revenue");
-  const epsGrowthOne = extractGrowthData(stockOneData, "eps");
-  const epsGrowthTwo = extractGrowthData(stockTwoData, "eps");
+  const revenueGrowthOne = extractGrowthData(stockOneInfo, "revenue");
+  const revenueGrowthTwo = extractGrowthData(stockTwoInfo, "revenue");
+  const epsGrowthOne = extractGrowthData(stockOneInfo, "eps");
+  const epsGrowthTwo = extractGrowthData(stockTwoInfo, "eps");
 
   return (
     <Section ariaLabelledby="growth">
@@ -63,18 +62,18 @@ export function GrowthSection({
       <H3>Revenue Growth</H3>
       <GrowthComparisonBarChartFigure
         metricName="Revenue Growth"
-        stockOneSymbol={stockOneData.symbol}
+        stockOneSymbol={stockOneInfo.symbol}
         stockOneGrowth={revenueGrowthOne}
-        stockTwoSymbol={stockTwoData.symbol}
+        stockTwoSymbol={stockTwoInfo.symbol}
         stockTwoGrowth={revenueGrowthTwo}
       />
 
       <H3>EPS Growth</H3>
       <GrowthComparisonBarChartFigure
         metricName="EPS Growth"
-        stockOneSymbol={stockOneData.symbol}
+        stockOneSymbol={stockOneInfo.symbol}
         stockOneGrowth={epsGrowthOne}
-        stockTwoSymbol={stockTwoData.symbol}
+        stockTwoSymbol={stockTwoInfo.symbol}
         stockTwoGrowth={epsGrowthTwo}
       />
     </Section>

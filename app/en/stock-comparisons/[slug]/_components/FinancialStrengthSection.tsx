@@ -22,18 +22,16 @@ import type {
 } from "@/constants/stock";
 
 type FinancialStrengthSectionProps = {
-  stockOneData: StockInfoData | null;
-  stockTwoData: StockInfoData | null;
+  stockOneInfo: StockInfoData | null;
+  stockTwoInfo: StockInfoData | null;
 };
 
-// Keys for the detailed commentary and box plot sections.
 const comparableFinancialStrengthKeys: ComparableMetricKey[] = [
   "currentRatioMrq",
   "debtToEquityRatioMrq",
   "interestCoverageRatioTtm",
 ];
 
-// Keys for the "at a Glance" summary table.
 const tableRows: FinancialStrengthKey[] = [
   "currentRatioMrq",
   "quickRatioMrq",
@@ -42,10 +40,10 @@ const tableRows: FinancialStrengthKey[] = [
 ];
 
 export function FinancialStrengthSection({
-  stockOneData,
-  stockTwoData,
+  stockOneInfo,
+  stockTwoInfo,
 }: FinancialStrengthSectionProps) {
-  if (!stockOneData || !stockTwoData) {
+  if (!stockOneInfo || !stockTwoInfo) {
     return (
       <Section ariaLabelledby="financial-strength">
         <H2 id="financial-strength">Financial Strength</H2>
@@ -59,15 +57,15 @@ export function FinancialStrengthSection({
       <H2 id="financial-strength">Financial Strength</H2>
 
       {comparableFinancialStrengthKeys.map((key) => {
-        const stockOneMetricValue = stockOneData[key];
-        const stockTwoMetricValue = stockTwoData[key];
+        const stockOneMetricValue = stockOneInfo[key];
+        const stockTwoMetricValue = stockTwoInfo[key];
         const metricLongName = getDisplayName(key, "en", "long");
         const stockOneIndustryMetricStats = getIndustryMetricStats(
-          stockOneData.industry,
+          stockOneInfo.industry,
           key,
         );
         const stockTwoIndustryMetricStats = getIndustryMetricStats(
-          stockTwoData.industry,
+          stockTwoInfo.industry,
           key,
         );
         const stockOneMetricColor = calculateMetricColor(
@@ -81,11 +79,11 @@ export function FinancialStrengthSection({
           stockTwoIndustryMetricStats,
         );
         const isStockOneMetricApplicable = getMetricApplicability(
-          stockOneData.industry,
+          stockOneInfo.industry,
           key,
         );
         const isStockTwoMetricApplicable = getMetricApplicability(
-          stockTwoData.industry,
+          stockTwoInfo.industry,
           key,
         );
 
@@ -94,14 +92,14 @@ export function FinancialStrengthSection({
             <H3>{metricLongName}</H3>
             <SummaryContainer
               metricKey={key}
-              stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry as string}
+              stockOneSymbol={stockOneInfo.symbol}
+              stockOneIndustryName={stockOneInfo.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry as string}
+              stockTwoSymbol={stockTwoInfo.symbol}
+              stockTwoIndustryName={stockTwoInfo.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -110,14 +108,14 @@ export function FinancialStrengthSection({
             <MetricComparisonBoxPlotFigure
               metricKey={key}
               metricName={metricLongName}
-              stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry as string}
+              stockOneSymbol={stockOneInfo.symbol}
+              stockOneIndustryName={stockOneInfo.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry as string}
+              stockTwoSymbol={stockTwoInfo.symbol}
+              stockTwoIndustryName={stockTwoInfo.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -136,10 +134,10 @@ export function FinancialStrengthSection({
                 {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneData.symbol}
+                {stockOneInfo.symbol}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoData.symbol}
+                {stockTwoInfo.symbol}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
@@ -150,12 +148,12 @@ export function FinancialStrengthSection({
                   {getDisplayName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneInfo[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoInfo[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>

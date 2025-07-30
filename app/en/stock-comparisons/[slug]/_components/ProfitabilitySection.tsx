@@ -22,18 +22,16 @@ import type {
 } from "@/constants/stock";
 
 type ProfitabilitySectionProps = {
-  stockOneData: StockInfoData | null;
-  stockTwoData: StockInfoData | null;
+  stockOneInfo: StockInfoData | null;
+  stockTwoInfo: StockInfoData | null;
 };
 
-// Keys for the detailed commentary and box plot sections.
 const comparableProfitabilityKeys: ComparableMetricKey[] = [
   "returnOnEquityTtm",
   "netProfitMarginTtm",
   "operatingProfitMarginTtm",
 ];
 
-// Keys for the "at a Glance" summary table.
 const tableRows: ProfitabilityKey[] = [
   "returnOnEquityTtm",
   "returnOnAssetsTtm",
@@ -43,10 +41,10 @@ const tableRows: ProfitabilityKey[] = [
 ];
 
 export function ProfitabilitySection({
-  stockOneData,
-  stockTwoData,
+  stockOneInfo,
+  stockTwoInfo,
 }: ProfitabilitySectionProps) {
-  if (!stockOneData || !stockTwoData) {
+  if (!stockOneInfo || !stockTwoInfo) {
     return (
       <Section ariaLabelledby="profitability">
         <H2 id="profitability">Profitability</H2>
@@ -60,15 +58,15 @@ export function ProfitabilitySection({
       <H2 id="profitability">Profitability</H2>
 
       {comparableProfitabilityKeys.map((key) => {
-        const stockOneMetricValue = stockOneData[key];
-        const stockTwoMetricValue = stockTwoData[key];
+        const stockOneMetricValue = stockOneInfo[key];
+        const stockTwoMetricValue = stockTwoInfo[key];
         const metricLongName = getDisplayName(key, "en", "long");
         const stockOneIndustryMetricStats = getIndustryMetricStats(
-          stockOneData.industry,
+          stockOneInfo.industry,
           key,
         );
         const stockTwoIndustryMetricStats = getIndustryMetricStats(
-          stockTwoData.industry,
+          stockTwoInfo.industry,
           key,
         );
         const stockOneMetricColor = calculateMetricColor(
@@ -82,11 +80,11 @@ export function ProfitabilitySection({
           stockTwoIndustryMetricStats,
         );
         const isStockOneMetricApplicable = getMetricApplicability(
-          stockOneData.industry,
+          stockOneInfo.industry,
           key,
         );
         const isStockTwoMetricApplicable = getMetricApplicability(
-          stockTwoData.industry,
+          stockTwoInfo.industry,
           key,
         );
 
@@ -95,14 +93,14 @@ export function ProfitabilitySection({
             <H3>{metricLongName}</H3>
             <SummaryContainer
               metricKey={key}
-              stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry as string}
+              stockOneSymbol={stockOneInfo.symbol}
+              stockOneIndustryName={stockOneInfo.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry as string}
+              stockTwoSymbol={stockTwoInfo.symbol}
+              stockTwoIndustryName={stockTwoInfo.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -111,14 +109,14 @@ export function ProfitabilitySection({
             <MetricComparisonBoxPlotFigure
               metricKey={key}
               metricName={metricLongName}
-              stockOneSymbol={stockOneData.symbol}
-              stockOneIndustryName={stockOneData.industry as string}
+              stockOneSymbol={stockOneInfo.symbol}
+              stockOneIndustryName={stockOneInfo.industry as string}
               stockOneMetricValue={stockOneMetricValue}
               stockOneMetricColor={stockOneMetricColor}
               stockOneIndustryMetricStats={stockOneIndustryMetricStats}
               isStockOneMetricApplicable={isStockOneMetricApplicable}
-              stockTwoSymbol={stockTwoData.symbol}
-              stockTwoIndustryName={stockTwoData.industry as string}
+              stockTwoSymbol={stockTwoInfo.symbol}
+              stockTwoIndustryName={stockTwoInfo.industry as string}
               stockTwoMetricValue={stockTwoMetricValue}
               stockTwoMetricColor={stockTwoMetricColor}
               stockTwoIndustryMetricStats={stockTwoIndustryMetricStats}
@@ -137,10 +135,10 @@ export function ProfitabilitySection({
                 {getDisplayName("symbol", "en", "long")}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockOneData.symbol}
+                {stockOneInfo.symbol}
               </Table.Thead.Tr.Th>
               <Table.Thead.Tr.Th scope="col">
-                {stockTwoData.symbol}
+                {stockTwoInfo.symbol}
               </Table.Thead.Tr.Th>
             </Table.Thead.Tr>
           </Table.Thead>
@@ -151,12 +149,12 @@ export function ProfitabilitySection({
                   {getDisplayName(key, "en", "long")}
                 </Table.Tbody.Tr.Th>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockOneData[key], {
+                  {formatStockInfo(key, stockOneInfo[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>
                 <Table.Tbody.Tr.Td>
-                  {formatStockInfo(key, stockTwoData[key], {
+                  {formatStockInfo(key, stockTwoInfo[key], {
                     lang: "en",
                   })}
                 </Table.Tbody.Tr.Td>

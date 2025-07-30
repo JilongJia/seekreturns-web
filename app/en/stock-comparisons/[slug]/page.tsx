@@ -6,8 +6,8 @@ import { generatePageInfo } from "./lib/generatePageInfo";
 import { generateArticleInfo } from "./lib/generateArticleInfo";
 import { generateJsonLd } from "./lib/generateJsonLd";
 
-import { fetchStockInfo } from "@/lib/firestore/stocks";
-import { fetchPriceSeriesData } from "@/app/lib/fmp/fetchPriceSeriesData";
+import { fetchStockInfo } from "@/lib/firestore";
+import { fetchStockAdjustedCloses } from "@/lib/cloud-storage";
 
 import { AdvertisementSidebar } from "@/components/en/layout/AdvertisementSidebar";
 import { Footer } from "@/components/en/layout/Footer";
@@ -34,17 +34,11 @@ type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: GenerateMetadataParams) {
   const slug = (await params).slug;
-
   const matchingComparison = stockComparisonList.find(
     (comparison) => comparison.slug === slug,
   );
-
-  if (!matchingComparison) {
-    notFound();
-  }
-
+  if (!matchingComparison) notFound();
   const pageInfo = generatePageInfo(matchingComparison);
-
   const {
     title,
     pathname,
@@ -53,7 +47,6 @@ export async function generateMetadata({ params }: GenerateMetadataParams) {
     modifiedDate,
     alternateLanguageUrls,
   } = pageInfo;
-
   const metadata = generateArticleMetadata({
     title,
     pathname,
@@ -62,41 +55,34 @@ export async function generateMetadata({ params }: GenerateMetadataParams) {
     modifiedDate,
     alternateLanguageUrls,
   });
-
   return metadata;
 }
 
 async function Page({ params }: PageProps) {
   const slug = (await params).slug;
-
   const matchingComparison = stockComparisonList.find(
     (comparison) => comparison.slug === slug,
   );
-
-  if (!matchingComparison) {
-    notFound();
-  }
-
+  if (!matchingComparison) notFound();
   const { stockOneSymbol, stockTwoSymbol } = matchingComparison;
 
-  const [stockOneData, stockTwoData, stockOnePriceSeries, stockTwoPriceSeries] =
-    await Promise.all([
-      fetchStockInfo(stockOneSymbol),
-      fetchStockInfo(stockTwoSymbol),
-      fetchPriceSeriesData(stockOneSymbol),
-      fetchPriceSeriesData(stockTwoSymbol),
-    ]);
+  const [
+    stockOneInfo,
+    stockTwoInfo,
+    stockOneAdjustedCloses,
+    stockTwoAdjustedCloses,
+  ] = await Promise.all([
+    fetchStockInfo(stockOneSymbol),
+    fetchStockInfo(stockTwoSymbol),
+    fetchStockAdjustedCloses(stockOneSymbol),
+    fetchStockAdjustedCloses(stockTwoSymbol),
+  ]);
 
-  if (!stockOneData || !stockTwoData) {
+  if (!stockOneInfo || !stockTwoInfo) {
     notFound();
   }
 
-  const pageInfo = generatePageInfo({
-    stockOneSymbol,
-    stockTwoSymbol,
-    slug,
-  });
-
+  const pageInfo = generatePageInfo({ stockOneSymbol, stockTwoSymbol, slug });
   const {
     title: pageTitle,
     pathname: pagePathname,
@@ -104,18 +90,12 @@ async function Page({ params }: PageProps) {
     publishedDate: pagePublishedDate,
     modifiedDate: pageModifiedDate,
   } = pageInfo;
-
-  const articleInfo = generateArticleInfo({
-    stockOneSymbol,
-    stockTwoSymbol,
-  });
-
+  const articleInfo = generateArticleInfo({ stockOneSymbol, stockTwoSymbol });
   const {
     title: articleTitle,
     description: articleDescription,
     images: articleImages,
   } = articleInfo;
-
   const jsonLd = generateJsonLd({
     pageTitle,
     pagePathname,
@@ -154,34 +134,34 @@ async function Page({ params }: PageProps) {
             </P>
 
             <CompanyOverviewSection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
             <HistoricalPerformanceSection
-              stockOneSymbol={stockOneSymbol}
-              stockTwoSymbol={stockTwoSymbol}
-              stockOnePriceSeries={stockOnePriceSeries}
-              stockTwoPriceSeries={stockTwoPriceSeries}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
+              stockOneAdjustedCloses={stockOneAdjustedCloses}
+              stockTwoAdjustedCloses={stockTwoAdjustedCloses}
             />
             <ProfitabilitySection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
             <FinancialStrengthSection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
             <GrowthSection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
             <DividendSection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
             <ValuationSection
-              stockOneData={stockOneData}
-              stockTwoData={stockTwoData}
+              stockOneInfo={stockOneInfo}
+              stockTwoInfo={stockTwoInfo}
             />
           </article>
         </main>
