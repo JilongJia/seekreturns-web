@@ -15,7 +15,7 @@ const chartConfig = {
   chart: {
     height: 450,
     minWidth: 250,
-    margin: { top: 20, right: 20, bottom: 40, left: 50 },
+    margin: { top: 20, right: 20, bottom: 40, left: 20 },
   },
   axis: {
     ticks: 5,
@@ -24,6 +24,7 @@ const chartConfig = {
     textColor: "oklch(37.1% 0 0)",
     gridColor: "oklch(87% 0 0)",
     gridStrokeWidth: 1,
+    labelPadding: 10,
   },
   boxAndWhiskers: {
     minWidth: 50,
@@ -70,17 +71,20 @@ function createChartGroup({
   svg,
   width,
   height,
+  marginLeft,
+  marginTop,
 }: {
   svg: Selection<SVGSVGElement, unknown, null, undefined>;
   width: number;
   height: number;
+  marginLeft: number;
+  marginTop: number;
 }) {
-  const { margin } = chartConfig.chart;
   return svg
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform", `translate(${marginLeft},${marginTop})`);
 }
 
 function drawYAxis({
@@ -382,9 +386,7 @@ export function MetricComparisonBoxPlot({
       stockTwoIndustryMetricStats,
     ].filter((stats): stats is MetricStats => !!stats);
 
-    const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-    const chartGroup = createChartGroup({ svg, width, height });
 
     const overallMin =
       validIndustryMetricStats.length > 0
@@ -425,6 +427,42 @@ export function MetricComparisonBoxPlot({
       .nice();
 
     const tickFormatter = createTickFormatter(metricKey);
+
+    const tempAxisGroup = svg.append("g").attr("class", "temp-axis");
+    const yAxisGenerator = axisLeft(yScale)
+      .ticks(chartConfig.axis.ticks)
+      .tickFormat(tickFormatter);
+
+    let maxLabelWidth = 0;
+    tempAxisGroup
+      .call(yAxisGenerator)
+      .selectAll(".tick text")
+      .style("font-size", chartConfig.axis.tickTextFontSize)
+      .style("font-weight", chartConfig.axis.tickTextFontWeight)
+      .each(function () {
+        const labelWidth = (this as SVGTextElement).getBBox().width;
+        if (labelWidth > maxLabelWidth) {
+          maxLabelWidth = labelWidth;
+        }
+      });
+
+    tempAxisGroup.remove();
+
+    const dynamicMarginLeft = Math.max(
+      margin.left,
+      maxLabelWidth + chartConfig.axis.labelPadding,
+    );
+
+    const innerWidth = width - dynamicMarginLeft - margin.right;
+
+    const chartGroup = createChartGroup({
+      svg,
+      width,
+      height,
+      marginLeft: dynamicMarginLeft,
+      marginTop: margin.top,
+    });
+
     drawYAxis({ chartGroup, yScale, innerWidth, tickFormatter });
 
     const boxAndWhiskersWidth = Math.min(

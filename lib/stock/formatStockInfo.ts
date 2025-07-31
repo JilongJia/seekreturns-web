@@ -5,6 +5,7 @@ type Lang = "en" | "zh";
 export type FormatOptions = {
   lang: Lang;
   currency?: string | null;
+  fractionDigits?: 1 | 2;
 };
 
 export function formatStockInfo(
@@ -16,7 +17,7 @@ export function formatStockInfo(
     return "--";
   }
 
-  const { lang, currency } = options;
+  const { lang, currency, fractionDigits = 2 } = options;
   const locale = lang === "zh" ? "zh-CN" : "en-US";
 
   switch (key) {
@@ -24,26 +25,26 @@ export function formatStockInfo(
       const displayCurrency = currency || "";
       if (lang === "zh") {
         return `${(Number(value) / 1e8).toLocaleString(locale, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          minimumFractionDigits: fractionDigits,
+          maximumFractionDigits: fractionDigits,
         })}亿 ${displayCurrency}`;
       }
       return `${(Number(value) / 1e9).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
       })} billion ${displayCurrency}`;
 
     case "averageTradingVolume10d":
     case "averageTradingVolume3m":
       if (lang === "zh") {
         return `${(Number(value) / 1e4).toLocaleString(locale, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          minimumFractionDigits: fractionDigits,
+          maximumFractionDigits: fractionDigits,
         })}万`;
       }
       return `${(Number(value) / 1e6).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
       })}M`;
 
     case "listingDate":
@@ -78,8 +79,8 @@ export function formatStockInfo(
     case "epsGrowth5yCagr":
       return Number(value).toLocaleString(locale, {
         style: "percent",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
       });
 
     // Ratios, Multiples, and other numbers
@@ -93,8 +94,8 @@ export function formatStockInfo(
     case "debtToEquityRatioMrq":
     case "interestCoverageRatioTtm":
       return Number(value).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
       });
 
     // Default case for string keys
