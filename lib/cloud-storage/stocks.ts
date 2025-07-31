@@ -27,10 +27,7 @@ export const fetchStockAdjustedCloses = unstable_cache(
         .download();
 
       const dataString = fileContents[0].toString("utf8");
-
-      const sanitizedString = dataString.replace(/NaN/g, "null");
-
-      const data = JSON.parse(sanitizedString);
+      const data = JSON.parse(dataString);
 
       return data as StockAdjustedClosesData;
     } catch (error) {

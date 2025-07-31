@@ -17,7 +17,7 @@ const chartConfig = {
   chart: {
     height: 450,
     minWidth: 500,
-    margin: { top: 20, right: 20, bottom: 65, left: 50 },
+    margin: { top: 20, right: 20, bottom: 65, left: 20 },
   },
   yAxis: {
     ticks: 5,
@@ -26,6 +26,7 @@ const chartConfig = {
     textColor: "oklch(37.1% 0 0)",
     gridColor: "oklch(87% 0 0)",
     gridStrokeWidth: 1,
+    labelPadding: 10,
   },
   xAxis: {
     tickTextFontWeight: 600,
@@ -67,17 +68,20 @@ function createChartGroup({
   svg,
   width,
   height,
+  marginLeft,
+  marginTop,
 }: {
   svg: Selection<SVGSVGElement, unknown, null, undefined>;
   width: number;
   height: number;
+  marginLeft: number;
+  marginTop: number;
 }) {
-  const { margin } = chartConfig.chart;
   return svg
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform", `translate(${marginLeft},${marginTop})`);
 }
 
 function drawXAxis({
@@ -115,21 +119,19 @@ function drawYAxis({
   chartGroup,
   yScale,
   innerWidth,
+  tickFormatter,
 }: {
   chartGroup: Selection<SVGGElement, unknown, null, undefined>;
   yScale: ScaleLinear<number, number>;
   innerWidth: number;
+  tickFormatter: (d: number | { valueOf(): number }) => string;
 }) {
   const { yAxis } = chartConfig;
-
-  const tickFormatter = new Intl.NumberFormat("en-US", {
-    style: "percent",
-  });
 
   const yAxisGenerator = axisLeft(yScale)
     .ticks(yAxis.ticks)
     .tickSize(-innerWidth)
-    .tickFormat((d) => tickFormatter.format(d as number));
+    .tickFormat(tickFormatter);
 
   chartGroup
     .append("g")
@@ -321,10 +323,7 @@ export function GrowthComparisonBarChart({
     const svg = select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-
-    const chartGroup = createChartGroup({ svg, width, height });
 
     const allValues = [
       ...Object.values(stockOneGrowth),
@@ -339,12 +338,58 @@ export function GrowthComparisonBarChart({
       .range([innerHeight, 0])
       .nice();
 
-    const xScale = scaleBand()
+    const tickFormatter = new Intl.NumberFormat("en-US", {
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    const tempAxisGroup = svg.append("g").attr("class", "temp-axis");
+    const yAxisGenerator = axisLeft(yScale)
+      .ticks(chartConfig.yAxis.ticks)
+      .tickFormat((d) => tickFormatter.format(d as number));
+
+    let maxLabelWidth = 0;
+    tempAxisGroup
+      .call(yAxisGenerator)
+      .selectAll(".tick text")
+      .style("font-size", chartConfig.yAxis.tickTextFontSize)
+      .style("font-weight", chartConfig.yAxis.tickTextFontWeight)
+      .each(function () {
+        const labelWidth = (this as SVGTextElement).getBBox().width;
+        if (labelWidth > maxLabelWidth) {
+          maxLabelWidth = labelWidth;
+        }
+      });
+
+    tempAxisGroup.remove();
+
+    const dynamicMarginLeft = Math.max(
+      margin.left,
+      maxLabelWidth + chartConfig.yAxis.labelPadding,
+    );
+
+    const innerWidth = width - dynamicMarginLeft - margin.right;
+
+    const chartGroup = createChartGroup({
+      svg,
+      width,
+      height,
+      marginLeft: dynamicMarginLeft,
+      marginTop: margin.top,
+    });
+
+    const xScale = scaleBand<string>()
       .domain(metricKeys)
       .range([0, innerWidth])
       .padding(0.3);
 
-    drawYAxis({ chartGroup, yScale, innerWidth });
+    drawYAxis({
+      chartGroup,
+      yScale,
+      innerWidth,
+      tickFormatter: (d) => tickFormatter.format(d as number),
+    });
     drawXAxis({ chartGroup, xScale, innerHeight });
     drawBars({
       chartGroup,
@@ -372,7 +417,12 @@ export function GrowthComparisonBarChart({
 
   return (
     <div ref={containerRef} className={styles.container}>
-      <svg ref={svgRef} width={dimensions.width} height={dimensions.height} />
+      <svg
+        ref={svgRef}
+        width={dimensions.width}
+        height={dimensions.height}
+        className={styles.svg}
+      />
     </div>
   );
 }

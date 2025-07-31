@@ -18,6 +18,7 @@ import type {
 
 type NormalizedPoint = { time: string; value: number };
 type TimeRangeOption = "6M" | "1Y" | "3Y" | "5Y" | "Max";
+type ValidPricePoint = StockAdjustedClosesPricePoint & { adjClose: number };
 
 const timeRangeOptions: TimeRangeOption[] = ["6M", "1Y", "3Y", "5Y", "Max"];
 const rangeDescriptions: Record<TimeRangeOption, string> = {
@@ -44,14 +45,14 @@ function generateWeekdayArray(startDate: string, endDate: string): string[] {
 }
 
 function fillMissingPrices(
-  originalSeries: StockAdjustedClosesPricePoint[],
+  validSeries: ValidPricePoint[],
   weekdayDates: string[],
 ): { date: string; adjClose: number }[] {
   const priceLookup = new Map(
-    originalSeries.map((point) => [point.date, point.adjClose as number]),
+    validSeries.map((point) => [point.date, point.adjClose]),
   );
   const filledSeries: { date: string; adjClose: number }[] = [];
-  let lastKnownPrice = originalSeries[0].adjClose as number;
+  let lastKnownPrice = validSeries[0].adjClose;
 
   weekdayDates.forEach((date) => {
     if (priceLookup.has(date)) {
@@ -105,11 +106,11 @@ export function PriceComparisonLineChartFigure({
     const filterStartDate = getStartDate(selectedRange);
 
     const stockOneValidSeries = stockOneAdjustedCloses.series.filter(
-      (p): p is StockAdjustedClosesPricePoint & { adjClose: number } =>
+      (p): p is ValidPricePoint =>
         p.adjClose !== null && new Date(p.date) >= filterStartDate,
     );
     const stockTwoValidSeries = stockTwoAdjustedCloses.series.filter(
-      (p): p is StockAdjustedClosesPricePoint & { adjClose: number } =>
+      (p): p is ValidPricePoint =>
         p.adjClose !== null && new Date(p.date) >= filterStartDate,
     );
 
