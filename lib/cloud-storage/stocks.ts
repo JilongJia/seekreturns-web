@@ -38,7 +38,7 @@ export const fetchStockAdjustedCloses = unstable_cache(
       return null;
     }
   },
-  ["stock_adjusted_close_data"],
+  ["stock_adjusted_closes_data"],
   {
     revalidate: 86400,
   },
