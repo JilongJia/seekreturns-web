@@ -19,7 +19,7 @@ function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={inter.variable}>
       <body className={styles.body}>{children}</body>
-      {isProduction && <GoogleAnalytics gaId="G-1WHQNHHT0M" />}
+      {isProduction && <GoogleAnalytics gaId="G-8MYNXKJYJ8" />}
     </html>
   );
 }

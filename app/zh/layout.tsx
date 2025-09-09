@@ -23,7 +23,7 @@ function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="zh" className={`${inter.variable} ${noto_sans_sc.variable}`}>
       <body className={styles.body}>{children}</body>
-      {isProduction && <GoogleAnalytics gaId="G-1WHQNHHT0M" />}
+      {isProduction && <GoogleAnalytics gaId="G-8MYNXKJYJ8" />}
     </html>
   );
 }
